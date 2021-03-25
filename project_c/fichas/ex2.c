@@ -3,8 +3,8 @@
 #include <string.h>
 #include "testar.h"
 
-int lerBusiness (){
-    char **c1; // guarda todas as linhas.
+int lerBusiness (char **c1){
+    // guarda todas as linhas.
     c1 = NULL;
 
     FILE *fd1 = fopen("business.csv", "r");
@@ -23,8 +23,8 @@ int lerBusiness (){
 		  i++;
     }
 
-    for (int j = 0; j < i; j++)
-      printf("%s", c1[j]);
+    //for (int j = 0; j < i; j++)
+    //  printf("%s", c1[j]);
 
     for (int j = 0; j < i; j++)
       free (c1[j]);
@@ -33,8 +33,7 @@ int lerBusiness (){
 	return 0;
 } 
 
-int lerUser (){
-    char **c2;
+int lerUser (char **c2){
     c2 = NULL;
 
     FILE *fd2 = fopen("users.csv", "r");
@@ -53,9 +52,8 @@ int lerUser (){
 		  i++;
     }
 
-    for (int j = 0; j < i; j++){
-      printf("%s", c2[j]);
-    }
+    //for (int j = 0; j < i; j++)
+    //  printf("%s", c2[j]);
 
     for (int j = 0; j < i; j++)
       free (c2[j]);
@@ -64,8 +62,7 @@ int lerUser (){
 	return 0;
 } 
 
-int lerReviews (){
-    char **c3;
+int lerReviews (char **c3){
     c3 = NULL;
 
     FILE *fd3 = fopen("reviews.csv", "r");
@@ -84,9 +81,8 @@ int lerReviews (){
 		  i++;
     }
 
-    for (int j = 0; j < i; j++){
-      printf("%s", c3[j]);
-    }
+    //for (int j = 0; j < i; j++)
+    //  printf("%s", c3[j]);
 
     for (int j = 0; j < i; j++)
       free (c3[j]);

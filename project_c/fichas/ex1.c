@@ -20,6 +20,7 @@ int lerBusiness (){
       c1 = realloc(c1, sizeof(char*)*(i+1));
       // estender espaço do c2, do espaço que já temos (segundo i) + uma linha.
 		  c1[i] = strdup(buff); // malloc + strcpy.
+      
 		  i++;
     }
 

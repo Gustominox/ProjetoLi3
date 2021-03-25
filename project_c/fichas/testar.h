@@ -2,10 +2,11 @@
 #include <stdlib.h>
 
 typedef struct business{
-	char *id;
+	char *business_id;
 	char *name;
+	char *city;
 	float stars;
-	int nr_ratings;
+	int review_count;
 } *BUSINESS; 
 // estou a criar um tipo de dados de business e este business já é um apontador.
 
@@ -16,12 +17,18 @@ typedef struct user{
 // estou a criar um tipo de dados de user e este user já é um apontador.
 
 typedef struct reviews{
-	char *id1;
-	char *id2;
-	char *id3;
+	char *review_id;
+	char *user_id;
+	char *business_id;
 	float stars;
-	int rev1;
-	int rev2;
-	int rev3;
+	int useful;
+	int funny;
+	int cool;
 } *REVIEWS;
 // estou a criar um tipo de dados de reviews e este reviews já é um apontador.
+
+/*
+typedef struct city{
+	char *name;
+} *CITY;
+*/
