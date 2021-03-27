@@ -26,6 +26,8 @@ b build: setup $(PROG)
 
 setup:
 	mkdir -p $(BLD_DIR)
+	mkdir -p $(SRC_DIR)
+	mkdir -p $(INC_DIR)
 
 .PHONY: clean # Remover ficheiros gerados
 c clean:
