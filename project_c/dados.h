@@ -8,7 +8,7 @@ typedef struct business{
 	char *city;
 	char *state;
 	char *categories;
-} *BUSINESS; 
+} *Business; 
 // estou a criar um tipo de dados de business e este business já é um apontador.
 
 
@@ -16,7 +16,7 @@ typedef struct user{
 	char *id;
 	char *name;
 	char *friends;
-} *USER;
+} *User;
 // estou a criar um tipo de dados de user e este user já é um apontador.
 
 
@@ -30,5 +30,5 @@ typedef struct reviews{
 	int cool;
 	char *date; ////////////////// char ?????????????????????
 	char *text;
-} *REVIEWS;
+} *Reviews;
 // estou a criar um tipo de dados de reviews e este reviews já é um apontador.
