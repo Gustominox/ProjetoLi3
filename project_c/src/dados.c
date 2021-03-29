@@ -43,7 +43,7 @@ char *getUserId (USER user){
     return user->id;
 }
 
-void setUserId(USER user, char newId[]{
+void setUserId(USER user, char newId[]){
     strcpy (user->id, newId);
 }
 
@@ -51,7 +51,7 @@ char *getUserName (USER user){
     return user->name;
 }
 
-void setUserName(USER user, char newName[]{
+void setUserName(USER user, char newName[]){
     strcpy (user->name, newName);
 }
 
@@ -59,7 +59,7 @@ char *getUserFriends (USER user){
     return user->friends;
 }
 
-void setUserName(USER user, char newFriends[]{
+void setUserFriends(USER user, char newFriends[]){
     strcpy (user->friends, newFriends);
 }
 
@@ -67,7 +67,7 @@ char *getReviewsId (REVIEWS reviews){
     return reviews->review_id;
 }
 
-void setReviewsId(REVIEWS reviews, char newId[]{
+void setReviewsId(REVIEWS reviews, char newId[]){
     strcpy (reviews->review_id, newId);
 }
 
@@ -75,7 +75,7 @@ char *getReviewsUser (REVIEWS reviews){
     return reviews->user_id;
 }
 
-void setReviewsUser(REVIEWS reviews, char newUser[]{
+void setReviewsUser(REVIEWS reviews, char newUser[]){
     strcpy (reviews->user_id, newUser);
 }
 
@@ -83,11 +83,11 @@ char *getReviewsBus (REVIEWS reviews){
     return reviews->business_id;
 }
 
-void setReviewsBus(REVIEWS reviews, char newBus[]{
+void setReviewsBus(REVIEWS reviews, char newBus[]){
     strcpy (reviews->business_id, newBus);
 }
 
-float *getReviewsStars (REVIEWS reviews){
+float getReviewsStars (REVIEWS reviews){
     return reviews->stars;
 }
 
@@ -95,7 +95,7 @@ void setReviewsStars(REVIEWS reviews, float newStars){
     reviews->stars = newStars;
 }
 
-int *getReviewsUseful (REVIEWS reviews){
+int getReviewsUseful (REVIEWS reviews){
     return reviews->useful;
 }
 
@@ -103,7 +103,7 @@ void setReviewsUseful(REVIEWS reviews, int newUseful){
     reviews->useful = newUseful;
 }
 
-int *getReviewsFunny (REVIEWS reviews){
+int getReviewsFunny (REVIEWS reviews){
     return reviews->funny;
 }
 
@@ -111,19 +111,19 @@ void setReviewsFunny(REVIEWS reviews, int newFunny){
     reviews->funny = newFunny;
 }
 
-int *getReviewsCool (REVIEWS reviews){
+int getReviewsCool (REVIEWS reviews){
     return reviews->cool;
 }
 
 void setReviewsCool(REVIEWS reviews, int newCool){
     reviews->cool = newCool;
 }
-
+/*
 char *getReviewsDate (REVIEWS reviews){
     return reviews->date;
 }
 
-void setReviewsDate(REVIEWS reviews, char newDate[]{
+void setReviewsDate(REVIEWS reviews, char newDate[]){
     strcpy (reviews->date, newDate);
 }
 
@@ -131,10 +131,10 @@ char *getReviewsText (REVIEWS reviews){
     return reviews->text;
 }
 
-void setReviewsText(REVIEWS reviews, char newText[]{
+void setReviewsText(REVIEWS reviews, char newText[]){
     strcpy (reviews->text, newText);
 }
-
+*/
 char** lerFichCsv (char **info, int* tmh, char path[]){
     
     FILE *fp = fopen(path, "r");
