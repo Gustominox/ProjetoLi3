@@ -19,8 +19,9 @@ int lerBusiness (char **c1){
 
       c1 = realloc(c1, sizeof(struct business*)*(i+1));
       // estender espaço do c2, do espaço que já temos (segundo i) + uma linha.
-		  c1[i] = strdup(buff); // malloc + strcpy.
-		  i++;
+	addReviews (REVIEWS rev, char info[], int i)
+      c1[i] = transformaStringpBusiness(buff);// strdup(buff); // malloc + strcpy.
+	i++;
     }
 
     //for (int j = 0; j < i; j++)
@@ -46,7 +47,7 @@ int lerUser (char **c2){
     char buff[1024];
     while(fgets(buff,1024,fd2)){
 
-      c2 = realloc(c2, sizeof(struct user*)*(i+1));
+      c2 = realloc(c2, sizeof( char*)*(i+1));
       // estender espaço do c2, do espaço que já temos (segundo i) + uma linha.
 		  c2[i] = strdup(buff); // malloc + strcpy.
 		  i++;

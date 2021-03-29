@@ -4,28 +4,29 @@
 #include "testar.h"
 #include "ex2.c"
 
-void addBusiness (BUSINESS *bus, char *buf, int N){
+void addBusiness (BUSINESS bus, char *buf, int N){
 	// char *str que representa todos os campos do business.
 	
 	bus[N] = malloc(sizeof(struct business));
 	bus[N]->business_id = strdup(strsep(&buf,";"));
 	bus[N]->name = strdup(strsep(&buf, ";"));
     bus[N]->city = strdup(strsep(&buf, ";"));
-	bus[N]->stars = atof(strsep(&buf, ";"));  
-	bus[N]->review_count = atoi(strsep(&buf, ";"));   
+	bus[N]->state = atof(strsep(&buf, ";"));  
+	bus[N]->categories = atoi(strsep(&buf, ";"));   
+    
 }
 
-void addReviews (REVIEWS *rev, char **c3, int N){
+void addReviews (REVIEWS rev, char info[]){
 	// char *str que representa todos os campos do business.
 	
-	rev[N] = malloc(sizeof(struct reviews));
-	rev[N]->review_id = strdup(strsep(&c3, ";"));
-	rev[N]->user_id = strdup(strsep(&c3, ";"));
-    rev[N]->business_id = strdup(strsep(&c3, ";"));
-	rev[N]->stars = atof(strsep(&c3, ";"));  
-	rev[N]->useful = atoi(strsep(&c3, ";"));
-    rev[N]->funny = atoi(strsep(&c3, ";"));
-    rev[N]->cool = atoi(strsep(&c3, ";"));   
+	rev = malloc(sizeof(struct reviews));
+	rev->review_id = strdup(strsep(&info, ";"));
+	rev->user_id = strdup(strsep(&info, ";"));
+    rev->business_id = strdup(strsep(&info, ";"));
+	rev->stars = atof(strsep(&info, ";"));  
+	rev->useful = atoi(strsep(&info, ";"));
+    rev->funny = atoi(strsep(&info, ";"));
+    rev->cool = atoi(strsep(&info, ";"));   
 }
 
 // a)
@@ -46,16 +47,16 @@ int mais4estrelas (BUSINESS bus[], char **c1, int N){
 }
 
 // c)
-
+/*
 int maxReviews(REVIEWS rev[], int N){
     int max = 0;
     for (int i = 0; **c1; i++){
-        int res = bus[i]->review_count;
+        int res = rev[i]->review_count;
         if (max < res) max = res;
     }
     return max;
 }
-
+*/
 // d)
 
 int nr_neg_cidade(BUSINESS bus[], char **c1, int N, char *cityName){
