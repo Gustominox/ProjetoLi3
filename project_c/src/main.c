@@ -3,8 +3,11 @@
 
 
 int main(){
-	Business b = malloc(sizeof(struct business));
-	char bid[5] = "12345";
-	b->business_id = bid;
-	printf("OLA PESSOAS, %s", b->business_id);
+	char **users;
+	users = NULL;
+	int tmh = lerFichCsv(users,"users.csv");
+	for (int j = 0; j < tmh; j++)
+      		printf("%s\n", users[j]);	
+	for (int j = 0; j < tmh; j++)
+      		free (users[j]);
 }

@@ -1,10 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
+int lerUser ();
 
+typedef struct sgr{
+	
+} *SGR; 
 
 typedef struct cidade{
 	char **referencias;
-} *Cidade; 
+} *CIDADE; 
 
 typedef struct business{
 	char *business_id;
@@ -12,7 +16,7 @@ typedef struct business{
 	char *city;
 	char *state;
 	char *categories;
-} *Business; 
+} *BUSINESS; 
 // estou a criar um tipo de dados de business e este business já é um apontador.
 
 
@@ -20,7 +24,7 @@ typedef struct user{
 	char *id;
 	char *name;
 	char *friends;
-} *User;
+} *USER;
 // estou a criar um tipo de dados de user e este user já é um apontador.
 
 
@@ -34,5 +38,5 @@ typedef struct reviews{
 	int cool;
 	char *date; ////////////////// char ?????????????????????
 	char *text;
-} *Reviews;
+} *REVIEWS;
 // estou a criar um tipo de dados de reviews e este reviews já é um apontador.

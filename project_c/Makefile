@@ -16,10 +16,10 @@ vpath %.c $(SRC_DIR)
 .DEFAULT_GOAL = build
 
 $(BLD_DIR)/%.o: %.c
-	$(CC) -c -I $(INC_DIR) $^ -o $@
+	$(CC) -g -c -I $(INC_DIR) $^ -o $@
 
 $(PROG): $(OBJS)
-	$(CC) -I $(INC_DIR) $^ -o $@
+	$(CC) -g -I $(INC_DIR) $^ -o $@
 
 setup:
 	@mkdir -p $(BLD_DIR)
@@ -28,7 +28,10 @@ setup:
 
 .PHONY: test # Run the tests
 test:
-	@echo "Write some tests!"
+	#@echo "Write some tests!"
+	./reviews
+	./reviews
+
 
 .PHONY: b, build # Compilar o binário
 b build: setup $(PROG)
