@@ -2,6 +2,10 @@
 #include <stdlib.h>
 
 
+typedef struct cidade{
+	char **referencias;
+} *Cidade; 
+
 typedef struct business{
 	char *business_id;
 	char *name;

@@ -4,3 +4,6 @@ a93284,Ana Filipa Ribeiro Murta,AnaMurta10
 
 a93320,Augusto César Oliveira Campos,Gustominox 
 
+
+GLIB: https://developer.gnome.org/glib/2.66/
+

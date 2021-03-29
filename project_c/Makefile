@@ -3,13 +3,13 @@
 # Por este motivo qualquer parecença com outras makefiles de colegas dá-se pois 
 # estamos todos a beber da mesma fonte
 
-CC    = gcc
+CC    	= gcc
 BLD_DIR = build
 SRC_DIR = src
 INC_DIR = includes
-FILES = $(shell ls $(SRC_DIR)/*.c)
-OBJS  = $(patsubst $(SRC_DIR)/%.c,$(BLD_DIR)/%.o,$(FILES))
-PROG  = reviews
+FILES 	= $(shell ls $(SRC_DIR)/*.c)
+OBJS  	= $(patsubst $(SRC_DIR)/%.c,$(BLD_DIR)/%.o,$(FILES))
+PROG  	= reviews
 
 vpath %.c $(SRC_DIR)
 
