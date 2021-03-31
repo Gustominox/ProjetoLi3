@@ -202,7 +202,7 @@ BUSINESS addBusiness (BUSINESS bus, char info[]){
 
   bus = malloc(sizeof(struct business));
 	bus->business_id = strdup(strsep(&info,";"));
-	//if(strlen(getBusId()) >22);
+	if(strlen(getBusId(bus)) > 22) return NULL;
   bus->name = strdup(strsep(&info, ";"));
   bus->city = strdup(strsep(&info, ";"));
 	bus->state = atof(strsep(&info, ";"));  

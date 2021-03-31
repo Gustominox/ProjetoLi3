@@ -3,6 +3,6 @@
 struct sgr{
 	USER *user;
 	BUSINESS *business;
-	REVIEWS *reviews;
+	REVIEW *review;
 
 };

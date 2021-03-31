@@ -5,10 +5,12 @@
 int main(){
 
 	
-	REVIEW rev = NULL;
-    char info[] = "lWC-xP3rd6obsecCYsGZRg;ak0TdVmGKo4pwqdJSTLwWw;buF9druCkbuXLX526sGELQ;4.0;3;1;1";
-    rev = addReview(rev,info);
-	reviewToString(rev);
+	BUSINESS bus = NULL;
+    char info[] = "zYMjNc-Q7-T238SHylKgKA;Chinatown Restaurant & Lucky Bistro;Tigard;3.5;44";
+    bus = addBusiness(bus,info);
+	if(bus)
+    printf("%s", bus->business_id);	
+	//reviewToString(rev);
 	
 	/*
 	char **info = NULL;
