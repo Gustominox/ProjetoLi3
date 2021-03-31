@@ -49,4 +49,4 @@ void addUser (USER user, char info[]);
 
 void addBusiness (BUSINESS bus, char info[]);
 
-void addReviews (REVIEWS rev, char info[]);
+REVIEWS addReviews (REVIEWS rev, char info[]);

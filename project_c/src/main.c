@@ -4,12 +4,12 @@
 
 int main(){
 
-	/*
-	REVIEWS rev = malloc(sizeof(struct reviews*));
-    char info[] = "cCsTIh3GrDnCwP5hLbFrGg;5fydAR8d7Umj2gh0uWyklg;HXYJIJ7lDhOUjaOvjVpZTw;5.0;4;3;1";
-    addReviews(rev,info);
-	printf("%s\n",rev->review_id);
-	*/
+	
+	REVIEWS rev = NULL;
+    char info[] = "lWC-xP3rd6obsecCYsGZRg;ak0TdVmGKo4pwqdJSTLwWw;buF9druCkbuXLX526sGELQ;4.0;3;1;1";
+    rev = addReviews(rev,info);
+	printf("output:%s;\n",rev->review_id);
+	
 	/*
 	char **info = NULL;
 	BUSINESS *business;

@@ -204,13 +204,17 @@ void addBusiness (BUSINESS bus, char info[]){
 }
 
 
-void addReviews (REVIEWS rev, char info[]){
+REVIEWS addReviews (REVIEWS rev, char info[]){
 	
-	rev->review_id = strdup(strsep(&info, ";"));
+  rev = malloc(sizeof(struct reviews*));
+  rev->review_id = strdup(strsep(&info, ";"));
 	rev->user_id = strdup(strsep(&info, ";"));
   rev->business_id = strdup(strsep(&info, ";"));
 	rev->stars = atof(strsep(&info, ";"));  
 	rev->useful = atoi(strsep(&info, ";"));
   rev->funny = atoi(strsep(&info, ";"));
-  rev->cool = atoi(strsep(&info, ";"));   
+  rev->cool = atoi(strsep(&info, ";"));
+  
+	printf("output:%s;\n",rev->review_id);
+  return rev;   
 }
