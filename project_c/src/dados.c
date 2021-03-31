@@ -42,7 +42,6 @@ void setCategories(BUSINESS bus, int newCategories){
 char *getUserId (USER user){
     return user->id;
 }
-
 void setUserId(USER user, char newId[]){
     strcpy (user->id, newId);
 }
@@ -50,7 +49,6 @@ void setUserId(USER user, char newId[]){
 char *getUserName (USER user){
     return user->name;
 }
-
 void setUserName(USER user, char newName[]){
     strcpy (user->name, newName);
 }
@@ -58,7 +56,6 @@ void setUserName(USER user, char newName[]){
 char *getUserFriends (USER user){
     return user->friends;
 }
-
 void setUserFriends(USER user, char newFriends[]){
     strcpy (user->friends, newFriends);
 }
@@ -66,7 +63,6 @@ void setUserFriends(USER user, char newFriends[]){
 char *getReviewId (REVIEW review){
     return review->review_id;
 }
-
 void setReviewId(REVIEW review, char newId[]){
     strcpy (review->review_id, newId);
 }
@@ -74,7 +70,6 @@ void setReviewId(REVIEW review, char newId[]){
 char *getReviewUser (REVIEW review){
     return review->user_id;
 }
-
 void setReviewUser(REVIEW review, char newUser[]){
     strcpy (review->user_id, newUser);
 }
@@ -82,7 +77,6 @@ void setReviewUser(REVIEW review, char newUser[]){
 char *getReviewBus (REVIEW review){
     return review->business_id;
 }
-
 void setReviewBus(REVIEW review, char newBus[]){
     strcpy (review->business_id, newBus);
 }
@@ -90,7 +84,6 @@ void setReviewBus(REVIEW review, char newBus[]){
 float getReviewStars (REVIEW review){
     return review->stars;
 }
-
 void setReviewStars(REVIEW review, float newStars){
     review->stars = newStars;
 }
@@ -98,7 +91,6 @@ void setReviewStars(REVIEW review, float newStars){
 int getReviewUseful (REVIEW review){
     return review->useful;
 }
-
 void setReviewUseful(REVIEW review, int newUseful){
     review->useful = newUseful;
 }
@@ -106,7 +98,6 @@ void setReviewUseful(REVIEW review, int newUseful){
 int getReviewFunny (REVIEW review){
     return review->funny;
 }
-
 void setReviewFunny(REVIEW review, int newFunny){
     review->funny = newFunny;
 }
@@ -114,7 +105,6 @@ void setReviewFunny(REVIEW review, int newFunny){
 int getReviewCool (REVIEW review){
     return review->cool;
 }
-
 void setReviewCool(REVIEW review, int newCool){
     review->cool = newCool;
 }
@@ -139,6 +129,7 @@ void setReviewText(REVIEW review, char newText[]){
     strcpy (review->text, newText);
 }
 */
+
 char** lerFichCsv (char **info, int* tmh, char path[]){
     
     FILE *fp = fopen(path, "r");
@@ -166,10 +157,8 @@ BUSINESS* transStrToBus(char **info,int tmh,BUSINESS *business){
 
     business = realloc(business,sizeof(struct business*)*(tmh));
     int tmhBus = 0;
-    for (int i = 0; info[i]; i++){
-    
-    business[tmhBus] = addBusiness(business[tmhBus], info[i]);
-    
+    for (int i = 0; info[i]; i++)
+        business[tmhBus] = addBusiness(business[tmhBus], info[i]);
     if(business[tmhBus] == NULL) tmhBus--;
     tmhBus++;
 }
@@ -190,6 +179,27 @@ REVIEW* transStrToRev(char **info,int tmh,REVIEW *review){
 USER* transStrToUsers(char **info,int tmh,USER *users){
 
 
+}
+
+char *businessToString(BUSINESS bus){
+    float state = getState(bus);
+    char stateToStr[5];
+    sprintf(stateToStr, "%g", state);
+
+    int categories = getCategories(bus);
+    char categoriesToStr[3];
+    sprintf(categoriesToStr, "%d", categories);
+
+    int funny = getReviewFunny(rev);
+    char funnyToStr[3];
+    sprintf(funnyToStr, "%d", funny);
+
+    int cool = getReviewCool(rev);
+    char coolToStr[3];
+    sprintf(coolToStr, "%d", cool);
+
+    char *business[5] = {bus->business_id; bus->name; bus->city; stateToStr; categoriesToStr};
+    return business;
 }
 
 USER addUser (USER user, char info[]){

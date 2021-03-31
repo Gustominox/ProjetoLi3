@@ -1,10 +1,35 @@
+/**
+* @file dados.h
+*/
+
+
 #include <stdio.h>
 #include <stdlib.h>
 
-/*
-typedef struct cidade{
-	char **referencias;
-} *CIDADE; 
+/***************************************************** Estruturas de dados *****************************************************/
+
+/*!
+* @typedef user
+*
+* @field   id        Identificação de um usuário
+* @field   name      Nome do usuário
+* @field   friends   Amigos do usuário
+*/
+typedef struct user{
+	char *id;
+	char *name;
+	char *friends;
+} *USER;
+
+
+/*!
+* @typedef business
+*
+* @field   business_id   Identificação de um negócio
+* @field   name          Nome do negócio
+* @field   city          Cidade onde está o negócio
+* @field   state         Estado do negócio
+* @field   categorias    Categorias do negócio
 */
 typedef struct business{
 	char *business_id;
@@ -13,17 +38,21 @@ typedef struct business{
 	float state;
 	int categories;
 } *BUSINESS; 
-// estou a criar um tipo de dados de business e este business já é um apontador.
 
 
-typedef struct user{
-	char *id;
-	char *name;
-	char *friends;
-} *USER;
-// estou a criar um tipo de dados de user e este user já é um apontador.
-
-
+/*!
+* @typedef review
+*
+* @field   review_id      Identificação da review
+* @field   user_id        Identificação do usuário        
+* @field   business_id    Identificação do negócio
+* @field   stars          Número de estrelas do negócio
+* @field   useful         Grau de utilidade do negócio
+* @field   funny          Grau de diversão do negócio
+* @field   cool           O quão fixe é o negócio
+* @field   date           Data de criação do negócio
+* @field   text           Review do negócio
+*/
 typedef struct review{
 	char *review_id;
 	char *user_id;
@@ -32,11 +61,251 @@ typedef struct review{
 	int useful;
 	int funny;
 	int cool;
-	//char *date; ////////////////// char ?????????????????????
+	//char *date;
 	//char *text;
 } *REVIEW;
-// estou a criar um tipo de dados de review e este review já é um apontador.
 
+/****************************************************** Funções get e set ******************************************************/
+
+/**
+* \brief Obtém a identificação do negócio
+* @param bus Negócio
+* @return identificação do negócio
+*/
+char *getBusId(BUSINESS bus);
+
+/**
+* \brief Muda a identificação do negócio
+* @param bus Negócio
+* @param newId nova identificação do negócio
+*/
+void setBusId(BUSINESS bus, char newId[]);
+
+/**
+* \brief Obtém o nome do negócio
+* @param bus Negócio
+* @return nome do negócio
+*/
+char *getName(BUSINESS bus);
+
+/**
+* \brief Muda o nome do negócio
+* @param bus Negócio
+* @param newName novo nome do negócio
+*/
+void setName(BUSINESS bus, char newName[]);
+
+/**
+* \brief Obtém a cidade onde está situado o negócio
+* @param bus Negócio
+* @return cidade onde está o negócio
+*/
+char *getCity(BUSINESS bus);
+
+/**
+* \brief Muda a cidade onde está situado o negócio
+* @param bus Negócio
+* @param newCity nova cidade onde está o negócio
+*/
+void setCity(BUSINESS bus, char newCity[]);
+
+/**
+* \brief Obtém o estado do negócio
+* @param bus Negócio
+* @return estado do negócio
+*/
+float getState(BUSINESS bus);
+
+/**
+* \brief Muda o estado do negócio
+* @param bus Negócio
+* @param newState novo estado do negócio
+*/
+void setState(BUSINESS bus, float newState);
+
+/**
+* \brief Obtém as categorias do negócio
+* @param bus Negócio
+* @return categorias do negócio
+*/
+int getCategories(BUSINESS bus);
+
+/**
+* \brief Muda as categorias do negócio
+* @param bus Negócio
+* @param newCategories novas categorias do negócio
+*/
+void setCategories(BUSINESS bus, int newCategories);
+
+/**
+* \brief Obtém a identificação do usuário
+* @param user Usuário
+* @return identificação do usuário
+*/
+char *getUserId (USER user);
+
+/**
+* \brief Muda a identificação do usuário
+* @param user Usuário
+* @param newId nova identificação do usuário
+*/
+void setUserId(USER user, char newId[]);
+
+/**
+* \brief Obtém o nome do usuário
+* @param user Usuário
+* @return nome do usuário
+*/
+char *getUserName (USER user);
+
+/**
+* \brief Muda o nome do usuário
+* @param user Usuário
+* @param newName novo nome do usuário
+*/
+void setUserName(USER user, char newName[]);
+
+/**
+* \brief Obtém os amigos do usuário
+* @param user Usuário
+* @return amigos do usuário
+*/
+char *getUserFriends (USER user);
+
+/**
+* \brief Muda os amigos do usuário
+* @param user Usuário
+* @param newFriends novos amigos do usuário
+*/
+void setUserFriends(USER user, char newFriends[]);
+
+/**
+* \brief Obtém a identificação da review
+* @param review Review
+* @return identificação da review
+*/
+char *getReviewId (REVIEW review);
+
+/**
+* \brief Muda a identificação da review
+* @param review Review
+* @param newId nova identificação da review
+*/
+void setReviewId(REVIEW review, char newId[]);
+
+/**
+* \brief Obtém a identificação do usuário
+* @param review Review
+* @return identificação do usuário
+*/
+char *getReviewUser (REVIEW review);
+
+/**
+* \brief Muda a identificação do usuário
+* @param review Review
+* @param newUser nova identificação do usuário
+*/
+void setReviewUser(REVIEW review, char newUser[]);
+
+/**
+* \brief Obtém a identificação do negócio
+* @param review Review
+* @return identificação da negócio
+*/
+char *getReviewBus (REVIEW review);
+
+/**
+* \brief Muda a identificação do negócio
+* @param review Review
+* @param newBus nova identificação do negócio
+*/
+void setReviewBus(REVIEW review, char newBus[]);
+
+/**
+* \brief Obtém o número de estrelas do negócio
+* @param review Review
+* @return número de estrelas do negócio
+*/
+float getReviewStars (REVIEW review);
+
+/**
+* \brief Muda o número de estrelas do negócio
+* @param review Review
+* @param newStars novo número de estrelas do negócio
+*/
+void setReviewStars(REVIEW review, float newStars);
+
+/**
+* \brief Obtém o grau de utilidade do negócio
+* @param review Review
+* @return grau de utilidade do negócio
+*/
+int getReviewUseful (REVIEW review);
+
+/**
+* \brief Muda o grau de utilidade do negócio
+* @param review Review
+* @param newUseful novo grau de utilidade do negócio
+*/
+void setReviewUseful(REVIEW review, int newUseful);
+
+/**
+* \brief Obtém o grau de diversão do negócio
+* @param review Review
+* @return grau de diversão do negócio
+*/
+int getReviewFunny (REVIEW review);
+
+/**
+* \brief Muda o grau de diversão do negócio
+* @param review Review
+* @param newFunny novo grau de diversão do negócio
+*/
+void setReviewFunny(REVIEW review, int newFunny);
+
+/**
+* \brief Obtém o grau de quão fixe é o negócio
+* @param review Review
+* @return grau de quão fixe é o negócio
+*/
+int getReviewCool (REVIEW review);
+
+/**
+* \brief Muda o grau de quão fixe é o negócio
+* @param review Review
+* @param newCool novo grau de quão fixe é o negócio
+*/
+void setReviewCool(REVIEW review, int newCool);
+
+/**
+* \brief Obtém a data de criação do negócio
+* @param review Review
+* @return data de criação do negócio
+*/
+char *getReviewDate (REVIEW review);
+
+/**
+* \brief Muda a data de criação do negócio
+* @param review Review
+* @param newDate nova data de criação do negócio
+*/
+void setReviewDate(REVIEW review, char newDate[]);
+
+/**
+* \brief Obtém a review (texto) do negócio
+* @param review Review
+* @return review do negócio
+*/
+char *getReviewText (REVIEW review);
+
+/**
+* \brief Muda a review (texto) do negócio
+* @param review Review
+* @param newText nova review do negócio
+*/
+void setReviewText(REVIEW review, char newText[]);
+
+/************************************************ Leitura e Tratamento dos dados ************************************************/
 
 /**
 * \brief Função que faz a leitura do ficheiro e o guarda o seu conteúdo
@@ -44,6 +313,7 @@ typedef struct review{
 * @param info é o array que guarda o conteúdo do ficheiro lido
 * @param tmh é o número de linhas que tem o ficheiro (é o tamanho do array de strings, info)
 * @param path é o nome do ficheiro
+* @return array que guarda o conteúdo do ficheiro lido
 */
 char** lerFichCsv (char **info, int* tmh, char path[]);
 
@@ -54,6 +324,7 @@ char** lerFichCsv (char **info, int* tmh, char path[]);
 * @param info é o array que guarda o conteúdo do ficheiro lido
 * @param tmh é o tamanho do array de strings, info
 * @param business é o array onde será guardado o conteúdo do ficheiro, mas convertido para structs do tipo BUSINESS
+* @return array que guarda o conteúdo do ficheiro lido, convertido para structs do tipo BUSINESS
 */
 BUSINESS* transStrToBus(char **info,int tmh, BUSINESS *business);
 
@@ -64,6 +335,7 @@ BUSINESS* transStrToBus(char **info,int tmh, BUSINESS *business);
 * @param info é o array que guarda o conteúdo do ficheiro lido
 * @param tmh é o tamanho do array de strings, info
 * @param review é o array onde será guardado o conteúdo do ficheiro, mas convertido para structs do tipo REVIEW
+* @return array que guarda o conteúdo do ficheiro lido, convertido para structs do tipo REVIEW
 */
 REVIEW* transStrToRev(char **info,int tmh, REVIEW *review);
 
@@ -74,9 +346,33 @@ REVIEW* transStrToRev(char **info,int tmh, REVIEW *review);
 * @param info é o array que guarda o conteúdo do ficheiro lido
 * @param tmh é o tamanho do array de strings, info
 * @param user é o array onde será guardado o conteúdo do ficheiro, mas convertido para structs do tipo USER
+* @return array que guarda o conteúdo do ficheiro lido, convertido para structs do tipo USER
 */
 USER* transStrToUsers(char **info,int tmh, USER *users);
 
+/**
+* \brief Função que converte o array da struct do tipo USER num array de strings
+*
+* @param user é o array que guarda o conteúdo do ficheiro, convertido para structs do tipo USER
+* @return array de strings com o conteúdo do ficheiro lido
+*/
+char *userToString(USER user);
+
+/**
+* \brief Função que converte o array da struct do tipo REVIEW num array de strings
+*
+* @param rev é o array que guarda o conteúdo do ficheiro, convertido para structs do tipo REVIEW
+* @return array de strings com o conteúdo do ficheiro lido
+*/
+char *reviewToString(REVIEW rev);
+
+/**
+* \brief Função que converte o array da struct do tipo BUSINESS num array de strings
+*
+* @param bus é o array que guarda o conteúdo do ficheiro, convertido para structs do tipo BUSINESS
+* @return array de strings com o conteúdo do ficheiro lido
+*/
+char *businessToString(BUSINESS bus);
 
 /**
 * \brief Função que preenche os campos da struct do tipo USER
@@ -103,11 +399,3 @@ BUSINESS addBusiness (BUSINESS bus, char info[]);
 * @param info é o array que guarda o conteúdo do ficheiro lido
 */
 REVIEW addReview (REVIEW rev, char info[]);
-
-
-/**
-* \brief Função que converte o array da struct do tipo REVIEW num array de strings
-*
-* @param rev é o array que guarda o conteúdo do ficheiro, convertido para structs do tipo REVIEW
-*/
-char *reviewToString(REVIEW rev);
