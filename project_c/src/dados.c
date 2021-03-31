@@ -109,14 +109,9 @@ void setReviewCool(REVIEW review, int newCool){
     review->cool = newCool;
 }
 
-char *reviewToString(REVIEW rev){
-    printf("Review [%s;%s;%s;%f;%d;%d;%d;]\n",rev->review_id,rev->user_id,rev->business_id,rev->stars,rev->useful,rev->funny,rev->cool);
-}
-/*
 char *getReviewDate (REVIEW review){
     return review->date;
 }
-
 void setReviewDate(REVIEW review, char newDate[]){
     strcpy (review->date, newDate);
 }
@@ -124,11 +119,10 @@ void setReviewDate(REVIEW review, char newDate[]){
 char *getReviewText (REVIEW review){
     return review->text;
 }
-
 void setReviewText(REVIEW review, char newText[]){
     strcpy (review->text, newText);
 }
-*/
+
 
 char** lerFichCsv (char **info, int* tmh, char path[]){
     
@@ -171,17 +165,43 @@ for (int j = 0; j < tmh; j++)
 
 
 REVIEW* transStrToRev(char **info,int tmh,REVIEW *review){
-
-
 }
 
 
 USER* transStrToUsers(char **info,int tmh,USER *users){
+}
 
+char *userToString(USER user){
 
+    char *user[3] = {user->id, user->name, user->friends};
+    return char;
+}
+
+char *reviewToString(REVIEW rev){
+
+    float stars = getReviewStars(rev);
+    char starsToStr[5];
+    sprintf(starsToStr, "%g", stars);
+
+    int useful = getReviewUseful(rev);
+    char usefulToStr[3];
+    sprintf(usefulToStr, "%d", useful);
+
+    int funny = getReviewFunny(rev);
+    char funnyToStr[3];
+    sprintf(funnyToStr, "%d", funny);
+
+    int cool = getReviewCool(rev);
+    char coolToStr[3];
+    sprintf(coolToStr, "%d", cool);
+
+    char *review[7] = {rev->review_id, rev->user_id, rev->business_id, starsToStr, usefulToStr, funnyToStr, coolToStr, rev->date, rev->text};
+    return review;
+    // printf("Review [%s;%s;%s;%f;%d;%d;%d;]\n",rev->review_id,rev->user_id,rev->business_id,rev->stars,rev->useful,rev->funny,rev->cool);
 }
 
 char *businessToString(BUSINESS bus){
+
     float state = getState(bus);
     char stateToStr[5];
     sprintf(stateToStr, "%g", state);
@@ -263,11 +283,11 @@ REVIEW addReview (REVIEW rev, char info[]){
     
     rev->cool = atoi(strsep(&info, ";"));
     if(getReviewUseful(rev) < 0) return NULL;
-    /*
+
     rev->date = strdup(strsep(&info, ";"));
     if(strlen(getReviewDate(rev) > 19) return NULL; // YYYY-MM-DD HH:MM:SS
+
     rev->text = strdup(strsep(&info, ";"));
-    */
   
   return rev;   
 }
