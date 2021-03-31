@@ -170,13 +170,7 @@ BUSINESS* transStrToBus(char **info,int tmh,BUSINESS *business){
     
     business[tmhBus] = addBusiness(business[tmhBus], info[i]);
     
-    if(business[tmhBus] == NULL){
-      printf("NULL");
-      tmhBus--;
-    }else{
-
-    printf("BUSSINESS: %s; indice[%d]; tmh[%d]\n",business[tmhBus]->business_id,i,tmhBus);
-    } 
+    if(business[tmhBus] == NULL) tmhBus--;
     tmhBus++;
 }
 
@@ -201,10 +195,13 @@ USER* transStrToUsers(char **info,int tmh,USER *users){
 USER addUser (USER user, char info[]){
 
     user = malloc(sizeof(struct user));
-	  user->id = strdup(strsep(&info,";"));
+	  
+    user->id = strdup(strsep(&info,";"));
     if(strlen(getUserId(user)) != 22) return NULL;
+    
     user->name = strdup(strsep(&info,";"));
     if(strlen(getUserName(user)) == 0) return NULL;
+    
     user->friends = strdup(strsep(&info,";"));
     // ???
     return user;
@@ -213,15 +210,20 @@ USER addUser (USER user, char info[]){
 BUSINESS addBusiness (BUSINESS bus, char info[]){
 
     bus = malloc(sizeof(struct business));
+    
     bus->business_id = strdup(strsep(&info,";"));
 	  if(strlen(getBusId(bus)) != 22) return NULL;
+    
     bus->name = strdup(strsep(&info, ";"));
     if(strlen(getName(bus)) == 0) return NULL;
+    
     bus->city = strdup(strsep(&info, ";"));
     if(strlen(getCity(bus)) == 0) return NULL;
-	  bus->state = atof(strsep(&info, ";"));
+	  
+    bus->state = atof(strsep(&info, ";"));
     if(getState(bus) <= 0.0) return NULL; // ???
-	  bus->categories = atoi(strsep(&info, ";"));
+	  
+    bus->categories = atoi(strsep(&info, ";"));
     if(getCategories(bus) <= 0) return NULL;
 
     return bus;
@@ -230,18 +232,25 @@ BUSINESS addBusiness (BUSINESS bus, char info[]){
 REVIEW addReview (REVIEW rev, char info[]){
 	
     rev = malloc(sizeof(struct review));
+    
     rev->review_id = strdup(strsep(&info, ";"));
     if(strlen(getReviewId(rev)) != 22) return NULL;
-	  rev->user_id = strdup(strsep(&info, ";"));
+	  
+    rev->user_id = strdup(strsep(&info, ";"));
     if(strlen(getReviewUser(rev)) != 22) return NULL;
+    
     rev->business_id = strdup(strsep(&info, ";"));
     if(strlen(getReviewBus(rev)) != 22) return NULL;
-	  rev->stars = atof(strsep(&info, ";"));
+	  
+    rev->stars = atof(strsep(&info, ";"));
     if(getReviewStars(rev) > 5.0 && getReviewStars(rev) <= 0.0) return NULL;
-	  rev->useful = atoi(strsep(&info, ";"));
+	  
+    rev->useful = atoi(strsep(&info, ";"));
     if(getReviewUseful(rev) < 0) return NULL;
+    
     rev->funny = atoi(strsep(&info, ";"));
     if(getReviewUseful(rev) < 0) return NULL;
+    
     rev->cool = atoi(strsep(&info, ";"));
     if(getReviewUseful(rev) < 0) return NULL;
     /*
