@@ -5,9 +5,9 @@
 int main(){
 
 	
-	REVIEWS rev = NULL;
+	REVIEW rev = NULL;
     char info[] = "lWC-xP3rd6obsecCYsGZRg;ak0TdVmGKo4pwqdJSTLwWw;buF9druCkbuXLX526sGELQ;4.0;3;1;1";
-    rev = addReviews(rev,info);
+    rev = addReview(rev,info);
 	printf("output:%s;\n",rev->review_id);
 	
 	/*

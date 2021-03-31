@@ -63,76 +63,76 @@ void setUserFriends(USER user, char newFriends[]){
     strcpy (user->friends, newFriends);
 }
 
-char *getReviewsId (REVIEWS reviews){
-    return reviews->review_id;
+char *getReviewId (REVIEW review){
+    return review->review_id;
 }
 
-void setReviewsId(REVIEWS reviews, char newId[]){
-    strcpy (reviews->review_id, newId);
+void setReviewId(REVIEW review, char newId[]){
+    strcpy (review->review_id, newId);
 }
 
-char *getReviewsUser (REVIEWS reviews){
-    return reviews->user_id;
+char *getReviewUser (REVIEW review){
+    return review->user_id;
 }
 
-void setReviewsUser(REVIEWS reviews, char newUser[]){
-    strcpy (reviews->user_id, newUser);
+void setReviewUser(REVIEW review, char newUser[]){
+    strcpy (review->user_id, newUser);
 }
 
-char *getReviewsBus (REVIEWS reviews){
-    return reviews->business_id;
+char *getReviewBus (REVIEW review){
+    return review->business_id;
 }
 
-void setReviewsBus(REVIEWS reviews, char newBus[]){
-    strcpy (reviews->business_id, newBus);
+void setReviewBus(REVIEW review, char newBus[]){
+    strcpy (review->business_id, newBus);
 }
 
-float getReviewsStars (REVIEWS reviews){
-    return reviews->stars;
+float getReviewStars (REVIEW review){
+    return review->stars;
 }
 
-void setReviewsStars(REVIEWS reviews, float newStars){
-    reviews->stars = newStars;
+void setReviewStars(REVIEW review, float newStars){
+    review->stars = newStars;
 }
 
-int getReviewsUseful (REVIEWS reviews){
-    return reviews->useful;
+int getReviewUseful (REVIEW review){
+    return review->useful;
 }
 
-void setReviewsUseful(REVIEWS reviews, int newUseful){
-    reviews->useful = newUseful;
+void setReviewUseful(REVIEW review, int newUseful){
+    review->useful = newUseful;
 }
 
-int getReviewsFunny (REVIEWS reviews){
-    return reviews->funny;
+int getReviewFunny (REVIEW review){
+    return review->funny;
 }
 
-void setReviewsFunny(REVIEWS reviews, int newFunny){
-    reviews->funny = newFunny;
+void setReviewFunny(REVIEW review, int newFunny){
+    review->funny = newFunny;
 }
 
-int getReviewsCool (REVIEWS reviews){
-    return reviews->cool;
+int getReviewCool (REVIEW review){
+    return review->cool;
 }
 
-void setReviewsCool(REVIEWS reviews, int newCool){
-    reviews->cool = newCool;
+void setReviewCool(REVIEW review, int newCool){
+    review->cool = newCool;
 }
 /*
-char *getReviewsDate (REVIEWS reviews){
-    return reviews->date;
+char *getReviewDate (REVIEW review){
+    return review->date;
 }
 
-void setReviewsDate(REVIEWS reviews, char newDate[]){
-    strcpy (reviews->date, newDate);
+void setReviewDate(REVIEW review, char newDate[]){
+    strcpy (review->date, newDate);
 }
 
-char *getReviewsText (REVIEWS reviews){
-    return reviews->text;
+char *getReviewText (REVIEW review){
+    return review->text;
 }
 
-void setReviewsText(REVIEWS reviews, char newText[]){
-    strcpy (reviews->text, newText);
+void setReviewText(REVIEW review, char newText[]){
+    strcpy (review->text, newText);
 }
 */
 char** lerFichCsv (char **info, int* tmh, char path[]){
@@ -175,7 +175,7 @@ for (int j = 0; j < tmh; j++)
 }
 
 
-REVIEWS* transStrToRev(char **info,int tmh,REVIEWS *reviews){
+REVIEW* transStrToRev(char **info,int tmh,REVIEW *review){
 
 
 }
@@ -204,9 +204,9 @@ void addBusiness (BUSINESS bus, char info[]){
 }
 
 
-REVIEWS addReviews (REVIEWS rev, char info[]){
+REVIEW addReview (REVIEW rev, char info[]){
 	
-  rev = malloc(sizeof(struct reviews*));
+  rev = malloc(sizeof(struct review*));
   rev->review_id = strdup(strsep(&info, ";"));
 	rev->user_id = strdup(strsep(&info, ";"));
   rev->business_id = strdup(strsep(&info, ";"));

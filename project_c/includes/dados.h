@@ -24,7 +24,7 @@ typedef struct user{
 // estou a criar um tipo de dados de user e este user já é um apontador.
 
 
-typedef struct reviews{
+typedef struct review{
 	char *review_id;
 	char *user_id;
 	char *business_id;
@@ -34,14 +34,14 @@ typedef struct reviews{
 	int cool;
 	//char *date; ////////////////// char ?????????????????????
 	//char *text;
-} *REVIEWS;
-// estou a criar um tipo de dados de reviews e este reviews já é um apontador.
+} *REVIEW;
+// estou a criar um tipo de dados de review e este review já é um apontador.
 
 char** lerFichCsv (char **info, int* tmh, char path[]);
 
 BUSINESS* transStrToBus(char **info,int tmh,BUSINESS *business);
 
-REVIEWS* transStrToRev(char **info,int tmh,REVIEWS *reviews);
+REVIEW* transStrToRev(char **info,int tmh,REVIEW *review);
 
 USER* transStrToUsers(char **info,int tmh,USER *users);
 
@@ -49,4 +49,4 @@ void addUser (USER user, char info[]);
 
 void addBusiness (BUSINESS bus, char info[]);
 
-REVIEWS addReviews (REVIEWS rev, char info[]);
+REVIEW addReview (REVIEW rev, char info[]);
