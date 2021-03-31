@@ -162,14 +162,22 @@ char** lerFichCsv (char **info, int* tmh, char path[]){
 	return info;
 } 
 
-BUSINESS* transStrToBus(char **info,int tmh,BUSINESS business[]){
+BUSINESS* transStrToBus(char **info,int tmh,BUSINESS *business){
 
-    business = malloc(sizeof(struct business*)*(tmh));
-    for (int i = 0; i < tmh; i++){
+    business = realloc(business,sizeof(struct business*)*(tmh));
+    int tmhBus = 0;
+    for (int i = 0; info[i]; i++){
     
-    printf("BUSSINESS%s;indice[%d];tmh[%d]\n",business[i]->business_id,i,tmh);
-    addBusiness(business[i], info[i]);
+    business[tmhBus] = addBusiness(business[tmhBus], info[i]);
     
+    if(business[tmhBus] == NULL){
+      printf("NULL");
+      tmhBus--;
+    }else{
+
+    printf("BUSSINESS: %s; indice[%d]; tmh[%d]\n",business[tmhBus]->business_id,i,tmhBus);
+    } 
+    tmhBus++;
 }
 
 for (int j = 0; j < tmh; j++)
