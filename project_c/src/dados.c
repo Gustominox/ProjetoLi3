@@ -118,6 +118,10 @@ int getReviewCool (REVIEW review){
 void setReviewCool(REVIEW review, int newCool){
     review->cool = newCool;
 }
+
+char *reviewToString(REVIEW rev){
+    printf("Review [%s;%s;%s;%f;%d;%d;%d;]\n",rev->review_id,rev->user_id,rev->business_id,rev->stars,rev->useful,rev->funny,rev->cool);
+}
 /*
 char *getReviewDate (REVIEW review){
     return review->date;
@@ -186,27 +190,30 @@ USER* transStrToUsers(char **info,int tmh,USER *users){
 
 }
 
-void addUser (USER user, char info[]){
+USER addUser (USER user, char info[]){
 
+  user = malloc(sizeof(struct user));
 	user->id = strdup(strsep(&info,";"));
-	   
+  return user;
 }
 
 
-void addBusiness (BUSINESS bus, char info[]){
+BUSINESS addBusiness (BUSINESS bus, char info[]){
 
+  bus = malloc(sizeof(struct business));
 	bus->business_id = strdup(strsep(&info,";"));
 	//if(strlen(getBusId()) >22);
   bus->name = strdup(strsep(&info, ";"));
   bus->city = strdup(strsep(&info, ";"));
 	bus->state = atof(strsep(&info, ";"));  
 	bus->categories = atoi(strsep(&info, ";"));   
+  return bus;
 }
 
 
 REVIEW addReview (REVIEW rev, char info[]){
 	
-  rev = malloc(sizeof(struct review*));
+  rev = malloc(sizeof(struct review));
   rev->review_id = strdup(strsep(&info, ";"));
 	rev->user_id = strdup(strsep(&info, ";"));
   rev->business_id = strdup(strsep(&info, ";"));
@@ -215,6 +222,5 @@ REVIEW addReview (REVIEW rev, char info[]){
   rev->funny = atoi(strsep(&info, ";"));
   rev->cool = atoi(strsep(&info, ";"));
   
-	printf("output:%s;\n",rev->review_id);
   return rev;   
 }

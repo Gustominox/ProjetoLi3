@@ -45,8 +45,10 @@ REVIEW* transStrToRev(char **info,int tmh,REVIEW *review);
 
 USER* transStrToUsers(char **info,int tmh,USER *users);
 
-void addUser (USER user, char info[]);
+USER addUser (USER user, char info[]);
 
-void addBusiness (BUSINESS bus, char info[]);
+BUSINESS addBusiness (BUSINESS bus, char info[]);
 
 REVIEW addReview (REVIEW rev, char info[]);
+
+char *reviewToString(REVIEW rev);

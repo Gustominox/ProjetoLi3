@@ -8,7 +8,7 @@ int main(){
 	REVIEW rev = NULL;
     char info[] = "lWC-xP3rd6obsecCYsGZRg;ak0TdVmGKo4pwqdJSTLwWw;buF9druCkbuXLX526sGELQ;4.0;3;1;1";
     rev = addReview(rev,info);
-	printf("output:%s;\n",rev->review_id);
+	reviewToString(rev);
 	
 	/*
 	char **info = NULL;
