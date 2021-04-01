@@ -277,7 +277,7 @@ REVIEW addReview (REVIEW rev, char info[]){
     if(getReviewUseful(rev) < 0) return NULL;
 
     rev->date = strdup(strsep(&info, ";"));
-    if(strlen(getReviewDate(rev)) > 19) return NULL; // YYYY-MM-DD HH:MM:SS
+    if(strlen(getReviewDate(rev)) != 19) return NULL; // YYYY-MM-DD HH:MM:SS
 
     rev->text = strdup(strsep(&info, ";"));
   
