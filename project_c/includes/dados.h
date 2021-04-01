@@ -61,8 +61,8 @@ typedef struct review{
 	int useful;
 	int funny;
 	int cool;
-	//char *date;
-	//char *text;
+	char *date;
+	char *text;
 } *REVIEW;
 
 /****************************************************** Funções get e set ******************************************************/

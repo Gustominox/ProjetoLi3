@@ -151,11 +151,11 @@ BUSINESS* transStrToBus(char **info,int tmh,BUSINESS *business){
 
     business = realloc(business,sizeof(struct business*)*(tmh));
     int tmhBus = 0;
-    for (int i = 0; info[i]; i++)
+    for (int i = 0; info[i]; i++){
         business[tmhBus] = addBusiness(business[tmhBus], info[i]);
-    if(business[tmhBus] == NULL) tmhBus--;
-    tmhBus++;
-}
+        if(business[tmhBus] == NULL) tmhBus--;
+        tmhBus++;
+    }
 
 for (int j = 0; j < tmh; j++)
     free (info[j]);
@@ -163,18 +163,18 @@ for (int j = 0; j < tmh; j++)
     return business; 
 }
 
-
+/*
 REVIEW* transStrToRev(char **info,int tmh,REVIEW *review){
 }
 
 
 USER* transStrToUsers(char **info,int tmh,USER *users){
 }
-
+*/
 char *userToString(USER user){
 
-    char *user[3] = {user->id, user->name, user->friends};
-    return char;
+    char *userStr[3] = {user->id, user->name, user->friends};
+    return userStr;
 }
 
 char *reviewToString(REVIEW rev){
@@ -195,8 +195,8 @@ char *reviewToString(REVIEW rev){
     char coolToStr[3];
     sprintf(coolToStr, "%d", cool);
 
-    char *review[7] = {rev->review_id, rev->user_id, rev->business_id, starsToStr, usefulToStr, funnyToStr, coolToStr, rev->date, rev->text};
-    return review;
+    char *reviewStr[9] = {rev->review_id, rev->user_id, rev->business_id, starsToStr, usefulToStr, funnyToStr, coolToStr, rev->date, rev->text};
+    return reviewStr;
     // printf("Review [%s;%s;%s;%f;%d;%d;%d;]\n",rev->review_id,rev->user_id,rev->business_id,rev->stars,rev->useful,rev->funny,rev->cool);
 }
 
@@ -210,16 +210,8 @@ char *businessToString(BUSINESS bus){
     char categoriesToStr[3];
     sprintf(categoriesToStr, "%d", categories);
 
-    int funny = getReviewFunny(rev);
-    char funnyToStr[3];
-    sprintf(funnyToStr, "%d", funny);
-
-    int cool = getReviewCool(rev);
-    char coolToStr[3];
-    sprintf(coolToStr, "%d", cool);
-
-    char *business[5] = {bus->business_id; bus->name; bus->city; stateToStr; categoriesToStr};
-    return business;
+    char *businessStr[5] = {bus->business_id, bus->name, bus->city, stateToStr, categoriesToStr};
+    return businessStr;
 }
 
 USER addUser (USER user, char info[]){
@@ -285,7 +277,7 @@ REVIEW addReview (REVIEW rev, char info[]){
     if(getReviewUseful(rev) < 0) return NULL;
 
     rev->date = strdup(strsep(&info, ";"));
-    if(strlen(getReviewDate(rev) > 19) return NULL; // YYYY-MM-DD HH:MM:SS
+    if(strlen(getReviewDate(rev)) > 19) return NULL; // YYYY-MM-DD HH:MM:SS
 
     rev->text = strdup(strsep(&info, ";"));
   
