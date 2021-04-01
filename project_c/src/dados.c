@@ -179,10 +179,23 @@ REVIEW* transStrToRev(char **info,int tmh,REVIEW *review){
     return review;
 }
 
-/*
+
 USER* transStrToUsers(char **info,int tmh,USER *users){
+    users = realloc(users,sizeof(struct user*)*(tmh));
+    int tmhUser = 0;
+    for (int i = 0; info[i]; i++){
+        users[tmhUser] = addUser(users[tmhUser], info[i]);
+        if(users[tmhUser] == NULL) tmhUser--;
+        tmhUser++;
+    }
+
+    for (int j = 0; j < tmh; j++)
+        free (info[j]);
+
+    return users;
 }
-*/
+
+
 char *userToString(USER user){
 
     char *userStr[3] = {user->id, user->name, user->friends};
