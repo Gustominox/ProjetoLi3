@@ -199,7 +199,7 @@ USER* transStrToUsers(char **info,int tmh,USER *users){
 char *userToString(USER user){
 
     char *userStr[3] = {user->id, user->name, user->friends};
-    return userStr;
+    return *userStr;
 }
 
 char *reviewToString(REVIEW rev){
@@ -221,7 +221,7 @@ char *reviewToString(REVIEW rev){
     sprintf(coolToStr, "%d", cool);
 
     char *reviewStr[9] = {rev->review_id, rev->user_id, rev->business_id, starsToStr, usefulToStr, funnyToStr, coolToStr, rev->date, rev->text};
-    return reviewStr;
+    return *reviewStr;
     // printf("Review [%s;%s;%s;%f;%d;%d;%d;]\n",rev->review_id,rev->user_id,rev->business_id,rev->stars,rev->useful,rev->funny,rev->cool);
 }
 
@@ -236,7 +236,7 @@ char *businessToString(BUSINESS bus){
     sprintf(categoriesToStr, "%d", categories);
 
     char *businessStr[5] = {bus->business_id, bus->name, bus->city, stateToStr, categoriesToStr};
-    return businessStr;
+    return *businessStr;
 }
 
 USER addUser (USER user, char info[]){
