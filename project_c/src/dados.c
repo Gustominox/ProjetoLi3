@@ -157,17 +157,29 @@ BUSINESS* transStrToBus(char **info,int tmh,BUSINESS *business){
         tmhBus++;
     }
 
-for (int j = 0; j < tmh; j++)
-    free (info[j]);
+    for (int j = 0; j < tmh; j++)
+        free (info[j]);
 
     return business; 
 }
 
-/*
+
 REVIEW* transStrToRev(char **info,int tmh,REVIEW *review){
+    review = realloc(review,sizeof(struct review*)*(tmh));
+    int tmhRev = 0;
+    for (int i = 0; info[i]; i++){
+        review[tmhRev] = addReview(review[tmhRev], info[i]);
+        if(review[tmhRev] == NULL) tmhRev--;
+        tmhRev++;
+    }
+
+    for (int j = 0; j < tmh; j++)
+        free (info[j]);
+
+    return review;
 }
 
-
+/*
 USER* transStrToUsers(char **info,int tmh,USER *users){
 }
 */
