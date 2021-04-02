@@ -226,7 +226,7 @@ char *reviewToString(REVIEW rev){
 
 char *businessToString(BUSINESS bus){
 
-    char *businessStr[5] = {bus->business_id, bus->name, bus->city, bus->state, bus->state};
+    char *businessStr[5] = {bus->business_id, bus->name, bus->city, bus->state, *bus->categories};
     return *businessStr;
 }
 
