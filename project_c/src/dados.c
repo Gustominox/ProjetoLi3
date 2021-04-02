@@ -35,7 +35,7 @@ void setState(BUSINESS bus, char newState[]){
 char** getCategories(BUSINESS bus){
   return bus->categories;
 }
-void setCategories(BUSINESS bus, int newCategories[][]){
+void setCategories(BUSINESS bus, char** newCategories){
   bus->categories = newCategories;
 }
 
@@ -259,12 +259,21 @@ BUSINESS addBusiness (BUSINESS bus, char info[]){
     if(strlen(getCity(bus)) == 0) return NULL;
 	  
     bus->state = strdup(strsep(&info, ";"));
-    if(strlen(getState(bus)) != 2) return NULL;
-    for (int i = 0; i < 2; i++)
-        if (bus[i]->state < 'A' && bus[i]->state > 'Z')
-            return NULL;
-	  
-    bus->categories = strdup(strsep(&info, ";"));
+    if(strlen(getState(bus)) != 2) return NULL;  // O state é um código de DUAS letras MAIÚSCULAS
+    char* st = NULL; 
+    strcpy(st, getState(bus));
+    for (int i = 0; i < 2; i++){
+        int valor = atoi(&st[i]);        // Converte a letra nessa posição para um inteiro
+        if (valor < 65 && valor > 90)    // 'A' = 65 ... 'Z' = 90 (em ASCII); como só podem ser maiúsculas,
+            return NULL;                 // não pode ser menor do que 65 nem maior do que 90.
+    }
+
+    int i = 0; char** categ;
+    while(atoi(strsep(&info, ";")) != 59){      // Enquanto não chegarmos a um ";"
+        categ[i] = strdup(strsep(&info, ","));  // Na primeira posição do array aux, será guardado a primeira categoria.
+        i++;                                    // NOTA: As strings encontram-se separadas por ","
+    }
+    strcpy(*bus->categories, *categ);
     // Todas as categorias são válidas, até mesmo a falta delas.
 
     return bus;

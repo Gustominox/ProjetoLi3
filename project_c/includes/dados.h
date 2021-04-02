@@ -135,7 +135,7 @@ char** getCategories(BUSINESS bus);
 * @param bus Negócio
 * @param newCategories novas categorias do negócio
 */
-void setCategories(BUSINESS bus, char newCategories[][]);
+void setCategories(BUSINESS bus, char** newCategories);
 
 /**
 * \brief Obtém a identificação do usuário
