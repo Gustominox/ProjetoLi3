@@ -25,17 +25,17 @@ void setCity(BUSINESS bus, char newCity[]){
   strcpy(bus->city,newCity);
 }
 
-float getState(BUSINESS bus){
+char* getState(BUSINESS bus){
   return bus->state;
 }
-void setState(BUSINESS bus, float newState){
+void setState(BUSINESS bus, char newState[]){
   bus->state = newState;
 }
 
-int getCategories(BUSINESS bus){
+char** getCategories(BUSINESS bus){
   return bus->categories;
 }
-void setCategories(BUSINESS bus, int newCategories){
+void setCategories(BUSINESS bus, int newCategories[][]){
   bus->categories = newCategories;
 }
 
@@ -222,20 +222,11 @@ char *reviewToString(REVIEW rev){
 
     char *reviewStr[9] = {rev->review_id, rev->user_id, rev->business_id, starsToStr, usefulToStr, funnyToStr, coolToStr, rev->date, rev->text};
     return *reviewStr;
-    // printf("Review [%s;%s;%s;%f;%d;%d;%d;]\n",rev->review_id,rev->user_id,rev->business_id,rev->stars,rev->useful,rev->funny,rev->cool);
 }
 
 char *businessToString(BUSINESS bus){
 
-    float state = getState(bus);
-    char stateToStr[5];
-    sprintf(stateToStr, "%g", state);
-
-    int categories = getCategories(bus);
-    char categoriesToStr[3];
-    sprintf(categoriesToStr, "%d", categories);
-
-    char *businessStr[5] = {bus->business_id, bus->name, bus->city, stateToStr, categoriesToStr};
+    char *businessStr[5] = {bus->business_id, bus->name, bus->city, bus->state, bus->state};
     return *businessStr;
 }
 
@@ -267,10 +258,13 @@ BUSINESS addBusiness (BUSINESS bus, char info[]){
     bus->city = strdup(strsep(&info, ";"));
     if(strlen(getCity(bus)) == 0) return NULL;
 	  
-    bus->state = atof(strsep(&info, ";"));
-    if(getState(bus) <= 0.0) return NULL;
+    bus->state = strdup(strsep(&info, ";"));
+    if(strlen(getState(bus)) != 2) return NULL;
+    for (int i = 0; i < 2; i++)
+        if (bus[i]->state < 'A' && bus[i]->state > 'Z')
+            return NULL;
 	  
-    bus->categories = atoi(strsep(&info, ";"));
+    bus->categories = strdup(strsep(&info, ";"));
     // Todas as categorias são válidas, até mesmo a falta delas.
 
     return bus;

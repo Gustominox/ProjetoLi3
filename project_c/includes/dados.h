@@ -114,28 +114,28 @@ void setCity(BUSINESS bus, char newCity[]);
 * @param bus Negócio
 * @return estado do negócio
 */
-float getState(BUSINESS bus);
+char* getState(BUSINESS bus);
 
 /**
 * \brief Muda o estado do negócio
 * @param bus Negócio
 * @param newState novo estado do negócio
 */
-void setState(BUSINESS bus, float newState);
+void setState(BUSINESS bus, char newState[]);
 
 /**
 * \brief Obtém as categorias do negócio
 * @param bus Negócio
 * @return categorias do negócio
 */
-int getCategories(BUSINESS bus);
+char** getCategories(BUSINESS bus);
 
 /**
 * \brief Muda as categorias do negócio
 * @param bus Negócio
 * @param newCategories novas categorias do negócio
 */
-void setCategories(BUSINESS bus, int newCategories);
+void setCategories(BUSINESS bus, char newCategories[][]);
 
 /**
 * \brief Obtém a identificação do usuário
