@@ -35,8 +35,8 @@ typedef struct business{
 	char *business_id;
 	char *name;
 	char *city;
-	float state;
-	int categories;
+	char *state;
+	char **categories;
 } *BUSINESS; 
 
 
