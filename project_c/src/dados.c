@@ -250,7 +250,7 @@ USER addUser (USER user, char info[]){
     if(strlen(getUserName(user)) == 0) return NULL;
     
     user->friends = strdup(strsep(&info,";"));
-    // ???
+
     return user;
 }
 
@@ -259,7 +259,7 @@ BUSINESS addBusiness (BUSINESS bus, char info[]){
     bus = malloc(sizeof(struct business));
     
     bus->business_id = strdup(strsep(&info,";"));
-	  if(strlen(getBusId(bus)) != 22) return NULL;
+	if(strlen(getBusId(bus)) != 22) return NULL;
     
     bus->name = strdup(strsep(&info, ";"));
     if(strlen(getName(bus)) == 0) return NULL;
@@ -268,10 +268,10 @@ BUSINESS addBusiness (BUSINESS bus, char info[]){
     if(strlen(getCity(bus)) == 0) return NULL;
 	  
     bus->state = atof(strsep(&info, ";"));
-    if(getState(bus) <= 0.0) return NULL; // ???
+    if(getState(bus) <= 0.0) return NULL;
 	  
     bus->categories = atoi(strsep(&info, ";"));
-    if(getCategories(bus) <= 0) return NULL;
+    // Todas as categorias são válidas, até mesmo a falta delas.
 
     return bus;
 }
