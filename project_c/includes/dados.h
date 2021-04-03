@@ -1,7 +1,7 @@
 /**
 * @file dados.h
+* \brief Ficheiro sobre as estruturas de dados, inclusive a leitura de um ficheiro e o tratamento dos dados.
 */
-
 
 #include <stdio.h>
 #include <stdlib.h>

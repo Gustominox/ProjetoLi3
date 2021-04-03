@@ -259,13 +259,13 @@ BUSINESS addBusiness (BUSINESS bus, char info[]){
     if(strlen(getCity(bus)) == 0) return NULL;
 	  
     bus->state = strdup(strsep(&info, ";"));
-    if(strlen(getState(bus)) != 2) return NULL;  // O state é um código de DUAS letras MAIÚSCULAS
-    char* st = NULL; 
+    if(strlen(getState(bus)) != 2) return NULL;  // O state é um código de DUAS letras MAIÚSCULAS.
+    char* st = NULL; int valor = 0;
     strcpy(st, getState(bus));
     for (int i = 0; i < 2; i++){
-        int valor = atoi(&st[i]);        // Converte a letra nessa posição para um inteiro
-        if (valor < 65 && valor > 90)    // 'A' = 65 ... 'Z' = 90 (em ASCII); como só podem ser maiúsculas,
-            return NULL;                 // não pode ser menor do que 65 nem maior do que 90.
+        valor = atoi(&st[i]);                    // Converte a letra nessa posição para um inteiro.
+        if (valor < 65 && valor > 90)            // 'A' = 65 ... 'Z' = 90 (em ASCII); como só podem ser maiúsculas,
+            return NULL;                         // não pode ser menor do que 65 nem maior do que 90.
     }
 
     int i = 0; char** categ;
@@ -274,7 +274,6 @@ BUSINESS addBusiness (BUSINESS bus, char info[]){
         i++;                                    // NOTA: As strings encontram-se separadas por ","
     }
     strcpy(*bus->categories, *categ);
-    // Todas as categorias são válidas, até mesmo a falta delas.
 
     return bus;
 }
@@ -294,15 +293,33 @@ REVIEW addReview (REVIEW rev, char info[]){
 	  
     rev->stars = atof(strsep(&info, ";"));
     if(getReviewStars(rev) > 5.0 && getReviewStars(rev) <= 0.0) return NULL;
-	  
-    rev->useful = atoi(strsep(&info, ";"));
-    if(getReviewUseful(rev) < 0) return NULL;
+	
+    char* strUseful = strdup(strsep(&info, ";"));
+    int digUseful = 0;
+    for (int i = 0; i < strlen(strUseful); i++){              // Este ciclo vai verificar se a string que recebe do ficheiro são
+        digUseful = atoi(strUseful[i]);                       // efetivamente dígitos. Se forem letras, os dados são inválidos.
+        if (digUseful < 48 && digUseful > 57) return NULL;    // Testamos assim se, quando a atoi retorna 0, houve algum erro de conversão ou se é mesmo 0.
+    }
+    rev->useful = atoi(strUseful);
+    if(getReviewUseful(rev) < 0) return NULL;                 // Se for um valor negativo, é inválido.
     
-    rev->funny = atoi(strsep(&info, ";"));
-    if(getReviewUseful(rev) < 0) return NULL;
+    char* strFunny = strdup(strsep(&info, ";"));
+    int digFunny = 0;
+    for (int i = 0; i < strlen(strFunny); i++){            
+        digFunny = atoi(strFunny[i]);                     
+        if (digFunny < 48 && digFunny > 57) return NULL;   
+    }
+    rev->funny = atoi(strFunny);
+    if(getReviewFunny(rev) < 0) return NULL;
     
-    rev->cool = atoi(strsep(&info, ";"));
-    if(getReviewUseful(rev) < 0) return NULL;
+    char* strCool = strdup(strsep(&info, ";"));
+    int digCool = 0;
+    for (int i = 0; i < strlen(strCool); i++){            
+        digCool = atoi(strCool[i]);                     
+        if (digCool < 48 && digCool > 57) return NULL;   
+    }
+    rev->cool = atoi(strCool);
+    if(getReviewCool(rev) < 0) return NULL;
 
     rev->date = strdup(strsep(&info, ";"));
     if(strlen(getReviewDate(rev)) != 19) return NULL; // YYYY-MM-DD HH:MM:SS
