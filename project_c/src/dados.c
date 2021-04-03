@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "dados.h"
+#include "auxiliares.h"
 
 
 char *getBusId(BUSINESS bus){
@@ -128,19 +129,16 @@ char** lerFichCsv (char **info, int* tmh, char path[]){
     
     FILE *fp = fopen(path, "r");
     if (fp == NULL){
-          printf ("Error opening file\n");
-          return NULL;
+        printf ("Error opening file\n");
+        return NULL;
     }
     int auxTmh = *tmh;
     auxTmh = 0;
     char buff[1024];
     while(fgets(buff,1024,fp)){
-
-      info = realloc(info, sizeof(char*)*(auxTmh+1));
-      
-      // estender espaço do users, do espaço que já temos (segundo tmh) + uma linha.
-		  info[auxTmh] = strdup(buff); // malloc + strcpy.
-		  auxTmh++;
+        info = realloc(info, sizeof(char*)*(auxTmh+1));
+	    info[auxTmh] = strdup(buff); // malloc + strcpy.
+	    auxTmh++;
     }
     *tmh = auxTmh;
     fclose (fp);
@@ -156,7 +154,6 @@ BUSINESS* transStrToBus(char **info,int tmh,BUSINESS *business){
         if(business[tmhBus] == NULL) tmhBus--;
         tmhBus++;
     }
-
     for (int j = 0; j < tmh; j++)
         free (info[j]);
 
@@ -172,7 +169,6 @@ REVIEW* transStrToRev(char **info,int tmh,REVIEW *review){
         if(review[tmhRev] == NULL) tmhRev--;
         tmhRev++;
     }
-
     for (int j = 0; j < tmh; j++)
         free (info[j]);
 
@@ -188,7 +184,6 @@ USER* transStrToUsers(char **info,int tmh,USER *users){
         if(users[tmhUser] == NULL) tmhUser--;
         tmhUser++;
     }
-
     for (int j = 0; j < tmh; j++)
         free (info[j]);
 
@@ -257,22 +252,17 @@ BUSINESS addBusiness (BUSINESS bus, char info[]){
     
     bus->city = strdup(strsep(&info, ";"));
     if(strlen(getCity(bus)) == 0) return NULL;
-	  
-    bus->state = strdup(strsep(&info, ";"));
-    if(strlen(getState(bus)) != 2) return NULL;  // O state é um código de DUAS letras MAIÚSCULAS.
-    char* st = NULL; int valor = 0;
-    strcpy(st, getState(bus));
-    for (int i = 0; i < 2; i++){
-        valor = atoi(&st[i]);                    // Converte a letra nessa posição para um inteiro.
-        if (valor < 65 && valor > 90)            // 'A' = 65 ... 'Z' = 90 (em ASCII); como só podem ser maiúsculas,
-            return NULL;                         // não pode ser menor do que 65 nem maior do que 90.
-    }
+	
+    char* st = strdup(strsep(&info, ";"));      // O state é um código de DUAS letras MAIÚSCULAS.
+    if(strlen(st) != 2) return NULL;            // Verifica, então, se são apenas dois.
+    for(int i = 0; i < 2; i++)                  
+        if(isUpper(st[i]) != 1) return NULL;    // Verifica se são letras maiúsculas.
+    strcpy(bus->state, st);
 
-    int i = 0; char** categ;
-    while(atoi(strsep(&info, ";")) != 59){      // Enquanto não chegarmos a um ";"
-        categ[i] = strdup(strsep(&info, ","));  // Na primeira posição do array aux, será guardado a primeira categoria.
-        i++;                                    // NOTA: As strings encontram-se separadas por ","
-    }
+    char** categ;                               // Guardará todas as strings referentes às categorias.
+    char* temp = strdup(strsep(&info, ";"));    // Guardará o conteúdo do array info até encontrar um ";"
+    for(int i = 0; temp != NULL; i++)
+        categ[i] = strdup(strsep(&temp, ","));  // Na primeira posição do array aux, será guardado a primeira categoria (separadas por ",").
     strcpy(*bus->categories, *categ);
 
     return bus;
@@ -295,29 +285,20 @@ REVIEW addReview (REVIEW rev, char info[]){
     if(getReviewStars(rev) > 5.0 && getReviewStars(rev) <= 0.0) return NULL;
 	
     char* strUseful = strdup(strsep(&info, ";"));
-    int digUseful = 0;
-    for (int i = 0; i < strlen(strUseful); i++){              // Este ciclo vai verificar se a string que recebe do ficheiro são
-        digUseful = atoi(strUseful[i]);                       // efetivamente dígitos. Se forem letras, os dados são inválidos.
-        if (digUseful < 48 && digUseful > 57) return NULL;    // Testamos assim se, quando a atoi retorna 0, houve algum erro de conversão ou se é mesmo 0.
-    }
-    rev->useful = atoi(strUseful);
+    for (int i = 0; i < strlen(strUseful); i++)               // Este ciclo vai verificar se a string que recebe do ficheiro são
+        if (isDigit(strUseful[i]) != 1) return NULL;          // efetivamente dígitos. Se forem letras, os dados são inválidos.
+    rev->useful = atoi(strUseful);                            // Testamos assim se, quando a atoi retorna 0, houve algum erro de conversão ou se é mesmo 0.
     if(getReviewUseful(rev) < 0) return NULL;                 // Se for um valor negativo, é inválido.
     
     char* strFunny = strdup(strsep(&info, ";"));
-    int digFunny = 0;
-    for (int i = 0; i < strlen(strFunny); i++){            
-        digFunny = atoi(strFunny[i]);                     
-        if (digFunny < 48 && digFunny > 57) return NULL;   
-    }
+    for (int i = 0; i < strlen(strFunny); i++)                           
+        if (isDigit(strFunny[i]) != 1) return NULL;   
     rev->funny = atoi(strFunny);
     if(getReviewFunny(rev) < 0) return NULL;
     
     char* strCool = strdup(strsep(&info, ";"));
-    int digCool = 0;
-    for (int i = 0; i < strlen(strCool); i++){            
-        digCool = atoi(strCool[i]);                     
-        if (digCool < 48 && digCool > 57) return NULL;   
-    }
+    for (int i = 0; i < strlen(strCool); i++)                           
+        if (isDigit(strCool[i]) != 1) return NULL;   
     rev->cool = atoi(strCool);
     if(getReviewCool(rev) < 0) return NULL;
 
