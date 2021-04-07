@@ -251,12 +251,19 @@ char *businessToString(BUSINESS bus){
     // {bus->business_id, bus->name, bus->city, bus->state, *bus->categories};
     strcat(businessStr,"Business [");
     strcat(businessStr,getBusId(bus));
+    strcat(businessStr,"; ");
     strcat(businessStr,getName(bus));
+    strcat(businessStr,"; ");
     strcat(businessStr,getCity(bus));
+    strcat(businessStr,"; ");
     strcat(businessStr,getState(bus));
+    strcat(businessStr,"; ");
     char **temp = getCategories(bus);
-    for (int i = 0; temp[i] != NULL; i++)
+    for (int i = 0; temp[i] != NULL; i++){
         strcat(businessStr, temp[i]);
+        strcat(businessStr," ");
+
+    }
     strcat(businessStr,"]");
 
     return businessStr;
@@ -296,14 +303,16 @@ BUSINESS addBusiness (BUSINESS bus, char info[]){
         if(isUpper(st[i]) != 1) return NULL;    // Verifica se são letras maiúsculas.
     strcpy(bus->state, st);
 
-    char* temp = strdup(strsep(&info, ";"));    // Guardará o conteúdo do array info até encontrar um ";"
+    char* temp = strdup(strsep(&info, "\n"));    // Guardará o conteúdo do array info até encontrar um ";"
     //printf("%s", temp);
     bus->categories=NULL;
-    for(int i = 0; temp != NULL; i++){
+    int i;
+    for( i = 0; temp != NULL; i++){
        bus->categories = realloc(bus->categories,sizeof(char*)*(i+1));
        bus->categories[i] = strdup(strsep(&temp, ","));  // Na primeira posição do array aux, será guardado a primeira categoria (separadas por ",").
     }
-    //printf("%s\n",businessToString(bus));
+    bus->categories[i] = NULL;
+    printf("%s\n",businessToString(bus));
     return bus;
 }
 
