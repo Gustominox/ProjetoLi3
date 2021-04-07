@@ -198,9 +198,14 @@ USER* transStrToUsers(char **info,int tmh,USER *users){
 
 
 char *userToString(USER user){
-
-    char *userStr[3] = {user->id, user->name, user->friends};
-    return *userStr;
+    char userStr[100000];
+    strcat(userStr,"User [");
+    strcat(userStr,getUserId(user));
+    strcat(userStr,getUserName(user));
+    strcat(userStr,getUserFriends(user));
+    strcat(userStr,"]");    
+    printf("%s\n", userStr);
+    return userStr;
 }
 
 char *reviewToString(REVIEW rev){
@@ -227,10 +232,18 @@ char *reviewToString(REVIEW rev){
 
 char *businessToString(BUSINESS bus){
 
-    char businessStr[100000];//{bus->business_id, bus->name, bus->city, bus->state, *bus->categories};
+    char businessStr[100000]; // {bus->business_id, bus->name, bus->city, bus->state, *bus->categories};
     strcat(businessStr,"Business [");
     strcat(businessStr,getBusId(bus));
+    strcat(businessStr,getName(bus));
+    strcat(businessStr,getCity(bus));
+    strcat(businessStr,getState(bus));
+    /*
+    for (int i = 0; i < ...; i++)
+        strcat(businessStr, getCategories(bus));
     strcat(businessStr,"]");
+    printf("%s\n", businessStr);
+    */
     return businessStr;
 }
 
