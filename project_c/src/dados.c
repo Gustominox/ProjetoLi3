@@ -140,6 +140,9 @@ char** lerFichCsv (char **info, int* tmh, char path[]){
 	    info[auxTmh] = strdup(buff); // malloc + strcpy.
 	    auxTmh++;
     }
+//	for (int j = 0; j < auxTmh; j++)
+//      		printf("%s", info[j]);	
+   
     *tmh = auxTmh;
     fclose (fp);
 	return info;
@@ -153,7 +156,10 @@ BUSINESS* transStrToBus(char **info,int tmh,BUSINESS *business){
         business[tmhBus] = addBusiness(business[tmhBus], info[i]);
         if(business[tmhBus] == NULL) tmhBus--;
         tmhBus++;
+        //printf("[%d]\n", i);
     }
+    
+    
     for (int j = 0; j < tmh; j++)
         free (info[j]);
 
@@ -221,8 +227,11 @@ char *reviewToString(REVIEW rev){
 
 char *businessToString(BUSINESS bus){
 
-    char *businessStr[5] = {bus->business_id, bus->name, bus->city, bus->state, *bus->categories};
-    return *businessStr;
+    char businessStr[100000];//{bus->business_id, bus->name, bus->city, bus->state, *bus->categories};
+    strcat(businessStr,"Business [");
+    strcat(businessStr,getBusId(bus));
+    strcat(businessStr,"]");
+    return businessStr;
 }
 
 USER addUser (USER user, char info[]){
@@ -259,12 +268,14 @@ BUSINESS addBusiness (BUSINESS bus, char info[]){
         if(isUpper(st[i]) != 1) return NULL;    // Verifica se são letras maiúsculas.
     strcpy(bus->state, st);
 
-    char** categ;                               // Guardará todas as strings referentes às categorias.
     char* temp = strdup(strsep(&info, ";"));    // Guardará o conteúdo do array info até encontrar um ";"
-    for(int i = 0; temp != NULL; i++)
-        categ[i] = strdup(strsep(&temp, ","));  // Na primeira posição do array aux, será guardado a primeira categoria (separadas por ",").
-    strcpy(*bus->categories, *categ);
-
+    //printf("%s", temp);
+    bus->categories=NULL;
+    for(int i = 0; temp != NULL; i++){
+       bus->categories = realloc(bus->categories,sizeof(char*)*(i+1));
+       bus->categories[i] = strdup(strsep(&temp, ","));  // Na primeira posição do array aux, será guardado a primeira categoria (separadas por ",").
+    }
+    //printf("%s\n",businessToString(bus));
     return bus;
 }
 

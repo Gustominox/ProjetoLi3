@@ -18,16 +18,14 @@ int main(){
 	char **info = NULL;
 	BUSINESS *business = NULL;
 	int tmh ;
-	info = lerFichCsv(info,&tmh,"business.csv");
-	for (int j = 0; j < tmh; j++)
-      		printf("%s", info[j]);	
+	info = lerFichCsv(info,&tmh,"input/business_full.csv");
 	business = transStrToBus(info,tmh,business);
-	/*
-	for (int j = 0; j < tmh; j++)
-      		printf("%s", business[j]->business_id);	
+	
+
 	for (int j = 0; j < tmh; j++)
       		free (business[j]);
-*/
+
 return 0;
 
 }
+
