@@ -228,8 +228,21 @@ char *reviewToString(REVIEW rev){
     char coolToStr[3];
     sprintf(coolToStr, "%d", cool);
 
-    char *reviewStr[9] = {rev->review_id, rev->user_id, rev->business_id, starsToStr, usefulToStr, funnyToStr, coolToStr, rev->date, rev->text};
-    return *reviewStr;
+    //char *reviewStr[9] = {rev->review_id, rev->user_id, rev->business_id, starsToStr, usefulToStr, funnyToStr, coolToStr, rev->date, rev->text};
+    char *reviewStr =  malloc(sizeof(char)*1000);
+    strcat(reviewStr,"Review [");
+    strcat(reviewStr,getReviewId(rev));
+    strcat(reviewStr,getReviewUser(rev));
+    strcat(reviewStr,getReviewBus(rev));
+    strcat(reviewStr,starsToStr);
+    strcat(reviewStr,usefulToStr);
+    strcat(reviewStr,funnyToStr);
+    strcat(reviewStr,coolToStr);
+    strcat(reviewStr,getReviewDate(rev));
+    strcat(reviewStr,getReviewText(rev));
+    strcat(reviewStr,"]");
+    
+    return reviewStr;
 }
 
 char *businessToString(BUSINESS bus){
