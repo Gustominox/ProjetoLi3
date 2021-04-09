@@ -83,28 +83,40 @@ void setReviewBus(REVIEW review, char newBus[]){
 }
 
 float getReviewStars (REVIEW review){
-    return strdup(review->stars);
+    float stars = review->stars;
+    char starsToStr[5];
+    sprintf(starsToStr, "%g", stars);
+    return strdup(starsToStr);
 }
 void setReviewStars(REVIEW review, float newStars){
     review->stars = newStars;
 }
 
 int getReviewUseful (REVIEW review){
-    return strdup(review->useful);
+    int useful = review->useful;
+    char usefulToStr[5];
+    sprintf(usefulToStr, "%g", useful);
+    return strdup(usefulToStr);
 }
 void setReviewUseful(REVIEW review, int newUseful){
     review->useful = newUseful;
 }
 
 int getReviewFunny (REVIEW review){
-    return strdup(review->funny);
+    int funny = review->funny;
+    char funnyToStr[5];
+    sprintf(funnyToStr, "%g", funny);
+    return strdup(funnyToStr);
 }
 void setReviewFunny(REVIEW review, int newFunny){
     review->funny = newFunny;
 }
 
 int getReviewCool (REVIEW review){
-    return strdup(review->cool);
+    int cool = review->cool;
+    char coolToStr[5];
+    sprintf(coolToStr, "%g", cool);
+    return strdup(coolToStr);
 }
 void setReviewCool(REVIEW review, int newCool){
     review->cool = newCool;
