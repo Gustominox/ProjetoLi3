@@ -6,35 +6,35 @@
 
 
 char *getBusId(BUSINESS bus){
-  return bus->business_id;
+  return strdup(bus->business_id);
 }
 void setBusId(BUSINESS bus, char newId[]){
   strcpy(bus->business_id,newId);
 }
 
 char *getName(BUSINESS bus){
-  return bus->name;
+  return strdup(bus->name);
 }
 void setName(BUSINESS bus, char newName[]){
   strcpy(bus->name,newName);
 }
 
 char *getCity(BUSINESS bus){
-  return bus->city;
+  return strdup(bus->city);
 }
 void setCity(BUSINESS bus, char newCity[]){
   strcpy(bus->city,newCity);
 }
 
 char* getState(BUSINESS bus){
-  return bus->state;
+  return strdup(bus->state);
 }
 void setState(BUSINESS bus, char newState[]){
   bus->state = newState;
 }
 
 char** getCategories(BUSINESS bus){
-  return bus->categories;
+  return strdup(bus->categories);
 }
 void setCategories(BUSINESS bus, char** newCategories){
   bus->categories = newCategories;
