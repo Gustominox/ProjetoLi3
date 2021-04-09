@@ -41,21 +41,21 @@ void setCategories(BUSINESS bus, char** newCategories){
 }
 
 char *getUserId (USER user){
-    return user->id;
+    return strdup(user->id);
 }
 void setUserId(USER user, char newId[]){
     strcpy (user->id, newId);
 }
 
 char *getUserName (USER user){
-    return user->name;
+    return strdup(user->name);
 }
 void setUserName(USER user, char newName[]){
     strcpy (user->name, newName);
 }
 
 char *getUserFriends (USER user){
-    return user->friends;
+    return strdup(user->friends);
 }
 void setUserFriends(USER user, char newFriends[]){
     strcpy (user->friends, newFriends);
