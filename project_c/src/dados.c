@@ -34,13 +34,14 @@ void setState(BUSINESS bus, char newState[]){
 }
 
 char** getCategories(BUSINESS bus){
-    char** categories = NULL;
+    char** categ = NULL;
     int i;
     for( i = 0; bus->categories[i] != NULL; i++){
-       categories = realloc(categories,sizeof(char*)*(i+1));
-       categories[i] = strdup(bus->categories[i]);
+       categ = realloc(categ,sizeof(char*)*(i+1));
+       categ[i] = strdup(bus->categories[i]);
     }
-  return categories;
+    categ[i] = NULL;
+  return categ;
 }
 void setCategories(BUSINESS bus, char** newCategories){
   bus->categories = newCategories;
@@ -143,78 +144,6 @@ void setReviewText(REVIEW review, char newText[]){
 }
 
 
-char** lerFichCsv (char **info, int* tmh, char path[]){
-    
-    FILE *fp = fopen(path, "r");
-    if (fp == NULL){
-        printf ("Error opening file\n");
-        return NULL;
-    }
-    int auxTmh = *tmh;
-    auxTmh = 0;
-    char buff[1024];
-    while(fgets(buff,1024,fp)){
-        info = realloc(info, sizeof(char*)*(auxTmh+1));
-	    info[auxTmh] = strdup(buff); // malloc + strcpy.
-	    auxTmh++;
-    }
-//	for (int j = 0; j < auxTmh; j++)
-//      		printf("%s", info[j]);	
-   
-    *tmh = auxTmh;
-    fclose (fp);
-	return info;
-} 
-
-BUSINESS* transStrToBus(char **info,int tmh,BUSINESS *business){
-
-    business = realloc(business,sizeof(struct business*)*(tmh));
-    int tmhBus = 0;
-    for (int i = 0; info[i]; i++){
-        business[tmhBus] = addBusiness(business[tmhBus], info[i]);
-        if(business[tmhBus] == NULL) tmhBus--;
-        tmhBus++;
-        //printf("[%d]\n", i);
-    }
-    
-    
-    for (int j = 0; j < tmh; j++)
-        free (info[j]);
-
-    return business; 
-}
-
-
-REVIEW* transStrToRev(char **info,int tmh,REVIEW *review){
-    review = realloc(review,sizeof(struct review*)*(tmh));
-    int tmhRev = 0;
-    for (int i = 0; info[i]; i++){
-        review[tmhRev] = addReview(review[tmhRev], info[i]);
-        if(review[tmhRev] == NULL) tmhRev--;
-        tmhRev++;
-    }
-    for (int j = 0; j < tmh; j++)
-        free (info[j]);
-
-    return review;
-}
-
-
-USER* transStrToUsers(char **info,int tmh,USER *users){
-    users = realloc(users,sizeof(struct user*)*(tmh));
-    int tmhUser = 0;
-    for (int i = 0; info[i]; i++){
-        users[tmhUser] = addUser(users[tmhUser], info[i]);
-        if(users[tmhUser] == NULL) tmhUser--;
-        tmhUser++;
-    }
-    for (int j = 0; j < tmh; j++)
-        free (info[j]);
-
-    return users;
-}
-
-
 char *userToString(USER user){
 
     char *userStr = malloc(sizeof(char)*1000);
@@ -232,7 +161,7 @@ char *reviewToString(REVIEW rev){
 
     float stars = getReviewStars(rev);
     char starsToStr[5];
-    sprintf(starsToStr, "%g", stars);
+    sprintf(starsToStr, "%f", stars);
 
     int useful = getReviewUseful(rev);
     char usefulToStr[3];
@@ -287,6 +216,79 @@ char *businessToString(BUSINESS bus){
     return businessStr;
 }
 
+
+char** lerFichCsv (char **info, int* tmh, char path[]){
+    
+    FILE *fp = fopen(path, "r");
+    if (fp == NULL){
+        printf ("Error opening file\n");
+        return NULL;
+    }
+    int auxTmh = *tmh;
+    auxTmh = 0;
+    char buff[1024];
+    while(fgets(buff,1024,fp)){
+        info = realloc(info, sizeof(char*)*(auxTmh+1));
+	    info[auxTmh] = strdup(buff); // malloc + strcpy.
+	    auxTmh++;
+    }
+//	for (int j = 0; j < auxTmh; j++)
+//      		printf("%s", info[j]);	
+   
+    *tmh = auxTmh;
+    fclose (fp);
+	return info;
+} 
+
+BUSINESS* transStrToBus(char **info,int tmh,BUSINESS *business){
+
+    business = realloc(business,sizeof(struct business*)*(tmh));
+    int tmhBus = 0;
+    for (int i = 0; info[i]; i++){
+        business[tmhBus] = addBusiness(business[tmhBus], info[i]);
+        if(business[tmhBus] == NULL) tmhBus--;
+        tmhBus++;
+        printf("[%d]\n", i);
+    }
+    
+    
+    for (int j = 0; j < tmh; j++)
+        free (info[j]);
+
+    return business; 
+}
+
+
+REVIEW* transStrToRev(char **info,int tmh,REVIEW *review){
+    review = realloc(review,sizeof(struct review*)*(tmh));
+    int tmhRev = 0;
+    for (int i = 0; info[i]; i++){
+        review[tmhRev] = addReview(review[tmhRev], info[i]);
+        if(review[tmhRev] == NULL) tmhRev--;
+        tmhRev++;
+    }
+    for (int j = 0; j < tmh; j++)
+        free (info[j]);
+
+    return review;
+}
+
+
+USER* transStrToUsers(char **info,int tmh,USER *users){
+    users = realloc(users,sizeof(struct user*)*(tmh));
+    int tmhUser = 0;
+    for (int i = 0; info[i]; i++){
+        users[tmhUser] = addUser(users[tmhUser], info[i]);
+        if(users[tmhUser] == NULL) tmhUser--;
+        tmhUser++;
+    }
+    for (int j = 0; j < tmh; j++)
+        free (info[j]);
+
+    return users;
+}
+
+
 USER addUser (USER user, char info[]){
 
     user = malloc(sizeof(struct user));
@@ -298,7 +300,7 @@ USER addUser (USER user, char info[]){
     if(strlen(getUserName(user)) == 0) return NULL;
     
     user->friends = strdup(strsep(&info,";"));
-
+    printf("%s\n", user->friends);
     return user;
 }
 
@@ -319,6 +321,7 @@ BUSINESS addBusiness (BUSINESS bus, char info[]){
     if(strlen(st) != 2) return NULL;            // Verifica, então, se são apenas dois.
     for(int i = 0; i < 2; i++)                  
         if(isUpper(st[i]) != 1) return NULL;    // Verifica se são letras maiúsculas.
+    printf("%s\n",st);
     strcpy(bus->state, st);
 
     char* temp = strdup(strsep(&info, "\n"));    // Guardará o conteúdo do array info até encontrar um ";"
