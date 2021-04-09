@@ -62,63 +62,63 @@ void setUserFriends(USER user, char newFriends[]){
 }
 
 char *getReviewId (REVIEW review){
-    return review->review_id;
+    return strdup(review->review_id);
 }
 void setReviewId(REVIEW review, char newId[]){
     strcpy (review->review_id, newId);
 }
 
 char *getReviewUser (REVIEW review){
-    return review->user_id;
+    return strdup(review->user_id);
 }
 void setReviewUser(REVIEW review, char newUser[]){
     strcpy (review->user_id, newUser);
 }
 
 char *getReviewBus (REVIEW review){
-    return review->business_id;
+    return strdup(review->business_id);
 }
 void setReviewBus(REVIEW review, char newBus[]){
     strcpy (review->business_id, newBus);
 }
 
 float getReviewStars (REVIEW review){
-    return review->stars;
+    return strdup(review->stars);
 }
 void setReviewStars(REVIEW review, float newStars){
     review->stars = newStars;
 }
 
 int getReviewUseful (REVIEW review){
-    return review->useful;
+    return strdup(review->useful);
 }
 void setReviewUseful(REVIEW review, int newUseful){
     review->useful = newUseful;
 }
 
 int getReviewFunny (REVIEW review){
-    return review->funny;
+    return strdup(review->funny);
 }
 void setReviewFunny(REVIEW review, int newFunny){
     review->funny = newFunny;
 }
 
 int getReviewCool (REVIEW review){
-    return review->cool;
+    return strdup(review->cool);
 }
 void setReviewCool(REVIEW review, int newCool){
     review->cool = newCool;
 }
 
 char *getReviewDate (REVIEW review){
-    return review->date;
+    return strdup(review->date);
 }
 void setReviewDate(REVIEW review, char newDate[]){
     strcpy (review->date, newDate);
 }
 
 char *getReviewText (REVIEW review){
-    return review->text;
+    return strdup(review->text);
 }
 void setReviewText(REVIEW review, char newText[]){
     strcpy (review->text, newText);
