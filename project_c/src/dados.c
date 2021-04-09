@@ -34,7 +34,13 @@ void setState(BUSINESS bus, char newState[]){
 }
 
 char** getCategories(BUSINESS bus){
-  return strdup(bus->categories);
+    char** categories = NULL;
+    int i;
+    for( i = 0; bus->categories[i] != NULL; i++){
+       categories = realloc(categories,sizeof(char*)*(i+1));
+       categories[i] = strdup(bus->categories[i]);
+    }
+  return categories;
 }
 void setCategories(BUSINESS bus, char** newCategories){
   bus->categories = newCategories;
@@ -86,7 +92,7 @@ float getReviewStars (REVIEW review){
     float stars = review->stars;
     char starsToStr[5];
     sprintf(starsToStr, "%g", stars);
-    return strdup(starsToStr);
+    return atof(strdup(starsToStr));
 }
 void setReviewStars(REVIEW review, float newStars){
     review->stars = newStars;
@@ -95,8 +101,8 @@ void setReviewStars(REVIEW review, float newStars){
 int getReviewUseful (REVIEW review){
     int useful = review->useful;
     char usefulToStr[5];
-    sprintf(usefulToStr, "%g", useful);
-    return strdup(usefulToStr);
+    sprintf(usefulToStr, "%d", useful);
+    return atoi(strdup(usefulToStr));
 }
 void setReviewUseful(REVIEW review, int newUseful){
     review->useful = newUseful;
@@ -105,8 +111,8 @@ void setReviewUseful(REVIEW review, int newUseful){
 int getReviewFunny (REVIEW review){
     int funny = review->funny;
     char funnyToStr[5];
-    sprintf(funnyToStr, "%g", funny);
-    return strdup(funnyToStr);
+    sprintf(funnyToStr, "%d", funny);
+    return atoi(strdup(funnyToStr));
 }
 void setReviewFunny(REVIEW review, int newFunny){
     review->funny = newFunny;
@@ -115,8 +121,8 @@ void setReviewFunny(REVIEW review, int newFunny){
 int getReviewCool (REVIEW review){
     int cool = review->cool;
     char coolToStr[5];
-    sprintf(coolToStr, "%g", cool);
-    return strdup(coolToStr);
+    sprintf(coolToStr, "%d", cool);
+    return atoi(strdup(coolToStr));
 }
 void setReviewCool(REVIEW review, int newCool){
     review->cool = newCool;
