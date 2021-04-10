@@ -326,7 +326,7 @@ char** lerFichCsv (char **info, int* tmh, char path[]);
 * @param business é o array onde será guardado o conteúdo do ficheiro, mas convertido para structs do tipo BUSINESS
 * @return array que guarda o conteúdo do ficheiro lido, convertido para structs do tipo BUSINESS
 */
-BUSINESS* transStrToBus(char **info,int tmh, BUSINESS *business);
+BUSINESS* transStrToBus(char **info,int *tmh, BUSINESS *business);
 
 
 /**
@@ -389,7 +389,7 @@ USER addUser (USER user, char info[]);
 * @param bus é o array que guarda o conteúdo do ficheiro, convertido para structs do tipo BUSINESS
 * @param info é o array que guarda o conteúdo do ficheiro lido
 */
-BUSINESS addBusiness (BUSINESS bus, char info[]);
+BUSINESS addBusiness ( char info[]);
 
 
 /**

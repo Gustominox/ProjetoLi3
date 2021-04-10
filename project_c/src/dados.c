@@ -194,7 +194,7 @@ char *reviewToString(REVIEW rev){
 
 char *businessToString(BUSINESS bus){
 
-    char *businessStr = malloc(sizeof(char)*1000);
+    char *businessStr = malloc(sizeof(char)*1024);
     // {bus->business_id, bus->name, bus->city, bus->state, *bus->categories};
     strcat(businessStr,"Business [");
     strcat(businessStr,getBusId(bus));
@@ -224,7 +224,7 @@ char** lerFichCsv (char **info, int* tmh, char path[]){
         printf ("Error opening file\n");
         return NULL;
     }
-    int auxTmh = *tmh;
+    int auxTmh;
     auxTmh = 0;
     char buff[1024];
     while(fgets(buff,1024,fp)){
@@ -240,44 +240,49 @@ char** lerFichCsv (char **info, int* tmh, char path[]){
 	return info;
 } 
 
-BUSINESS* transStrToBus(char **info,int tmh,BUSINESS *business){
+BUSINESS* transStrToBus(char **info,int *tmh,BUSINESS *business){
 
-    business = realloc(business,sizeof(struct business*)*(tmh));
     int tmhBus = 0;
     for (int i = 0; info[i]; i++){
-        business[tmhBus] = addBusiness(business[tmhBus], info[i]);
-        if(business[tmhBus] == NULL) tmhBus--;
+        business = realloc(business,sizeof(BUSINESS)*(tmhBus+1));
+        business[tmhBus] = addBusiness( info[i]);
+        if(business[tmhBus] == NULL) {
+            free(business[tmhBus]);
+            tmhBus--; 
+        }
         tmhBus++;
-        printf("[%d]\n", i);
+        printf("[%d]\n", tmhBus);
+        printf("%s\n",businessToString(business[tmhBus-1]));
+
     }
     
-    
-    for (int j = 0; j < tmh; j++)
+    for (int j = 0; j < *tmh; j++)
         free (info[j]);
 
+    *tmh = tmhBus;
     return business; 
 }
 
-BUSINESS addBusiness (BUSINESS bus, char info[]){
+BUSINESS addBusiness ( char info[]){
 
-    bus = malloc(sizeof(struct business));
+    BUSINESS bus = malloc(sizeof(BUSINESS));
     
     bus->business_id = strdup(strsep(&info,";"));
-	if(strlen(getBusId(bus)) != 22) return NULL;
+	//if(strlen(getBusId(bus)) != 22) return NULL;
     
     bus->name = strdup(strsep(&info, ";"));
-    if(strlen(getName(bus)) == 0) return NULL;
+    //if(strlen(getName(bus)) == 0) return NULL;
     
     bus->city = strdup(strsep(&info, ";"));
-    if(strlen(getCity(bus)) == 0) return NULL;
+    //if(strlen(getCity(bus)) == 0) return NULL;
 
-    printf("%s\n",getCity(bus));
+    //printf("%s\n",getCity(bus));
      
     bus->state = strdup(strsep(&info, ";"));      // O state é um código de DUAS letras MAIÚSCULAS.
-    if(strlen(getState(bus)) != 2) return NULL;            // Verifica, então, se são apenas dois.
-    for(int i = 0; i < 2; i++)                  
-        if(isUpper(bus->state[i]) != 1) return NULL;    // Verifica se são letras maiúsculas.
-    printf("%s\n",getState(bus));
+    //if(strlen(getState(bus)) != 2) return NULL;            // Verifica, então, se são apenas dois.
+    //for(int i = 0; i < 2; i++)                  
+    //    if(isUpper(bus->state[i]) != 1) return NULL;    // Verifica se são letras maiúsculas.
+    //printf("%s\n",getState(bus));
 
     char* temp = strdup(strsep(&info, "\n"));    // Guardará o conteúdo do array info até encontrar um ";"
     bus->categories=NULL;
@@ -287,7 +292,7 @@ BUSINESS addBusiness (BUSINESS bus, char info[]){
        bus->categories[i] = strdup(strsep(&temp, ","));  // Na primeira posição do array aux, será guardado a primeira categoria (separadas por ",").
     }
     bus->categories[i] = NULL;
-    //printf("%s\n",businessToString(bus));
+    printf("%s\n",businessToString(bus));
     return bus;
 }
 
