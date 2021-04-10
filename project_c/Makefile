@@ -4,6 +4,7 @@
 # estamos todos a beber da mesma fonte
 
 CC    	= gcc
+PKG = `pkg-config --cflags --libs glib-2.0`
 BLD_DIR = build
 SRC_DIR = src
 INC_DIR = includes
@@ -16,10 +17,10 @@ vpath %.c $(SRC_DIR)
 .DEFAULT_GOAL = build
 
 $(BLD_DIR)/%.o: %.c
-	$(CC) -g -c -I $(INC_DIR) $^ -o $@
+	$(CC) -g -c -I $(INC_DIR) $(PKG) $^ -o $@
 
 $(PROG): $(OBJS)
-	$(CC) -g -I $(INC_DIR) $^ -o $@
+	$(CC) -g -I $(INC_DIR) $^ $(PKG) -o $@
 
 setup:
 	@mkdir -p $(BLD_DIR)
