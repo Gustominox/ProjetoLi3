@@ -36,7 +36,7 @@ int interpretador(SGR sgr){
     if(fgets(linha, BUF_SIZE, stdin) == NULL)
         return ERRO_IO;
 
-    swicth(linha){
+    switch(linha){
 
         case (strcmp(strsep(&linha, ";"),"query2")==0):
             printf("Qual e a letra com que comeca o nome do negocio?");
