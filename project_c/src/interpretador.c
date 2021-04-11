@@ -2,9 +2,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include "interpretador.h"
+#include "sgr.h"
 
 #define ERRO_IO 1;
 #define COMANDO_INEXISTENTE 2;
+#define BUFSIZE 1024;
 
 /**void show(TABLE table){
     int colunas, linhas;
@@ -23,59 +25,58 @@ void show(TABLE x){
 }*/
 
 int interpretador(SGR sgr){
-    char linha[BUF_SIZE];
-    char col[2], lin[2];
-    char cmdname[BUF_SIZE];
-    char filename[BUF_SIZE];
+    char linha[BUFSIZE];
+    // char col[2], lin[2];
+    // char cmdname[BUF_SIZE];
+    // char filename[BUF_SIZE];
     char letter;
     TABLE x;
-    SINAL s = OK;
+    // SINAL s = OK;
 
     if(fgets(linha, BUF_SIZE, stdin) == NULL)
         return ERRO_IO;
-    
+
     swicth(linha){
-        
-        case (strcmp(linha,"query2")==0):
+
+        case (strcmp(strsep(&linha, ";"),"query2")==0):
             printf("Qual e a letra com que comeca o nome do negocio?");
             scanf("%c", &letter);
             x = businesses_started_by_letter(sgr, letter);
-            //break;
+            // break;
 
-        case (strcmp(linha,"query3")==0):
+        case (strcmp(strsep(&linha, ";"),"query3")==0):
             x = business_info(sgr, business_id);
-            //break;
+            // break;
         
-        case (strcmp(linha,"query4")==0):
+        case (strcmp(strsep(&linha, ";"),"query4")==0):
             x = businesses_reviewed(sgr, user_id);
-            //break;
+            // break;
                
-        case (strcmp(linha,"query5")==0):           
+        case (strcmp(strsep(&linha, ";"),"query5")==0):           
             x = businesses_with_stars_and_city(sgr, stars, city);
-            //break;
+            // break;
         
-        case (strcmp(linha,"query6")==0):
+        case (strcmp(strsep(&linha, ";"),"query6")==0):
             x = top_businesses_by_city(sgr, top);
-            //break;  
+            // break;  
         
-        case (strcmp(linha,"query7")==0):
+        case (strcmp(strsep(&linha, ";"),"query7")==0):
             x = international_users(sgr);
-            //break;
+            // break;
         
-        case (strcmp(linha,"query8")==0):   
+        case (strcmp(strsep(&linha, ";"),"query8")==0):   
             x = top_businesses_with_category(sgr, top, categorie);
-            //break;
+            // break;
         
-        case (strcmp(linha,"query9")==0):
+        case (strcmp(strsep(&linha, ";"),"query9")==0):
             x = reviews_with_word(sgr, top, word);
-            //break;
+            // break;
         
         case "quit":
             exit(0);
 
         default:    
-          s = COMANDO_INEXISTENTE;
+          // s = COMANDO_INEXISTENTE;
           printf("comando inexistente");
-
     }
 }
