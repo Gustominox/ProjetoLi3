@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include "dados.h"
-#include <glib.h>
+#include <glib-2.0/glib.h>
 #include <stdio.h>
 
 
@@ -19,13 +19,13 @@ int main(int argc, char *argv[]) {
     GHashTable* hash = g_hash_table_new(g_str_hash, g_str_equal);
 	BUSINESS bus = addBusiness(info[0]);
 
-    g_hash_table_insert(hash,getBusId(bus),bus);
+    g_hash_table_insert(hash,"gusto",bus);
     g_hash_table_insert(hash,"Mr Darcy","Treats");
 
     printf("There are %d keys in the hash table\n",
         g_hash_table_size(hash));
 
-    printf("Jazzy likes %s\n",businessToString( g_hash_table_lookup(hash,getBusId(bus) )));
+    printf("Jazzy likes %s\n",businessToString( g_hash_table_lookup(hash,"gusto" )));
 
 	//for (int j = 0; j < tmh; j++)
     // 		free (business[j]);

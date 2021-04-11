@@ -4,9 +4,9 @@
 #include "interpretador.h"
 #include "sgr.h"
 
-#define ERRO_IO 1;
-#define COMANDO_INEXISTENTE 2;
-#define BUFSIZE 1024;
+#define ERRO_IO 1
+#define COMANDO_INEXISTENTE 2
+#define BUF_SIZE 1024
 
 /**void show(TABLE table){
     int colunas, linhas;
@@ -23,9 +23,9 @@ void show(TABLE x){
     int i = 0;
     while(i < tsize)
 }*/
-
+/*
 int interpretador(SGR sgr){
-    char linha[BUFSIZE];
+    char linha[BUF_SIZE];
     // char col[2], lin[2];
     // char cmdname[BUF_SIZE];
     // char filename[BUF_SIZE];
@@ -80,3 +80,4 @@ int interpretador(SGR sgr){
           printf("comando inexistente");
     }
 }
+*/

@@ -6,5 +6,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
+#include <sgr.h>
+#include <glib-2.0/glib.h>
 int interpretador(SGR sgr);
