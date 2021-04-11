@@ -1,3 +1,20 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <glib.h>
+
+/*!
+* @typedef _GHashTable
+*/
+typedef _GHashTable *TABLE;
+
+/*!
+* @typedef sgr
+*
+* @field   user        Utilizador
+* @field   business    Negócio
+* @field   review      Review
+*/
 typedef struct sgr *SGR;
 
 SGR init_sgr();
