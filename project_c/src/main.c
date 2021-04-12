@@ -7,29 +7,25 @@
 int main(int argc, char *argv[]) {
 
 	char **info = NULL;
-	BUSINESS *business = NULL;
-	//USER *user = NULL;
+
+	
 	int tmh ;
-//	info = lerFichCsv(info,&tmh,"input/users_full.csv");
-//	user = transStrToUsers(info,tmh,user);
+
+
 	
 	info = lerFichCsv(info,&tmh,"input/business_full.csv");
-	//business = transStrToBus(info,&tmh,business);
+	
 
     GHashTable* hash = g_hash_table_new(g_str_hash, g_str_equal);
-	BUSINESS bus = addBusiness(info[0]);
-
-    g_hash_table_insert(hash,"gusto",bus);
-    g_hash_table_insert(hash,"Mr Darcy","Treats");
+	transStrToTable(info,hash,addBusiness);
 
     printf("There are %d keys in the hash table\n",
         g_hash_table_size(hash));
 
-    printf("Jazzy likes %s\n",businessToString( g_hash_table_lookup(hash,"gusto" )));
+    printf("BUSID: %s\n", getBusId( g_hash_table_lookup(hash,"rYs_1pNB_RMtn5WQh55QDA" )));
+    printf("STATE: %s\n",getState( g_hash_table_lookup(hash,"hCABMnKtwo4Y9alQDxh2kw" )));
 
-	//for (int j = 0; j < tmh; j++)
-    // 		free (business[j]);
-    g_hash_table_destroy(hash);
+	g_hash_table_destroy(hash);
     return 0;
 }
 /*

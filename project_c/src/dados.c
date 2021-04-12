@@ -240,6 +240,24 @@ char** lerFichCsv (char **info, int* tmh, char path[]){
 	return info;
 } 
 
+void transStrToTable(char **info, TABLE hash, void* (*funcao) (char info[]) ){
+
+    for (int i = 0; info[i]; i++){
+	    char *id = strdup(info[i]);
+        strcpy(id, strsep(&id,";"));
+
+        void* obj = funcao(info[i]);
+        if(obj){
+            g_hash_table_insert(hash,id,obj);
+        }else{
+            free(obj);            
+        }
+
+        //free(id);
+    }
+
+}
+/*
 BUSINESS* transStrToBus(char **info,int *tmh,BUSINESS *business){
 
     int tmhBus = 0;
@@ -262,28 +280,26 @@ BUSINESS* transStrToBus(char **info,int *tmh,BUSINESS *business){
     *tmh = tmhBus;
     return business; 
 }
-
+*/
 BUSINESS addBusiness ( char info[]){
 
     BUSINESS bus = malloc(sizeof(BUSINESS));
     
     bus->business_id = strdup(strsep(&info,";"));
-	//if(strlen(getBusId(bus)) != 22) return NULL;
+	if(strlen(getBusId(bus)) != 22) return NULL;
     
     bus->name = strdup(strsep(&info, ";"));
-    //if(strlen(getName(bus)) == 0) return NULL;
+    if(strlen(getName(bus)) == 0) return NULL;
     
     bus->city = strdup(strsep(&info, ";"));
-    //if(strlen(getCity(bus)) == 0) return NULL;
+    if(strlen(getCity(bus)) == 0) return NULL;
 
-    //printf("%s\n",getCity(bus));
      
     bus->state = strdup(strsep(&info, ";"));      // O state é um código de DUAS letras MAIÚSCULAS.
-    //if(strlen(getState(bus)) != 2) return NULL;            // Verifica, então, se são apenas dois.
-    //for(int i = 0; i < 2; i++)                  
-    //    if(isUpper(bus->state[i]) != 1) return NULL;    // Verifica se são letras maiúsculas.
-    //printf("%s\n",getState(bus));
-
+    if(strlen(getState(bus)) != 2) return NULL;            // Verifica, então, se são apenas dois.
+    for(int i = 0; i < 2; i++)                  
+        if(isUpper(bus->state[i]) != 1) return NULL;    // Verifica se são letras maiúsculas.
+/*
     char* temp = strdup(strsep(&info, "\n"));    // Guardará o conteúdo do array info até encontrar um ";"
     bus->categories=NULL;
     int i;
@@ -292,7 +308,8 @@ BUSINESS addBusiness ( char info[]){
        bus->categories[i] = strdup(strsep(&temp, ","));  // Na primeira posição do array aux, será guardado a primeira categoria (separadas por ",").
     }
     bus->categories[i] = NULL;
-    printf("%s\n",businessToString(bus));
+    */
+    printf("%s\n",getBusId(bus));
     return bus;
 }
 

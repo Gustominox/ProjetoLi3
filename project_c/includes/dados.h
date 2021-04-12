@@ -5,6 +5,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <glib-2.0/glib.h>
+#include "sgr.h"
 
 /***************************************************** Estruturas de dados *****************************************************/
 
@@ -389,7 +391,7 @@ USER addUser (USER user, char info[]);
 * @param bus é o array que guarda o conteúdo do ficheiro, convertido para structs do tipo BUSINESS
 * @param info é o array que guarda o conteúdo do ficheiro lido
 */
-BUSINESS addBusiness ( char info[]);
+BUSINESS addBusiness (char info[]);
 
 
 /**
@@ -399,3 +401,6 @@ BUSINESS addBusiness ( char info[]);
 * @param info é o array que guarda o conteúdo do ficheiro lido
 */
 REVIEW addReview (REVIEW rev, char info[]);
+
+
+void transStrToTable(char **info,TABLE hash,void* (*funcao) (char info[]));
