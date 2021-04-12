@@ -312,7 +312,7 @@ BUSINESS addBusiness ( char info[]){
     printf("%s\n",getBusId(bus));
     return bus;
 }
-
+/*
 REVIEW* transStrToRev(char **info,int tmh,REVIEW *review){
     review = realloc(review,sizeof(struct review*)*(tmh));
     int tmhRev = 0;
@@ -343,7 +343,7 @@ USER* transStrToUsers(char **info,int tmh,USER *users){
     return users;
 }
 
-
+*/
 USER addUser (USER user, char info[]){
 
     user = malloc(sizeof(struct user));
