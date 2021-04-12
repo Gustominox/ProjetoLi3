@@ -91,4 +91,8 @@ int interpretador(SGR sgr){
         }
         k++;
     }
+    
+    int j;
+    for (j = 0; j < tmh; j++)
+        free (temp[j]);
 }
