@@ -295,12 +295,12 @@ BUSINESS addBusiness ( char info[]){
     if(strlen(getCity(bus)) == 0) return NULL;
 
      
-    bus->state = strdup(strsep(&info, ";"));      // O state é um código de DUAS letras MAIÚSCULAS.
-    if(strlen(getState(bus)) != 2) return NULL;            // Verifica, então, se são apenas dois.
+    bus->state = strdup(strsep(&info, ";"));     
+    if(strlen(getState(bus)) != 2) return NULL;           
     for(int i = 0; i < 2; i++)                  
-        if(isUpper(bus->state[i]) != 1) return NULL;    // Verifica se são letras maiúsculas.
+        if(isUpper(bus->state[i]) != 1) return NULL;   
 /*
-    char* temp = strdup(strsep(&info, "\n"));    // Guardará o conteúdo do array info até encontrar um ";"
+    char* temp = strdup(strsep(&info, "\n"));   
     bus->categories=NULL;
     int i;
     for( i = 0; temp != NULL; i++){
@@ -377,10 +377,10 @@ REVIEW addReview (REVIEW rev, char info[]){
     if(getReviewStars(rev) > 5.0 && getReviewStars(rev) <= 0.0) return NULL;
 	
     char* strUseful = strdup(strsep(&info, ";"));
-    for (int i = 0; i < strlen(strUseful); i++)               // Este ciclo vai verificar se a string que recebe do ficheiro são
-        if (isDigit(strUseful[i]) != 1) return NULL;          // efetivamente dígitos. Se forem letras, os dados são inválidos.
-    rev->useful = atoi(strUseful);                            // Testamos assim se, quando a atoi retorna 0, houve algum erro de conversão ou se é mesmo 0.
-    if(getReviewUseful(rev) < 0) return NULL;                 // Se for um valor negativo, é inválido.
+    for (int i = 0; i < strlen(strUseful); i++)              
+        if (isDigit(strUseful[i]) != 1) return NULL;          
+    rev->useful = atoi(strUseful);                           
+    if(getReviewUseful(rev) < 0) return NULL;                
     
     char* strFunny = strdup(strsep(&info, ";"));
     for (int i = 0; i < strlen(strFunny); i++)                           
