@@ -63,7 +63,8 @@ int interpretador(SGR sgr){
     if(fgets(linha, BUF_SIZE, stdin) == NULL)
         return ERRO_IO;
 
-    for(int i = 0; linha != NULL; i++){
+    int i;
+    for(i = 0; linha != NULL; i++){
         temp = realloc(temp,sizeof(char*)*(i+1));
         temp[i] = strsep(&temp, ";");
     }
@@ -117,8 +118,7 @@ int interpretador(SGR sgr){
         k++;
     }
     
-    int j;
-    for (j = 0; j < tmh; j++)
+    for (int j = 0; j < tmh; j++)
         free (temp[j]);
 }
 */
