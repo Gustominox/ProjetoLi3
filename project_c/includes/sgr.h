@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
- #include <glib.h>
+#include <glib.h>
 // #include <glib-2.0/glib.h>
 
 /*!
@@ -16,7 +16,11 @@ typedef GHashTable *TABLE;
 * @field   business    Negócio
 * @field   review      Review
 */
-typedef struct sgr *SGR;
+typedef struct sgr{
+	TABLE business;
+	TABLE review;
+	TABLE user;
+} *SGR;
 
 SGR init_sgr();
 

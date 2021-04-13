@@ -240,50 +240,27 @@ char** lerFichCsv (char **info, int* tmh, char path[]){
 	return info;
 } 
 
-void transStrToTable(char **info, TABLE hash, void* (*funcao) (char info[]) ){
+void transStrToTable(char **info, GHashTable* hash, void* (*funcao) (char info[]) ){
 
     for (int i = 0; info[i]; i++){
-	    char *id = strdup(info[i]);
-        strcpy(id, strsep(&id,";"));
-
+	    char *temp = strdup(info[i]);
+        char *id =  strdup (strsep(&temp,";"));
+        free(temp);
         void* obj = funcao(info[i]);
         if(obj){
             g_hash_table_insert(hash,id,obj);
         }else{
             free(obj);            
         }
-
+        //free(temp);
         //free(id);
     }
 
 }
-/*
-BUSINESS* transStrToBus(char **info,int *tmh,BUSINESS *business){
 
-    int tmhBus = 0;
-    for (int i = 0; info[i]; i++){
-        business = realloc(business,sizeof(BUSINESS)*(tmhBus+1));
-        business[tmhBus] = addBusiness( info[i]);
-        if(business[tmhBus] == NULL) {
-            free(business[tmhBus]);
-            tmhBus--; 
-        }
-        tmhBus++;
-        printf("[%d]\n", tmhBus);
-        printf("%s\n",businessToString(business[tmhBus-1]));
-
-    }
-    
-    for (int j = 0; j < *tmh; j++)
-        free (info[j]);
-
-    *tmh = tmhBus;
-    return business; 
-}
-*/
 BUSINESS addBusiness ( char info[]){
 
-    BUSINESS bus = malloc(sizeof(BUSINESS));
+    BUSINESS bus = (BUSINESS) malloc( sizeof(BUSINESS));
     
     bus->business_id = strdup(strsep(&info,";"));
 	if(strlen(getBusId(bus)) != 22) return NULL;
@@ -312,41 +289,10 @@ BUSINESS addBusiness ( char info[]){
     printf("%s\n",getBusId(bus));
     return bus;
 }
-/*
-REVIEW* transStrToRev(char **info,int tmh,REVIEW *review){
-    review = realloc(review,sizeof(struct review*)*(tmh));
-    int tmhRev = 0;
-    for (int i = 0; info[i]; i++){
-        review[tmhRev] = addReview(review[tmhRev], info[i]);
-        if(review[tmhRev] == NULL) tmhRev--;
-        tmhRev++;
-    }
-    for (int j = 0; j < tmh; j++)
-        free (info[j]);
 
-    return review;
-}
+USER addUser ( char info[]){
 
-
-USER* transStrToUsers(char **info,int tmh,USER *users){
-    users = realloc(users,sizeof(struct user*)*(tmh));
-    int tmhUser = 0;
-    for (int i = 0; info[i]; i++){
-
-        users[tmhUser] = addUser(users[tmhUser], info[i]);
-        if(users[tmhUser] == NULL) tmhUser--;
-        tmhUser++;
-    }
-    for (int j = 0; j < tmh; j++)
-        free (info[j]);
-
-    return users;
-}
-
-*/
-USER addUser (USER user, char info[]){
-
-    user = malloc(sizeof(struct user));
+    USER user = malloc(sizeof(struct user));
 	  
     user->id = strdup(strsep(&info,";"));
     if(strlen(getUserId(user)) != 22) return NULL;
@@ -360,9 +306,9 @@ USER addUser (USER user, char info[]){
 }
 
 
-REVIEW addReview (REVIEW rev, char info[]){
+REVIEW addReview ( char info[]){
 	
-    rev = malloc(sizeof(struct review));
+    REVIEW rev = malloc(sizeof(struct review));
     
     rev->review_id = strdup(strsep(&info, ";"));
     if(strlen(getReviewId(rev)) != 22) return NULL;
