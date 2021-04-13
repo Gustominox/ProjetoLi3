@@ -7,6 +7,27 @@
 #define ERRO_IO 1
 #define COMANDO_INEXISTENTE 2
 #define BUF_SIZE 1024
+void
+print_uppercase_words (const gchar *string)
+{
+  // Print all uppercase-only words.
+  GRegex *regex;
+  GMatchInfo *match_info;
+ 
+  regex = g_regex_new ("[A-z]+ = [A-z]+[(][a-z]+, '[A-z]'[)];", 0, 0, NULL);
+  g_regex_match (regex, string, 0, &match_info);
+  while (g_match_info_matches (match_info))
+    {
+      gchar *word = g_match_info_fetch (match_info, 0);
+      g_print ("%s\n", word);
+      g_free (word);
+      g_match_info_next (match_info, NULL);
+    }
+  g_match_info_free (match_info);
+  g_regex_unref (regex);
+
+//	print_uppercase_words("x = businesses_started_by_letter(sgr, 'T');");
+}
 
 /** void show(TABLE table){
     int colunas, linhas;
@@ -23,13 +44,18 @@ void show(TABLE x){
     int i = 0;
     while(i < tsize)
 }*/
-
+/*
 int interpretador(SGR sgr){
     char linha[BUF_SIZE];
     char **temp = NULL;
     // char col[2], lin[2];
     // char cmdname[BUF_SIZE];
     // char filename[BUF_SIZE];
+        typedef struct var{
+    	TABLE tabela;
+    	char* nome;
+    }* VAR;
+
     char letter;
     TABLE x;
     // SINAL s = OK;
@@ -41,17 +67,16 @@ int interpretador(SGR sgr){
         temp = realloc(temp,sizeof(char*)*(i+1));
         temp[i] = strsep(&temp, ";");
     }
-    temp[i] = NULL;
 
+    temp[i] = NULL;
+    // nomeFuncao =  businesses_started_by_letter
     int k = 0;
     while (temp != NULL){
         
         switch(temp){
 
-            case (strcmp(temp[k],"query2")==0):
-                printf("Qual e a letra com que comeca o nome do negocio?");
-                scanf("%c", &letter);
-                x = businesses_started_by_letter(sgr, letter);
+            case (strcmp(temp[k],"businesses_started_by_letter")==0):
+                x = businesses_started_by_letter(sgr, letter); // cria uma hash table em que a key é o nome/primeira letra? do bussiness
                 break;
 
             case (strcmp(temp[k],"query3")==0):
@@ -96,3 +121,4 @@ int interpretador(SGR sgr){
     for (j = 0; j < tmh; j++)
         free (temp[j]);
 }
+*/

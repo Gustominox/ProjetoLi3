@@ -3,24 +3,25 @@
 #include <glib-2.0/glib.h>
 #include <stdio.h>
 
-
 int main(int argc, char *argv[]) {
 
 	char **info = NULL;
 
+	int "var";
 	
 	int tmh ;
 
 
 	
+ 
 	info = lerFichCsv(info,&tmh,"input/business_full.csv");
 	
 
     GHashTable* hash = g_hash_table_new(g_str_hash, g_str_equal);
-	transStrToTable(info,hash,addBusiness);
+	//transStrToTable(info,hash,addBusiness);
 
-    printf("There are %d keys in the hash table\n",
-        g_hash_table_size(hash));
+ //   printf("There are %d keys in the hash table\n",
+   //     g_hash_table_size(hash));
 
     printf("BUSID: %s\n", getBusId( g_hash_table_lookup(hash,"rYs_1pNB_RMtn5WQh55QDA" )));
     printf("STATE: %s\n",getState( g_hash_table_lookup(hash,"hCABMnKtwo4Y9alQDxh2kw" )));
