@@ -18,6 +18,7 @@ int main(int argc, char *argv[]) {
 	
 
     GHashTable* hash = g_hash_table_new(g_str_hash, g_str_equal);
+	
 	//transStrToTable(info,hash,addBusiness);
 
  //   printf("There are %d keys in the hash table\n",
