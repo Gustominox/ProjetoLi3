@@ -277,7 +277,7 @@ transStrToTable(char path[], GHashTable* hash, void* (*funcao) (char info[]),
         GSList *head = NULL;
 
         if(head = g_hash_table_lookup(hash,id)){
-            head = g_slist_prepend (head, obj);
+            head = g_slist_append (head, obj);
         }else{
             GSList *list = NULL;
             list = g_slist_prepend (list, obj);
