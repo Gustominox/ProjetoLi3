@@ -7,7 +7,8 @@
 /*!
 * @typedef GHashTable
 */
-typedef char *TABLE;
+// typedef char *TABLE;
+
 
 /*!
 * @typedef sgr
@@ -21,6 +22,7 @@ typedef struct sgr{
 	GHashTable* review;
 	GHashTable* user;
 } *SGR;
+
 
 SGR init_sgr();
 

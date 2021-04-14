@@ -28,21 +28,20 @@ print_uppercase_words (const gchar *string)
 //	print_uppercase_words("x = businesses_started_by_letter(sgr, 'T');");
 }
 
-/** void show(TABLE table){
+/*
+void show(TABLE table){
     int colunas, linhas;
-    
+    printf("----------------------------------------------------------");
     printf();
     printf("|      business_id   |    name        |");
-
-
 }
+*/
 
-void show(TABLE x){
-    printf("----------------------------------------------------------");
-    ...
-    int i = 0;
-    while(i < tsize)
-}*/
+typedef struct var{
+    TABLE tabela;       // output de uma query
+    char* nome;         // nome da variável
+} *VAR;
+
 /*
 int interpretador(SGR sgr){
     char linha[BUF_SIZE];
@@ -50,14 +49,9 @@ int interpretador(SGR sgr){
     // char col[2], lin[2];
     // char cmdname[BUF_SIZE];
     // char filename[BUF_SIZE];
-        typedef struct var{
-    	TABLE tabela;
-    	char* nome;
-    }* VAR;
 
     char letter;
     TABLE x;
-    // SINAL s = OK;
 
     if(fgets(linha, BUF_SIZE, stdin) == NULL)
         return ERRO_IO;
