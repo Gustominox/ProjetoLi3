@@ -275,14 +275,17 @@ transStrToTable(char path[], GHashTable* hash, void* (*funcao) (char info[]),
         //printf("OBJETO\n");
         void* obj = funcao(info);
         GSList *head = NULL;
-
-        if(head = g_hash_table_lookup(hash,id)){
-            head = g_slist_append (head, obj);
-        }else{
-            GSList *list = NULL;
-            list = g_slist_prepend (list, obj);
-    
-            g_hash_table_insert(hash,id,list);
+        if (obj != NULL){
+            if(head = g_hash_table_lookup(hash,id)){
+                head = g_slist_prepend (head, obj);
+                g_hash_table_insert(hash,id,head);
+            }else{
+                GSList *list = NULL;
+                list = g_slist_prepend (list, obj);
+        
+                g_hash_table_insert(hash,id,list);
+            
+            }
         }
         free(info);
     

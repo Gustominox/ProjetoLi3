@@ -20,7 +20,9 @@
 */
 typedef struct sgr{
 	GHashTable* business;
+	GHashTable* businessByCity;
 	GHashTable* review;
+	GHashTable* reviewByBusid;
 	GHashTable* user;
 } *SGR;
 
