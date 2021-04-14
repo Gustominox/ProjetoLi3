@@ -317,7 +317,7 @@ void setReviewText(REVIEW review, char newText[]);
 * @param path é o nome do ficheiro
 * @return array que guarda o conteúdo do ficheiro lido
 */
-char** lerFichCsv (char **info, int* tmh, char path[]);
+char** lerFichCsv ( int* tmh, char path[]);
 
 
 /**

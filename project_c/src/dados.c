@@ -217,8 +217,9 @@ char *businessToString(BUSINESS bus){
 }
 
 
-char** lerFichCsv (char **info, int* tmh, char path[]){
+char** lerFichCsv ( int* tmh, char path[]){
     
+    char **info = NULL;
     FILE *fp = fopen(path, "r");
     if (fp == NULL){
         printf ("Error opening file\n");

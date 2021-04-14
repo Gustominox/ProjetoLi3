@@ -8,14 +8,16 @@ int main(int argc, char *argv[]) {
 
 	char **info = NULL;
 
-
+	print_uppercase_words("x = businesses_started_by_letter(sgr, 'T');");
+	
+	print_uppercase_words("toCSV(x,';',\"tascos.txt\");");
 	
 	int tmh ;
 
 
 	
  
-	info = lerFichCsv(info,&tmh,"input/business_full.csv");
+	info = lerFichCsv(&tmh,"input/business_full.csv");
 	
 	//SGR sgr = init_sgr();	
     //GHashTable* hash = sgr->business;

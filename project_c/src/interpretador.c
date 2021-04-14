@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "interpretador.h"
-#include "sgr.h"
 
 #define ERRO_IO 1
 #define COMANDO_INEXISTENTE 2
@@ -14,7 +13,7 @@ print_uppercase_words (const gchar *string)
   GRegex *regex;
   GMatchInfo *match_info;
  
-  regex = g_regex_new ("[A-z]+ = [A-z]+[(][a-z]+, '[A-z]'[)];", 0, 0, NULL);
+  regex = g_regex_new ("[A-z/;.]+", 0, 0, NULL);//[A-z]+ = [A-z]+[(][a-z]+, '[A-z]'[)];
   g_regex_match (regex, string, 0, &match_info);
   while (g_match_info_matches (match_info))
     {
