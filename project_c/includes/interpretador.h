@@ -8,4 +8,9 @@
 #include <string.h>
 #include <sgr.h>
 #include <glib-2.0/glib.h>
+
+typedef struct var *VAR;
+
 int interpretador(SGR sgr);
+
+
