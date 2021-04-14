@@ -6,6 +6,8 @@
 #define ERRO_IO 1
 #define COMANDO_INEXISTENTE 2
 #define BUF_SIZE 1024
+
+
 void
 print_uppercase_words (const gchar *string)
 {
@@ -37,10 +39,10 @@ void show(TABLE table){
 }
 */
 
-typedef struct var{
+struct var{
     TABLE tabela;       // output de uma query
     char* nome;         // nome da variável
-} *VAR;
+};
 
 /*
 int interpretador(SGR sgr){

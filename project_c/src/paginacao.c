@@ -5,16 +5,16 @@
 // #include <glib.h>
 
 
-typedef struct table{
+struct table{
     char **paginas;       // Array de páginas
     int numPag;           // Número da página atual
-} *TABLE;
+};
 
 
 // numPag++ :: Avançar na página
 // numPag-- :: Recuar na página
 
-
+// esta funçao nao faz sentido nenhum paula ve como se fez as outras
 int getNumPag(TABLE table){
     int numPag = table->numPag;
     char numPagToStr[10];         // 10...
