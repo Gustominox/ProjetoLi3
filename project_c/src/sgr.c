@@ -47,7 +47,7 @@ SGR load_sgr(char *fileBus, char *fileReviews, char *fileUsers){
 
 	//transStrToTable(fileBus,sgr->business,addBusiness,0);
 	
-	transStrToTable(fileReviews,sgr->review,addReview,0);
+	transStrToTable(fileReviews,sgr->review,addReview,2);
 
 	//transStrToTable(fileUsers,sgr->user,addUser,0);
 	

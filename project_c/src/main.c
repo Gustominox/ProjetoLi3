@@ -8,7 +8,7 @@ int main(int argc, char *argv[]) {
 
 SGR sgr = load_sgr(NULL,NULL,NULL);
 
-GSList* arr = g_slist_last(g_hash_table_lookup(sgr->review,"mShDMZ5ABtc8BRHjoMwKQQ" ));
+GSList* arr = g_slist_last(g_hash_table_lookup(sgr->review,"S8pM1QQGTZGgXJZ4MgR8UQ" ));
 printf("Id: %s\n", getReviewId( arr->data ));//g_hash_table_lookup(sgr->review,"K9Qs10WdPusc1OVQKc5hbg" )));
 
 /*
