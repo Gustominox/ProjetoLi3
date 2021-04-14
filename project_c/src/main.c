@@ -15,9 +15,9 @@ int main(int argc, char *argv[]) {
 	int tmh ;
 
 
-	
+	char path[] = "input/users_full.csv";
  
-	info = lerFichCsv(&tmh,"input/business_full.csv");
+	info = lerFichCsv(&tmh,path);
 	
 	//SGR sgr = init_sgr();	
     //GHashTable* hash = sgr->business;
@@ -25,7 +25,7 @@ int main(int argc, char *argv[]) {
 	
 
 
-	transStrToTable(info,business,addBusiness);
+	transStrToTable(info,business,addUser);
 
     printf("There are %d keys in the hash table\n",
         g_hash_table_size(business));

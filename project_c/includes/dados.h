@@ -20,7 +20,7 @@
 typedef struct user{
 	char *id;
 	char *name;
-	char *friends;
+	char **friends;
 } *USER;
 
 
@@ -172,14 +172,14 @@ void setUserName(USER user, char newName[]);
 * @param user Usuário
 * @return amigos do usuário
 */
-char *getUserFriends (USER user);
+char **getUserFriends (USER user);
 
 /**
 * \brief Muda os amigos do usuário
 * @param user Usuário
 * @param newFriends novos amigos do usuário
 */
-void setUserFriends(USER user, char newFriends[]);
+void setUserFriends(USER user, char **newFriends);
 
 /**
 * \brief Obtém a identificação da review

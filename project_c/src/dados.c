@@ -61,11 +61,18 @@ void setUserName(USER user, char newName[]){
     strcpy (user->name, newName);
 }
 
-char *getUserFriends (USER user){
-    return strdup(user->friends);
+char **getUserFriends (USER user){
+    char** friends = NULL;
+    int i;
+    for( i = 0; user->friends[i] != NULL; i++){
+       friends = realloc(friends,sizeof(char*)*(i+1));
+       friends[i] = strdup(user->friends[i]);
+    }
+    friends[i] = NULL;
+  return friends;
 }
-void setUserFriends(USER user, char newFriends[]){
-    strcpy (user->friends, newFriends);
+void setUserFriends(USER user, char **newFriends){
+    user->friends = newFriends;
 }
 
 char *getReviewId (REVIEW review){
@@ -227,8 +234,8 @@ char** lerFichCsv ( int* tmh, char path[]){
     }
     int auxTmh;
     auxTmh = 0;
-    char buff[1024];
-    while(fgets(buff,1024,fp)){
+    char buff[180000];
+    while(fgets(buff,180000,fp)){
         info = realloc(info, sizeof(char*)*(auxTmh+1));
 	    info[auxTmh] = strdup(buff); // malloc + strcpy.
 	    auxTmh++;
@@ -243,10 +250,12 @@ char** lerFichCsv ( int* tmh, char path[]){
 
 void transStrToTable(char **info, GHashTable* hash, void* (*funcao) (char info[]) ){
 
-    for (int i = 0; info[i]; i++){
+    for (int i = 0; i<5; i++){
 	    char *temp = strdup(info[i]);
         char *id =  strdup (strsep(&temp,";"));
-        free(temp);
+        //free(temp);
+        printf("OBJETO [%d]\n",i);
+    
         void* obj = funcao(info[i]);
         if(obj){
             g_hash_table_insert(hash,id,obj);
@@ -254,14 +263,14 @@ void transStrToTable(char **info, GHashTable* hash, void* (*funcao) (char info[]
             free(obj);            
         }
         //free(temp);
-        //free(id);
+//free(id);
     }
 
 }
 
 BUSINESS addBusiness ( char info[]){
 
-    BUSINESS bus = (BUSINESS) malloc( sizeof(BUSINESS));
+    BUSINESS bus = (BUSINESS) malloc( sizeof(struct business));
     
     bus->business_id = strdup(strsep(&info,";"));
 	if(strlen(getBusId(bus)) != 22) return NULL;
@@ -277,32 +286,55 @@ BUSINESS addBusiness ( char info[]){
     if(strlen(getState(bus)) != 2) return NULL;           
     for(int i = 0; i < 2; i++)                  
         if(isUpper(bus->state[i]) != 1) return NULL;   
-/*
+
     char* temp = strdup(strsep(&info, "\n"));   
+    //printf("TEMP: %s\n",temp);
     bus->categories=NULL;
     int i;
     for( i = 0; temp != NULL; i++){
-       bus->categories = realloc(bus->categories,sizeof(char*)*(i+1));
-       bus->categories[i] = strdup(strsep(&temp, ","));  // Na primeira posição do array aux, será guardado a primeira categoria (separadas por ",").
+        bus->categories = realloc(bus->categories,sizeof(char*)*(i+1));
+        bus->categories[i] = strdup(strsep(&temp, ","));  // Na primeira posição do array aux, será guardado a primeira categoria (separadas por ",").
+        //printf("%s\n",bus->categories[i]);
     }
+    bus->categories = realloc(bus->categories,sizeof(char*)*(i+1));
     bus->categories[i] = NULL;
-    */
-    printf("%s\n",getBusId(bus));
+    //printf("TEMP: %s\n",temp);
+    free(temp);
+    //printf("%s\n",getBusId(bus));
     return bus;
 }
 
 USER addUser ( char info[]){
 
-    USER user = malloc(sizeof(struct user));
-	  
+    USER user = (USER) malloc(sizeof(struct user));
+	//printf("INFO: %s\n", info);
+    
     user->id = strdup(strsep(&info,";"));
+    printf("ID: %s\n", user->id);
     if(strlen(getUserId(user)) != 22) return NULL;
     
     user->name = strdup(strsep(&info,";"));
-    if(strlen(getUserName(user)) == 0) return NULL;
+    printf("NAME: %s\n", user->name);
+    if(strcmp(getUserName(user),"") == 0) return NULL;
     
-    user->friends = strdup(strsep(&info,";"));
-    printf("%s\n", user->friends);
+    char* temp = strdup(strsep(&info, "\n"));   
+    //printf("TEMP: %s\n",temp);
+    user->friends=NULL;
+    int i;
+    for( i = 0; temp != NULL; i++){
+        user->friends = realloc(user->friends,sizeof(char*)*(i+1));
+        user->friends[i] = strdup(strsep(&temp, ","));  // Na primeira posição do array aux, será guardado a primeira categoria (separadas por ",").
+        //printf("%s\n",bus->categories[i]);
+    }
+    user->friends = realloc(user->friends,sizeof(char*)*(i+1));
+    user->friends[i] = NULL;
+    //printf("TEMP: %s\n",temp);
+    free(temp);
+    printf("FRIENDS:\n");
+    for (int i = 0; user->friends[i] != NULL; i++){
+        printf("%s\n", user->friends[i]);
+    }
+    
     return user;
 }
 
