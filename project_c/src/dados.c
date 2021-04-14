@@ -12,28 +12,28 @@ void setBusId(BUSINESS bus, char newId[]){
   strcpy(bus->business_id,newId);
 }
 
-char *getName(BUSINESS bus){
+char *getBusName(BUSINESS bus){
   return strdup(bus->name);
 }
-void setName(BUSINESS bus, char newName[]){
+void setBusName(BUSINESS bus, char newName[]){
   strcpy(bus->name,newName);
 }
 
-char *getCity(BUSINESS bus){
+char *getBusCity(BUSINESS bus){
   return strdup(bus->city);
 }
-void setCity(BUSINESS bus, char newCity[]){
+void setBusCity(BUSINESS bus, char newCity[]){
   strcpy(bus->city,newCity);
 }
 
-char* getState(BUSINESS bus){
+char* getBusState(BUSINESS bus){
   return strdup(bus->state);
 }
-void setState(BUSINESS bus, char newState[]){
+void setBusState(BUSINESS bus, char newState[]){
   bus->state = newState;
 }
 
-char** getCategories(BUSINESS bus){
+char** getBusCategories(BUSINESS bus){
     char** categ = NULL;
     int i;
     for( i = 0; bus->categories[i] != NULL; i++){
@@ -43,7 +43,7 @@ char** getCategories(BUSINESS bus){
     categ[i] = NULL;
   return categ;
 }
-void setCategories(BUSINESS bus, char** newCategories){
+void setBusCategories(BUSINESS bus, char** newCategories){
   bus->categories = newCategories;
 }
 
@@ -150,7 +150,7 @@ void setReviewText(REVIEW review, char newText[]){
     strcpy (review->text, newText);
 }
 
-
+/*
 char *userToString(USER user){
 
     char *userStr = malloc(sizeof(char)*1000);
@@ -222,7 +222,7 @@ char *businessToString(BUSINESS bus){
 
     return businessStr;
 }
-
+*/
 
 char** lerFichCsv ( int* tmh, char path[]){
     
@@ -248,8 +248,46 @@ char** lerFichCsv ( int* tmh, char path[]){
 	return info;
 } 
 
-void transStrToTable(char **info, GHashTable* hash, void* (*funcao) (char info[]) ){
+void 
+transStrToTable(char path[], GHashTable* hash, void* (*funcao) (char info[]),
+                int mode ){
+    FILE *fp = fopen(path, "r");
+    
+    if (fp == NULL){
+        printf ("Error opening file\n");
+        return;
+    }
 
+    char buff[180000];
+    
+    while(fgets(buff,180000,fp)){
+        char *info;
+        info = strdup(buff); // malloc + strcpy.
+        char *id; 
+	    char *temp = strdup(info);
+        for (int i = 0; i <= mode; i++)
+        {
+        id =  strdup (strsep(&temp,";"));    
+        }
+        //printf("%s\n",id);
+        
+        
+        //printf("OBJETO\n");
+        void* obj = funcao(info);
+        GSList *head = NULL;
+
+        if(head = g_hash_table_lookup(hash,id)){
+            head = g_slist_prepend (head, obj);
+        }else{
+            GSList *list = NULL;
+            list = g_slist_prepend (list, obj);
+    
+            g_hash_table_insert(hash,id,list);
+        }
+        free(info);
+    
+    }
+/*
     for (int i = 0; i<5; i++){
 	    char *temp = strdup(info[i]);
         char *id =  strdup (strsep(&temp,";"));
@@ -262,9 +300,12 @@ void transStrToTable(char **info, GHashTable* hash, void* (*funcao) (char info[]
         }else{
             free(obj);            
         }
+    
+         
         //free(temp);
 //free(id);
-    }
+    }*/
+    fclose (fp);
 
 }
 
@@ -276,14 +317,14 @@ BUSINESS addBusiness ( char info[]){
 	if(strlen(getBusId(bus)) != 22) return NULL;
     
     bus->name = strdup(strsep(&info, ";"));
-    if(strlen(getName(bus)) == 0) return NULL;
+    if(strlen(getBusName(bus)) == 0) return NULL;
     
     bus->city = strdup(strsep(&info, ";"));
-    if(strlen(getCity(bus)) == 0) return NULL;
+    if(strlen(getBusCity(bus)) == 0) return NULL;
 
      
     bus->state = strdup(strsep(&info, ";"));     
-    if(strlen(getState(bus)) != 2) return NULL;           
+    if(strlen(getBusState(bus)) != 2) return NULL;           
     for(int i = 0; i < 2; i++)                  
         if(isUpper(bus->state[i]) != 1) return NULL;   
 
@@ -310,11 +351,11 @@ USER addUser ( char info[]){
 	//printf("INFO: %s\n", info);
     
     user->id = strdup(strsep(&info,";"));
-    printf("ID: %s\n", user->id);
+    //printf("ID: %s\n", user->id);
     if(strlen(getUserId(user)) != 22) return NULL;
     
     user->name = strdup(strsep(&info,";"));
-    printf("NAME: %s\n", user->name);
+    //printf("NAME: %s\n", user->name);
     if(strcmp(getUserName(user),"") == 0) return NULL;
     
     char* temp = strdup(strsep(&info, "\n"));   
@@ -330,10 +371,10 @@ USER addUser ( char info[]){
     user->friends[i] = NULL;
     //printf("TEMP: %s\n",temp);
     free(temp);
-    printf("FRIENDS:\n");
-    for (int i = 0; user->friends[i] != NULL; i++){
-        printf("%s\n", user->friends[i]);
-    }
+    //printf("FRIENDS:\n");
+    //for (int i = 0; user->friends[i] != NULL; i++){
+        //printf("%s\n", user->friends[i]);
+    //}
     
     return user;
 }
@@ -345,22 +386,23 @@ REVIEW addReview ( char info[]){
     
     rev->review_id = strdup(strsep(&info, ";"));
     if(strlen(getReviewId(rev)) != 22) return NULL;
-	  
+    
     rev->user_id = strdup(strsep(&info, ";"));
     if(strlen(getReviewUser(rev)) != 22) return NULL;
-    
+
     rev->business_id = strdup(strsep(&info, ";"));
     if(strlen(getReviewBus(rev)) != 22) return NULL;
-	  
+
     rev->stars = atof(strsep(&info, ";"));
-    if(getReviewStars(rev) > 5.0 && getReviewStars(rev) <= 0.0) return NULL;
+    if((getReviewStars(rev) > 5.0) || (getReviewStars(rev) <= 0.0)) return NULL;
 	
+
     char* strUseful = strdup(strsep(&info, ";"));
     for (int i = 0; i < strlen(strUseful); i++)              
         if (isDigit(strUseful[i]) != 1) return NULL;          
     rev->useful = atoi(strUseful);                           
-    if(getReviewUseful(rev) < 0) return NULL;                
-    
+    if(getReviewUseful(rev) < 0) return NULL;
+
     char* strFunny = strdup(strsep(&info, ";"));
     for (int i = 0; i < strlen(strFunny); i++)                           
         if (isDigit(strFunny[i]) != 1) return NULL;   
@@ -375,8 +417,22 @@ REVIEW addReview ( char info[]){
 
     rev->date = strdup(strsep(&info, ";"));
     if(strlen(getReviewDate(rev)) != 19) return NULL; // YYYY-MM-DD HH:MM:SS
+    
+
 
     rev->text = strdup(strsep(&info, ";"));
-  
-  return rev;   
+
+/*
+    printf("%s\n",getReviewId(rev));
+    printf("%s\n",getReviewUser(rev));
+	printf("%s\n",getReviewBus(rev));
+    printf("%f\n",getReviewStars(rev));                
+    printf("%d\n",getReviewUseful(rev));
+    printf("%d\n",getReviewFunny(rev));
+    printf("%d\n",getReviewCool(rev));
+    printf("%s\n",getReviewDate(rev));
+    printf("%s\n",getReviewText(rev));
+*/
+    
+    return rev;   
 }

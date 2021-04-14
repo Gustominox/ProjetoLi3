@@ -88,56 +88,56 @@ void setBusId(BUSINESS bus, char newId[]);
 * @param bus Negócio
 * @return nome do negócio
 */
-char *getName(BUSINESS bus);
+char *getBusName(BUSINESS bus);
 
 /**
 * \brief Muda o nome do negócio
 * @param bus Negócio
 * @param newName novo nome do negócio
 */
-void setName(BUSINESS bus, char newName[]);
+void setBusName(BUSINESS bus, char newName[]);
 
 /**
 * \brief Obtém a cidade onde está situado o negócio
 * @param bus Negócio
 * @return cidade onde está o negócio
 */
-char *getCity(BUSINESS bus);
+char *getBusCity(BUSINESS bus);
 
 /**
 * \brief Muda a cidade onde está situado o negócio
 * @param bus Negócio
 * @param newCity nova cidade onde está o negócio
 */
-void setCity(BUSINESS bus, char newCity[]);
+void setBusCity(BUSINESS bus, char newCity[]);
 
 /**
 * \brief Obtém o estado do negócio
 * @param bus Negócio
 * @return estado do negócio
 */
-char* getState(BUSINESS bus);
+char* getBusState(BUSINESS bus);
 
 /**
 * \brief Muda o estado do negócio
 * @param bus Negócio
 * @param newState novo estado do negócio
 */
-void setState(BUSINESS bus, char newState[]);
+void setBusState(BUSINESS bus, char newState[]);
 
 /**
 * \brief Obtém as categorias do negócio
 * @param bus Negócio
 * @return categorias do negócio
 */
-char** getCategories(BUSINESS bus);
+char** getBusCategories(BUSINESS bus);
 
 /**
 * \brief Muda as categorias do negócio
 * @param bus Negócio
 * @param newCategories novas categorias do negócio
 */
-void setCategories(BUSINESS bus, char** newCategories);
+void setBusCategories(BUSINESS bus, char** newCategories);
 
 /**
 * \brief Obtém a identificação do usuário
@@ -403,4 +403,4 @@ BUSINESS addBusiness (char info[]);
 REVIEW addReview ( char info[]);
 
 
-void transStrToTable(char **info,GHashTable* hash ,void* (*funcao) (char info[]));
+void transStrToTable(char path[],GHashTable* hash ,void* (*funcao) (char info[]),int mode);

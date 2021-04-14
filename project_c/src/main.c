@@ -6,6 +6,21 @@
 
 int main(int argc, char *argv[]) {
 
+SGR sgr = load_sgr(NULL,NULL,NULL);
+
+GSList* arr = g_slist_last(g_hash_table_lookup(sgr->review,"mShDMZ5ABtc8BRHjoMwKQQ" ));
+printf("Id: %s\n", getReviewId( arr->data ));//g_hash_table_lookup(sgr->review,"K9Qs10WdPusc1OVQKc5hbg" )));
+
+/*
+
+arr = realloc(arr,sizeof(REVIEW) * 2);	
+arr[1] = g_hash_table_lookup(sgr->review,"qIiRyyR9vk9LffiTrMDXwQ" );
+printf("Id: %s\n", getReviewId( arr[0]));//g_hash_table_lookup(sgr->review,"K9Qs10WdPusc1OVQKc5hbg" )));
+printf("Id: %s\n", getReviewId( arr[1]));//g_hash_table_lookup(sgr->review,"K9Qs10WdPusc1OVQKc5hbg" )));
+*/
+free_sgr(sgr);    
+
+/*
 	char **info = NULL;
 
 	print_uppercase_words("x = businesses_started_by_letter(sgr, 'T');");
@@ -15,24 +30,25 @@ int main(int argc, char *argv[]) {
 	int tmh ;
 
 
-	char path[] = "input/users_full.csv";
+	char path[] = "input/reviews_1M.csv";
  
-	info = lerFichCsv(&tmh,path);
+	//info = lerFichCsv(&tmh,path);
 	
-	//SGR sgr = init_sgr();	
+		
     //GHashTable* hash = sgr->business;
 	GHashTable* business = g_hash_table_new(g_str_hash, g_str_equal);
 	
 
 
-	transStrToTable(info,business,addUser);
+	transStrToTable(path,business,addReview);
 
     printf("There are %d keys in the hash table\n",
         g_hash_table_size(business));
 
-    printf("BUSID: %s\n", getBusId( g_hash_table_lookup(business,"rYs_1pNB_RMtn5WQh55QDA" )));
-    printf("STATE: %s\n",getState( g_hash_table_lookup(business,"HPA_qyMEddpAEtFof02ixg" )));
+    printf("BUSID: %s\n", getReviewText( g_hash_table_lookup(business,"ABmhd3xJM_mup1h4OqpNuQ" )));
+    printf("STATE: %s\n",getReviewId( g_hash_table_lookup(business,"iGZNuiT_hKXSvGf22LPQ6A" )));
 
 	g_hash_table_destroy(business);
+*/
     return 0;
 }

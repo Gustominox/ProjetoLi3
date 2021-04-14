@@ -7,7 +7,7 @@
 /*!
 * @typedef GHashTable
 */
-typedef GHashTable *TABLE;
+typedef char *TABLE;
 
 /*!
 * @typedef sgr
@@ -17,9 +17,9 @@ typedef GHashTable *TABLE;
 * @field   review      Review
 */
 typedef struct sgr{
-	TABLE business;
-	TABLE review;
-	TABLE user;
+	GHashTable* business;
+	GHashTable* review;
+	GHashTable* user;
 } *SGR;
 
 SGR init_sgr();
@@ -29,7 +29,11 @@ void free_sgr(SGR sgr);
 SGR load_sgr(char *users, char *businesses, char *reviews);
 /* query 2 */
 TABLE businesses_started_by_letter(SGR sgr, char letter);
-/* query 3 */
+/* 	QUERY 3
+	Dado um id de negócio, determinar a sua informação:
+ 	nome, cidade, estado, stars, e número total reviews.
+ 
+ ******/
 TABLE business_info(SGR sgr, char *business_id);
 /* query 4 */
 TABLE businesses_reviewed(SGR sgr, char *user_id);
