@@ -46,23 +46,23 @@ SGR load_sgr(char *fileBus, char *fileReviews, char *fileUsers){
 
 	//LER OS FICH E CRIAR AS TABELAS DE HASH
 
-	transStrToTable(fileBus,sgr->business,addBusiness,0);
+	//transStrToTable(fileBus,sgr->business,addBusiness,0);
 	
-	transStrToTable(fileReviews,sgr->review,addReview,0);
+	//transStrToTable(fileReviews,sgr->review,addReview,0);
 
-	transStrToTable(fileReviews,sgr->reviewByBusid,addReview,2);
+	//transStrToTable(fileReviews,sgr->reviewByBusid,addReview,2);
 
 	transStrToTable(fileUsers,sgr->user,addUser,0);
 	
-	printf("There are %d keys in the hash table\n",
-        g_hash_table_size(sgr->business));
+	//printf("There are %d keys in the hash table\n",
+      //  g_hash_table_size(sgr->business));
 
-	printf("There are %d keys in the hash table\n",
-        g_hash_table_size(sgr->review));
-
-	printf("There are %d keys in the hash table\n",
-        g_hash_table_size(sgr->reviewByBusid));
-
+	//printf("There are %d keys in the hash table\n",
+    //    g_hash_table_size(sgr->review));
+//
+	//printf("There are %d keys in the hash table\n",
+      //  g_hash_table_size(sgr->reviewByBusid));
+//
 	printf("There are %d keys in the hash table\n",
         g_hash_table_size(sgr->user));
 	return sgr;

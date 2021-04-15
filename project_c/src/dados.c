@@ -97,28 +97,28 @@ void setReviewBus(REVIEW review, char newBus[]){
 }
 
 float getReviewStars (REVIEW review){
-    return *review->stars;
+    return review->stars;
 }
 void setReviewStars(REVIEW review, float newStars){
     review->stars = newStars;
 }
 
 int getReviewUseful (REVIEW review){
-    return *review->useful;
+    return review->useful;
 }
 void setReviewUseful(REVIEW review, int newUseful){
     review->useful = newUseful;
 }
 
 int getReviewFunny (REVIEW review){
-    return *review->funny;
+    return review->funny;
 }
 void setReviewFunny(REVIEW review, int newFunny){
     review->funny = newFunny;
 }
 
 int getReviewCool (REVIEW review){
-    return *review->cool;
+    return review->cool;
 }
 void setReviewCool(REVIEW review, int newCool){
     review->cool = newCool;
@@ -249,19 +249,19 @@ transStrToTable(char path[], GHashTable* hash, void* (*funcao) (char info[]),
     char buff[180000];
     
     while(fgets(buff,180000,fp)){
-        char *info;
-        info = strdup(buff); // malloc + strcpy.
+
         char *id; 
-	    char *temp = strdup(info);
-        for (int i = 0; i <= mode; i++)
-        {
-        id =  strdup (strsep(&temp,";"));    
+	    char *temp = strdup(buff);
+        for (int i = 0; i < mode; i++){
+        strsep(&temp,";");    
         }
+
+        id =  strdup (strsep(&temp,";"));
         //printf("%s\n",id);
         
         
         //printf("OBJETO\n");
-        void* obj = funcao(info);
+        void* obj = funcao(buff);
         GSList *head = NULL;
         if (obj != NULL){
             if(head = g_hash_table_lookup(hash,id)){
@@ -275,27 +275,10 @@ transStrToTable(char path[], GHashTable* hash, void* (*funcao) (char info[]),
             
             }
         }
-        free(info);
+        
     
     }
-/*
-    for (int i = 0; i<5; i++){
-	    char *temp = strdup(info[i]);
-        char *id =  strdup (strsep(&temp,";"));
-        //free(temp);
-        printf("OBJETO [%d]\n",i);
-    
-        void* obj = funcao(info[i]);
-        if(obj){
-            g_hash_table_insert(hash,id,obj);
-        }else{
-            free(obj);            
-        }
-    
-         
-        //free(temp);
-//free(id);
-    }*/
+
     fclose (fp);
 
 }
@@ -343,11 +326,11 @@ USER addUser ( char info[]){
     
     user->id = strdup(strsep(&info,";"));
     //printf("ID: %s\n", user->id);
-    if(strlen(getUserId(user)) != 22) return NULL;
+    if(strlen(user->id) != 22) return NULL;
     
     user->name = strdup(strsep(&info,";"));
     //printf("NAME: %s\n", user->name);
-    if(strcmp(getUserName(user),"") == 0) return NULL;
+    if(strcmp(user->name,"") == 0) return NULL;
     
     char* temp = strdup(strsep(&info, "\n"));   
     //printf("TEMP: %s\n",temp);
@@ -359,7 +342,7 @@ USER addUser ( char info[]){
         //printf("%s\n",bus->categories[i]);
     }
     user->friends = realloc(user->friends,sizeof(char*)*(i+1));
-    user->friends[i] = NULL;
+    //user->friends[i] = NULL;
     //printf("TEMP: %s\n",temp);
     free(temp);
     //printf("FRIENDS:\n");
@@ -376,38 +359,45 @@ REVIEW addReview ( char info[]){
     REVIEW rev = malloc(sizeof(struct review));
     
     rev->review_id = strdup(strsep(&info, ";"));
-    if(strlen(getReviewId(rev)) != 22) return NULL;
+    if(strlen(rev->review_id) != 22) return NULL;
     
     rev->user_id = strdup(strsep(&info, ";"));
-    if(strlen(getReviewUser(rev)) != 22) return NULL;
+    if(strlen(rev->user_id) != 22) return NULL;
 
     rev->business_id = strdup(strsep(&info, ";"));
-    if(strlen(getReviewBus(rev)) != 22) return NULL;
+    if(strlen(rev->business_id) != 22) return NULL;
 
     rev->stars = atof(strsep(&info, ";"));
-    if((getReviewStars(rev) > 5.0) || (getReviewStars(rev) <= 0.0)) return NULL;
+    if((rev->stars > 5.0) || (rev->stars <= 0.0)) return NULL;
 	
+    rev->useful = atoi(strsep(&info, ";"));                           
+    
+    //char* strUseful = strdup(strsep(&info, ";"));
+    
+    //for (int i = 0; i < strlen(strUseful); i++)              
+    //    if (isDigit(strUseful[i]) != 1) return NULL;          
+    //rev->useful = atoi(strUseful);                           
+    //if(getReviewUseful(rev) < 0) return NULL;
 
-    char* strUseful = strdup(strsep(&info, ";"));
-    for (int i = 0; i < strlen(strUseful); i++)              
-        if (isDigit(strUseful[i]) != 1) return NULL;          
-    rev->useful = atoi(strUseful);                           
-    if(getReviewUseful(rev) < 0) return NULL;
-
+    rev->funny = atoi(strsep(&info, ";"));
+/*
     char* strFunny = strdup(strsep(&info, ";"));
     for (int i = 0; i < strlen(strFunny); i++)                           
         if (isDigit(strFunny[i]) != 1) return NULL;   
     rev->funny = atoi(strFunny);
-    if(getReviewFunny(rev) < 0) return NULL;
+    if(rev->review_id < 0) return NULL;
+  */  
     
+    rev->cool = atoi(strsep(&info, ";"));
+/*
     char* strCool = strdup(strsep(&info, ";"));
     for (int i = 0; i < strlen(strCool); i++)                           
         if (isDigit(strCool[i]) != 1) return NULL;   
     rev->cool = atoi(strCool);
     if(getReviewCool(rev) < 0) return NULL;
-
+*/
     rev->date = strdup(strsep(&info, ";"));
-    if(strlen(getReviewDate(rev)) != 19) return NULL; // YYYY-MM-DD HH:MM:SS
+    if(strlen(rev->date) != 19) return NULL; // YYYY-MM-DD HH:MM:SS
     
 
 

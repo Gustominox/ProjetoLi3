@@ -8,7 +8,7 @@ int main(int argc, char *argv[]) {
 
 SGR sgr = load_sgr(NULL,NULL,NULL);
 
-business_info(sgr,"S8pM1QQGTZGgXJZ4MgR8UQ");
+//business_info(sgr,"S8pM1QQGTZGgXJZ4MgR8UQ");
 //int tmh = g_slist_length(g_hash_table_lookup(sgr->review,"S8pM1QQGTZGgXJZ4MgR8UQ" ));
 //printf("Id: %d\n", tmh);//getReviewId( arr->data ));//g_hash_table_lookup(sgr->review,"K9Qs10WdPusc1OVQKc5hbg" )));
 
