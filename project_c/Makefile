@@ -20,7 +20,7 @@ $(BLD_DIR)/%.o: %.c
 	$(CC) -g -c -I $(INC_DIR) $(PKG) $^ -o $@
 
 $(PROG): $(OBJS)
-	$(CC) -g -I $(INC_DIR) $^ $(PKG) -o $@
+	$(CC) -g -I $(INC_DIR) $^ $(PKG) -o $@ -lpthread
 
 setup:
 	@mkdir -p $(BLD_DIR)

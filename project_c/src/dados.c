@@ -252,6 +252,7 @@ transStrToTable(char path[], GHashTable* hash, void* (*funcao) (char info[]),
 
         char *id; 
 	    char *temp = strdup(buff);
+
         for (int i = 0; i < mode; i++){
         strsep(&temp,";");    
         }
@@ -263,7 +264,7 @@ transStrToTable(char path[], GHashTable* hash, void* (*funcao) (char info[]),
         //printf("OBJETO\n");
         void* obj = funcao(buff);
         GSList *head = NULL;
-        if (obj != NULL){
+        if (obj){
             if(head = g_hash_table_lookup(hash,id)){
                 head = g_slist_prepend (head, obj);
                 g_hash_table_insert(hash,id,head);
@@ -278,7 +279,7 @@ transStrToTable(char path[], GHashTable* hash, void* (*funcao) (char info[]),
         
     
     }
-
+    printf("Fim da table %s\n",path);
     fclose (fp);
 
 }
@@ -334,14 +335,16 @@ USER addUser ( char info[]){
     
     char* temp = strdup(strsep(&info, "\n"));   
     //printf("TEMP: %s\n",temp);
+    
     user->friends=NULL;
     int i;
     for( i = 0; temp != NULL; i++){
         user->friends = realloc(user->friends,sizeof(char*)*(i+1));
+        
         user->friends[i] = strdup(strsep(&temp, ","));  // Na primeira posição do array aux, será guardado a primeira categoria (separadas por ",").
         //printf("%s\n",bus->categories[i]);
     }
-    user->friends = realloc(user->friends,sizeof(char*)*(i+1));
+    //user->friends = realloc(user->friends,sizeof(char*)*(i+1));
     //user->friends[i] = NULL;
     //printf("TEMP: %s\n",temp);
     free(temp);

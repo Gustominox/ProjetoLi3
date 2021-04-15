@@ -26,6 +26,14 @@ typedef struct sgr{
 	GHashTable* user;
 } *SGR;
 
+typedef struct sthread{
+
+	char *file;
+	SGR sgr;
+	void* (*funcao) (char info[]);
+}*STHREAD;
+
+
 
 SGR init_sgr();
 

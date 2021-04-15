@@ -4,13 +4,14 @@
 #include <glib.h>
 #include "dados.h"
 #include "sgr.h"
-
+#include <pthread.h>
 
 
 SGR init_sgr(){
 
 	SGR sgr = malloc(sizeof(struct sgr));
 	sgr->business = g_hash_table_new(g_str_hash, g_str_equal);
+	sgr->businessByCity = g_hash_table_new(g_str_hash, g_str_equal);
 	sgr->review = g_hash_table_new(g_str_hash, g_str_equal);
 	sgr->reviewByBusid = g_hash_table_new(g_str_hash, g_str_equal);
 	sgr->user = g_hash_table_new(g_str_hash, g_str_equal);
@@ -22,6 +23,7 @@ SGR init_sgr(){
 void free_sgr(SGR sgr){
 
 	g_hash_table_destroy(sgr->business);
+	g_hash_table_destroy(sgr->businessByCity);
 	g_hash_table_destroy(sgr->review);
 	g_hash_table_destroy(sgr->reviewByBusid);
 	g_hash_table_destroy(sgr->user);
@@ -30,7 +32,35 @@ void free_sgr(SGR sgr){
 }	
 
 
+void *threadUsers(void* value){
+	
+	STHREAD help = (STHREAD) value;
+	transStrToTable(help->file,help->sgr->user,help->funcao,0);
 
+	return NULL;
+}
+
+void *threadBusiness(void* value){
+	
+	STHREAD help = (STHREAD) value;
+	
+	transStrToTable(help->file,help->sgr->business,help->funcao,0);
+	
+	transStrToTable(help->file,help->sgr->businessByCity,help->funcao,2);
+
+	return NULL;
+}
+
+void *threadReviews(void* value){
+	
+	STHREAD help = (STHREAD) value;
+	
+	transStrToTable(help->file,help->sgr->review,help->funcao,0);
+	
+	transStrToTable(help->file,help->sgr->reviewByBusid,help->funcao,2);
+
+	return NULL;
+}
 SGR load_sgr(char *fileBus, char *fileReviews, char *fileUsers){
     // init struct sgr
 	SGR sgr = init_sgr();
@@ -43,26 +73,54 @@ SGR load_sgr(char *fileBus, char *fileReviews, char *fileUsers){
 	
 	if (fileUsers == NULL) fileUsers = strdup("input/users_full.csv"); // strcpy (fileUsers,"input/users_full.csv");
 
+	STHREAD helpUsers = malloc(sizeof(struct sthread));
+	helpUsers->file =fileUsers;
+	helpUsers->sgr = sgr;
+	helpUsers->funcao = addUser;
 
+
+	STHREAD helpBusiness = malloc(sizeof(struct sthread));
+	helpBusiness->file =fileBus;
+	helpBusiness->sgr = sgr;
+	helpBusiness->funcao = addBusiness;
+
+	STHREAD helpReviews = malloc(sizeof(struct sthread));
+	helpReviews->file =fileReviews;
+	helpReviews->sgr = sgr;
+	helpReviews->funcao = addReview;	
 	//LER OS FICH E CRIAR AS TABELAS DE HASH
 
-	//transStrToTable(fileBus,sgr->business,addBusiness,0);
+	pthread_t thread1,thread2,thread3;
+
+
+	pthread_create(&thread1,NULL,threadUsers,helpUsers);
 	
-	//transStrToTable(fileReviews,sgr->review,addReview,0);
+	//help->file = fileBus;
+	//help->sgr = sgr;
+	//help->funcao = addBusiness;
+//	help->mode = 0;
 
-	//transStrToTable(fileReviews,sgr->reviewByBusid,addReview,2);
+	pthread_create(&thread3,NULL,threadReviews,helpReviews);
 
-	transStrToTable(fileUsers,sgr->user,addUser,0);
+	pthread_create(&thread2,NULL,threadBusiness,helpBusiness);
+
+
+
 	
-	//printf("There are %d keys in the hash table\n",
-      //  g_hash_table_size(sgr->business));
 
-	//printf("There are %d keys in the hash table\n",
-    //    g_hash_table_size(sgr->review));
-//
-	//printf("There are %d keys in the hash table\n",
-      //  g_hash_table_size(sgr->reviewByBusid));
-//
+	//transStrToTable(fileUsers,sgr->user,help->funcao,0);
+	pthread_join(thread1,NULL);
+	pthread_join(thread2,NULL);
+	pthread_join(thread3,NULL);
+	printf("There are %d keys in the hash table\n",
+        g_hash_table_size(sgr->business));
+
+	printf("There are %d keys in the hash table\n",
+        g_hash_table_size(sgr->review));
+
+	printf("There are %d keys in the hash table\n",
+        g_hash_table_size(sgr->reviewByBusid));
+
 	printf("There are %d keys in the hash table\n",
         g_hash_table_size(sgr->user));
 	return sgr;
