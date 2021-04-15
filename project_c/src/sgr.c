@@ -112,6 +112,7 @@ SGR load_sgr(char *fileBus, char *fileReviews, char *fileUsers){
 	pthread_join(thread1,NULL);
 	pthread_join(thread2,NULL);
 	pthread_join(thread3,NULL);
+	/*
 	printf("There are %d keys in the hash table\n",
         g_hash_table_size(sgr->business));
 
@@ -120,9 +121,9 @@ SGR load_sgr(char *fileBus, char *fileReviews, char *fileUsers){
 
 	printf("There are %d keys in the hash table\n",
         g_hash_table_size(sgr->reviewByBusid));
-
-	printf("There are %d keys in the hash table\n",
-        g_hash_table_size(sgr->user));
+*/
+	//printf("There are %d keys in the hash table\n",
+      //  g_hash_table_size(sgr->user));
 	return sgr;
 
 }

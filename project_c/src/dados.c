@@ -279,7 +279,7 @@ transStrToTable(char path[], GHashTable* hash, void* (*funcao) (char info[]),
         
     
     }
-    printf("Fim da table %s\n",path);
+    //printf("Fim da table %s\n",path);
     fclose (fp);
 
 }
@@ -335,7 +335,7 @@ USER addUser ( char info[]){
     
     char* temp = strdup(strsep(&info, "\n"));   
     //printf("TEMP: %s\n",temp);
-    
+
     user->friends=NULL;
     int i;
     for( i = 0; temp != NULL; i++){

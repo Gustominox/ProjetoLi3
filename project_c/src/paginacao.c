@@ -3,7 +3,7 @@
 #include <string.h>
 #include "paginacao.h"
 // #include <glib.h>
-
+/*
 
 struct table{
     char **paginas;        // Array de páginas
@@ -64,3 +64,4 @@ void acao(TABLE table, char tecla){
 }
 
 
+*/
