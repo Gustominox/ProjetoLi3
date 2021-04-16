@@ -251,17 +251,16 @@ transStrToTable(char path[], GHashTable* hash, void* (*funcao) (char info[]),
     while(fgets(buff,180000,fp)){
 
         char *id; 
-	    char *temp = strdup(buff);
+        char *temp = strdup(buff);
 
         for (int i = 0; i < mode; i++){
         strsep(&temp,";");    
         }
 
         id =  strdup (strsep(&temp,";"));
-        //printf("%s\n",id);
         
+        //free(temp);
         
-        //printf("OBJETO\n");
         void* obj = funcao(buff);
         GSList *head = NULL;
         if (obj){
@@ -279,7 +278,6 @@ transStrToTable(char path[], GHashTable* hash, void* (*funcao) (char info[]),
         
     
     }
-    //printf("Fim da table %s\n",path);
     fclose (fp);
 
 }

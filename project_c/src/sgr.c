@@ -13,7 +13,8 @@ SGR init_sgr(){
 	sgr->business = g_hash_table_new(g_str_hash, g_str_equal);
 	sgr->businessByCity = g_hash_table_new(g_str_hash, g_str_equal);
 	sgr->review = g_hash_table_new(g_str_hash, g_str_equal);
-	sgr->reviewByBusid = g_hash_table_new(g_str_hash, g_str_equal);
+	sgr->reviewByBusId = g_hash_table_new(g_str_hash, g_str_equal);
+	sgr->reviewByUserId = g_hash_table_new(g_str_hash, g_str_equal);
 	sgr->user = g_hash_table_new(g_str_hash, g_str_equal);
 	
 	return sgr;
@@ -25,7 +26,8 @@ void free_sgr(SGR sgr){
 	g_hash_table_destroy(sgr->business);
 	g_hash_table_destroy(sgr->businessByCity);
 	g_hash_table_destroy(sgr->review);
-	g_hash_table_destroy(sgr->reviewByBusid);
+	g_hash_table_destroy(sgr->reviewByBusId);
+	g_hash_table_destroy(sgr->reviewByUserId);
 	g_hash_table_destroy(sgr->user);
 	
 	free(sgr);
@@ -56,8 +58,11 @@ void *threadReviews(void* value){
 	STHREAD help = (STHREAD) value;
 	
 	transStrToTable(help->file,help->sgr->review,help->funcao,0);
-	
-	transStrToTable(help->file,help->sgr->reviewByBusid,help->funcao,2);
+
+	transStrToTable(help->file,help->sgr->reviewByUserId,help->funcao,1);
+
+
+	transStrToTable(help->file,help->sgr->reviewByBusId,help->funcao,2);
 
 	return NULL;
 }
@@ -140,15 +145,17 @@ TABLE business_info(SGR sgr, char *business_id){
 
 	BUSINESS bus = list->data;
 
-	list = g_hash_table_lookup(sgr->reviewByBusid,business_id );
+	list = g_hash_table_lookup(sgr->reviewByBusId,business_id );
 
 	int nRev = g_slist_length(list);	
+	float sumStars = 0;
+	if (nRev > 0){
+		sumStars = getReviewStars (list->data);
+		while (list = g_slist_next(list)) sumStars +=  getReviewStars (list->data);
 	
-	float sumStars = getReviewStars (list->data);
-	while (list = g_slist_next(list)) sumStars +=  getReviewStars (list->data);
-	
-	float nRevF = nRev/1.0;
-	sumStars = sumStars/nRevF;
+		float nRevF = nRev/1.0;
+		sumStars = sumStars/nRevF;
+	}
 	printf("NAME: %s\n", getBusName(bus));
 	printf("CITY: %s\n", getBusCity(bus));
 	printf("STATE: %s\n", getBusState(bus));
@@ -157,3 +164,83 @@ TABLE business_info(SGR sgr, char *business_id){
 	printf("nRev: %d\n", nRev);											  
 }
 
+/* 	QUERY 4
+	Dado um id de utilizador, determinar a lista de negócios aos quais fez review.
+	A informação associada a cada negócio deve ser o id e o nome.
+ ******/ 
+
+
+TABLE businesses_reviewed(SGR sgr, char *user_id){
+
+
+	
+	if (g_hash_table_contains(sgr->reviewByUserId,user_id))
+	{
+		printf("EXISTE\n");
+	}else{
+		printf("NAO EXISTE\n");
+	}
+	GSList* list = g_hash_table_lookup(sgr->reviewByUserId,user_id );
+	printf("%s",getReviewUser(list->data));
+	//int nRev = g_slist_length(list);	
+	
+	//float sumStars = getReviewStars (list->data);
+	
+	
+
+	GSList* list2 =  g_hash_table_lookup(sgr->business,getReviewBus(list->data));
+	
+	//BUSINESS bus = list2->data;
+	printf("%s %s\n", getBusId(list2->data),getBusName(list2->data));
+	while (list = g_slist_next(list)) {
+	
+	list2 =  g_hash_table_lookup(sgr->business,getReviewBus(list->data));
+	printf("%s %s\n", getBusId(list2->data),getBusName(list2->data));
+	}
+	
+}
+
+/* 	QUERY 5
+	Dado um número n de stars e uma cidade, determinar a lista de negócios 
+	com n ou mais stars na dada cidade. A informação associada a cada negócio
+	deve ser o seu id e nome.
+ ******/
+
+TABLE businesses_with_stars_and_city(SGR sgr, float stars, char *city){
+	
+	printf("\n\n\n\n\n");
+	GSList* list = g_hash_table_lookup(sgr->businessByCity,city );
+
+//	GSList* list2 =  g_hash_table_lookup(sgr->business,getReviewBus(list->data));
+	printf("%s\n", getBusId( list->data ));
+	GSList* list2 = g_hash_table_lookup(sgr->reviewByBusId, getBusId( list->data ));
+
+	int nRev = g_slist_length(list2);	
+	if (nRev > 0){
+		printf("nRev: %d\n", nRev);
+		float sumStars = getReviewStars (list2->data);
+		while (list2 = g_slist_next(list2)) sumStars +=  getReviewStars (list->data);
+		float nRevF = nRev/1.0;
+		sumStars = sumStars/nRevF;
+
+		//BUSINESS bus = list2->data;
+		if(sumStars > stars) printf("%s %s %f\n", getBusId(list->data),getBusName(list->data),sumStars);
+		
+	}
+	while (list = g_slist_next(list)) {
+	
+
+		list2 = g_hash_table_lookup(sgr->reviewByBusId, getBusId( list->data ));
+
+		int nRev = g_slist_length(list2);	
+
+		if (nRev > 0){
+			float sumStars = getReviewStars (list2->data);
+			while (list2 = g_slist_next(list2)) sumStars +=  getReviewStars (list2->data);
+			float nRevF = nRev/1.0;
+			sumStars = sumStars/nRevF;
+
+			if(sumStars > stars) printf("%s %s %f\n", getBusId(list->data),getBusName(list->data),sumStars);
+		}
+	}
+}

@@ -22,7 +22,8 @@ typedef struct sgr{
 	GHashTable* business;
 	GHashTable* businessByCity;
 	GHashTable* review;
-	GHashTable* reviewByBusid;
+	GHashTable* reviewByBusId;
+	GHashTable* reviewByUserId;
 	GHashTable* user;
 } *SGR;
 
