@@ -46,20 +46,22 @@ void previousPage(TABLE table, int numPagAtual){
 }
 
 void acao(TABLE table, char tecla){
-    char tecla;
-    tecla = fgetc(stdin);
-
+    
     int numPagATual = getNumPag(table);
     
     switch(tecla){
 
-        case (tecla == 0x0A): // ENTER
+        case (tecla == 'k'): // Avança na página
             nextPage(table, numPagAtual);
             break;
         
-        case (tecla = "pgdn");
+        case (tecla == 'j'): // Recua na página 
             previousPage(table, numPagAtual);
             break;
+
+        default:
+            printf("comanddo inesxixtente \n");
+        
     }
 }
 
