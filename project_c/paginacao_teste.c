@@ -7,8 +7,8 @@
 
 struct table{
     char ***variaveis;         // Array de páginas
-    int *numLin;           // Número da linha atual
-    int *numLinTotal;     // Número de linhas totais
+    int *numLin;               // Número da linha atual
+    int *numLinTotal;          // Número de linhas totais
 };
 
 //printf("-----------------------------------------");
@@ -20,10 +20,6 @@ struct table{
 //printf("|\n");
 
 //printf("-----------------------------------------");
-
-
-// numPag++ :: Avançar na página
-// numPag-- :: Recuar na página
 
 
 int getNumLin(TABLE table){
@@ -46,6 +42,13 @@ char** getVariaveis(TABLE table){
 }
 void setVariaveis(TABLE table, char ***newVariaveis){
     table->variaveis = newVariaveis;
+}
+
+int getNumLinTotal(TABLE table){
+    return *table->numLinTotal;
+}
+void setNumLinTotal(TABLE table, int newNumLinTotal){
+    table->numLinTotal = newNumLinTotal;
 }
 
 void nextLine(TABLE table, int numLinAtual){
