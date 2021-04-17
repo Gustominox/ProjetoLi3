@@ -42,14 +42,23 @@ doRegex (const gchar *string)
 //	print_uppercase_words("x = businesses_started_by_letter(sgr, 'T');");
 }
 
-/*
-void show(TABLE table){
-    int colunas, linhas;
-    printf("----------------------------------------------------------");
-    printf();
-    printf("|      business_id   |    name        |");
+void show (TABLE table){
+     
+    int linhas;
+    
+    printf("|");
+    for(int i = 0; i < 100 ; i++){
+        printf("-");
+    } 
+    printf("|\n");
+
+    for(linhas = 0; table->variaveis[linha] != Null; linhas++){
+        printLinha(table->variaveis[linha]);
+        for(int i = 0; i < 100 ; i++){
+        printf("-");
+        } 
+    }        
 }
-*/
 
 /*
 struct var{
