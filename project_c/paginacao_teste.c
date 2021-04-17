@@ -6,10 +6,20 @@
 
 
 struct table{
-    char **paginas;        // Array de páginas
-    int *numPag;          // Número da página atual
+    char **variaveis;         // Array de páginas
+    int *numPag;           // Número da página atual
     int *numPagTotal;     // Número de páginas totais
 };
+
+//printf("-----------------------------------------");
+
+// char **variaveis;
+// variaveis[0] = nomeBus;
+// printf("|%s",variaveis[i]);
+
+//printf("|\n");
+
+//printf("-----------------------------------------");
 
 
 // numPag++ :: Avançar na página
@@ -23,18 +33,19 @@ void setNumPag(TABLE table, int newNumPag){
     table->numPag = newNumPag;
 }
 
-char** getPaginas(TABLE table){
-    char **paginas = NULL;
+char** getVariaveis(TABLE table){
+    char **variaveis = NULL;
     int i = 0;
-    for(i = 0; table->paginas[i] != NULL; i++){
-        paginas = realloc(paginas, sizeof(char*)*(i+1));
-        paginas[i] = strdup(table->paginas[i]);
+    for(i = 0; table->variaveis[i] != NULL; i++){
+        variaveis = realloc(variaveis, sizeof(char*)*(i+1));
+        variaveis[i] = strdup(table->variaveis[i]);
     }
-    paginas[i] = NULL;
-    return paginas;
+    variaveis = realloc(variaveis, sizeof(char*)*(i+1));
+    variaveis[i] = NULL;
+    return variaveis;
 }
-void setPaginas(TABLE table, char **newPaginas){
-    table->paginas = newPaginas;
+void setVariaveis(TABLE table, char **newVariaveis){
+    table->variaveis = newVariaveis;
 }
 
 void nextPage(TABLE table, int numPagAtual){
@@ -45,22 +56,31 @@ void previousPage(TABLE table, int numPagAtual){
     setNumPag(table, numPagAtual--);    
 }
 
+void printLinha (char **variaveis){
+
+    for(int i = 0; variaveis != NULL; i++){
+        printf("| %s ", variaveis[i]);
+    } 
+
+    printf("|\n");
+}
+
 void acao(TABLE table, char tecla){
     
-    int numPagATual = getNumPag(table);
+    int numPagAtual = getNumPag(table);
     
     switch(tecla){
 
-        case (tecla == 'k'): // Avança na página
+        case ('k'): // Avança na página
             nextPage(table, numPagAtual);
             break;
         
-        case (tecla == 'j'): // Recua na página 
+        case ('j'): // Recua na página 
             previousPage(table, numPagAtual);
             break;
 
         default:
-            printf("comanddo inesxixtente \n");
+            printf("comando inesxixtente \n");
         
     }
 }

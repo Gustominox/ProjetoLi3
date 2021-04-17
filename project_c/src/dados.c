@@ -40,6 +40,7 @@ char** getBusCategories(BUSINESS bus){
        categ = realloc(categ,sizeof(char*)*(i+1));
        categ[i] = strdup(bus->categories[i]);
     }
+    categ = realloc(categ,sizeof(char*)*(i+1));
     categ[i] = NULL;
   return categ;
 }
@@ -68,6 +69,7 @@ char **getUserFriends (USER user){
        friends = realloc(friends,sizeof(char*)*(i+1));
        friends[i] = strdup(user->friends[i]);
     }
+    friends = realloc(friends,sizeof(char*)*(i+1));
     friends[i] = NULL;
   return friends;
 }
@@ -76,12 +78,8 @@ void setUserFriends(USER user, char **newFriends){
 }
 
 char *getReviewId (REVIEW review){
-    return strdup(review->review_id);
-}
-void setReviewId(REVIEW review, char newId[]){
-    strcpy (review->review_id, newId);
-}
-
+    return strdup(review->rs[i] = strdup(table->variaveis[i]);
+    }
 char *getReviewUser (REVIEW review){
     return strdup(review->user_id);
 }
@@ -338,7 +336,6 @@ USER addUser ( char info[]){
     int i;
     for( i = 0; temp != NULL; i++){
         user->friends = realloc(user->friends,sizeof(char*)*(i+1));
-        
         user->friends[i] = strdup(strsep(&temp, ","));  // Na primeira posição do array aux, será guardado a primeira categoria (separadas por ",").
         //printf("%s\n",bus->categories[i]);
     }
