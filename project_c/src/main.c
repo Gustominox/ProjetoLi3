@@ -4,14 +4,7 @@
 #include <stdio.h>
 #include "sgr.h"
 #include "interpretador.h"
-void printLinha (char **variaveis){
 
-    for(int i = 0; variaveis[i] != NULL; i++){
-        printf("| %s ", variaveis[i]);
-    } 
-
-    printf("|\n");
-}
 
 int main(int argc, char *argv[]) {
 char **info;

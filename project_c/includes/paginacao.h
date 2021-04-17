@@ -7,7 +7,11 @@
 * @field   paginas    Array de páginas (dos resultados obtidos nas queries)
 * @field   numPag     O número da página atual
 */
-typedef struct table *TABLE;
+typedef struct table{
+    char ***variaveis;         // Array de páginas
+    int *numLin;               // Número da linha atual
+    int *numLinTotal;          // Número de linhas totais
+} *TABLE;
 
 int getNumPag(TABLE table);
 

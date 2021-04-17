@@ -4,64 +4,86 @@
 #include "paginacao.h"
 // #include <glib.h>
 /*
-
 struct table{
-    char **paginas;        // Array de páginas
-    int *numPag;          // Número da página atual
-    int *numPagTotal;     // Número de páginas totais
-};
+    char ***variaveis;         // Array de páginas
+    int *numLin;               // Número da linha atual
+    int *numLinTotal;          // Número de linhas totais
+};*/
+
+//printf("-----------------------------------------");
+
+// char **variaveis;
+// variaveis[0] = nomeBus;
+// printf("|%s",variaveis[i]);
+
+//printf("|\n");
+
+//printf("-----------------------------------------");
 
 
-// numPag++ :: Avançar na página
-// numPag-- :: Recuar na página
-
-
-int getNumPag(TABLE table){
-    return *table->numPag;
+int getNumLin(TABLE table){
+    return *table->numLin;
 }
-void setNumPag(TABLE table, int newNumPag){
-    table->numPag = newNumPag;
+void setNumLin(TABLE table, int newNumLin){
+    table->numLin = newNumLin;
 }
 
-char** getPaginas(TABLE table){
-    char **paginas = NULL;
+char** getVariaveis(TABLE table){
+    char ***variaveis = NULL;
     int i = 0;
-    for(i = 0; table->paginas[i] != NULL; i++){
-        paginas = realloc(paginas, sizeof(char*)*(i+1));
-        paginas[i] = strdup(table->paginas[i]);
+    for(i = 0; table->variaveis[i] != NULL; i++){
+        variaveis = realloc(variaveis, sizeof(char*)*(i+1));
+        variaveis[i] = strdup(table->variaveis[i]);
     }
-    paginas[i] = NULL;
-    return paginas;
+    variaveis = realloc(variaveis, sizeof(char*)*(i+1));
+    variaveis[i] = NULL;
+    return variaveis;
 }
-void setPaginas(TABLE table, char **newPaginas){
-    table->paginas = newPaginas;
-}
-
-void nextPage(TABLE table, int numPagAtual){
-    setNumPag(table, numPagAtual++);
+void setVariaveis(TABLE table, char ***newVariaveis){
+    table->variaveis = newVariaveis;
 }
 
-void previousPage(TABLE table, int numPagAtual){
-    setNumPag(table, numPagAtual--);    
+int getNumLinTotal(TABLE table){
+    return *table->numLinTotal;
+}
+void setNumLinTotal(TABLE table, int newNumLinTotal){
+    table->numLinTotal = newNumLinTotal;
+}
+
+void nextLine(TABLE table, int numLinAtual){
+    setNumLin(table, numLinAtual++);
+}
+
+void previousLine(TABLE table, int numLinAtual){
+    setNumLin(table, numLinAtual--);    
+}
+
+void printLinha (char ***variaveis){
+
+    for(int i = 0; variaveis != NULL; i++){
+        printf("| %s ", variaveis[i]);
+    } 
+
+    printf("|\n");
 }
 
 void acao(TABLE table, char tecla){
-    char tecla;
-    tecla = fgetc(stdin);
-
-    int numPagATual = getNumPag(table);
+    
+    int numLinAtual = getNumLin(table);
     
     switch(tecla){
 
-        case (tecla == 0x0A): // ENTER
-            nextPage(table, numPagAtual);
+        case ('k'): // Avança na página
+            nextLine(table, numLinAtual);
             break;
         
-        case (tecla = "pgdn");
-            previousPage(table, numPagAtual);
+        case ('j'): // Recua na página 
+            previousLine(table, numLinAtual);
             break;
+
+        default:
+            printf("comando inesxixtente \n");
+        
     }
 }
 
-
-*/

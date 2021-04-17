@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "interpretador.h"
+#include "paginacao.h"
 
 #define ERRO_IO 1
 #define COMANDO_INEXISTENTE 2
@@ -51,7 +52,7 @@ doRegex (const gchar *string)
 
 void show (TABLE table){
      
-    int linhas;
+    int linha;
     
     printf("|");
     for(int i = 0; i < 100 ; i++){
@@ -59,7 +60,7 @@ void show (TABLE table){
     } 
     printf("|\n");
 
-    for(linhas = 0; table->variaveis[linha] != Null; linhas++){
+    for(linha = 0; table->variaveis[linha] != NULL; linha++){
         printLinha(table->variaveis[linha]);
         for(int i = 0; i < 100 ; i++){
         printf("-");
@@ -72,7 +73,7 @@ TABLE fromCSV(char filepath[] ,char delim){
 
     TABLE table = malloc(sizeof(struct table));
     
-    FILE *fp = fopen(path, "r"); 
+    FILE *fp = fopen(filepath, "r"); 
     if (fp == NULL){
         printf ("Error opening file\n");
         return;
@@ -99,7 +100,7 @@ TABLE fromCSV(char filepath[] ,char delim){
     return table;
 }
 
-
+/*
 int interpretador(){
     char linha[BUF_SIZE];
     char **temp = NULL;
@@ -138,16 +139,7 @@ int interpretador(){
             case "businesses_reviewed":
                 //businesses_reviewed(sgr, user_id);
                 break;
-               
-            case "businesses_with_stars_and_city":           
-                //businesses_with_stars_and_city(sgr, stars, city);
-                break;
-        
-            case "top_businesses_by_city":
-                //top_businesses_by_city(sgr, top);
-                break;  
-        
-            case "international_users":
+               " "international_users":
                 //international_users(sgr);
                 break;
         
@@ -174,4 +166,4 @@ int interpretador(){
 
     
 }
-
+*/
