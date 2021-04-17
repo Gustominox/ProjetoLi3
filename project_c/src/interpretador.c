@@ -68,6 +68,23 @@ void show (TABLE table){
     }        
 }
 
+void toCSV(TABLE var, char delim, char path[]){
+    
+    char **info = NULL;
+    FILE *fd = fopen(path, "a");
+    if (fd == NULL) printf ("Error opening freq file");
+    
+    int j;
+    for(j = 0; var->variaveis[j] != NULL; j++){
+        for(int i = 0; var->variaveis[j][i] != NULL; i++){
+            fprintf(fd, var->variaveis[j][i]);
+            fputc(delim, fd);
+        }
+        fputc('\n', fd);
+    }
+    free(fd);
+}
+
 TABLE fromCSV(char filepath[] ,char delim){
 
     TABLE table = malloc(sizeof(struct table));
