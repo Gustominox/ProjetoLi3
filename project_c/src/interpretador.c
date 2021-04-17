@@ -8,6 +8,12 @@
 #define COMANDO_INEXISTENTE 2
 #define BUF_SIZE 1024
 
+typedef enum{
+    LT,
+    EQ,
+    GT
+} OPERATOR;
+
 /*
 struct var{
     TABLE tabela;       // output de uma query
@@ -83,6 +89,53 @@ void toCSV(TABLE var, char delim, char path[]){
         fputc('\n', fd);
     }
     free(fd);
+}
+
+int compare(char* qqcena, char* value, OPERATOR oper){
+    
+    int r = 1;
+    if(oper == LT)
+        if(qqcena < value) r = 0;
+    if(oper == EQ)
+        if(qqcena == value) r = 0;
+    if(oper == GT)
+        if(qqcena > value) r = 0;
+
+    return r;
+}
+
+TABLE filter(TABLE var, char columName[], char* value, OPERATOR oper){
+
+    TABLE nova = malloc(sizeof(struct table));
+    setNumLinTotal(nova, 0);
+
+    int linha = 0, flag = 0;
+
+    for(int j = 0; var->variaveis[j] != NULL; j++){
+
+        for(int i = 0; var->variaveis[j][i] != NULL; i++){
+
+            if(strcmp(var->variaveis[j][i], columName) == 0)
+                if(compare(var->variaveis[j][i], value, oper) == 0)
+                    flag = 1;
+        }
+        if (flag){
+            char **arr = NULL;
+            int i = 0;
+            for(i = 0; var->variaveis[j][i] != NULL; i++){
+                arr = realloc(arr, sizeof(char*)*(i+1));
+                arr[i] = strdup(var->variaveis[i]);
+            }
+            arr = realloc(arr, sizeof(char*)*(i+1));
+            arr[i] = NULL;
+            linha++;
+        }
+    }
+    flag = 0;
+    setNumLinTotal(nova, linha);
+    nova->variaveis[linha] = arr;
+
+    return nova;
 }
 
 TABLE fromCSV(char filepath[] ,char delim){
