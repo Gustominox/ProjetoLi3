@@ -138,6 +138,26 @@ TABLE filter(TABLE var, char columName[], char* value, OPERATOR oper){
     return nova;
 }
 
+TABLE proj(TABLE var, int cols){
+
+    TABLE nova = malloc(sizeof(struct table));
+    setNumLinTotal(nova, getNumLinTotal(var));
+    setNumLin(nova, getNumLin(var));
+
+    int i = 0, j = 0;
+    char ***arr = NULL;
+
+    for(int j = 0; var->variaveis[j] != NULL; j++){
+        arr = realloc(arr, sizeof(char*)*(i+1));
+        for(i = 0; i < cols; i++){
+            arr[j] = realloc(arr, sizeof(char*)*(i+1));
+            arr[j][i] = strdup(var->variaveis[j][i]);
+        }   
+    }
+    nova->variaveis = arr;
+    return nova;
+}
+
 TABLE fromCSV(char filepath[] ,char delim){
 
     TABLE table = malloc(sizeof(struct table));
