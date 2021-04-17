@@ -249,10 +249,9 @@ transStrToTable(char path[], GHashTable* hash, void* (*funcao) (char info[]),
     
     while(fgets(buff,180000,fp)){
         //variaveis[0] = {busid,nome}
-        
         char *id; 
         char *temp = strdup(buff);
-     
+
         for (int i = 0; i < mode; i++){
         strsep(&temp,";");    
         }

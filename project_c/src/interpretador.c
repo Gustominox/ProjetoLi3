@@ -68,15 +68,14 @@ void show (TABLE table){
     }        
 }
 
-
 TABLE fromCSV(char filepath[] ,char delim){
 
     TABLE table = malloc(sizeof(struct table));
-    
+
     FILE *fp = fopen(filepath, "r"); 
     if (fp == NULL){
         printf ("Error opening file\n");
-        return;
+        return NULL;
     }
 
     char buffer[180000];
@@ -87,83 +86,77 @@ TABLE fromCSV(char filepath[] ,char delim){
         table->variaveis[j] = NULL;
         int i; //todos os caracteres ate encontrar uma virgula / coluna
         for( i = 0; buffer != NULL; i++){
-            table->variaveis[j] = realloc(table->variaveis,sizeof(char*)*(i+1));
+            table->variaveis[j] = realloc(table->variaveis,sizeof(char)*(i+1));
             table->variaveis[j][i] = strdup(strsep(&buffer, ","));
         }
-        j++;  
+        j++;
     }
     setNumLinTotal(table,j);
     setNumLin(table,0);
-    
+
     free(buffer);
 
     return table;
 }
 
-/*
+int isAssignment(char *linha){
+
+    if(strchr(linha,'=') != NULL) return 1;
+    else return 0;    
+
+}
+
 int interpretador(){
     char linha[BUF_SIZE];
-    char **temp = NULL;
+    char **info;
+    char* funcao;
     // char col[2], lin[2];
     // char cmdname[BUF_SIZE];
     // char filename[BUF_SIZE];
 
-    char letter;
+
      
 
     if(fgets(linha, BUF_SIZE, stdin) == NULL)
         return ERRO_IO;
 
-    int i;
-    //
-    //for(i = 0; linha != NULL; i++){
-    //    temp = realloc(temp,sizeof(char*)*(i+1));
-    //    temp[i] = strsep(&temp, ";");
-    //}
-//
- //   temp[i] = NULL;
-    // nomeFuncao =  businesses_started_by_letter
-    int k = 0;
-    char *funcao;
-        
-        switch(0){
-
-            case (strcmp("businesses_started_by_letter",funcao)):
-                //businesses_started_by_letter(sgr, letter); // cria uma hash table em que a key é o nome/primeira letra? do bussiness
-                break;
-
-            case "business_info":
-                //business_info(sgr, business_id);
-                break;
-        
-            case "businesses_reviewed":
-                //businesses_reviewed(sgr, user_id);
-                break;
-               " "international_users":
-                //international_users(sgr);
-                break;
-        
-            case "top_businesses_with_category":   
-                //top_businesses_with_category(sgr, top, categories);
-                break;
-        
-            case "reviews_with_word":
-                //reviews_with_word(sgr, top, word);
-                break;
-            
-            case "=":
-                //businesses_started_by_letter(sgr, letter); // cria uma hash table em que a key é o nome/primeira letra? do bussiness
-                break;
-
-            case "quit":
-                exit(0);
-
-            default:    
-                // s = COMANDO_INEXISTENTE;
-                printf("comando inexistente");
-        }
+    info = doRegex(linha);
+    
+    
+    if(isAssignment(linha)) funcao = info[2];
+    else funcao = info[0];
+    
+    if (strcmp("businesses_started_by_letter",funcao == 0))
+    {   
+        printf("HELLOOOOOOOOO \n");
+        //businesses_started_by_letter(sgr, letter);     
+    }   
+    else if (strcmp("business_info",funcao == 0))
+    {
+        //business_info(sgr, business_id);
+    }
+    else if (strcmp("businesses_reviewed",funcao == 0))
+    {
+        //businesses_reviewed(sgr, user_id);
+    }    
+    else if (strcmp("international_users",funcao == 0))
+    {
+        //international_users(sgr);
+    }    
+    else if (strcmp("top_businesses_with_category",funcao == 0))
+    {
+        //top_businesses_with_category(sgr, top, categories);
+    }           
+    else if (strcmp("reviews_with_word",funcao == 0))
+    {
+        //reviews_with_word(sgr, top, word);
+    }    
+    else{
+        printf("comando inexistente");
+    }
+    
     
 
     
 }
-*/
+

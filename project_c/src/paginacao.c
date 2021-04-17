@@ -20,16 +20,13 @@ struct table{
 
 //printf("-----------------------------------------");
 
-
-int getNumLin(TABLE table){
-    return *table->numLin;
-}
-
-
 void setNumLin(TABLE table, int newNumLin){
     table->numLin = newNumLin;
 }
-
+int getNumLin(TABLE table){
+    return table->numLin;
+}
+/*
 char** getVariaveis(TABLE table){
     char ***variaveis = NULL;
     int i = 0;
@@ -40,7 +37,7 @@ char** getVariaveis(TABLE table){
     variaveis = realloc(variaveis, sizeof(char*)*(i+1));
     variaveis[i] = NULL;
     return variaveis;
-}
+}*/
 
 
 void setVariaveis(TABLE table, char ***newVariaveis){
@@ -49,7 +46,7 @@ void setVariaveis(TABLE table, char ***newVariaveis){
 
 
 int getNumLinTotal(TABLE table){
-    return *table->numLinTotal;
+    return table->numLinTotal;
 }
 
 
@@ -68,7 +65,7 @@ void previousLine(TABLE table, int numLinAtual){
 }
 
 
-void printLinha (char ***variaveis){
+void printLinha (char **variaveis){
 
     for(int i = 0; variaveis != NULL; i++){
         printf("| %s ", variaveis[i]);

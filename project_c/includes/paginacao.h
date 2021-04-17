@@ -10,8 +10,8 @@
 */
 typedef struct table{
     char ***variaveis;        
-    int *numLin;               
-    int *numLinTotal;         
+    int numLin;               
+    int numLinTotal;         
 } *TABLE;
 
 
@@ -20,7 +20,7 @@ typedef struct table{
 * @param table table
 * @return número da linha atual
 */
-int getNumLin(TABLE table)
+int getNumLin(TABLE table);
 
 
 /**
@@ -83,7 +83,7 @@ void previousLine(TABLE table, int numLinAtual);
 * \brief Imprime uma linha do array de variaveis
 * @param variaveis variaveis
 */
-void printLinha (char ***variaveis);
+void printLinha (char **variaveis);
 
 
 /**
