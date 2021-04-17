@@ -6,7 +6,7 @@
 
 
 struct table{
-    char **variaveis;         // Array de páginas
+    char ***variaveis;         // Array de páginas
     int *numLin;           // Número da linha atual
     int *numLinTotal;     // Número de linhas totais
 };
@@ -26,15 +26,15 @@ struct table{
 // numPag-- :: Recuar na página
 
 
-int getNumPag(TABLE table){
-    return *table->numPag;
+int getNumLin(TABLE table){
+    return *table->numLin;
 }
-void setNumPag(TABLE table, int newNumPag){
-    table->numPag = newNumPag;
+void setNumLin(TABLE table, int newNumLin){
+    table->numLin = newNumLin;
 }
 
 char** getVariaveis(TABLE table){
-    char **variaveis = NULL;
+    char ***variaveis = NULL;
     int i = 0;
     for(i = 0; table->variaveis[i] != NULL; i++){
         variaveis = realloc(variaveis, sizeof(char*)*(i+1));
@@ -44,19 +44,19 @@ char** getVariaveis(TABLE table){
     variaveis[i] = NULL;
     return variaveis;
 }
-void setVariaveis(TABLE table, char **newVariaveis){
+void setVariaveis(TABLE table, char ***newVariaveis){
     table->variaveis = newVariaveis;
 }
 
-void nextPage(TABLE table, int numPagAtual){
-    setNumPag(table, numPagAtual++);
+void nextLine(TABLE table, int numLinAtual){
+    setNumLin(table, numLinAtual++);
 }
 
-void previousPage(TABLE table, int numPagAtual){
-    setNumPag(table, numPagAtual--);    
+void previousLine(TABLE table, int numLinAtual){
+    setNumLin(table, numLinAtual--);    
 }
 
-void printLinha (char **variaveis){
+void printLinha (char ***variaveis){
 
     for(int i = 0; variaveis != NULL; i++){
         printf("| %s ", variaveis[i]);
@@ -67,16 +67,16 @@ void printLinha (char **variaveis){
 
 void acao(TABLE table, char tecla){
     
-    int numPagAtual = getNumPag(table);
+    int numLinAtual = getNumLin(table);
     
     switch(tecla){
 
         case ('k'): // Avança na página
-            nextPage(table, numPagAtual);
+            nextPage(table, numLinAtual);
             break;
         
         case ('j'): // Recua na página 
-            previousPage(table, numPagAtual);
+            previousPage(table, numLinAtual);
             break;
 
         default:
