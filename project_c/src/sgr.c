@@ -42,6 +42,7 @@ void *threadUsers(void* value){
 	return NULL;
 }
 
+
 void *threadBusiness(void* value){
 	
 	STHREAD help = (STHREAD) value;
@@ -52,6 +53,7 @@ void *threadBusiness(void* value){
 
 	return NULL;
 }
+
 
 void *threadReviews(void* value){
 	
@@ -66,6 +68,8 @@ void *threadReviews(void* value){
 
 	return NULL;
 }
+
+
 SGR load_sgr(char *fileBus, char *fileReviews, char *fileUsers){
     // init struct sgr
 	SGR sgr = init_sgr();
@@ -132,11 +136,6 @@ SGR load_sgr(char *fileBus, char *fileReviews, char *fileUsers){
 	return sgr;
 
 }
-/* 	QUERY 3
-	Dado um id de negócio, determinar a sua informação:
- 	nome, cidade, estado, stars, e número total reviews.
- 
- ******/ 
 
 
 TABLE business_info(SGR sgr, char *business_id){
@@ -163,11 +162,6 @@ TABLE business_info(SGR sgr, char *business_id){
 	
 	printf("nRev: %d\n", nRev);											  
 }
-
-/* 	QUERY 4
-	Dado um id de utilizador, determinar a lista de negócios aos quais fez review.
-	A informação associada a cada negócio deve ser o id e o nome.
- ******/ 
 
 
 TABLE businesses_reviewed(SGR sgr, char *user_id){
@@ -200,11 +194,6 @@ TABLE businesses_reviewed(SGR sgr, char *user_id){
 	
 }
 
-/* 	QUERY 5
-	Dado um número n de stars e uma cidade, determinar a lista de negócios 
-	com n ou mais stars na dada cidade. A informação associada a cada negócio
-	deve ser o seu id e nome.
- ******/
 
 TABLE businesses_with_stars_and_city(SGR sgr, float stars, char *city){
 	

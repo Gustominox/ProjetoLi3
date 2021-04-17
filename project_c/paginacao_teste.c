@@ -7,8 +7,8 @@
 
 struct table{
     char **variaveis;         // Array de páginas
-    int *numPag;           // Número da página atual
-    int *numPagTotal;     // Número de páginas totais
+    int *numLin;           // Número da linha atual
+    int *numLinTotal;     // Número de linhas totais
 };
 
 //printf("-----------------------------------------");
