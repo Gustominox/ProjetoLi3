@@ -8,25 +8,37 @@
 #define BUF_SIZE 1024
 
 
-void
-print_uppercase_words (const gchar *string)
+char **
+doRegex (const gchar *string)
 {
   // Print all uppercase-only words.
   GRegex *regex;
   GMatchInfo *match_info;
- 
-  regex = g_regex_new ("[A-z/;.]+", 0, 0, NULL);//[A-z]+ = [A-z]+[(][a-z]+, '[A-z]'[)];
+  char **info = NULL;
+  int i = 0;
+  regex = g_regex_new ("[A-z/;.=]+", 0, 0, NULL);//[A-z]+ = [A-z]+[(][a-z]+, '[A-z]'[)];
   g_regex_match (regex, string, 0, &match_info);
-  while (g_match_info_matches (match_info))
-    {
-      gchar *word = g_match_info_fetch (match_info, 0);
-      g_print ("%s\n", word);
-      g_free (word);
-      g_match_info_next (match_info, NULL);
+
+
+  while (g_match_info_matches (match_info)){
+
+    gchar *word = g_match_info_fetch (match_info, 0);
+      
+    info = realloc(info,sizeof(char*)*(i+1));
+    info[i] = strdup(word);
+
+    i++;
+
+    //g_print ("%s\n", word);
+    
+    g_free (word);
+    g_match_info_next (match_info, NULL);
     }
+    info = realloc(info,sizeof(char*)*(i+1));
+    info[i] = NULL;
   g_match_info_free (match_info);
   g_regex_unref (regex);
-
+  return info;
 //	print_uppercase_words("x = businesses_started_by_letter(sgr, 'T');");
 }
 
@@ -39,13 +51,14 @@ void show(TABLE table){
 }
 */
 
+/*
 struct var{
     TABLE tabela;       // output de uma query
     char* nome;         // nome da variável
 };
+*/
 
-/*
-int interpretador(SGR sgr){
+int interpretador(){
     char linha[BUF_SIZE];
     char **temp = NULL;
     // char col[2], lin[2];
@@ -53,56 +66,61 @@ int interpretador(SGR sgr){
     // char filename[BUF_SIZE];
 
     char letter;
-    TABLE x;
+     
 
     if(fgets(linha, BUF_SIZE, stdin) == NULL)
         return ERRO_IO;
 
     int i;
-    for(i = 0; linha != NULL; i++){
-        temp = realloc(temp,sizeof(char*)*(i+1));
-        temp[i] = strsep(&temp, ";");
-    }
-
-    temp[i] = NULL;
+    //
+    //for(i = 0; linha != NULL; i++){
+    //    temp = realloc(temp,sizeof(char*)*(i+1));
+    //    temp[i] = strsep(&temp, ";");
+    //}
+//
+ //   temp[i] = NULL;
     // nomeFuncao =  businesses_started_by_letter
     int k = 0;
-    while (temp != NULL){
+    char *funcao;
         
-        switch(temp){
+        switch(0){
 
-            case (strcmp(temp[k],"businesses_started_by_letter")==0):
-                x = businesses_started_by_letter(sgr, letter); // cria uma hash table em que a key é o nome/primeira letra? do bussiness
+            case (strcmp("businesses_started_by_letter",funcao)):
+                //businesses_started_by_letter(sgr, letter); // cria uma hash table em que a key é o nome/primeira letra? do bussiness
                 break;
 
-            case (strcmp(temp[k],"query3")==0):
-                x = business_info(sgr, business_id);
+            case "business_info":
+                //business_info(sgr, business_id);
                 break;
         
-            case (strcmp(temp[k],"query4")==0):
-                x = businesses_reviewed(sgr, user_id);
+            case "businesses_reviewed":
+                //businesses_reviewed(sgr, user_id);
                 break;
                
-            case (strcmp(temp[k],"query5")==0):           
-                x = businesses_with_stars_and_city(sgr, stars, city);
+            case "businesses_with_stars_and_city":           
+                //businesses_with_stars_and_city(sgr, stars, city);
                 break;
         
-            case (strcmp(temp[k],"query6")==0):
-                x = top_businesses_by_city(sgr, top);
+            case "top_businesses_by_city":
+                //top_businesses_by_city(sgr, top);
                 break;  
         
-            case (strcmp(temp[k],"query7")==0):
-                x = international_users(sgr);
+            case "international_users":
+                //international_users(sgr);
                 break;
         
-            case (strcmp(temp[k],"query8")==0):   
-                x = top_businesses_with_category(sgr, top, categories);
+            case "top_businesses_with_category":   
+                //top_businesses_with_category(sgr, top, categories);
                 break;
         
-            case (strcmp(temp[k],"query9")==0):
-                x = reviews_with_word(sgr, top, word);
+            case "reviews_with_word":
+                //reviews_with_word(sgr, top, word);
                 break;
             
+            case "=":
+                //businesses_started_by_letter(sgr, letter); // cria uma hash table em que a key é o nome/primeira letra? do bussiness
+                break;
+
             case "quit":
                 exit(0);
 
@@ -110,10 +128,8 @@ int interpretador(SGR sgr){
                 // s = COMANDO_INEXISTENTE;
                 printf("comando inexistente");
         }
-        k++;
-    }
     
-    for (int j = 0; j < tmh; j++)
-        free (temp[j]);
+
+    
 }
-*/
+

@@ -78,8 +78,8 @@ void setUserFriends(USER user, char **newFriends){
 }
 
 char *getReviewId (REVIEW review){
-    return strdup(review->rs[i] = strdup(table->variaveis[i]);
-    }
+    return strdup(review->review_id);
+}
 char *getReviewUser (REVIEW review){
     return strdup(review->user_id);
 }
@@ -237,6 +237,7 @@ char** lerFichCsv ( int* tmh, char path[]){
 void 
 transStrToTable(char path[], GHashTable* hash, void* (*funcao) (char info[]),
                 int mode ){
+
     FILE *fp = fopen(path, "r");
     
     if (fp == NULL){
@@ -247,10 +248,11 @@ transStrToTable(char path[], GHashTable* hash, void* (*funcao) (char info[]),
     char buff[180000];
     
     while(fgets(buff,180000,fp)){
-
+        //variaveis[0] = {busid,nome}
+        
         char *id; 
         char *temp = strdup(buff);
-
+     
         for (int i = 0; i < mode; i++){
         strsep(&temp,";");    
         }
@@ -352,7 +354,7 @@ USER addUser ( char info[]){
 }
 
 
-REVIEW addReview ( char info[]){
+REVIEW addReview (char info[]){
 	
     REVIEW rev = malloc(sizeof(struct review));
     
