@@ -7,6 +7,12 @@
 #define COMANDO_INEXISTENTE 2
 #define BUF_SIZE 1024
 
+/*
+struct var{
+    TABLE tabela;       // output de uma query
+    char* nome;         // nome da variável
+};
+*/
 
 char **
 doRegex (const gchar *string)
@@ -42,6 +48,7 @@ doRegex (const gchar *string)
 //	print_uppercase_words("x = businesses_started_by_letter(sgr, 'T');");
 }
 
+
 void show (TABLE table){
      
     int linhas;
@@ -60,12 +67,38 @@ void show (TABLE table){
     }        
 }
 
-/*
-struct var{
-    TABLE tabela;       // output de uma query
-    char* nome;         // nome da variável
-};
-*/
+
+TABLE fromCSV(char filepath[] ,char delim){
+
+    TABLE table = malloc(sizeof(struct table));
+    
+    FILE *fp = fopen(path, "r"); 
+    if (fp == NULL){
+        printf ("Error opening file\n");
+        return;
+    }
+
+    char buffer[180000];
+    int j=0; //linha
+
+    while(fgets(buffer,180000,fp)){
+
+        table->variaveis[j] = NULL;
+        int i; //todos os caracteres ate encontrar uma virgula / coluna
+        for( i = 0; buffer != NULL; i++){
+            table->variaveis[j] = realloc(table->variaveis,sizeof(char*)*(i+1));
+            table->variaveis[j][i] = strdup(strsep(&buffer, ","));
+        }
+        j++;  
+    }
+    setNumLinTotal(table,j);
+    setNumLin(table,0);
+    
+    free(buffer);
+
+    return table;
+}
+
 
 int interpretador(){
     char linha[BUF_SIZE];
