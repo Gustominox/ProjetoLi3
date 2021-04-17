@@ -24,6 +24,8 @@ struct table{
 int getNumLin(TABLE table){
     return *table->numLin;
 }
+
+
 void setNumLin(TABLE table, int newNumLin){
     table->numLin = newNumLin;
 }
@@ -39,24 +41,32 @@ char** getVariaveis(TABLE table){
     variaveis[i] = NULL;
     return variaveis;
 }
+
+
 void setVariaveis(TABLE table, char ***newVariaveis){
     table->variaveis = newVariaveis;
 }
 
+
 int getNumLinTotal(TABLE table){
     return *table->numLinTotal;
 }
+
+
 void setNumLinTotal(TABLE table, int newNumLinTotal){
     table->numLinTotal = newNumLinTotal;
 }
+
 
 void nextLine(TABLE table, int numLinAtual){
     setNumLin(table, numLinAtual++);
 }
 
+
 void previousLine(TABLE table, int numLinAtual){
     setNumLin(table, numLinAtual--);    
 }
+
 
 void printLinha (char ***variaveis){
 
@@ -66,6 +76,7 @@ void printLinha (char ***variaveis){
 
     printf("|\n");
 }
+
 
 void acao(TABLE table, char tecla){
     
