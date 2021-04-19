@@ -8,13 +8,13 @@
 #define ERRO_IO 1
 #define COMANDO_INEXISTENTE 2
 #define BUF_SIZE 1024
-/*
+
 typedef enum{
     LT,
     EQ,
     GT
 } OPERATOR;
-*/
+
 /*
 struct var{
     TABLE tabela;       // output de uma query
@@ -74,17 +74,17 @@ void show (TABLE table){
         } 
     }        
 }
-/*
+
 void toCSV(TABLE var, char delim, char path[]){
     
     char **info = NULL;
     FILE *fd = fopen(path, "a");
-    if (fd == NULL) printf ("Error opening freq file");
+    if (fd == NULL) printf ("Error opening file");
     
     int j;
     for(j = 0; var->variaveis[j] != NULL; j++){
         for(int i = 0; var->variaveis[j][i] != NULL; i++){
-            fprintf(fd, var->variaveis[j][i]);
+            fprintf(fd,"%s" ,var->variaveis[j][i]);
             fputc(delim, fd);
         }
         fputc('\n', fd);
@@ -93,8 +93,16 @@ void toCSV(TABLE var, char delim, char path[]){
 }
 
 int compare(char* qqcena, char* value, OPERATOR oper){
-    
+    // strcmp returns :
+    // menor do que zero se a 1 for menor que a segunda
+    // zero se for igual
+    // maior do que zero se a 1 for maior que a segunda
     int r = 1;
+    
+    //"" = atof("3.0654");
+    //"paula\0"}
+    //paulazinha
+    
     if(oper == LT)
         if(qqcena < value) r = 0;
     if(oper == EQ)
@@ -111,6 +119,9 @@ TABLE filter(TABLE var, char columName[], char* value, OPERATOR oper){
     setNumLinTotal(nova, 0);
 
     int linha = 0, flag = 0;
+    char **arr = NULL;
+            
+
 
     for(int j = 0; var->variaveis[j] != NULL; j++){
 
@@ -121,11 +132,11 @@ TABLE filter(TABLE var, char columName[], char* value, OPERATOR oper){
                     flag = 1;
         }
         if (flag){
-            char **arr = NULL;
+            
             int i = 0;
             for(i = 0; var->variaveis[j][i] != NULL; i++){
                 arr = realloc(arr, sizeof(char*)*(i+1));
-                arr[i] = strdup(var->variaveis[i]);
+                arr[i] = strdup(var->variaveis[j][i]);
             }
             arr = realloc(arr, sizeof(char*)*(i+1));
             arr[i] = NULL;
@@ -146,7 +157,7 @@ TABLE proj(TABLE var, int cols){
     setNumLin(nova, getNumLin(var));
 
     int i = 0, j = 0;
-    char ***arr = NULL;
+    char ***arr = NULL; //== nova->variaveis
 
     for(int j = 0; var->variaveis[j] != NULL; j++){
         arr = realloc(arr, sizeof(char*)*(i+1));
@@ -154,11 +165,13 @@ TABLE proj(TABLE var, int cols){
             arr[j] = realloc(arr, sizeof(char*)*(i+1));
             arr[j][i] = strdup(var->variaveis[j][i]);
         }   
-    }
+    // alocar memoria para variaveis
     nova->variaveis = arr;
+    }
+   
     return nova;
 }
- */
+ 
 TABLE fromCSV(char filepath[] ,char delim){
 
     TABLE table = malloc(sizeof(struct table));

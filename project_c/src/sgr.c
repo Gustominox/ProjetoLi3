@@ -102,7 +102,7 @@ SGR load_sgr(char *fileBus, char *fileReviews, char *fileUsers){
 	pthread_t thread1,thread2,thread3;
 
 
-	pthread_create(&thread1,NULL,threadUsers,helpUsers);
+	//pthread_create(&thread1,NULL,threadUsers,helpUsers);
 	
 	pthread_create(&thread2,NULL,threadBusiness,helpBusiness);
 	
@@ -112,7 +112,7 @@ SGR load_sgr(char *fileBus, char *fileReviews, char *fileUsers){
 	
 
 	//transStrToTable(fileUsers,sgr->user,help->funcao,0);
-	pthread_join(thread1,NULL);
+	//pthread_join(thread1,NULL);
 	pthread_join(thread2,NULL);
 	pthread_join(thread3,NULL);
 	/*
