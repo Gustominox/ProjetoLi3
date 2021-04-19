@@ -334,6 +334,7 @@ USER addUser ( char info[]){
     //printf("TEMP: %s\n",temp);
 
     user->friends=NULL;
+    
     int i;
     for( i = 0; temp != NULL; i++){
         user->friends = realloc(user->friends,sizeof(char*)*(i+1));

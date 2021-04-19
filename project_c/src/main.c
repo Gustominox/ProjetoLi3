@@ -7,19 +7,25 @@
 
 
 int main(int argc, char *argv[]) {
+
+interpretador();
+/*
 char **info;
 info = doRegex("x = businesses_started_by_letter(sgr, 'T');");
 
-printf("FORA\n");
 if(strchr("x = businesses_started_by_letter(sgr, 'T');",'=') != NULL)
 	printLinha(info);
-//for (int i = 0; user->friends[i] != NULL; i++){
-        //printf("%s\n", user->friends[i]);
-
 
 info = doRegex("toCSV(x,';',\"tascos.txt\");");
 if(strchr("y = toCSV(x,';',\"tascos.txt\");", '=') != NULL)
 	printLinha(info);
+*/
+
+
+
+
+
+
 //free_sgr(sgr);    
 //SGR sgr = load_sgr(NULL,NULL,NULL);
 

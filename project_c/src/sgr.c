@@ -104,15 +104,9 @@ SGR load_sgr(char *fileBus, char *fileReviews, char *fileUsers){
 
 	pthread_create(&thread1,NULL,threadUsers,helpUsers);
 	
-	//help->file = fileBus;
-	//help->sgr = sgr;
-	//help->funcao = addBusiness;
-//	help->mode = 0;
-
-	pthread_create(&thread3,NULL,threadReviews,helpReviews);
-
 	pthread_create(&thread2,NULL,threadBusiness,helpBusiness);
-
+	
+	pthread_create(&thread3,NULL,threadReviews,helpReviews);
 
 
 	
@@ -141,7 +135,10 @@ SGR load_sgr(char *fileBus, char *fileReviews, char *fileUsers){
 TABLE business_info(SGR sgr, char *business_id){
 
 	GSList* list =  g_hash_table_lookup(sgr->business,business_id);
-
+	if (list == NULL) {
+		printf("BUSINESS DOES NOT EXIST\n");
+		return NULL;
+	}
 	BUSINESS bus = list->data;
 
 	list = g_hash_table_lookup(sgr->reviewByBusId,business_id );

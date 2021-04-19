@@ -2,13 +2,13 @@
 #include <stdlib.h>
 #include <string.h>
 #include <glib.h>
-#include "paginacao.h"
+
 // #include <glib-2.0/glib.h>
 
 /*!
 * @typedef GHashTable
 */
-// typedef char *TABLE;
+ typedef struct table *TABLE;
 
 
 /*!
