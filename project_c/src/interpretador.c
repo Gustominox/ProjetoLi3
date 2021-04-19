@@ -3,6 +3,7 @@
 #include <string.h>
 #include "interpretador.h"
 #include "paginacao.h"
+#include "auxiliares.h"
 #include "sgr.h"
 
 #define ERRO_IO 1
@@ -75,101 +76,119 @@ void show (TABLE table){
     }        
 }
 
-void toCSV(TABLE var, char delim, char path[]){
+void toCSV(TABLE table, char delim, char path[]){
     
     char **info = NULL;
     FILE *fd = fopen(path, "a");
-    if (fd == NULL) printf ("Error opening file");
-    
+    if (fd == NULL) printf ("Error opening file");   // tipo, aqui não devíamos interromper a função para ele não fazer o resto? 
+                                                     // eu sei que é um void, mas é que assim ele vai executar o resto desnecessariamente.
+    // else{
     int j;
-    for(j = 0; var->variaveis[j] != NULL; j++){
-        for(int i = 0; var->variaveis[j][i] != NULL; i++){
-            fprintf(fd,"%s" ,var->variaveis[j][i]);
+    for(j = 0; table->variaveis[j] != NULL; j++){
+        for(int i = 0; table->variaveis[j][i] != NULL; i++){
+            fprintf(fd,"%s" ,table->variaveis[j][i]);
             fputc(delim, fd);
         }
         fputc('\n', fd);
     }
+    //}
     free(fd);
 }
 
-int compare(char* qqcena, char* value, OPERATOR oper){
+int compare(char* content, char* value, OPERATOR oper){
     // strcmp returns :
     // menor do que zero se a 1 for menor que a segunda
     // zero se for igual
     // maior do que zero se a 1 for maior que a segunda
-    int r = 1;
-    
-    //"" = atof("3.0654");
-    //"paula\0"}
-    //paulazinha
-    
-    if(oper == LT)
-        if(qqcena < value) r = 0;
-    if(oper == EQ)
-        if(qqcena == value) r = 0;
-    if(oper == GT)
-        if(qqcena > value) r = 0;
+    int isValid = 1, isFloat = 0, isInt = 0;
 
-    return r;
+    float valueToFloat = atof(value);
+    int valueToInt = atoi(value);
+
+    // testa se, na string value, há um float ou não.
+    if(valueToFloat != 0.0) isFloat = 1;
+
+    // testa se, na string value, há um inteiro ou não.
+    for(int i = 0; i < strlen(value); i++)
+        if (valueToInt != 0 || (valueToInt == 0 && isDigit(value[i])) ) isInt = 1;
+
+    switch(oper){
+
+        case LT:
+            if(isFloat)
+                if(atof(content) < valueToFloat) isValid = 0;
+            else if(isInt)
+                if(atoi(content) < valueToInt) isValid = 0;
+            // else ...
+
+            break;
+
+        case EQ:
+            if(isFloat)
+                if(atof(content) == valueToFloat) isValid = 0;
+            else if(isInt)
+                if(atoi(content) == valueToInt) isValid = 0;
+            // else ...
+
+            // if(strcmp(content, value) == 0) isValid = 0;
+            break;
+        case GT:
+            if(isFloat)
+                if(atof(content) > valueToFloat) isValid = 0;
+            else if(isInt)
+                if(atoi(content) > valueToInt) isValid = 0;
+            // else ...
+
+            // if(strcmp(content, value) > 0) isValid = 0;
+            break;
+    }
+    return isValid;
 }
 
-TABLE filter(TABLE var, char columName[], char* value, OPERATOR oper){
+TABLE filter(TABLE table, char columName[], char* value, OPERATOR oper){
 
-    TABLE nova = malloc(sizeof(struct table));
-    setNumLinTotal(nova, 0);
+    TABLE novaTable = malloc(sizeof(struct table));
+    setNumLinTotal(novaTable, 0);
 
-    int linha = 0, flag = 0;
-    char **arr = NULL;
-            
+    int linhas = 0, flag = 0;
+         
+    for(int j = 0; table->variaveis[j] != NULL; j++){
+        
+        novaTable->variaveis = realloc(novaTable->variaveis, sizeof(char*)*(j+1));
 
-
-    for(int j = 0; var->variaveis[j] != NULL; j++){
-
-        for(int i = 0; var->variaveis[j][i] != NULL; i++){
-
-            if(strcmp(var->variaveis[j][i], columName) == 0)
-                if(compare(var->variaveis[j][i], value, oper) == 0)
+        for(int i = 0; table->variaveis[j][i] != NULL; i++){
+            if(strcmp(table->variaveis[j][i], columName) == 0)
+                if(compare(table->variaveis[j][i], value, oper) == 0)
                     flag = 1;
         }
         if (flag){
-            
-            int i = 0;
-            for(i = 0; var->variaveis[j][i] != NULL; i++){
-                arr = realloc(arr, sizeof(char*)*(i+1));
-                arr[i] = strdup(var->variaveis[j][i]);
+            for(int i = 0; table->variaveis[j][i] != NULL; i++){
+                novaTable->variaveis[j] = realloc(novaTable->variaveis, sizeof(char*)*(i+1));
+                novaTable->variaveis[j][i] = strdup(table->variaveis[j][i]);
             }
-            arr = realloc(arr, sizeof(char*)*(i+1));
-            arr[i] = NULL;
-            linha++;
+            linhas++;
         }
     }
     flag = 0;
-    setNumLinTotal(nova, linha);
-    nova->variaveis[linha] = arr;
+    setNumLinTotal(novaTable, linhas);
 
-    return nova;
+    return novaTable;
 }
 
-TABLE proj(TABLE var, int cols){
+TABLE proj(TABLE table, int cols){
 
-    TABLE nova = malloc(sizeof(struct table));
-    setNumLinTotal(nova, getNumLinTotal(var));
-    setNumLin(nova, getNumLin(var));
+    TABLE novaTable = malloc(sizeof(struct table));
+    setNumLinTotal(novaTable, getNumLinTotal(table));
+    setNumLin(novaTable, getNumLin(table));
 
-    int i = 0, j = 0;
-    char ***arr = NULL; //== nova->variaveis
-
-    for(int j = 0; var->variaveis[j] != NULL; j++){
-        arr = realloc(arr, sizeof(char*)*(i+1));
-        for(i = 0; i < cols; i++){
-            arr[j] = realloc(arr, sizeof(char*)*(i+1));
-            arr[j][i] = strdup(var->variaveis[j][i]);
+    for(int j = 0; table->variaveis[j] != NULL; j++){
+        novaTable->variaveis = realloc(novaTable->variaveis, sizeof(char*)*(j+1));
+        for(int i = 0; i < cols; i++){
+            novaTable->variaveis[j] = realloc(novaTable->variaveis, sizeof(char*)*(i+1));
+            novaTable->variaveis[j][i] = strdup(table->variaveis[j][i]);
         }   
-    // alocar memoria para variaveis
-    nova->variaveis = arr;
     }
-   
-    return nova;
+    return novaTable;
 }
  
 TABLE fromCSV(char filepath[] ,char delim){
