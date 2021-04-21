@@ -8,7 +8,8 @@
 
 int main(int argc, char *argv[]) {
 
-//interpretador();
+interpretador();
+
 /*
 char **info;
 info = doRegex("x = businesses_started_by_letter(sgr, 'T');");

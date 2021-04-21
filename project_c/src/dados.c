@@ -330,11 +330,13 @@ USER addUser ( char info[]){
     //printf("NAME: %s\n", user->name);
     if(strcmp(user->name,"") == 0) return NULL;
     
-    char* temp = strdup(strsep(&info, "\n"));   
+    //char* temp = strdup(strsep(&info, "\n"));   
     //printf("TEMP: %s\n",temp);
 
-    user->friends=NULL;
-    
+    //user->friends=malloc (sizeof(char*));
+    user->friends = strdup(strsep(&info, "\n"));;
+    //printf("\n\n%s\n", user->friends[0]);
+    /*
     int i;
     for( i = 0; temp != NULL; i++){
         user->friends = realloc(user->friends,sizeof(char*)*(i+1));
@@ -343,13 +345,13 @@ USER addUser ( char info[]){
     }
     //user->friends = realloc(user->friends,sizeof(char*)*(i+1));
     //user->friends[i] = NULL;
-    //printf("TEMP: %s\n",temp);
     free(temp);
     //printf("FRIENDS:\n");
     //for (int i = 0; user->friends[i] != NULL; i++){
         //printf("%s\n", user->friends[i]);
     //}
-    
+    */
+
     return user;
 }
 

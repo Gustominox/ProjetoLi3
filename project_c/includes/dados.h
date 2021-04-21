@@ -20,7 +20,7 @@
 typedef struct user{
 	char *id;
 	char *name;
-	char **friends;
+	char *friends;
 } *USER;
 
 
