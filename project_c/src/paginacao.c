@@ -3,22 +3,6 @@
 #include <string.h>
 #include "paginacao.h"
 // #include <glib.h>
-/*
-struct table{
-    char ***variaveis;         // Array de páginas
-    int *numLin;               // Número da linha atual
-    int *numLinTotal;          // Número de linhas totais
-};*/
-
-//printf("-----------------------------------------");
-
-// char **variaveis;
-// variaveis[0] = nomeBus;
-// printf("|%s",variaveis[i]);
-
-//printf("|\n");
-
-//printf("-----------------------------------------");
 
 void setNumLin(TABLE table, int newNumLin){
     table->numLin = newNumLin;

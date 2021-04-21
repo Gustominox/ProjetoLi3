@@ -137,100 +137,29 @@ void setReviewText(REVIEW review, char newText[]){
     strcpy (review->text, newText);
 }
 
-/*
-char *userToString(USER user){
-
-    char *userStr = malloc(sizeof(char)*1000);
-    strcat(userStr,"User [");
-    strcat(userStr,getUserId(user));
-    strcat(userStr,getUserName(user));
-    strcat(userStr,getUserFriends(user));
-    strcat(userStr,"]");    
-    printf("%s\n", userStr);
-
-    return userStr;
-}
-
-char *reviewToString(REVIEW rev){
-
-    float stars = getReviewStars(rev);
-    char starsToStr[5];
-    sprintf(starsToStr, "%f", stars);
-
-    int useful = getReviewUseful(rev);
-    char usefulToStr[3];
-    sprintf(usefulToStr, "%d", useful);
-
-    int funny = getReviewFunny(rev);
-    char funnyToStr[3];
-    sprintf(funnyToStr, "%d", funny);
-
-    int cool = getReviewCool(rev);
-    char coolToStr[3];
-    sprintf(coolToStr, "%d", cool);
-
-    //char *reviewStr[9] = {rev->review_id, rev->user_id, rev->business_id, starsToStr, usefulToStr, funnyToStr, coolToStr, rev->date, rev->text};
-    char *reviewStr =  malloc(sizeof(char)*1000);
-    strcat(reviewStr,"Review [");
-    strcat(reviewStr,getReviewId(rev));
-    strcat(reviewStr,getReviewUser(rev));
-    strcat(reviewStr,getReviewBus(rev));
-    strcat(reviewStr,starsToStr);
-    strcat(reviewStr,usefulToStr);
-    strcat(reviewStr,funnyToStr);
-    strcat(reviewStr,coolToStr);
-    strcat(reviewStr,getReviewDate(rev));
-    strcat(reviewStr,getReviewText(rev));
-    strcat(reviewStr,"]");
-    
-    return reviewStr;
-}
-
-char *businessToString(BUSINESS bus){
-
-    char *businessStr = malloc(sizeof(char)*1024);
-    // {bus->business_id, bus->name, bus->city, bus->state, *bus->categories};
-    strcat(businessStr,"Business [");
-    strcat(businessStr,getBusId(bus));
-    strcat(businessStr,"; ");
-    strcat(businessStr,getName(bus));
-    strcat(businessStr,"; ");
-    strcat(businessStr,getCity(bus));
-    strcat(businessStr,"; ");
-    strcat(businessStr,getState(bus));
-    strcat(businessStr,"; ");
-    char **temp = getCategories(bus);
-    for (int i = 0; temp[i] != NULL; i++){
-        strcat(businessStr, temp[i]);
-        strcat(businessStr," ");
-
-    }
-    strcat(businessStr,"]");
-
-    return businessStr;
-}
-*/
-
+// le um fich e retorna a matriz de strings em que cada linha é uma linha do fich
 char** lerFichCsv ( int* tmh, char path[]){
     
     char **info = NULL;
+    // open file
     FILE *fp = fopen(path, "r");
+    // if file is null termina a func
     if (fp == NULL){
         printf ("Error opening file\n");
         return NULL;
     }
-    int auxTmh;
-    auxTmh = 0;
+    
+    
     char buff[180000];
+    // read file linha por linha
     while(fgets(buff,180000,fp)){
-        info = realloc(info, sizeof(char*)*(auxTmh+1));
-	    info[auxTmh] = strdup(buff); // malloc + strcpy.
-	    auxTmh++;
+        // alocar memoria para a matriz
+        info = realloc(info, sizeof(char*)*(*tmh+1));
+	    info[*tmh] = strdup(buff); // malloc + strcpy.
+	    *tmh++;
     }
-//	for (int j = 0; j < auxTmh; j++)
-//      		printf("%s", info[j]);	
-   
-    *tmh = auxTmh;
+
+    // close file
     fclose (fp);
 	return info;
 } 

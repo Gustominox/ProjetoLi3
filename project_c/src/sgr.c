@@ -58,30 +58,31 @@ void *threadBusiness(void* value){
 void *threadReviews(void* value){
 	
 	STHREAD help = (STHREAD) value;
-	
+
 	transStrToTable(help->file,help->sgr->review,help->funcao,0);
 
 	transStrToTable(help->file,help->sgr->reviewByUserId,help->funcao,1);
-
 
 	transStrToTable(help->file,help->sgr->reviewByBusId,help->funcao,2);
 
 	return NULL;
 }
 
+/** QUERY 1 */
 
 SGR load_sgr(char *fileBus, char *fileReviews, char *fileUsers){
     // init struct sgr
 	SGR sgr = init_sgr();
 	
 	//DEFAULT VALUES DE FICH INPUT
-	//printf("FILE: %s\n",fileBus);
-	if (fileBus == NULL) fileBus = strdup("input/business_full.csv"); // strcpy (fileBus,"input/business_full.csv");
-	//printf("FILE: %d\n",(fileBus == NULL));
-	if (fileReviews == NULL) fileReviews = strdup("input/reviews_1M.csv"); //strcpy (fileReviews,"input/reviews_1M.csv");
-	
-	if (fileUsers == NULL) fileUsers = strdup("input/users_full.csv"); // strcpy (fileUsers,"input/users_full.csv");
+	if (fileBus == NULL) fileBus = strdup("input/business_full.csv"); 
 
+	if (fileReviews == NULL) fileReviews = strdup("input/reviews_1M.csv"); 
+	
+	if (fileUsers == NULL) fileUsers = strdup("input/users_full.csv"); 
+
+	// criacao de struct's para ser possivel passar mais do que um arg para a
+	// criacao das threads
 	STHREAD helpUsers = malloc(sizeof(struct sthread));
 	helpUsers->file =fileUsers;
 	helpUsers->sgr = sgr;
@@ -98,23 +99,27 @@ SGR load_sgr(char *fileBus, char *fileReviews, char *fileUsers){
 	helpReviews->sgr = sgr;
 	helpReviews->funcao = addReview;	
 	//LER OS FICH E CRIAR AS TABELAS DE HASH
-
 	pthread_t thread1,thread2,thread3;
 
-
-	//pthread_create(&thread1,NULL,threadUsers,helpUsers);
+	//inicio da thread relativa ao fich com users
+	pthread_create(&thread1,NULL,threadUsers,helpUsers);
 	
+	//inicio da thread relativa ao fich com businesses
 	pthread_create(&thread2,NULL,threadBusiness,helpBusiness);
 	
+	//inicio da thread relativa ao fich com reviews
 	pthread_create(&thread3,NULL,threadReviews,helpReviews);
 
 
 	
-
-	//transStrToTable(fileUsers,sgr->user,help->funcao,0);
-	//pthread_join(thread1,NULL);
+    // espera pela thread1
+	pthread_join(thread1,NULL);
+    // espera pela thread2
 	pthread_join(thread2,NULL);
+    // espera pela thread3
 	pthread_join(thread3,NULL);
+	
+	// *DEBUG*
 	/*
 	printf("There are %d keys in the hash table\n",
         g_hash_table_size(sgr->business));
@@ -124,14 +129,15 @@ SGR load_sgr(char *fileBus, char *fileReviews, char *fileUsers){
 
 	printf("There are %d keys in the hash table\n",
         g_hash_table_size(sgr->reviewByBusid));
-*/
-	//printf("There are %d keys in the hash table\n",
-      //  g_hash_table_size(sgr->user));
+
+	printf("There are %d keys in the hash table\n",
+        g_hash_table_size(sgr->user));
+		*/
 	return sgr;
 
 }
 
-
+/** QUERY 3 */
 TABLE business_info(SGR sgr, char *business_id){
 
 	GSList* list =  g_hash_table_lookup(sgr->business,business_id);
@@ -161,6 +167,7 @@ TABLE business_info(SGR sgr, char *business_id){
 }
 
 
+/** QUERY 4 */
 TABLE businesses_reviewed(SGR sgr, char *user_id){
 
 
@@ -173,15 +180,12 @@ TABLE businesses_reviewed(SGR sgr, char *user_id){
 	}
 	GSList* list = g_hash_table_lookup(sgr->reviewByUserId,user_id );
 	printf("%s",getReviewUser(list->data));
-	//int nRev = g_slist_length(list);	
 	
-	//float sumStars = getReviewStars (list->data);
 	
 	
 
 	GSList* list2 =  g_hash_table_lookup(sgr->business,getReviewBus(list->data));
 	
-	//BUSINESS bus = list2->data;
 	printf("%s %s\n", getBusId(list2->data),getBusName(list2->data));
 	while (list = g_slist_next(list)) {
 	
@@ -192,12 +196,12 @@ TABLE businesses_reviewed(SGR sgr, char *user_id){
 }
 
 
+/** QUERY 5 */
 TABLE businesses_with_stars_and_city(SGR sgr, float stars, char *city){
 	
 	printf("\n\n\n\n\n");
 	GSList* list = g_hash_table_lookup(sgr->businessByCity,city );
 
-//	GSList* list2 =  g_hash_table_lookup(sgr->business,getReviewBus(list->data));
 	printf("%s\n", getBusId( list->data ));
 	GSList* list2 = g_hash_table_lookup(sgr->reviewByBusId, getBusId( list->data ));
 
@@ -209,7 +213,6 @@ TABLE businesses_with_stars_and_city(SGR sgr, float stars, char *city){
 		float nRevF = nRev/1.0;
 		sumStars = sumStars/nRevF;
 
-		//BUSINESS bus = list2->data;
 		if(sumStars > stars) printf("%s %s %f\n", getBusId(list->data),getBusName(list->data),sumStars);
 		
 	}
