@@ -7,13 +7,13 @@
 #include <stdlib.h>
 
 /**
-* \brief Testa se um char é uma letra maiúscula
-* @return 1 se verdadeiro, outro valor se falso
+* \brief Testa se uma string contem um float
+* @return 1 se verdadeiro, 0 se falso
 */
-int isUpper(char let);
+int isFloat (char *s);
 
 /**
-* \brief Testa se um char é um dígito
-* @return 1 se verdadeiro, outro valor se falso
+* \brief Testa se uma string contem um integer
+* @return 1 se verdadeiro, 0 se falso
 */
-int isDigit(char dig);
+int isInteger (char *s);
