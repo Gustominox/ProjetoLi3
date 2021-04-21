@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 #include "auxiliares.h"
 
 int isFloat (char *s){
@@ -12,7 +13,7 @@ int isFloat (char *s){
 
 int isInteger (char *s){
   while(*s){
-    if(!isDigit(*s)) return 0;   
+    if(!isdigit(*s)) return 0;   
     s++;
   }
   return 1;

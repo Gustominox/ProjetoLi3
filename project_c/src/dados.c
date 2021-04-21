@@ -149,16 +149,16 @@ char** lerFichCsv ( int* tmh, char path[]){
         return NULL;
     }
     
-    
+    int auxTmh =0;
     char buff[180000];
     // read file linha por linha
     while(fgets(buff,180000,fp)){
         // alocar memoria para a matriz
-        info = realloc(info, sizeof(char*)*(*tmh+1));
-	    info[*tmh] = strdup(buff); // malloc + strcpy.
-	    *tmh++;
+        info = realloc(info, sizeof(char*)*(auxTmh+1));
+	    info[auxTmh] = strdup(buff); // malloc + strcpy.
+	    auxTmh++;
     }
-
+    *tmh = auxTmh;
     // close file
     fclose (fp);
 	return info;
@@ -250,8 +250,9 @@ BUSINESS addBusiness ( char info[]){
 USER addUser ( char info[]){
 
     USER user = (USER) malloc(sizeof(struct user));
+    //user->id = strdup(info));
 	//printf("INFO: %s\n", info);
-    
+   /* 
     user->id = strdup(strsep(&info,";"));
     //printf("ID: %s\n", user->id);
     if(strlen(user->id) != 22) return NULL;
@@ -280,8 +281,8 @@ USER addUser ( char info[]){
     //for (int i = 0; user->friends[i] != NULL; i++){
         //printf("%s\n", user->friends[i]);
     //}
-    */
-
+    
+*/
     return user;
 }
 
