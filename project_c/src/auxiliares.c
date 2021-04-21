@@ -2,13 +2,18 @@
 #include <stdlib.h>
 #include "auxiliares.h"
 
-int isUpper(char let){
-    if (let < 'A' && let > 'Z')
+int isFloat (char *s){
+  char *str = NULL;
+  double flt = strtod (s, &str);
+  if (!str  ||  *str)
       return 0;
-    else return 1;
+  return 1;
 }
-int isDigit(char dig){
-    if (dig < '0' && dig > '9')
-      return 0;
-    else return 1;
+
+int isInteger (char *s){
+  while(*s){
+    if(!isDigit(*s)) return 0;   
+    s++;
+  }
+  return 1;
 }

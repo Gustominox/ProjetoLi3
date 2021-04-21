@@ -95,51 +95,52 @@ void toCSV(TABLE table, char delim, char path[]){
     free(fd);
 }
 
+// esta função retorna zero (isValid = 0) em caso de sucesso, 1 em caso de insucesso
 int compare(char* content, char* value, OPERATOR oper){
-    // strcmp returns :
-    // menor do que zero se a 1 for menor que a segunda
-    // zero se for igual
-    // maior do que zero se a 1 for maior que a segunda
-    int isValid = 1, isFloat = 0, isInt = 0;
-
-    float valueToFloat = atof(value);
-    int valueToInt = atoi(value);
-
-    // testa se, na string value, há um float ou não.
-    if(valueToFloat != 0.0) isFloat = 1;
-
-    // testa se, na string value, há um inteiro ou não.
-    for(int i = 0; i < strlen(value); i++)
-        if (valueToInt != 0 || (valueToInt == 0 && isDigit(value[i])) ) isInt = 1;
-
+    int isValid = 1;
+    
     switch(oper){
 
         case LT:
-            if(isFloat)
-                if(atof(content) < valueToFloat) isValid = 0;
-            else if(isInt)
-                if(atoi(content) < valueToInt) isValid = 0;
-            // else ...
-
+            if(isInteger(value)){
+                if(atoi(content) < atoi(value)) isValid = 0;
+            }
+            else if(isFloat(value)){
+                if(atof(content) < atof(value)) isValid = 0;
+            } else {
+                for(int k = 0; k < strlen(value) || k < strlen(content); k++){
+                    if(content[k] > value[k]) isValid = 0;
+                    break;
+                }
+            }
             break;
-
+        
         case EQ:
-            if(isFloat)
-                if(atof(content) == valueToFloat) isValid = 0;
-            else if(isInt)
-                if(atoi(content) == valueToInt) isValid = 0;
-            // else ...
-
-            // if(strcmp(content, value) == 0) isValid = 0;
+            if(isInteger(value)){
+                if(atoi(content) == atoi(value)) isValid = 0;
+            }
+            else if(isFloat(value)){
+                if(atof(content) == atof(value)) isValid = 0;
+            } else {
+                for(int k = 0; k < strlen(value) || k < strlen(content); k++){
+                    if(content[k] == value[k]) isValid = 0;
+                    break;
+                }
+            }
             break;
-        case GT:
-            if(isFloat)
-                if(atof(content) > valueToFloat) isValid = 0;
-            else if(isInt)
-                if(atoi(content) > valueToInt) isValid = 0;
-            // else ...
 
-            // if(strcmp(content, value) > 0) isValid = 0;
+        case GT:
+            if(isInteger(value)){
+                if(atoi(content) > atoi(value)) isValid = 0;
+            }
+            else if(isFloat(value)){
+                if(atof(content) > atof(value)) isValid = 0;
+            } else { 
+                for(int k = 0; k < strlen(value) || k < strlen(content); k++){
+                    if(content[k] < value[k] || content[k] == '\n') isValid = 0;
+                    break;
+                }
+            }
             break;
     }
     return isValid;

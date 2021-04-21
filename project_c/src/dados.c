@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include "dados.h"
-#include "auxiliares.h"
+// #include "auxiliares.h"
 
 
 char *getBusId(BUSINESS bus){
@@ -298,7 +299,7 @@ BUSINESS addBusiness ( char info[]){
     bus->state = strdup(strsep(&info, ";"));     
     if(strlen(getBusState(bus)) != 2) return NULL;           
     for(int i = 0; i < 2; i++)                  
-        if(isUpper(bus->state[i]) != 1) return NULL;   
+        if(isupper(bus->state[i]) != 1) return NULL;   
 
     char* temp = strdup(strsep(&info, "\n"));   
     //printf("TEMP: %s\n",temp);
@@ -377,7 +378,7 @@ REVIEW addReview (char info[]){
     //char* strUseful = strdup(strsep(&info, ";"));
     
     //for (int i = 0; i < strlen(strUseful); i++)              
-    //    if (isDigit(strUseful[i]) != 1) return NULL;          
+    //    if (isdigit(strUseful[i]) != 1) return NULL;          
     //rev->useful = atoi(strUseful);                           
     //if(getReviewUseful(rev) < 0) return NULL;
 
@@ -385,7 +386,7 @@ REVIEW addReview (char info[]){
 /*
     char* strFunny = strdup(strsep(&info, ";"));
     for (int i = 0; i < strlen(strFunny); i++)                           
-        if (isDigit(strFunny[i]) != 1) return NULL;   
+        if (isdigit(strFunny[i]) != 1) return NULL;   
     rev->funny = atoi(strFunny);
     if(rev->review_id < 0) return NULL;
   */  
@@ -394,7 +395,7 @@ REVIEW addReview (char info[]){
 /*
     char* strCool = strdup(strsep(&info, ";"));
     for (int i = 0; i < strlen(strCool); i++)                           
-        if (isDigit(strCool[i]) != 1) return NULL;   
+        if (isdigit(strCool[i]) != 1) return NULL;   
     rev->cool = atoi(strCool);
     if(getReviewCool(rev) < 0) return NULL;
 */
