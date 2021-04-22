@@ -59,9 +59,9 @@ doRegex (const gchar *string)
 
 
 void show (TABLE table){
-     
+
     int linha;
-    
+
     printf("|");
     for(int i = 0; i < 100 ; i++){
         printf("-");
@@ -70,10 +70,12 @@ void show (TABLE table){
 
     for(linha = 0; table->variaveis[linha] != NULL; linha++){
         printLinha(table->variaveis[linha]);
-        for(int i = 0; i < 100 ; i++){
-        printf("-");
+        printf("|");
+        for(int i = 0; i < 100; i++){
+            printf("-");
         } 
-    }        
+        printf("\n");
+    }
 }
 
 void toCSV(TABLE table, char delim, char path[]){
