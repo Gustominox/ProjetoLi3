@@ -8,11 +8,12 @@
 
 int main(int argc, char *argv[]) {
 
-interpretador();
+//interpretador();
 
 //free_sgr(sgr);    
-//SGR sgr = load_sgr(NULL,NULL,NULL);
-
+printf("LOADING...\n");
+SGR sgr = load_sgr(NULL,NULL,NULL);
+printf("FINISHED!\n");
 //business_info(sgr,"pCFTvC1v0B9Wilm8XixKDw");
 //businesses_reviewed(sgr,"HWzMPRalNgsGEnfBwiSf9Q");
 //businesses_with_stars_and_city(sgr,3.0,"Melrose");
