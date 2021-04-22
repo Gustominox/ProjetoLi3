@@ -52,10 +52,10 @@ void previousLine(TABLE table, int numLinAtual){
 void printLinha (char **variaveis){
 
     for(int i = 0; variaveis[i] != NULL; i++){
-        printf("| %s ", variaveis[i]);
+        printf("| %s", variaveis[i]);
     } 
 
-    printf("|\n");
+    //printf("|\n");
 }
 
 
