@@ -191,7 +191,7 @@ TABLE proj(TABLE table, int cols){
     return novaTable;
 }
  
-TABLE fromCSV(char filepath[] ,char delim){
+TABLE fromCSV(char filepath[] ,char *delim){
 
     TABLE table = malloc(sizeof(struct table));
 
@@ -201,17 +201,24 @@ TABLE fromCSV(char filepath[] ,char delim){
         return NULL;
     }
 
-    char buffer[180000];
+    char *buffer;
+    buffer =  malloc(sizeof(char)*180000);
     int j=0; //linha
 
+    table->variaveis = NULL;// string **variaveis
     while(fgets(buffer,180000,fp)){
-
+        char *temp = strdup(buffer);
+        table->variaveis = realloc(table->variaveis,sizeof(char**)*(j+1));
         table->variaveis[j] = NULL;
         int i; //todos os caracteres ate encontrar uma virgula / coluna
-        for( i = 0; buffer != NULL; i++){
-            table->variaveis[j] = realloc(table->variaveis,sizeof(char)*(i+1));
-            table->variaveis[j][i] = strdup(strsep(&buffer, ","));
+        //printf("%s", temp);
+        for( i = 0; temp != NULL; i++){
+            table->variaveis[j]= realloc(table->variaveis[j],sizeof(char*)*(i+1));
+            table->variaveis[j][i]= strdup(strsep(&temp, delim));
+            //printf("%s\n", table->variaveis[j][i]);
         }
+        table->variaveis[j]= realloc(table->variaveis[j],sizeof(char*)*(i+1));
+        table->variaveis[j][i] = NULL;
         j++;
     }
     setNumLinTotal(table,j);
