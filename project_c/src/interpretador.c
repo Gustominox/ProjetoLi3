@@ -80,9 +80,8 @@ void toCSV(TABLE table, char delim, char path[]){
     
     char **info = NULL;
     FILE *fd = fopen(path, "a");
-    if (fd == NULL) printf ("Error opening file");   // tipo, aqui não devíamos interromper a função para ele não fazer o resto? 
-                                                     // eu sei que é um void, mas é que assim ele vai executar o resto desnecessariamente.
-    // else{
+    if (fd == NULL) printf ("Error opening file");
+
     int j;
     for(j = 0; table->variaveis[j] != NULL; j++){
         for(int i = 0; table->variaveis[j][i] != NULL; i++){
