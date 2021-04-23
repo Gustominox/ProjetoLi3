@@ -79,20 +79,26 @@ void show (TABLE table){
 }
 
 void toCSV(TABLE table, char delim, char path[]){
-    
-    char **info = NULL;
-    FILE *fd = fopen(path, "a");
-    if (fd == NULL) printf ("Error opening file");
 
-    int j;
-    for(j = 0; table->variaveis[j] != NULL; j++){
+    FILE *fd = fopen(path, "a");
+    if (fd == NULL){
+        printf("Error opening file\n");
+        return;
+    } 
+    int j = 0;
+    while(j < table->numLinTotal){
+
         for(int i = 0; table->variaveis[j][i] != NULL; i++){
-            fprintf(fd,"%s" ,table->variaveis[j][i]);
+            fprintf(fd, "%s", table->variaveis[j][i]);
             fputc(delim, fd);
+            // printf("%s",table->variaveis[j][i]);
+            // putchar(delim);
         }
         fputc('\n', fd);
-    }
-    free(fd);
+        // printf("\n");
+        j++;
+   }
+   fclose(fd);
 }
 
 // esta função retorna zero (isValid = 0) em caso de sucesso, 1 em caso de insucesso
