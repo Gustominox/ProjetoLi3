@@ -30,9 +30,7 @@ char** getVariaveis(TABLE table){
     return variaveis;
 }*/
 
-void setNumLinTotal(TABLE table, int newNumLinTotal){
-    table->numLinTotal = newNumLinTotal;
-}
+
 void nextLine(TABLE table, int numLinAtual){
     setNumLin(table, numLinAtual++);
 }

@@ -107,7 +107,7 @@ SGR load_sgr(char *fileBus, char *fileReviews, char *fileUsers){
 	pthread_create(&thread2,NULL,threadBusiness,helpBusiness);
 	
 	//inicio da thread relativa ao fich com reviews
-	pthread_create(&thread3,NULL,threadReviews,helpReviews);
+	//pthread_create(&thread3,NULL,threadReviews,helpReviews);
 	
 	//int tmh;
 	//char **info=lerFichCsv(&tmh,fileUsers);
@@ -115,7 +115,7 @@ SGR load_sgr(char *fileBus, char *fileReviews, char *fileUsers){
     // espera pela thread1
 	//pthread_join(thread1,NULL);
     // espera pela thread2
-	pthread_join(thread2,NULL);
+	//pthread_join(thread2,NULL);
     // espera pela thread3
 	pthread_join(thread3,NULL);
 	

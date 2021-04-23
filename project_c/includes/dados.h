@@ -343,7 +343,7 @@ BUSINESS* transStrToBus(char **info,int *tmh, BUSINESS *business);
 * @param review é o array onde será guardado o conteúdo do ficheiro, mas convertido para structs do tipo REVIEW
 * @return array que guarda o conteúdo do ficheiro lido, convertido para structs do tipo REVIEW
 */
-REVIEW* transStrToRev(char **info,int tmh, REVIEW *review);
+REVIEW* transStrToRev(char **info,int *tmh, REVIEW *review);
 
 
 /**
@@ -354,7 +354,7 @@ REVIEW* transStrToRev(char **info,int tmh, REVIEW *review);
 * @param user é o array onde será guardado o conteúdo do ficheiro, mas convertido para structs do tipo USER
 * @return array que guarda o conteúdo do ficheiro lido, convertido para structs do tipo USER
 */
-USER* transStrToUsers(char **info,int tmh, USER *users);
+USER* transStrToUsers(char **info,int *tmh, USER *users);
 
 /**
 * \brief Função que converte o array da struct do tipo USER num array de strings

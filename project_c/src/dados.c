@@ -156,7 +156,7 @@ char** lerFichCsv ( int* tmh, char path[]){
         // alocar memoria para a matriz
         info = realloc(info, sizeof(char*)*(auxTmh+1));
 	    info[auxTmh] = strdup(buff); // malloc + strcpy.
-	    printf("%s\n",info[auxTmh]);
+	    //printf("%s\n",info[auxTmh]);
         auxTmh++;
     }
     *tmh = auxTmh;
@@ -164,6 +164,89 @@ char** lerFichCsv ( int* tmh, char path[]){
     fclose (fp);
 	return info;
 } 
+
+BUSINESS* transStrToBus(char **info,int *tmh,BUSINESS *business){
+
+    int tmhBus = 0;
+    for (int i = 0; info[i]; i++){
+        business = realloc(business,sizeof(BUSINESS)*(tmhBus+1));
+        business[tmhBus] = addBusiness( info[i]);
+        //if (business[tmhBus]!=NULL)
+        //printf("%s\n",getBusId( business[tmhBus]));
+
+        if(business[tmhBus] == NULL) {
+            
+            free(business[tmhBus]);
+            tmhBus--; 
+        }
+        
+        tmhBus++;
+        //printf("[%d] i:%d\n", tmhBus,i);
+        
+        
+    }
+    
+    for (int j = 0; j < *tmh; j++)
+        free (info[j]);
+
+    *tmh = tmhBus;
+    return business; 
+}
+
+REVIEW* transStrToRev(char **info,int *tmh,REVIEW *reviews){
+
+    int tmhRev = 0;
+    for (int i = 0; info[i]; i++){
+        reviews = realloc(reviews,sizeof(REVIEW)*(tmhRev+1));
+        reviews[tmhRev] = addReview( info[i]);
+        //if (reviews[tmhRev]!=NULL)
+        //printf("%s\n",getReviewId( reviews[tmhRev]));
+
+        if(reviews[tmhRev] == NULL) {
+            
+            free(reviews[tmhRev]);
+            tmhRev--; 
+        }
+        
+        tmhRev++;
+        //printf("[%d] i:%d\n", tmhRev,i);
+        
+        
+    }
+    
+    for (int j = 0; j < *tmh; j++)
+        free (info[j]);
+
+    *tmh = tmhRev;
+    return reviews; 
+}
+
+
+USER* transStrToUsers(char **info,int *tmh,USER *users){
+
+    int tmhUser = 0;
+    for (int i = 0; info[i]; i++){
+        users = realloc(users,sizeof(USER)*(tmhUser+1));
+        users[tmhUser] = addUser( info[i]);
+        //if (reviews[tmhUser]!=NULL)
+        //printf("%s\n",getReviewId( reviews[tmhUser]));
+
+        if(users[tmhUser] == NULL) {
+            
+            free(users[tmhUser]);
+            tmhUser--; 
+        }
+        
+        tmhUser++;
+        //printf("[%d] i:%d\n", tmhUser,i);
+        
+        
+    }
+
+    *tmh = tmhUser;
+    return users; 
+}
+
 
 void 
 transStrToTable(char path[], GHashTable* hash, void* (*funcao) (char info[]),
@@ -254,7 +337,7 @@ USER addUser ( char info[]){
     USER user = (USER) malloc(sizeof(struct user));
     //user->id = strdup(info));
 	//printf("INFO: %s\n", info);
-   /* 
+   
     user->id = strdup(strsep(&info,";"));
     //printf("ID: %s\n", user->id);
     if(strlen(user->id) != 22) return NULL;
