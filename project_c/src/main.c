@@ -39,18 +39,22 @@ char linha[1024];
 int tmh,tmhs;
 char **info;
 char **info1;
-char **info2;
+char **info2,info3,info4,info5;
 
 info = lerFichCsv(&tmh,"input/business_full.csv");
 info1 = lerFichCsv(&tmhs,"input/users_full.csv");
 info2 = lerFichCsv(&tmhs,"input/reviews_1M.csv");
+info3 = lerFichCsv(&tmh,"input/business_full.csv");
+info4 = lerFichCsv(&tmhs,"input/users_full.csv");
+info5 = lerFichCsv(&tmhs,"input/reviews_1M.csv");
 //printf("Espera\n");
 //fgets(linha, 1024, stdin);
-//USER *bus = NULL;
-//bus = transStrToUsers(info,&tmhs,bus);
 for (int j = 0; j < tmh; j++)
         free (info[j]);
 free(info);
+USER *bus = NULL;
+//bus = transStrToUsers(info1,&tmhs,bus);
+
 //printf("%s\n",info[0]);
 //GHashTable* hash = g_hash_table_new(g_str_hash, g_str_equal);
 //GHashTable* hash1 = g_hash_table_new(g_str_hash, g_str_equal);

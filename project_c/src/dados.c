@@ -137,7 +137,7 @@ void setReviewText(REVIEW review, char newText[]){
     strcpy (review->text, newText);
 }
 
-// le um fich e retorna a matriz de strings em que cada linha é uma linha do fich
+// le um fich e retorna a matriz dinamica de strings em que cada linha é uma linha do fich
 char** lerFichCsv ( int* tmh, char path[]){
     
     char **info = NULL;
@@ -156,8 +156,7 @@ char** lerFichCsv ( int* tmh, char path[]){
         // alocar memoria para a matriz
         info = realloc(info, sizeof(char*)*(auxTmh+1));
 	    info[auxTmh] = strdup(buff); // malloc + strcpy.
-	    //printf("%s\n",info[auxTmh]);
-        auxTmh++;
+	    auxTmh++;
     }
     *tmh = auxTmh;
     // close file
