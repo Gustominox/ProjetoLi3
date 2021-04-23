@@ -1,3 +1,6 @@
+#ifndef PAGINACAO_H
+#define PAGINACAO_H
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -92,3 +95,5 @@ void printLinha (char **variaveis);
 * @param tecla comando 
 */
 void acao(TABLE table, char tecla);
+
+#endif

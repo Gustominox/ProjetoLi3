@@ -156,7 +156,8 @@ char** lerFichCsv ( int* tmh, char path[]){
         // alocar memoria para a matriz
         info = realloc(info, sizeof(char*)*(auxTmh+1));
 	    info[auxTmh] = strdup(buff); // malloc + strcpy.
-	    auxTmh++;
+	    printf("%s\n",info[auxTmh]);
+        auxTmh++;
     }
     *tmh = auxTmh;
     // close file
@@ -226,10 +227,11 @@ BUSINESS addBusiness ( char info[]){
 
      
     bus->state = strdup(strsep(&info, ";"));     
+    /*
     if(strlen(getBusState(bus)) != 2) return NULL;           
     for(int i = 0; i < 2; i++)                  
         if(isupper(bus->state[i]) != 1) return NULL;   
-
+*/
     char* temp = strdup(strsep(&info, "\n"));   
     //printf("TEMP: %s\n",temp);
     bus->categories=NULL;

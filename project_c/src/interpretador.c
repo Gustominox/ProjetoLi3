@@ -2,19 +2,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include "interpretador.h"
-#include "paginacao.h"
-#include "auxiliares.h"
-#include "sgr.h"
+
 
 #define ERRO_IO 1
 #define COMANDO_INEXISTENTE 2
 #define BUF_SIZE 1024
-
-typedef enum{
-    LT,
-    EQ,
-    GT
-} OPERATOR;
 
 /*
 struct var{

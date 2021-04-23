@@ -11,14 +11,19 @@ BUSINESS* transStrToBus(char **info,int *tmh,BUSINESS *business){
     for (int i = 0; info[i]; i++){
         business = realloc(business,sizeof(BUSINESS)*(tmhBus+1));
         business[tmhBus] = addBusiness( info[i]);
+        if (business[tmhBus]!=NULL)
+        //printf("%s\n",getBusId( business[tmhBus]));
+
         if(business[tmhBus] == NULL) {
+            
             free(business[tmhBus]);
             tmhBus--; 
         }
+        
         tmhBus++;
-        printf("[%d]\n", tmhBus);
-        //printf("%s\n",businessToString(business[tmhBus-1]));
-
+        //printf("[%d] i:%d\n", tmhBus,i);
+        
+        
     }
     
     for (int j = 0; j < *tmh; j++)
@@ -32,6 +37,9 @@ int main(int argc, char *argv[]) {
 int tmh;
 char **info;
 info = lerFichCsv(&tmh,"input/business_full.csv");
+
+BUSINESS *bus = NULL;
+bus = transStrToBus(info,&tmh,bus);
 //interpretador();
 
 //free_sgr(sgr);    

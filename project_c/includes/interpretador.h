@@ -7,7 +7,15 @@
 #include <stdlib.h>
 #include <string.h>
 #include <glib-2.0/glib.h>
+#include "paginacao.h"
+#include "auxiliares.h"
+#include "sgr.h"
 
+typedef enum{
+    LT,
+    EQ,
+    GT
+} OPERATOR;
 
 typedef struct var *VAR;
 
@@ -41,7 +49,7 @@ void toCSV(TABLE table, char delim, char path[]);
  * @param delim separador
  * @return table que contém o conteúdo do ficheiro csv
  */
-TABLE fromCSV(char filepath[] ,char delim);
+TABLE fromCSV(char filepath[] ,char *delim);
 
 
 /**

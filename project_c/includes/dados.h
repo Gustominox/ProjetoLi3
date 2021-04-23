@@ -1,3 +1,7 @@
+#ifndef DADOS_H
+#define DADOS_H
+
+
 /**
 * @file dados.h
 * \brief Ficheiro sobre as estruturas de dados, inclusive a leitura de um ficheiro e o tratamento dos dados.
@@ -404,3 +408,5 @@ REVIEW addReview ( char info[]);
 
 
 void transStrToTable(char path[],GHashTable* hash ,void* (*funcao) (char info[]),int mode);
+
+#endif

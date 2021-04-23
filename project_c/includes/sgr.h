@@ -1,14 +1,18 @@
+#ifndef HEADER_FILE
+#define HEADER_FILE
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <glib.h>
+#include "dados.h"
+#include "paginacao.h"
 
 // #include <glib-2.0/glib.h>
 
 /*!
 * @typedef GHashTable
 */
- typedef struct table *TABLE;
 
 
 /*!
@@ -142,3 +146,5 @@ TABLE top_businesses_with_category(SGR sgr, int top, char *category);
  * @param word palavra referida no campo text
 */
 TABLE reviews_with_word(SGR sgr, int top, char *word);
+
+#endif
