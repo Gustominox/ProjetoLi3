@@ -92,7 +92,6 @@ void toCSV(TABLE table, char delim, char path[]){
         }
         fputc('\n', fd);
     }
-    //}
     free(fd);
 }
 
@@ -152,26 +151,32 @@ TABLE filter(TABLE table, char columName[], char* value, OPERATOR oper){
     TABLE novaTable = malloc(sizeof(struct table));
     setNumLinTotal(novaTable, 0);
 
-    int linhas = 0, flag = 0;
-         
-    for(int j = 0; table->variaveis[j] != NULL; j++){
-        
-        novaTable->variaveis = realloc(novaTable->variaveis, sizeof(char*)*(j+1));
+    int linhas = 0, flag = 0, j = 0;
 
-        for(int i = 0; table->variaveis[j][i] != NULL; i++){
-            if(strcmp(table->variaveis[j][i], columName) == 0)
-                if(compare(table->variaveis[j][i], value, oper) == 0)
-                    flag = 1;
-        }
-        if (flag){
+    int col; // col é o índice da coluna cujos valores serão comparados com value
+
+    for(int i = 0; table->variaveis[0][i] != NULL; i++)
+        if(strcmp(table->variaveis[0][i], columName) == 0) col = i;
+
+    novaTable->variaveis = NULL;
+    while(j < table->numLinTotal){
+        
+        novaTable->variaveis = realloc(novaTable->variaveis, sizeof(char**)*(linhas+1));
+        novaTable->variaveis[linhas] = NULL;
+
+        if(compare(table->variaveis[j][col], value, oper) == 0)
+            flag = 1;
+
+        if(flag){
             for(int i = 0; table->variaveis[j][i] != NULL; i++){
-                novaTable->variaveis[j] = realloc(novaTable->variaveis, sizeof(char*)*(i+1));
-                novaTable->variaveis[j][i] = strdup(table->variaveis[j][i]);
+                novaTable->variaveis[linhas] = realloc(novaTable->variaveis, sizeof(char*)*(i+1));
+                novaTable->variaveis[linhas][i] = strdup(table->variaveis[j][i]);
+                printf("%s ", novaTable->variaveis[linhas][i]);
             }
             linhas++;
         }
+        flag = 0;
     }
-    flag = 0;
     setNumLinTotal(novaTable, linhas);
 
     return novaTable;

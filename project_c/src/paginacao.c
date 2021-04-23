@@ -10,6 +10,13 @@ void setNumLin(TABLE table, int newNumLin){
 int getNumLin(TABLE table){
     return table->numLin;
 }
+
+int getNumLinTotal(TABLE table){
+    return table->numLinTotal;
+}
+void setNumLinTotal(TABLE table, int newNumLinTotal){
+    table->numLinTotal = newNumLinTotal;
+}
 /*
 char** getVariaveis(TABLE table){
     char ***variaveis = NULL;
@@ -23,32 +30,16 @@ char** getVariaveis(TABLE table){
     return variaveis;
 }*/
 
-
-void setVariaveis(TABLE table, char ***newVariaveis){
-    table->variaveis = newVariaveis;
-}
-
-
-int getNumLinTotal(TABLE table){
-    return table->numLinTotal;
-}
-
-
 void setNumLinTotal(TABLE table, int newNumLinTotal){
     table->numLinTotal = newNumLinTotal;
 }
-
-
 void nextLine(TABLE table, int numLinAtual){
     setNumLin(table, numLinAtual++);
 }
 
-
 void previousLine(TABLE table, int numLinAtual){
     setNumLin(table, numLinAtual--);    
 }
-
-
 void printLinha (char **variaveis){
 
     for(int i = 0; variaveis[i] != NULL; i++){
@@ -57,7 +48,6 @@ void printLinha (char **variaveis){
 
     //printf("|\n");
 }
-
 
 void acao(TABLE table, char tecla){
     
@@ -74,7 +64,7 @@ void acao(TABLE table, char tecla){
             break;
 
         default:
-            printf("comando inesxixtente \n");
+            printf("comando inexistente \n");
         
     }
 }
