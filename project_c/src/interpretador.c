@@ -107,7 +107,7 @@ TABLE fromCSV(char filepath[] ,char *delim){
     table->variaveis = NULL;
 
     while(fgets(buffer,180000,fd)){
-        
+
         char *temp = strdup(buffer);
         
         table->variaveis = realloc(table->variaveis,sizeof(char**)*(j+1));
@@ -186,8 +186,7 @@ TABLE filter(TABLE table, char columName[], char* value, OPERATOR oper){
     TABLE novaTable = malloc(sizeof(struct table));
     setNumLinTotal(novaTable, 0);
 
-    int linhas = 1, j = 1, flag = 0;
-    int col; // col é o índice da coluna cujos valores serão comparados com value
+    int linhas = 1, j = 1, flag = 0, col; // col é o índice da coluna cujos valores serão comparados com value
     
     novaTable->variaveis = NULL;
     novaTable->variaveis = realloc(novaTable->variaveis, sizeof(char**)*(linhas+1));
@@ -217,22 +216,30 @@ TABLE filter(TABLE table, char columName[], char* value, OPERATOR oper){
         j++;
     }
     setNumLinTotal(novaTable, linhas);
+    setNumLin(table, 0);
     return novaTable;
 }
 
 TABLE proj(TABLE table, int cols){
 
     TABLE novaTable = malloc(sizeof(struct table));
+
+    int j = 0;
+    novaTable->variaveis = NULL;
+
+    while(j < getNumLinTotal(table)){
+
+        novaTable->variaveis = realloc(novaTable->variaveis, sizeof(char**)*(j+1));
+        novaTable->variaveis[j] = NULL;
+
+        for(int i = 0; table->variaveis[j][i] != NULL && i < cols; i++){
+            novaTable->variaveis[j] = realloc(novaTable->variaveis[j], sizeof(char*)*(i+1));
+            novaTable->variaveis[j][i] = strdup(table->variaveis[j][i]);
+        }
+        j++;
+    }
     setNumLinTotal(novaTable, getNumLinTotal(table));
     setNumLin(novaTable, getNumLin(table));
-
-    for(int j = 0; table->variaveis[j] != NULL; j++){
-        novaTable->variaveis = realloc(novaTable->variaveis, sizeof(char*)*(j+1));
-        for(int i = 0; i < cols; i++){
-            novaTable->variaveis[j] = realloc(novaTable->variaveis, sizeof(char*)*(i+1));
-            novaTable->variaveis[j][i] = strdup(table->variaveis[j][i]);
-        }   
-    }
     return novaTable;
 }
 
@@ -240,7 +247,6 @@ int isAssignment(char *linha){
 
     if(strchr(linha,'=') != NULL) return 1;
     else return 0;    
-
 }
 
 int interpretador(){
