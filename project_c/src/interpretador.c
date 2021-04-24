@@ -78,7 +78,7 @@ void toCSV(TABLE table, char delim, char path[]){
         return;
     } 
     int j = 0;
-    while(j < table->numLinTotal){
+    while(j < getNumLinTotal(table)){
 
         for(int i = 0; table->variaveis[j][i] != NULL; i++){
             if (i != 0) fputc(delim, fd);
@@ -90,7 +90,47 @@ void toCSV(TABLE table, char delim, char path[]){
    fclose(fd);
 }
 
-// esta função retorna zero (isValid = 0) em caso de sucesso, 1 em caso de insucesso
+TABLE fromCSV(char filepath[] ,char *delim){
+
+    TABLE table = malloc(sizeof(struct table));
+
+    FILE *fd = fopen(filepath, "r");
+    if (fd == NULL){
+        printf ("Error opening file\n");
+        return NULL;
+    }
+
+    char *buffer;
+    buffer = malloc(sizeof(char)*180000);
+    int j=0, i;
+
+    table->variaveis = NULL;
+
+    while(fgets(buffer,180000,fd)){
+        
+        char *temp = strdup(buffer);
+        
+        table->variaveis = realloc(table->variaveis,sizeof(char**)*(j+1));
+        table->variaveis[j] = NULL;
+        
+        for(i = 0; temp != NULL; i++){
+            table->variaveis[j]= realloc(table->variaveis[j],sizeof(char*)*(i+1));
+            table->variaveis[j][i]= strdup(strsep(&temp, delim));
+        }
+        table->variaveis[j][i-1] = strsep(&table->variaveis[j][i-1], "\n");
+        table->variaveis[j] = realloc(table->variaveis[j],sizeof(char*)*(i+1));
+        table->variaveis[j][i] = NULL;
+        j++;
+    }
+    setNumLinTotal(table,j);
+    setNumLin(table,0);
+
+    free(buffer);
+    fclose(fd);
+
+    return table;
+}
+
 int compare(char* content, char* value, OPERATOR oper){
     int isValid = 1;
     
@@ -146,34 +186,37 @@ TABLE filter(TABLE table, char columName[], char* value, OPERATOR oper){
     TABLE novaTable = malloc(sizeof(struct table));
     setNumLinTotal(novaTable, 0);
 
-    int linhas = 0, flag = 0, j = 0;
-
+    int linhas = 1, j = 1, flag = 0;
     int col; // col é o índice da coluna cujos valores serão comparados com value
-
-    for(int i = 0; table->variaveis[0][i] != NULL; i++)
-        if(strcmp(table->variaveis[0][i], columName) == 0) col = i;
-
+    
     novaTable->variaveis = NULL;
-    while(j < table->numLinTotal){
+    novaTable->variaveis = realloc(novaTable->variaveis, sizeof(char**)*(linhas+1));
+
+    novaTable->variaveis[0] = NULL;
+    for(int i = 0; table->variaveis[0][i] != NULL; i++){
+        if(strcmp(table->variaveis[0][i], columName) == 0) col = i;
+        novaTable->variaveis[0] = realloc(novaTable->variaveis[0], sizeof(char*)*(i+1));
+        novaTable->variaveis[0][i] = strdup(table->variaveis[0][i]);
+    }
+
+    while(j < getNumLinTotal(table)){
         
         novaTable->variaveis = realloc(novaTable->variaveis, sizeof(char**)*(linhas+1));
+
+        if(compare(table->variaveis[j][col], value, oper) == 0) flag = 1;
+
         novaTable->variaveis[linhas] = NULL;
-
-        if(compare(table->variaveis[j][col], value, oper) == 0)
-            flag = 1;
-
         if(flag){
             for(int i = 0; table->variaveis[j][i] != NULL; i++){
-                novaTable->variaveis[linhas] = realloc(novaTable->variaveis, sizeof(char*)*(i+1));
+                novaTable->variaveis[linhas] = realloc(novaTable->variaveis[linhas], sizeof(char*)*(i+1));
                 novaTable->variaveis[linhas][i] = strdup(table->variaveis[j][i]);
-                printf("%s ", novaTable->variaveis[linhas][i]);
             }
             linhas++;
         }
         flag = 0;
+        j++;
     }
     setNumLinTotal(novaTable, linhas);
-
     return novaTable;
 }
 
@@ -191,44 +234,6 @@ TABLE proj(TABLE table, int cols){
         }   
     }
     return novaTable;
-}
- 
-TABLE fromCSV(char filepath[] ,char *delim){
-
-    TABLE table = malloc(sizeof(struct table));
-
-    FILE *fp = fopen(filepath, "r"); 
-    if (fp == NULL){
-        printf ("Error opening file\n");
-        return NULL;
-    }
-
-    char *buffer;
-    buffer =  malloc(sizeof(char)*180000);
-    int j=0; //linha
-
-    table->variaveis = NULL;// string **variaveis
-    while(fgets(buffer,180000,fp)){
-        char *temp = strdup(buffer);
-        table->variaveis = realloc(table->variaveis,sizeof(char**)*(j+1));
-        table->variaveis[j] = NULL;
-        int i; //todos os caracteres ate encontrar uma virgula / coluna
-        //printf("%s", temp);
-        for( i = 0; temp != NULL; i++){
-            table->variaveis[j]= realloc(table->variaveis[j],sizeof(char*)*(i+1));
-            table->variaveis[j][i]= strdup(strsep(&temp, delim));
-            //printf("%s\n", table->variaveis[j][i]);
-        }
-        table->variaveis[j]= realloc(table->variaveis[j],sizeof(char*)*(i+1));
-        table->variaveis[j][i] = NULL;
-        j++;
-    }
-    setNumLinTotal(table,j);
-    setNumLin(table,0);
-
-    free(buffer);
-
-    return table;
 }
 
 int isAssignment(char *linha){
