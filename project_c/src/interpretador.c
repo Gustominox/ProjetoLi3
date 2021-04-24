@@ -60,8 +60,8 @@ void show (TABLE table){
         printf("-");
     } 
     printf("\n");
-    
-    for(linha = 0, maxPorPag = 0; linha < getNumLinTotal(table) && maxPorPag < 10; linha++, maxPorPag++){
+
+    for(linha = getNumLin(table), maxPorPag = 0; linha < getNumLinTotal(table) && maxPorPag < 10; linha++, maxPorPag++){
         printLinha(table->variaveis[linha]);
         printf("|");
         for(int i = 0; i < 100; i++){
