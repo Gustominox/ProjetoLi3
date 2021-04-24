@@ -81,13 +81,10 @@ void toCSV(TABLE table, char delim, char path[]){
     while(j < table->numLinTotal){
 
         for(int i = 0; table->variaveis[j][i] != NULL; i++){
+            if (i != 0) fputc(delim, fd);
             fprintf(fd, "%s", table->variaveis[j][i]);
-            fputc(delim, fd);
-            // printf("%s",table->variaveis[j][i]);
-            // putchar(delim);
         }
         fputc('\n', fd);
-        // printf("\n");
         j++;
    }
    fclose(fd);
