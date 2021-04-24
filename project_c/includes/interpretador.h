@@ -83,6 +83,16 @@ TABLE proj(TABLE table, int cols);
 
 
 /**
+* @brief Função que acede a valores/registos contidos numa determinada posição da tabela
+* @param table table 
+* @param linha linha em que se encontra o valor/registo da tabela dada
+* @param coluna coluna em que se encontra o valor/registo da tabela dada
+* @return table com apenas o valor/registo contido numa determinada posição da tabela dada
+*/
+TABLE indexa (TABLE table, int linha, int coluna);
+
+
+/**
  * 
  */
 int isAssignment(char *linha);

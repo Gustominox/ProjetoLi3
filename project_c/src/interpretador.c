@@ -63,7 +63,7 @@ void show (TABLE table){
     
     linha = getNumLin(table), maximoPag = 0;
 
-    while(linha = getNumLin(table), maximoPag = 0; table->variaveis[linha] != NULL && maximoPag < 10; linha++, maximoPag++){
+    for(linha = getNumLin(table), maximoPag = 0; table->variaveis[linha] != NULL && maximoPag < 10; linha++, maximoPag++){
         printLinha(table->variaveis[linha]);
         printf("|");
         for(int i = 0; i < 100; i++){
@@ -249,6 +249,27 @@ TABLE proj(TABLE table, int cols){
     setNumLinTotal(novaTable, getNumLinTotal(table));
     setNumLin(novaTable, getNumLin(table));
     return novaTable;
+}
+
+TABLE indexa (TABLE table, int linha, int coluna){
+
+    TABLE resultado = malloc(sizeof(struct table));
+    
+    resultado->variaveis = NULL;
+    resultado->variaveis = realloc(table->variaveis,sizeof(char**));
+
+    resultado->variaveis[0] = NULL;
+
+    resultado->variaveis[0]= realloc(table->variaveis[0],sizeof(char*));
+    resultado->variaveis[0][0]= strdup(table->variaveis[linha][coluna]);
+
+    resultado->variaveis[0]= realloc(table->variaveis[0],sizeof(char*));
+    table->variaveis[0][1] = NULL;
+
+    // printf("%s\n", resultado->variaveis[0][0]);
+
+    setNumLinTotal(resultado, 1);
+    return resultado;
 }
 
 int isAssignment(char *linha){
