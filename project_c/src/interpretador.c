@@ -52,18 +52,16 @@ doRegex (const gchar *string)
 
 void show (TABLE table){
 
-    int linha, maximoPag;
+    int linha, maxPorPag;
     char tecla;
 
     printf("|");
     for(int i = 0; i < 100 ; i++){
         printf("-");
     } 
-    printf("|\n");
+    printf("\n");
     
-    linha = getNumLin(table), maximoPag = 0;
-
-    for(linha = getNumLin(table), maximoPag = 0; table->variaveis[linha] != NULL && maximoPag < 10; linha++, maximoPag++){
+    for(linha = 0, maxPorPag = 0; linha < getNumLinTotal(table) && maxPorPag < 10; linha++, maxPorPag++){
         printLinha(table->variaveis[linha]);
         printf("|");
         for(int i = 0; i < 100; i++){
@@ -72,7 +70,7 @@ void show (TABLE table){
         printf("\n");
     }
     setNumLin(table, linha);
-    printf("%c\n", '\n');
+    printf("\n");
 
     acao(table);
     show (table);
@@ -259,14 +257,10 @@ TABLE indexa (TABLE table, int linha, int coluna){
     resultado->variaveis = realloc(table->variaveis,sizeof(char**));
 
     resultado->variaveis[0] = NULL;
+    resultado->variaveis[0]= realloc(table->variaveis[0],sizeof(char*)*2);
 
-    resultado->variaveis[0]= realloc(table->variaveis[0],sizeof(char*));
     resultado->variaveis[0][0]= strdup(table->variaveis[linha][coluna]);
-
-    resultado->variaveis[0]= realloc(table->variaveis[0],sizeof(char*));
-    table->variaveis[0][1] = NULL;
-
-    // printf("%s\n", resultado->variaveis[0][0]);
+    resultado->variaveis[0][1] = NULL;
 
     setNumLinTotal(resultado, 1);
     return resultado;

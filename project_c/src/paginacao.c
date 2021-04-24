@@ -43,7 +43,7 @@ void acao(TABLE table){
     
     int numLinAtual = getNumLin(table);
 
-    printf("Que tecla pretende ler?\n");
+    printf("Que página pretende ver a seguir?\n");
 
     while(1){
         char tecla = getchar();
