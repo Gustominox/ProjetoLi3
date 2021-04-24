@@ -52,22 +52,30 @@ doRegex (const gchar *string)
 
 void show (TABLE table){
 
-    int linha;
+    int linha, maximoPag;
+    char tecla;
 
     printf("|");
     for(int i = 0; i < 100 ; i++){
         printf("-");
     } 
     printf("|\n");
+    
+    linha = getNumLin(table), maximoPag = 0;
 
-    for(linha = 0; table->variaveis[linha] != NULL; linha++){
+    while(linha = getNumLin(table), maximoPag = 0; table->variaveis[linha] != NULL && maximoPag < 10; linha++, maximoPag++){
         printLinha(table->variaveis[linha]);
         printf("|");
         for(int i = 0; i < 100; i++){
             printf("-");
-        } 
+        }
         printf("\n");
     }
+    setNumLin(table, linha);
+    printf("%c\n", '\n');
+
+    acao(table);
+    show (table);
 }
 
 void toCSV(TABLE table, char delim, char path[]){

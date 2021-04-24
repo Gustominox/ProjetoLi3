@@ -31,13 +31,6 @@ char** getVariaveis(TABLE table){
 }*/
 
 
-void nextLine(TABLE table, int numLinAtual){
-    setNumLin(table, numLinAtual++);
-}
-
-void previousLine(TABLE table, int numLinAtual){
-    setNumLin(table, numLinAtual--);    
-}
 void printLinha (char **variaveis){
 
     for(int i = 0; variaveis[i] != NULL; i++){
@@ -47,23 +40,28 @@ void printLinha (char **variaveis){
     //printf("|\n");
 }
 
-void acao(TABLE table, char tecla){
+void acao(TABLE table){
     
     int numLinAtual = getNumLin(table);
-    
-    switch(tecla){
 
-        case ('k'): // Avança na página
-            nextLine(table, numLinAtual);
-            break;
-        
-        case ('j'): // Recua na página 
-            previousLine(table, numLinAtual);
-            break;
+    printf("Que tecla pretende ler?\n");
 
-        default:
-            printf("comando inexistente \n");
-        
+    while(1){
+        char tecla = getchar();
+
+        if (tecla == 'k' || tecla == 'K'){ // Avança na página
+            setNumLin(table, numLinAtual++);
+            break;
+        }
+        else if (tecla == 'j' || tecla == 'J'){ // Recua na página 
+            setNumLin(table, numLinAtual-20);
+            break;
+        }
+        else if (tecla == 'q'){
+            exit(0);
+        }
+        else
+            if(tecla != 0x0A) printf("comando inexistente \n");
     }
 }
 
