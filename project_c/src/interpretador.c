@@ -72,8 +72,10 @@ void show (TABLE table){
     setNumLin(table, linha);
     printf("\n");
 
-    acao(table);
-    show (table);
+    if((getNumLinTotal(table) - 10) > 0){
+        acao(table);
+        show (table);
+    }
 }
 
 void toCSV(TABLE table, char delim, char path[]){
