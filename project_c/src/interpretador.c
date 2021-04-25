@@ -192,7 +192,7 @@ TABLE filter(TABLE table, char columName[], char* value, OPERATOR oper){
     TABLE novaTable = malloc(sizeof(struct table));
     setNumLinTotal(novaTable, 0);
 
-    int linhas = 1, j = 1, flag = 0, col; // col é o índice da coluna cujos valores serão comparados com value
+    int i, linhas = 1, j = 1, flag = 0, col;
     
     novaTable->variaveis = NULL;
     novaTable->variaveis = realloc(novaTable->variaveis, sizeof(char**)*(linhas+1));
@@ -203,7 +203,6 @@ TABLE filter(TABLE table, char columName[], char* value, OPERATOR oper){
         novaTable->variaveis[0] = realloc(novaTable->variaveis[0], sizeof(char*)*(i+1));
         novaTable->variaveis[0][i] = strdup(table->variaveis[0][i]);
     }
-
     while(j < getNumLinTotal(table)){
         
         novaTable->variaveis = realloc(novaTable->variaveis, sizeof(char**)*(linhas+1));
@@ -212,14 +211,15 @@ TABLE filter(TABLE table, char columName[], char* value, OPERATOR oper){
 
         novaTable->variaveis[linhas] = NULL;
         if(flag){
-            for(int i = 0; table->variaveis[j][i] != NULL; i++){
+            for(i = 0; table->variaveis[j][i] != NULL; i++){
                 novaTable->variaveis[linhas] = realloc(novaTable->variaveis[linhas], sizeof(char*)*(i+1));
                 novaTable->variaveis[linhas][i] = strdup(table->variaveis[j][i]);
             }
+            novaTable->variaveis[linhas] = realloc(novaTable->variaveis[linhas], sizeof(char*)*(i+1));
+            novaTable->variaveis[linhas][i] = NULL;
             linhas++;
         }
-        flag = 0;
-        j++;
+        flag = 0; j++;
     }
     setNumLinTotal(novaTable, linhas);
     setNumLin(table, 0);
@@ -230,7 +230,7 @@ TABLE proj(TABLE table, int cols){
 
     TABLE novaTable = malloc(sizeof(struct table));
 
-    int j = 0;
+    int j = 0, i;
     novaTable->variaveis = NULL;
 
     while(j < getNumLinTotal(table)){
@@ -238,10 +238,12 @@ TABLE proj(TABLE table, int cols){
         novaTable->variaveis = realloc(novaTable->variaveis, sizeof(char**)*(j+1));
         novaTable->variaveis[j] = NULL;
 
-        for(int i = 0; table->variaveis[j][i] != NULL && i < cols; i++){
+        for(i = 0; table->variaveis[j][i] != NULL && i < cols; i++){
             novaTable->variaveis[j] = realloc(novaTable->variaveis[j], sizeof(char*)*(i+1));
             novaTable->variaveis[j][i] = strdup(table->variaveis[j][i]);
         }
+        novaTable->variaveis[j] = realloc(novaTable->variaveis[j],sizeof(char*)*(i+1));
+        novaTable->variaveis[j][i] = NULL;
         j++;
     }
     setNumLinTotal(novaTable, getNumLinTotal(table));
