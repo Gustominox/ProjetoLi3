@@ -93,6 +93,24 @@ TABLE indexa (TABLE table, int linha, int coluna);
 
 
 /**
+ * @brief Funçaõ que retorna o máximo valor de uma dada coluna
+ * @param table table
+ * @param columName coluna da tabela dada
+ * @return table com o maximo valor da coluna
+ */
+TABLE max(TABLE table, char columName[]);
+
+
+/**
+ * @brief Função que retorna o mínimo valor de uam dada coluna
+ * @param table table
+ * @param columName coluna da tabela dada
+ * @return table com o m+inimo valor da coluna
+ */ 
+TABLE min(TABLE table, char columName[]);
+
+
+/**
  * 
  */
 int isAssignment(char *linha);
