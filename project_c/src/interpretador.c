@@ -258,15 +258,18 @@ TABLE indexa (TABLE table, int linha, int coluna){
     TABLE resultado = malloc(sizeof(struct table));
     
     resultado->variaveis = NULL;
-    resultado->variaveis = realloc(table->variaveis,sizeof(char**));
+    resultado->variaveis = realloc(table->variaveis,sizeof(char**)*2);
 
     resultado->variaveis[0] = NULL;
     resultado->variaveis[0]= realloc(table->variaveis[0],sizeof(char*)*2);
 
-    resultado->variaveis[0][0]= strdup(table->variaveis[linha][coluna]);
+    resultado->variaveis[0][0]= strdup(table->variaveis[0][coluna]);
     resultado->variaveis[0][1] = NULL;
+    
+    resultado->variaveis[1][0]= strdup(table->variaveis[linha][coluna]);
+    resultado->variaveis[1][1] = NULL;
 
-    setNumLinTotal(resultado, 1);
+    setNumLinTotal(resultado, 2);
     return resultado;
 }
 
