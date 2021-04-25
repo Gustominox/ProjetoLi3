@@ -288,7 +288,7 @@ TABLE max(TABLE table, char columName[]){
     novaTable->variaveis[0] = NULL;
     novaTable->variaveis[0] = realloc(novaTable->variaveis[0], sizeof(char*));
 
-    novaTable->variaveis[0][0] = table->variaveis[0][col];
+    novaTable->variaveis[0][0] = strdup(table->variaveis[0][col]);
     novaTable->variaveis[0][1] = NULL;
 
     novaTable->variaveis[1] = NULL;
@@ -300,6 +300,41 @@ TABLE max(TABLE table, char columName[]){
 
     novaTable->variaveis[1][0] = maximo;
     novaTable->variaveis[0][1] = NULL;
+
+    setNumLinTotal(novaTable, 2);
+    return novaTable;
+}
+
+TABLE min(TABLE table, char columName[]){
+
+    TABLE novaTable = malloc(sizeof(struct table));
+
+    int col;
+
+    for(int i = 0; table->variaveis[0][i] != NULL; i++)
+        if(strcmp(table->variaveis[0][i], columName) == 0) col = i;
+
+    char* minimo = malloc(sizeof(char*));
+    minimo = table->variaveis[1][col];
+
+    novaTable->variaveis = NULL;
+    novaTable->variaveis = realloc(novaTable->variaveis, sizeof(char**)*2);
+
+    novaTable->variaveis[0] = NULL;
+    novaTable->variaveis[0] = realloc(novaTable->variaveis[0], sizeof(char*));
+
+    novaTable->variaveis[0][0] = strdup(table->variaveis[0][col]);
+    novaTable->variaveis[0][1] = NULL;
+
+    novaTable->variaveis[1] = NULL;
+    novaTable->variaveis[1] = realloc(novaTable->variaveis[1], sizeof(char*));
+
+    for(int j = 1; j < getNumLinTotal(table); j++)
+        if(compare(table->variaveis[j][col], minimo, LT) == 0)
+            minimo = strdup(table->variaveis[j][col]);
+
+    novaTable->variaveis[1][0] = minimo;
+    novaTable->variaveis[1][1] = NULL;
 
     setNumLinTotal(novaTable, 2);
     return novaTable;
