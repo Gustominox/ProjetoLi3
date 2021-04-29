@@ -12,8 +12,8 @@
 
 
 struct var{
-    TABLE* table;       // output de uma query
-    char** nome;         // nome da variável
+    TABLE table;       // output de uma query
+    char* nome;         // nome da variável
 };
 
 
@@ -343,6 +343,17 @@ int isAssignment(char *linha){
     else return 0;    
 }
 
+int verificaVar(struct var vars[], char* var){
+    int j = 0, posicao = 0;
+    while(j<10 && strcmp(vars[j]->nome, var) != 0){
+        j++;
+    }
+    posicao = j;
+    if(posicao<10) return posicao;
+    else return -1;
+}
+
+
 int interpretador(){
     char linha[BUF_SIZE];
     char **info;
@@ -360,84 +371,93 @@ int interpretador(){
     int i = 0;
 
     while(linha){
-
+        
         info = doRegex(linha);
-        printLinha(info);
+        //printLinha(info);
 
         if(isAssignment(linha)) strcpy(funcao, info[2]);
         else strcpy(funcao, info[0]);
 
-        table->variaveis[0] = realloc(table->variaveis[0], sizeof(char*)*(i+1));
+        if(isAssignment(linha) && i == 10){
+            return MEM_FULL;
+        }
+
+        //table->variaveis[0] = realloc(table->variaveis[0], sizeof(char*)*(i+1));
 
         if (strcmp("businesses_started_by_letter",funcao) == 0)
         {   
-            vars[i]->nome = info[0];
-            vars[i]->table = businesses_started_by_letter(sgr, info[4][0]);     
-            i++;
+                vars[i]->nome = info[0];
+                vars[i]->table = businesses_started_by_letter(sgr, info[4][0]);     
+                i++;
         }   
         else if (strcmp("business_info",funcao) == 0)
         {
-            vars[i]->nome= info[0];
-            vars[i]->table = business_info(sgr, info[4]);
-            i++;
+                vars[i]->nome= info[0];
+                vars[i]->table = business_info(sgr, info[4]);
+                i++;
         }
         else if (strcmp("businesses_reviewed",funcao) == 0)
         {
-            vars[i]->nome = info[0];
-            vars[i]->table = businesses_reviewed(sgr, info[4]);
-            i++;
+                vars[i]->nome = info[0];
+                vars[i]->table = businesses_reviewed(sgr, info[4]);
+                i++;
         }
         else if (strcmp("businesses_with_stars_and_city",funcao) == 0)
         {
-            vars[i]->nome = info[0];
-            vars[i]->table =businesses_with_stars_and_city(sgr, atof(info [4]), info[5]);
-            i++;
+                vars[i]->nome = info[0];
+                vars[i]->table =businesses_with_stars_and_city(sgr, atof(info [4]), info[5]);
+                i++;
         }
         else if (strcmp("top_businesses_by_city",funcao) == 0)
         {
-            vars[i]->nome = info[0];
-            vars[i]->table = top_businesses_by_city(sgr, atoi(info [4]));
-            i++;
+                vars[i]->nome = info[0];
+                vars[i]->table = top_businesses_by_city(sgr, atoi(info [4]));
+                i++;
         }
         else if (strcmp("international_users",funcao) == 0)
         {
-            vars[i]->nome = info[0];
-            vars[i]->table = international_users(sgr);
-            i++;
+                vars[i]->nome = info[0];
+                vars[i]->table = international_users(sgr);
+                i++;
         }    
         else if (strcmp("top_businesses_with_category",funcao) == 0)
         {
-            vars[i]->nome = info[0];
-            vars[i]->table = top_businesses_with_category(sgr, atoi(info[4]), info[5]);
-            i++;
+                vars[i]->nome = info[0];
+                vars[i]->table = top_businesses_with_category(sgr, atoi(info[4]), info[5]);
+                i++;
         }           
         else if (strcmp("reviews_with_word",funcao) == 0)
         {
-            vars[i]->nome = info[0];
-            vars[i]->table = reviews_with_word(sgr, atoi(info[4]), info[5]);
-            i++;
+                vars[i]->nome = info[0];
+                vars[i]->table = reviews_with_word(sgr, atoi(info[4]), info[5]);
+                i++;
         }
-        else if (strcmp("show",funcao) == 0) {
-                int j = 0, posicao = 0;
-                while(j<10 && strcmp(var[j]->nome,info[1]) != 0){
-                    posicao = j;
-                    j++;
-                }
-                    //ou sai do ciclo porque j>=10 ou porque encontrou a variavel
-                if(posicao<10) show(var[posicao]->table);
-                else printf("A TABLE PEDIDA NAO EXISTE");
-        } 
+        else if (strcmp("show",funcao) == 0) 
+        {
+                int posicao = verificaVar(vars, info[1]);
+                if(posicao != -1) show(vars[posicao]->table);
+                else printf("A TABLE nao existe");
+        }         
         else if (strcmp("toCSV",funcao) == 0)
         {
-            
+                int posicao = verificaVar(vars, info[1]);
+                if(posicao != -1) toCSV(vars[posicao]->table, info[2][0], info[3]);
+                else printf("A TABLE nao existe");
         } 
         else if (strcmp("fromCSV",funcao) == 0)
         {
-
+                vars[i]->nome = info[0];
+                vars[i]->table = fromCSV(info[3], info[4]);
+                i++;
         } 
         else if (strcmp("filter",funcao) == 0)
         {
-
+                int posicao = verificaVar(vars, info[3]);
+                if(posicao != -1){
+                    vars[i]->nome = info[0];
+                    vars[i]->table = filter(vars[posicao]->table, info[4], info[5], info[6]);
+                    i++;
+                }
         } 
         else if (strcmp("proj",funcao) == 0)
         {
@@ -454,7 +474,11 @@ int interpretador(){
         else if (strcmp("min",funcao) == 0)
         {
 
-        } 
+        }
+        else if (strcmp("quit",funcao) == 0)
+        {
+                return EXIT_CODE;
+        }
         else{
             free_sgr(sgr);
             fgets(linha, BUF_SIZE, stdin);  
