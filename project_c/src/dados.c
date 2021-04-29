@@ -5,6 +5,31 @@
 #include "dados.h"
 // #include "auxiliares.h"
 
+struct user{
+	char *id;
+	char *name;
+	char *friends;
+};
+
+struct business{
+	char *business_id;
+	char *name;
+	char *city;
+	char *state;
+	char **categories;
+};
+
+struct review{
+	char *review_id;
+	char *user_id;
+	char *business_id;
+	float stars;
+	int useful;
+	int funny;
+	int cool;
+	char *date;
+	char *text;
+};
 
 char *getBusId(BUSINESS bus){
   return strdup(bus->business_id);
@@ -138,7 +163,7 @@ void setReviewText(REVIEW review, char newText[]){
 }
 
 // le um fich e retorna a matriz dinamica de strings em que cada linha é uma linha do fich
-char** lerFichCsv ( int* tmh, char path[]){
+char** lerFichCsv (int* tmh, char path[]){
     
     char **info = NULL;
     // open file
@@ -180,9 +205,7 @@ BUSINESS* transStrToBus(char **info,int *tmh,BUSINESS *business){
         }
         
         tmhBus++;
-        //printf("[%d] i:%d\n", tmhBus,i);
-        
-        
+        //printf("[%d] i:%d\n", tmhBus,i);   
     }
     
     for (int j = 0; j < *tmh; j++)
@@ -209,8 +232,6 @@ REVIEW* transStrToRev(char **info,int *tmh,REVIEW *reviews){
         
         tmhRev++;
         //printf("[%d] i:%d\n", tmhRev,i);
-        
-        
     }
     
     for (int j = 0; j < *tmh; j++)
@@ -238,8 +259,6 @@ USER* transStrToUsers(char **info,int *tmh,USER *users){
         
         tmhUser++;
         //printf("[%d] i:%d\n", tmhUser,i);
-        
-        
     }
 
     *tmh = tmhUser;
@@ -247,8 +266,7 @@ USER* transStrToUsers(char **info,int *tmh,USER *users){
 }
 
 
-void 
-transStrToTable(char path[], GHashTable* hash, void* (*funcao) (char info[]),
+void transStrToTable(char path[], GHashTable* hash, void* (*funcao) (char info[]),
                 int mode ){
 
     FILE *fp = fopen(path, "r");
@@ -287,12 +305,10 @@ transStrToTable(char path[], GHashTable* hash, void* (*funcao) (char info[]),
             
             }
         }
-        
-    
     }
     fclose (fp);
-
 }
+
 
 BUSINESS addBusiness ( char info[]){
 
@@ -330,6 +346,7 @@ BUSINESS addBusiness ( char info[]){
     //printf("%s\n",getBusId(bus));
     return bus;
 }
+
 
 USER addUser ( char info[]){
 
@@ -416,8 +433,6 @@ REVIEW addReview (char info[]){
     rev->date = strdup(strsep(&info, ";"));
     if(strlen(rev->date) != 19) return NULL; // YYYY-MM-DD HH:MM:SS
     
-
-
     rev->text = strdup(strsep(&info, ";"));
 
 /*

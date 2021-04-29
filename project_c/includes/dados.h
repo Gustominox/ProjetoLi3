@@ -11,7 +11,6 @@
 #include <stdlib.h>
 #include <glib-2.0/glib.h>
 
-
 /***************************************************** Estruturas de dados *****************************************************/
 
 /*!
@@ -21,11 +20,7 @@
 * @field   name      Nome do usuário
 * @field   friends   Amigos do usuário
 */
-typedef struct user{
-	char *id;
-	char *name;
-	char *friends;
-} *USER;
+typedef struct user *USER;
 
 
 /*!
@@ -37,13 +32,7 @@ typedef struct user{
 * @field   state         Estado do negócio
 * @field   categorias    Categorias do negócio
 */
-typedef struct business{
-	char *business_id;
-	char *name;
-	char *city;
-	char *state;
-	char **categories;
-} *BUSINESS; 
+typedef struct business *BUSINESS; 
 
 
 /*!
@@ -59,17 +48,8 @@ typedef struct business{
 * @field   date           Data de criação do negócio
 * @field   text           Review do negócio
 */
-typedef struct review{
-	char *review_id;
-	char *user_id;
-	char *business_id;
-	float stars;
-	int useful;
-	int funny;
-	int cool;
-	char *date;
-	char *text;
-} *REVIEW;
+typedef struct review *REVIEW;
+
 
 /****************************************************** Funções get e set ******************************************************/
 
@@ -314,14 +294,14 @@ void setReviewText(REVIEW review, char newText[]);
 /************************************************ Leitura e Tratamento dos dados ************************************************/
 
 /**
-* \brief Função que faz a leitura do ficheiro e o guarda o seu conteúdo
+* \brief Função que faz a leitura do ficheiro e retorna a matriz dinâmica de strings em que cada linha é uma linha do fich
 *
 * @param info é o array que guarda o conteúdo do ficheiro lido
 * @param tmh é o número de linhas que tem o ficheiro (é o tamanho do array de strings, info)
 * @param path é o nome do ficheiro
-* @return array que guarda o conteúdo do ficheiro lido
+* @return matriz dinâmica
 */
-char** lerFichCsv ( int* tmh, char path[]);
+char** lerFichCsv (int* tmh, char path[]);
 
 
 /**
@@ -356,37 +336,15 @@ REVIEW* transStrToRev(char **info,int *tmh, REVIEW *review);
 */
 USER* transStrToUsers(char **info,int *tmh, USER *users);
 
-/**
-* \brief Função que converte o array da struct do tipo USER num array de strings
-*
-* @param user é o array que guarda o conteúdo do ficheiro, convertido para structs do tipo USER
-* @return array de strings com o conteúdo do ficheiro lido
-*/
-char *userToString(USER user);
 
 /**
-* \brief Função que converte o array da struct do tipo REVIEW num array de strings
+* \brief Função que converte uma String numa TABLE
 *
-* @param rev é o array que guarda o conteúdo do ficheiro, convertido para structs do tipo REVIEW
-* @return array de strings com o conteúdo do ficheiro lido
+* @param path
+* @param hash
+* @param funcao
 */
-char *reviewToString(REVIEW rev);
-
-/**
-* \brief Função que converte o array da struct do tipo BUSINESS num array de strings
-*
-* @param bus é o array que guarda o conteúdo do ficheiro, convertido para structs do tipo BUSINESS
-* @return array de strings com o conteúdo do ficheiro lido
-*/
-char *businessToString(BUSINESS bus);
-
-/**
-* \brief Função que preenche os campos da struct do tipo USER
-*
-* @param user é o array que guarda o conteúdo do ficheiro, convertido para structs do tipo USER
-* @param info é o array que guarda o conteúdo do ficheiro lido
-*/
-USER addUser ( char info[]);
+void transStrToTable(char path[],GHashTable* hash ,void* (*funcao) (char info[]),int mode);
 
 
 /**
@@ -399,6 +357,15 @@ BUSINESS addBusiness (char info[]);
 
 
 /**
+* \brief Função que preenche os campos da struct do tipo USER
+*
+* @param user é o array que guarda o conteúdo do ficheiro, convertido para structs do tipo USER
+* @param info é o array que guarda o conteúdo do ficheiro lido
+*/
+USER addUser ( char info[]);
+
+
+/**
 * \brief Função que preenche os campos da struct do tipo REVIEW
 *
 * @param rev é o array que guarda o conteúdo do ficheiro, convertido para structs do tipo REVIEW
@@ -406,7 +373,5 @@ BUSINESS addBusiness (char info[]);
 */
 REVIEW addReview ( char info[]);
 
-
-void transStrToTable(char path[],GHashTable* hash ,void* (*funcao) (char info[]),int mode);
 
 #endif
