@@ -31,6 +31,7 @@ struct review{
 	char *text;
 };
 
+
 char *getBusId(BUSINESS bus){
   return strdup(bus->business_id);
 }

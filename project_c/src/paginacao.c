@@ -4,6 +4,14 @@
 #include "paginacao.h"
 // #include <glib.h>
 
+
+struct table{
+    char ***variaveis;        
+    int numLin;               
+    int numLinTotal;         
+};
+
+
 void setNumLin(TABLE table, int newNumLin){
     table->numLin = newNumLin;
 }

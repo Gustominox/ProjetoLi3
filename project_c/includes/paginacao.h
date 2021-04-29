@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 /*!
 * @typedef table
 *
@@ -11,11 +12,7 @@
 * @field   numLin        O número da linha atual
 * @field   numLinTotal   O número de linhas totais
 */
-typedef struct table{
-    char ***variaveis;        
-    int numLin;               
-    int numLinTotal;         
-} *TABLE;
+typedef struct table *TABLE;
 
 
 /**

@@ -5,6 +5,21 @@
 #include "sgr.h"
 #include <pthread.h>
 
+struct sgr{
+	GHashTable* business;
+	GHashTable* businessByCity;
+	GHashTable* review;
+	GHashTable* reviewByBusId;
+	GHashTable* reviewByUserId;
+	GHashTable* user;
+};
+
+struct sthread{
+	char *file;
+	SGR sgr;
+	void* (*funcao) (char info[]);
+};
+
 
 SGR init_sgr(){
 

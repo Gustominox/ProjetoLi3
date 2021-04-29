@@ -22,21 +22,16 @@
 * @field   business    Negócio
 * @field   review      Review
 */
-typedef struct sgr{
-	GHashTable* business;
-	GHashTable* businessByCity;
-	GHashTable* review;
-	GHashTable* reviewByBusId;
-	GHashTable* reviewByUserId;
-	GHashTable* user;
-} *SGR;
+typedef struct sgr *SGR;
 
-typedef struct sthread{
-
-	char *file;
-	SGR sgr;
-	void* (*funcao) (char info[]);
-}*STHREAD;
+/*!
+* @typedef sthread
+*
+* @field   file        Ficheiro a receber
+* @field   sgr         SGR
+* @field   funcao      Função a aplicar
+*/
+typedef struct sthread *STHREAD;
 
 
 /**
