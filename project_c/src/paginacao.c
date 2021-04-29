@@ -22,6 +22,7 @@ int getNumLin(TABLE table){
 int getNumLinTotal(TABLE table){
     return table->numLinTotal;
 }
+
 void setNumLinTotal(TABLE table, int newNumLinTotal){
     table->numLinTotal = newNumLinTotal;
 }
@@ -47,7 +48,22 @@ void printLinha (char **variaveis){
     printf("\n");
 }
 
-void acao(TABLE table){
+void printPagina (TABLE table){
+    
+    int linha, maxPorPag;
+
+    for(linha = getNumLin(table), maxPorPag = 0; linha < getNumLinTotal(table) && maxPorPag < 10; linha++, maxPorPag++){
+        printLinha(table->variaveis[linha]);
+        printf("|");
+        for(int i = 0; i < 100; i++){
+            printf("-");
+        }
+        printf("\n");
+    }
+    setNumLin(table, linha);
+}
+
+int acao(TABLE table){
     
     int numLinAtual = getNumLin(table);
 
@@ -58,17 +74,19 @@ void acao(TABLE table){
 
         if (tecla == 'k' || tecla == 'K'){ // Avança na página
             setNumLin(table, numLinAtual++);
-            break;
+            printPagina(table);
         }
         else if (tecla == 'j' || tecla == 'J'){ // Recua na página 
             setNumLin(table, numLinAtual-20);
-            break;
+            printPagina(table);
         }
         else if (tecla == 'q'){
-            exit(0);
+            return 1;
         }
         else
             if(tecla != 0x0A) printf("comando inexistente \n");
     }
 }
+
+
 
