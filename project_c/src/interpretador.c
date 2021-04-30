@@ -305,16 +305,16 @@ void maxOrMin(TABLE table, char columName[], OPERATOR op){
             break;
         }
 
-    char* maximo = malloc(sizeof(char*));
-    maximo = table->variaveis[1][col];
+    char* extremo = malloc(sizeof(char*));
+    extremo = table->variaveis[1][col];
 
     for(int j = 1; j < getNumLinTotal(table); j++){
-        if(compare(table->variaveis[j][col], maximo, op) == 0){
-            maximo = strdup(table->variaveis[j][col]);
+        if(compare(table->variaveis[j][col], extremo, op) == 0){
+            extremo = strdup(table->variaveis[j][col]);
         }
     }
 
-    printf("%s\n", maximo);
+    printf("%s\n", extremo);
 }
 
 int isAssignment(char *linha){
