@@ -323,14 +323,14 @@ int isAssignment(char *linha){
     else return 0;    
 }
 
-int verificaVar(struct var vars[], char* var){
+int verificaVar(struct var vars[], int N, char* var){
     int j = 0, posicao = 0;
-    while(j<10 && strcmp(vars[j]->nome, var) != 0){
+    while(j<N && strcmp(vars[j]->nome, var) != 0){
         j++;
     }
     posicao = j;
-    if(posicao<10) return posicao;
-    else return -1;
+    if(posicao<N) return posicao;
+    else return posicao = -1;
 }
 
 OPERATOR stringToOperator(char* oper){
@@ -431,13 +431,13 @@ int interpretador(){
         }
         else if (strcmp("show",funcao) == 0) 
         {
-                int posicao = verificaVar(vars, info[1]);
+                int posicao = verificaVar(vars, i+1, info[1]);
                 if(posicao != -1) show(vars[posicao].table);
                 else printf("A TABLE nao existe");
         }         
         else if (strcmp("toCSV",funcao) == 0)
         {
-                int posicao = verificaVar(vars, info[1]);
+                int posicao = verificaVar(vars, i+1, info[1]);
                 if(posicao != -1) toCSV(vars[posicao].table, info[2][0], info[3]);
                 else printf("A TABLE nao existe");
         } 
@@ -449,7 +449,7 @@ int interpretador(){
         } 
         else if (strcmp("filter",funcao) == 0)
         {
-                int posicao = verificaVar(vars, info[3]);
+                int posicao = verificaVar(vars, i+1, info[3]);
                 if(posicao != -1){
                     vars[i].nome = info[0];
                     vars[i].table = filter(vars[posicao].table, info[4], info[5], stringToOperator(info[6]));
@@ -458,7 +458,7 @@ int interpretador(){
         } 
         else if (strcmp("proj",funcao) == 0)
         {
-                int posicao = verificaVar(vars, info[3]);
+                int posicao = verificaVar(vars, i+1, info[3]);
                 if(posicao != -1){
                     vars[i].nome = info[0];
                     vars[i].table = proj(vars[posicao].table, atoi(info[4]))
@@ -467,7 +467,7 @@ int interpretador(){
         } 
         else if (strcmp("indexa",funcao) == 0)
         {
-                int posicao = verificaVar(vars, info[2]);
+                int posicao = verificaVar(vars, i+1, info[2]);
                 if(posicao != -1){
                     vars[i].nome = info[0];
                     vars[i].table = proj(vars[posicao].table, atoi(info[3]), atoi(info[4]));
@@ -476,14 +476,14 @@ int interpretador(){
         } 
         else if (strcmp("max",funcao) == 0) //max(x,nomeColuna, Operador)
         {
-                int posicao = verificaVar(vars, info[1]);
+                int posicao = verificaVar(vars, i+1, info[1]);
                 if(posicao != -1){
                     maxOrMin(vars[posicao].table, info[2], stringToOperator(info[3]));
                 }
         } 
         else if (strcmp("min",funcao) == 0)
         {
-                int posicao = verificaVar(vars, info[1]);
+                int posicao = verificaVar(vars, i+1, info[1]);
                 if(posicao != -1){
                     maxOrMin(vars[posicao].table, info[2], stringToOperator(info[3]));
                 }
