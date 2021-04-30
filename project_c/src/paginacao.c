@@ -77,7 +77,7 @@ int acao(TABLE table){
             printPagina(table);
         }
         else if (tecla == 'j' || tecla == 'J'){ // Recua na página 
-            setNumLin(table, numLinAtual-20);
+            setNumLin(table, numLinAtual-numLinAtual);
             printPagina(table);
         }
         else if (tecla == 'q'){

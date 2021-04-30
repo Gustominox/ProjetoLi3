@@ -145,9 +145,17 @@ int compare(char* content, char* value, OPERATOR oper){
             else if(isFloat(value)){
                 if(atof(content) < atof(value)) isValid = 0;
             } else {
-                for(int k = 0; k < strlen(value) || k < strlen(content); k++){
-                    if(content[k] > value[k]) isValid = 0;
-                    break;
+                int k = 0;
+                while(k < strlen(value) && k < strlen(content)){
+                    if(content[k] == value[k])
+                        k++;
+                    else if(content[k] < value[k]){
+                        break;
+                    }
+                    else if(content[k] > value[k]){
+                        isValid = 0;
+                        break;
+                    }
                 }
             }
             break;
@@ -159,9 +167,16 @@ int compare(char* content, char* value, OPERATOR oper){
             else if(isFloat(value)){
                 if(atof(content) == atof(value)) isValid = 0;
             } else {
-                for(int k = 0; k < strlen(value) || k < strlen(content); k++){
-                    if(content[k] == value[k]) isValid = 0;
-                    break;
+                int k = 0;
+                while(k < strlen(value) && k < strlen(content)){
+                    if(content[k] == value[k]){
+                        isValid = 0;
+                        k++;
+                    }
+                    else{
+                        isValid = 1;
+                        break;
+                    }
                 }
             }
             break;
@@ -172,10 +187,18 @@ int compare(char* content, char* value, OPERATOR oper){
             }
             else if(isFloat(value)){
                 if(atof(content) > atof(value)) isValid = 0;
-            } else { 
-                for(int k = 0; k < strlen(value) || k < strlen(content); k++){
-                    if(content[k] < value[k] || content[k] == '\n') isValid = 0;
-                    break;
+            } else {
+                int k = 0;
+                while(k < strlen(value) && k < strlen(content)){
+                    if(content[k] == value[k])
+                        k++;
+                    else if(content[k] > value[k]){
+                        break;
+                    }
+                    else if(content[k] < value[k] || content[k] == '\n'){
+                        isValid = 0;
+                        break;
+                    }
                 }
             }
             break;
@@ -191,14 +214,16 @@ TABLE filter(TABLE table, char columName[], char* value, OPERATOR oper){
     int i, linhas = 1, j = 1, flag = 0, col;
     
     novaTable->variaveis = NULL;
-    novaTable->variaveis = realloc(novaTable->variaveis, sizeof(char**)*(linhas+1));
+    novaTable->variaveis = realloc(novaTable->variaveis, sizeof(char**));
 
     novaTable->variaveis[0] = NULL;
+
     for(int i = 0; table->variaveis[0][i] != NULL; i++){
         if(strcmp(table->variaveis[0][i], columName) == 0) col = i;
         novaTable->variaveis[0] = realloc(novaTable->variaveis[0], sizeof(char*)*(i+1));
         novaTable->variaveis[0][i] = strdup(table->variaveis[0][i]);
     }
+
     while(j < getNumLinTotal(table)){
         
         novaTable->variaveis = realloc(novaTable->variaveis, sizeof(char**)*(linhas+1));
@@ -206,6 +231,7 @@ TABLE filter(TABLE table, char columName[], char* value, OPERATOR oper){
         if(compare(table->variaveis[j][col], value, oper) == 0) flag = 1;
 
         novaTable->variaveis[linhas] = NULL;
+
         if(flag){
             for(i = 0; table->variaveis[j][i] != NULL; i++){
                 novaTable->variaveis[linhas] = realloc(novaTable->variaveis[linhas], sizeof(char*)*(i+1));
@@ -215,7 +241,8 @@ TABLE filter(TABLE table, char columName[], char* value, OPERATOR oper){
             novaTable->variaveis[linhas][i] = NULL;
             linhas++;
         }
-        flag = 0; j++;
+        flag = 0;
+        j++;
     }
     setNumLinTotal(novaTable, linhas);
     setNumLin(table, 0);
@@ -267,7 +294,7 @@ TABLE indexa (TABLE table, int linha, int coluna){
     return resultado;
 }
 
-TABLE max(TABLE table, char columName[]){
+TABLE min(TABLE table, char columName[]){
 
     TABLE novaTable = malloc(sizeof(struct table));
 
@@ -276,8 +303,8 @@ TABLE max(TABLE table, char columName[]){
     for(int i = 0; table->variaveis[0][i] != NULL; i++)
         if(strcmp(table->variaveis[0][i], columName) == 0) col = i;
 
-    char* maximo = malloc(sizeof(char*));
-    maximo = table->variaveis[1][col];
+    char* minimo = malloc(sizeof(char*));
+    minimo = table->variaveis[1][col];
 
     novaTable->variaveis = NULL;
     novaTable->variaveis = realloc(novaTable->variaveis, sizeof(char**)*2);
@@ -292,11 +319,11 @@ TABLE max(TABLE table, char columName[]){
     novaTable->variaveis[1] = realloc(novaTable->variaveis[1], sizeof(char*));
 
     for(int j = 1; j < getNumLinTotal(table); j++)
-        if(compare(table->variaveis[j][col], maximo, GT) == 0)
-            maximo = strdup(table->variaveis[j][col]);
+        if(compare(table->variaveis[j][col], minimo, GT) == 0)
+            minimo = strdup(table->variaveis[j][col]);
 
-    novaTable->variaveis[1][0] = maximo;
-    novaTable->variaveis[0][1] = NULL;
+    novaTable->variaveis[1][0] = minimo;
+    novaTable->variaveis[1][1] = NULL;
 
     setNumLinTotal(novaTable, 2);
     return novaTable;
