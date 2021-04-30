@@ -294,74 +294,27 @@ TABLE indexa (TABLE table, int linha, int coluna){
     return resultado;
 }
 
-TABLE min(TABLE table, char columName[]){
-
-    TABLE novaTable = malloc(sizeof(struct table));
+void maxOrMin(TABLE table, char columName[], OPERATOR op){
 
     int col;
 
     for(int i = 0; table->variaveis[0][i] != NULL; i++)
-        if(strcmp(table->variaveis[0][i], columName) == 0) col = i;
+        if(strcmp(table->variaveis[0][i], columName) == 0){
+            col = i;
+            printf("%s: ", table->variaveis[0][i]);
+            break;
+        }
 
-    char* minimo = malloc(sizeof(char*));
-    minimo = table->variaveis[1][col];
+    char* maximo = malloc(sizeof(char*));
+    maximo = table->variaveis[1][col];
 
-    novaTable->variaveis = NULL;
-    novaTable->variaveis = realloc(novaTable->variaveis, sizeof(char**)*2);
+    for(int j = 1; j < getNumLinTotal(table); j++){
+        if(compare(table->variaveis[j][col], maximo, op) == 0){
+            maximo = strdup(table->variaveis[j][col]);
+        }
+    }
 
-    novaTable->variaveis[0] = NULL;
-    novaTable->variaveis[0] = realloc(novaTable->variaveis[0], sizeof(char*));
-
-    novaTable->variaveis[0][0] = strdup(table->variaveis[0][col]);
-    novaTable->variaveis[0][1] = NULL;
-
-    novaTable->variaveis[1] = NULL;
-    novaTable->variaveis[1] = realloc(novaTable->variaveis[1], sizeof(char*));
-
-    for(int j = 1; j < getNumLinTotal(table); j++)
-        if(compare(table->variaveis[j][col], minimo, GT) == 0)
-            minimo = strdup(table->variaveis[j][col]);
-
-    novaTable->variaveis[1][0] = minimo;
-    novaTable->variaveis[1][1] = NULL;
-
-    setNumLinTotal(novaTable, 2);
-    return novaTable;
-}
-
-TABLE min(TABLE table, char columName[]){
-
-    TABLE novaTable = malloc(sizeof(struct table));
-
-    int col;
-
-    for(int i = 0; table->variaveis[0][i] != NULL; i++)
-        if(strcmp(table->variaveis[0][i], columName) == 0) col = i;
-
-    char* minimo = malloc(sizeof(char*));
-    minimo = table->variaveis[1][col];
-
-    novaTable->variaveis = NULL;
-    novaTable->variaveis = realloc(novaTable->variaveis, sizeof(char**)*2);
-
-    novaTable->variaveis[0] = NULL;
-    novaTable->variaveis[0] = realloc(novaTable->variaveis[0], sizeof(char*));
-
-    novaTable->variaveis[0][0] = strdup(table->variaveis[0][col]);
-    novaTable->variaveis[0][1] = NULL;
-
-    novaTable->variaveis[1] = NULL;
-    novaTable->variaveis[1] = realloc(novaTable->variaveis[1], sizeof(char*));
-
-    for(int j = 1; j < getNumLinTotal(table); j++)
-        if(compare(table->variaveis[j][col], minimo, LT) == 0)
-            minimo = strdup(table->variaveis[j][col]);
-
-    novaTable->variaveis[1][0] = minimo;
-    novaTable->variaveis[1][1] = NULL;
-
-    setNumLinTotal(novaTable, 2);
-    return novaTable;
+    printf("%s\n", maximo);
 }
 
 int isAssignment(char *linha){
