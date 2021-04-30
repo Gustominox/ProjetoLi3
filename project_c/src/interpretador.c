@@ -383,94 +383,110 @@ int interpretador(){
 
         if (strcmp("businesses_started_by_letter",funcao) == 0)
         {   
-                vars[i]->nome = info[0];
-                vars[i]->table = businesses_started_by_letter(sgr, info[4][0]);     
+                vars[i].nome = info[0];
+                vars[i].table = businesses_started_by_letter(sgr, info[4][0]);     
                 i++;
         }   
         else if (strcmp("business_info",funcao) == 0)
         {
-                vars[i]->nome= info[0];
-                vars[i]->table = business_info(sgr, info[4]);
+                vars[i].nome= info[0];
+                vars[i].table = business_info(sgr, info[4]);
                 i++;
         }
         else if (strcmp("businesses_reviewed",funcao) == 0)
         {
-                vars[i]->nome = info[0];
-                vars[i]->table = businesses_reviewed(sgr, info[4]);
+                vars[i].nome = info[0];
+                vars[i].table = businesses_reviewed(sgr, info[4]);
                 i++;
         }
         else if (strcmp("businesses_with_stars_and_city",funcao) == 0)
         {
-                vars[i]->nome = info[0];
-                vars[i]->table =businesses_with_stars_and_city(sgr, atof(info [4]), info[5]);
+                vars[i].nome = info[0];
+                vars[i].table =businesses_with_stars_and_city(sgr, atof(info [4]), info[5]);
                 i++;
         }
         else if (strcmp("top_businesses_by_city",funcao) == 0)
         {
-                vars[i]->nome = info[0];
-                vars[i]->table = top_businesses_by_city(sgr, atoi(info [4]));
+                vars[i].nome = info[0];
+                vars[i].table = top_businesses_by_city(sgr, atoi(info [4]));
                 i++;
         }
         else if (strcmp("international_users",funcao) == 0)
         {
-                vars[i]->nome = info[0];
-                vars[i]->table = international_users(sgr);
+                vars[i].nome = info[0];
+                vars[i].table = international_users(sgr);
                 i++;
         }    
         else if (strcmp("top_businesses_with_category",funcao) == 0)
         {
-                vars[i]->nome = info[0];
-                vars[i]->table = top_businesses_with_category(sgr, atoi(info[4]), info[5]);
+                vars[i].nome = info[0];
+                vars[i].table = top_businesses_with_category(sgr, atoi(info[4]), info[5]);
                 i++;
         }           
         else if (strcmp("reviews_with_word",funcao) == 0)
         {
-                vars[i]->nome = info[0];
-                vars[i]->table = reviews_with_word(sgr, atoi(info[4]), info[5]);
+                vars[i].nome = info[0];
+                vars[i].table = reviews_with_word(sgr, atoi(info[4]), info[5]);
                 i++;
         }
         else if (strcmp("show",funcao) == 0) 
         {
                 int posicao = verificaVar(vars, info[1]);
-                if(posicao != -1) show(vars[posicao]->table);
+                if(posicao != -1) show(vars[posicao].table);
                 else printf("A TABLE nao existe");
         }         
         else if (strcmp("toCSV",funcao) == 0)
         {
                 int posicao = verificaVar(vars, info[1]);
-                if(posicao != -1) toCSV(vars[posicao]->table, info[2][0], info[3]);
+                if(posicao != -1) toCSV(vars[posicao].table, info[2][0], info[3]);
                 else printf("A TABLE nao existe");
         } 
         else if (strcmp("fromCSV",funcao) == 0)
         {
-                vars[i]->nome = info[0];
-                vars[i]->table = fromCSV(info[3], info[4]);
+                vars[i].nome = info[0];
+                vars[i].table = fromCSV(info[3], info[4]);
                 i++;
         } 
         else if (strcmp("filter",funcao) == 0)
         {
                 int posicao = verificaVar(vars, info[3]);
                 if(posicao != -1){
-                    vars[i]->nome = info[0];
-                    vars[i]->table = filter(vars[posicao]->table, info[4], info[5], info[6]);
+                    vars[i].nome = info[0];
+                    vars[i].table = filter(vars[posicao].table, info[4], info[5], stringToOperator(info[6]));
                     i++;
                 }
         } 
         else if (strcmp("proj",funcao) == 0)
         {
-
+                int posicao = verificaVar(vars, info[3]);
+                if(posicao != -1){
+                    vars[i].nome = info[0];
+                    vars[i].table = proj(vars[posicao].table, atoi(info[4]))
+                    i++;
+                }
         } 
         else if (strcmp("indexa",funcao) == 0)
         {
-
+                int posicao = verificaVar(vars, info[2]);
+                if(posicao != -1){
+                    vars[i].nome = info[0];
+                    vars[i].table = proj(vars[posicao].table, atoi(info[3]), atoi(info[4]));
+                    i++;
+                }
         } 
-        else if (strcmp("max",funcao) == 0)
+        else if (strcmp("max",funcao) == 0) //max(x,nomeColuna, Operador)
         {
-
+                int posicao = verificaVar(vars, info[1]);
+                if(posicao != -1){
+                    maxOrMin(vars[posicao].table, info[2], stringToOperator(info[3]));
+                }
         } 
         else if (strcmp("min",funcao) == 0)
         {
-
+                int posicao = verificaVar(vars, info[1]);
+                if(posicao != -1){
+                    maxOrMin(vars[posicao].table, info[2], stringToOperator(info[3]));
+                }
         }
         else if (strcmp("quit",funcao) == 0)
         {
@@ -483,5 +499,3 @@ int interpretador(){
         }
     }
 }
-
-
