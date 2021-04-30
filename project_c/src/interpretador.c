@@ -333,6 +333,23 @@ int verificaVar(struct var vars[], char* var){
     else return -1;
 }
 
+OPERATOR stringToOperator(char* oper){
+        OPERATOR operador;
+
+        if(strcmp("LT",oper) == 0){
+                operador = LT;
+        }
+
+        if(strcmp("EQ",oper) == 0){
+                operador = EQ;
+        }
+
+        if(strcmp("GT",oper) == 0){
+                operador = QT;
+        }
+
+        return operador;
+}
 
 int interpretador(){
     char linha[BUF_SIZE];
