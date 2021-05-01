@@ -50,9 +50,9 @@ char **doRegex (const gchar *string){
 }
 
 
-int show (TABLE table){
+void show (TABLE table){
 
-    int r;
+    int r = 0;
 
     printf("|");
     for(int i = 0; i < 100 ; i++){
@@ -64,11 +64,9 @@ int show (TABLE table){
 
     printf("\n");
 
-    if((getNumLinTotal(table) - 10) > 0){
+    while((getNumLinTotal(table) - 10) > 0 && (getNumLin(table) < (getNumLinTotal(table) - 10)) && !r){
         r = acao(table);
-        if(r != 0) return r;
-        //r = show (table);
-        //return r;
+        if(r != 0) r = 1;
     }
 }
 
