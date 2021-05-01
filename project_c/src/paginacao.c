@@ -1,3 +1,4 @@
+/*
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -37,7 +38,7 @@ char** getVariaveis(TABLE table){
     variaveis = realloc(variaveis, sizeof(char*)*(i+1));
     variaveis[i] = NULL;
     return variaveis;
-}*/
+}
 
 
 void printLinha (char **variaveis){
@@ -90,3 +91,4 @@ int acao(TABLE table){
 
 
 
+*/

@@ -6,6 +6,10 @@
 #include <pthread.h>
 
 struct sgr{
+	
+	BUSINESS *bus;
+	REVIEW *rev;
+	USER *use;
 	GHashTable* business;
 	GHashTable* businessByCity;
 	GHashTable* review;
@@ -14,16 +18,15 @@ struct sgr{
 	GHashTable* user;
 };
 
-struct sthread{
-	char *file;
-	SGR sgr;
-	void* (*funcao) (char info[]);
-};
-
-
 SGR init_sgr(){
 
 	SGR sgr = malloc(sizeof(struct sgr));
+	
+	sgr->bus  = NULL;
+	sgr->rev  = NULL;
+	sgr->use = NULL;
+
+
 	sgr->business = g_hash_table_new(g_str_hash, g_str_equal);
 	sgr->businessByCity = g_hash_table_new(g_str_hash, g_str_equal);
 	sgr->review = g_hash_table_new(g_str_hash, g_str_equal);
@@ -34,9 +37,10 @@ SGR init_sgr(){
 	return sgr;
 }
 
-
+// todo: INCOMPLETA
 void free_sgr(SGR sgr){
 
+	freeBusiness (sgr->bus[0]);
 	g_hash_table_destroy(sgr->business);
 	g_hash_table_destroy(sgr->businessByCity);
 	g_hash_table_destroy(sgr->review);
@@ -50,8 +54,8 @@ void free_sgr(SGR sgr){
 
 void *threadUsers(void* value){
 	
-	STHREAD help = (STHREAD) value;
-	transStrToTable(help->file,help->sgr->user,help->funcao,0);
+	SGR sgr = (SGR) value;
+	transStructToTable(sgr->user,sgr->use,getUserId);
 
 	return NULL;
 }
@@ -59,11 +63,11 @@ void *threadUsers(void* value){
 
 void *threadBusiness(void* value){
 	
-	STHREAD help = (STHREAD) value;
+	SGR sgr = (SGR) value;
 	
-	transStrToTable(help->file,help->sgr->business,help->funcao,0);
-	
-	transStrToTable(help->file,help->sgr->businessByCity,help->funcao,2);
+	transStructToTable(sgr->business,sgr->bus,getBusId);
+
+	transStructToTable(sgr->businessByCity,sgr->bus,getBusCity);
 
 	return NULL;
 }
@@ -71,13 +75,13 @@ void *threadBusiness(void* value){
 
 void *threadReviews(void* value){
 	
-	STHREAD help = (STHREAD) value;
+	SGR sgr = (SGR) value;
+	
+	transStructToTable(sgr->review,sgr->rev,getReviewId);
 
-	transStrToTable(help->file,help->sgr->review,help->funcao,0);
+	transStructToTable(sgr->reviewByUserId,sgr->rev,getReviewUser);
 
-	transStrToTable(help->file,help->sgr->reviewByUserId,help->funcao,1);
-
-	transStrToTable(help->file,help->sgr->reviewByBusId,help->funcao,2);
+	transStructToTable(sgr->reviewByBusId,sgr->rev,getReviewBus);
 
 	return NULL;
 }
@@ -94,60 +98,55 @@ SGR load_sgr(char *fileBus, char *fileReviews, char *fileUsers){
 	if (fileReviews == NULL) fileReviews = strdup("input/reviews_1M.csv"); 
 	
 	if (fileUsers == NULL) fileUsers = strdup("input/users_full.csv"); 
-
-	// criacao de struct's para ser possivel passar mais do que um arg para a
-	// criacao das threads
-	STHREAD helpUsers = malloc(sizeof(struct sthread));
-	helpUsers->file =fileUsers;
-	helpUsers->sgr = sgr;
-	helpUsers->funcao = addUser;
-
-
-	STHREAD helpBusiness = malloc(sizeof(struct sthread));
-	helpBusiness->file =fileBus;
-	helpBusiness->sgr = sgr;
-	helpBusiness->funcao = addBusiness;
-
-	STHREAD helpReviews = malloc(sizeof(struct sthread));
-	helpReviews->file =fileReviews;
-	helpReviews->sgr = sgr;
-	helpReviews->funcao = addReview;	
+	
 	//LER OS FICH E CRIAR AS TABELAS DE HASH
+	
+	
+	int tmh;
+	char **info;
+
+	info = lerFichCsv(&tmh,fileBus);
+	sgr->bus = transStrToBus(info,&tmh,sgr->bus);
+	
+	info = lerFichCsv(&tmh,"input/reviews_1M.csv");
+	sgr->rev = transStrToRev(info,&tmh,sgr->rev);
+	
+	
+	info = lerFichCsv(&tmh,"input/users_full.csv");
+	sgr->use = transStrToUsers(info,&tmh,sgr->use);
+	
 	pthread_t thread1,thread2,thread3;
 
 	//inicio da thread relativa ao fich com users
-	//pthread_create(&thread1,NULL,threadUsers,helpUsers);
+	pthread_create(&thread1,NULL,threadUsers,sgr);
 	
 	//inicio da thread relativa ao fich com businesses
-	pthread_create(&thread2,NULL,threadBusiness,helpBusiness);
+	pthread_create(&thread2,NULL,threadBusiness,sgr);
 	
 	//inicio da thread relativa ao fich com reviews
-	//pthread_create(&thread3,NULL,threadReviews,helpReviews);
-	
-	//int tmh;
-	//char **info=lerFichCsv(&tmh,fileUsers);
+	pthread_create(&thread3,NULL,threadReviews,sgr);
 	
     // espera pela thread1
-	//pthread_join(thread1,NULL);
+	pthread_join(thread1,NULL);
     // espera pela thread2
-	//pthread_join(thread2,NULL);
+	pthread_join(thread2,NULL);
     // espera pela thread3
 	pthread_join(thread3,NULL);
 	
 	// *DEBUG*
-	/*
-	printf("There are %d keys in the hash table\n",
-        g_hash_table_size(sgr->business));
+	//
+	//printf("There are %d keys in the hash table\n",
+    //    g_hash_table_size(sgr->business));
+	//
+	//printf("There are %d keys in the hash table\n",
+    //    g_hash_table_size(sgr->review));
+	//
+	//printf("There are %d keys in the hash table\n",
+    //    g_hash_table_size(sgr->reviewByBusId));
+	//
+	//printf("There are %d keys in the hash table\n",
+    //    g_hash_table_size(sgr->user));
 
-	printf("There are %d keys in the hash table\n",
-        g_hash_table_size(sgr->review));
-
-	printf("There are %d keys in the hash table\n",
-        g_hash_table_size(sgr->reviewByBusid));
-
-	printf("There are %d keys in the hash table\n",
-        g_hash_table_size(sgr->user));
-		*/
 	return sgr;
 
 }
@@ -186,13 +185,10 @@ TABLE business_info(SGR sgr, char *business_id){
 TABLE businesses_reviewed(SGR sgr, char *user_id){
 
 
-	
 	if (g_hash_table_contains(sgr->reviewByUserId,user_id))
 	{
 		printf("EXISTE\n");
-	}else{
-		printf("NAO EXISTE\n");
-	}
+	
 	GSList* list = g_hash_table_lookup(sgr->reviewByUserId,user_id );
 	printf("%s",getReviewUser(list->data));
 	
@@ -207,17 +203,19 @@ TABLE businesses_reviewed(SGR sgr, char *user_id){
 	list2 =  g_hash_table_lookup(sgr->business,getReviewBus(list->data));
 	printf("%s %s\n", getBusId(list2->data),getBusName(list2->data));
 	}
-	
+	}else{
+		printf("NAO EXISTE\n");
+	}
 }
 
 
 /** QUERY 5 */
 TABLE businesses_with_stars_and_city(SGR sgr, float stars, char *city){
 	
-	printf("\n\n\n\n\n");
+	//printf("\n\n\n\n\n");
 	GSList* list = g_hash_table_lookup(sgr->businessByCity,city );
 
-	printf("%s\n", getBusId( list->data ));
+	//printf("%s\n", getBusId( list->data ));
 	GSList* list2 = g_hash_table_lookup(sgr->reviewByBusId, getBusId( list->data ));
 
 	int nRev = g_slist_length(list2);	

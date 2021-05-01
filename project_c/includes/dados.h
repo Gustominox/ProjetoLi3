@@ -346,6 +346,9 @@ USER* transStrToUsers(char **info,int *tmh, USER *users);
 */
 void transStrToTable(char path[],GHashTable* hash ,void* (*funcao) (char info[]),int mode);
 
+void transStructToTable( GHashTable* hash,void**arrStr,char* (*funcao) (void* bus) );
+
+
 
 /**
 * \brief Função que preenche os campos da struct do tipo BUSINESS

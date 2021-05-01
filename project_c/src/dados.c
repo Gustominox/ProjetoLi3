@@ -209,6 +209,9 @@ BUSINESS* transStrToBus(char **info,int *tmh,BUSINESS *business){
         //printf("[%d] i:%d\n", tmhBus,i);   
     }
     
+    business = realloc(business,sizeof(BUSINESS)*(tmhBus+1));
+    business[tmhBus] = NULL ;
+        
     for (int j = 0; j < *tmh; j++)
         free (info[j]);
 
@@ -234,7 +237,9 @@ REVIEW* transStrToRev(char **info,int *tmh,REVIEW *reviews){
         tmhRev++;
         //printf("[%d] i:%d\n", tmhRev,i);
     }
-    
+    reviews = realloc(reviews,sizeof(REVIEW)*(tmhRev+1));
+    reviews[tmhRev] = NULL ;
+        
     for (int j = 0; j < *tmh; j++)
         free (info[j]);
 
@@ -261,6 +266,11 @@ USER* transStrToUsers(char **info,int *tmh,USER *users){
         tmhUser++;
         //printf("[%d] i:%d\n", tmhUser,i);
     }
+    users = realloc(users,sizeof(USER)*(tmhUser+1));
+    users[tmhUser] = NULL;
+    
+    for (int j = 0; j < *tmh; j++)
+        free (info[j]);
 
     *tmh = tmhUser;
     return users; 
@@ -310,6 +320,31 @@ void transStrToTable(char path[], GHashTable* hash, void* (*funcao) (char info[]
     fclose (fp);
 }
 
+void 
+transStructToTable( GHashTable* hash,void**arrStr,char* (*funcao) (void* bus) ){
+    
+    for(int i=0; arrStr[i] != NULL; i++){
+    
+        char *id = funcao(arrStr[i]); 
+        //free(temp);
+        //  printf("[%d] hash: %s\n",i,id);
+        
+        GSList *head = NULL;
+        
+        if(head = g_hash_table_lookup(hash,id)){
+            head = g_slist_prepend (head, arrStr[i]);
+            g_hash_table_insert(hash,id,head);
+        }else{
+            GSList *list = NULL;
+            list = g_slist_prepend (list, arrStr[i]);
+    
+            g_hash_table_insert(hash,id,list);
+        
+        }
+    }
+
+}
+
 
 BUSINESS addBusiness ( char info[]){
 
@@ -346,6 +381,19 @@ BUSINESS addBusiness ( char info[]){
     free(temp);
     //printf("%s\n",getBusId(bus));
     return bus;
+}
+
+void freeBusiness(BUSINESS bus){
+
+    free(bus->business_id);
+    free(bus->name);
+    free(bus->city);
+    free(bus->state);
+
+    for (size_t i = 0; bus->categories[i] != NULL; i++){
+        free(bus->categories[i]);
+    }
+     free(bus);
 }
 
 
