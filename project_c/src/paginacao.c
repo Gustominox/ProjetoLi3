@@ -66,27 +66,30 @@ void printPagina (TABLE table){
 
 int acao(TABLE table){
     
-    int numLinAtual = getNumLin(table);
+    int r = 0;
 
     printf("Que página pretende ver a seguir?\n");
 
-    while(1){
+    while(r == 0){
         char tecla = getchar();
+
+        int numLinAtual = getNumLin(table);
 
         if (tecla == 'k' || tecla == 'K'){ // Avança na página
             setNumLin(table, numLinAtual++);
             printPagina(table);
         }
         else if (tecla == 'j' || tecla == 'J'){ // Recua na página 
-            setNumLin(table, numLinAtual-numLinAtual);
+            setNumLin(table, numLinAtual-20);
             printPagina(table);
         }
         else if (tecla == 'q'){
-            return 1;
+            r = 1;
         }
         else
             if(tecla != 0x0A) printf("comando inexistente \n");
     }
+    return r;
 }
 
 
