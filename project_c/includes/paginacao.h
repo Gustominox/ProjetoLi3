@@ -32,6 +32,22 @@ void setNumLin(TABLE table, int newNumLin);
 
 
 /**
+* \brief Obtém o número total de linhas
+* @param table table
+* @return número total de linhas
+*/
+int getNumLinTotal(TABLE table);
+
+
+/**
+* \brief Muda o número de linhas totais
+* @param table table
+* @param newNumLinTotal novo número de linhas totais
+*/
+void setNumLinTotal(TABLE table, int newNumLinTotal);
+
+
+/**
 * \brief Obtém as variaveis da table
 * @param table table
 * @return variaveis da table
@@ -48,19 +64,18 @@ void setVariaveis(TABLE table, char ***newVariaveis);
 
 
 /**
-* \brief Obtém o número total de linhas
-* @param table table
-* @return número total de linhas
+* \brief Inicializa a estrutura de dados table
+* @return a table inicializada
 */
-int getNumLinTotal(TABLE table);
+TABLE init_table();
 
 
 /**
-* \brief Muda o número de linhas totais
-* @param table table
-* @param newNumLinTotal novo número de linhas totais
+* \brief Dado o conteúdo de um ficheiro, lê o seu conteúdo e carrega a estrutura de dados table
+* @param info Conteúdo de um ficheiro
+* @return a table carregada com o conteúdo do ficheiro
 */
-void setNumLinTotal(TABLE table, int newNumLinTotal);
+TABLE load_table(char ***info);
 
 
 /**

@@ -35,7 +35,7 @@ typedef struct sthread *STHREAD;
 
 
 /**
-* \brief 
+* \brief Inicializa as estruturas de dados correspondentes
 */
 SGR init_sgr();
 
