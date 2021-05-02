@@ -296,15 +296,25 @@ TABLE international_users(SGR sgr){
 	
 	while (list) {
 		int flag=0;
+		
 		GSList* reviews = list->data ;
-		while (reviews)
-		{
+		GSList* aux = g_hash_table_lookup(sgr->business,getReviewBus(reviews->data));
+		char *state;
+		if(aux)state = getBusState(aux->data);
+		while (reviews){
 			
-			printf("Business: %s\n",getReviewBus(reviews->data));
-			
+			GSList* head = g_hash_table_lookup(sgr->business,getReviewBus(reviews->data));
+			if (head) {
+				if (strcmp(state,getBusState(head->data))!=0){
+					flag = 1;
+					break;
+				}
+			}
 			reviews = g_slist_next(reviews);
 		}
-		
+		GSList* user = list->data ;
+		if (flag) printf("%s : INTERNACIONAL\n",getReviewUser(user->data));
+		else printf("%s : NOT INTERNACIONAL\n",getReviewUser(user->data));
 
  		list = g_slist_next(list);
 	}
