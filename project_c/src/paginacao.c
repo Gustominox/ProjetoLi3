@@ -48,7 +48,6 @@ void setVariaveis(TABLE table, char*** newVariaveis){
 }
 
 
-
 TABLE init_table(){
 
 	TABLE table = malloc(sizeof(struct table));
