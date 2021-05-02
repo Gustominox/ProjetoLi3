@@ -46,9 +46,11 @@ void setBusName(BUSINESS bus, char newName[]){
   strcpy(bus->name,newName);
 }
 
-int getBusNameInicial(BUSINESS bus){
-    int r = bus->name[0]; 
-    return r;
+char* getBusNameInicial(BUSINESS bus){
+    char str[2] = "\0";
+    str[0] = toupper(bus->name[0]);
+
+    return strdup(str);
 }
 
 char *getBusCity(BUSINESS bus){
@@ -330,7 +332,7 @@ void transStructToTable( GHashTable* hash,void**arrStr,char* (*funcao) (void* bu
     
         char *id = funcao(arrStr[i]); 
         //free(temp);
-        //  printf("[%d] hash: %s\n",i,id);
+        //printf("[%d] hash: %s\n",i,id);
         
         GSList *head = NULL;
         
@@ -349,13 +351,13 @@ void transStructToTable( GHashTable* hash,void**arrStr,char* (*funcao) (void* bu
 }
 
 void 
-transStructToTableInt( GHashTable* hash,void**arrStr,int (*funcao) (void* bus) ){
+transStructToTableInt( GHashTable* hash,void**arrStr,int* (*funcao) (void* bus) ){
     
     for(int i=0; arrStr[i] != NULL; i++){
     
-        int id = funcao(arrStr[i]); 
+        int *id = funcao(arrStr[i]); 
         //free(temp);
-        //  printf("[%d] hash: %s\n",i,id);
+          printf("[%d] hash: %d\n",i,*id);
         
         GSList *head = NULL;
         

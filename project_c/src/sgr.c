@@ -30,7 +30,7 @@ SGR init_sgr(){
 
 	sgr->business = g_hash_table_new(g_str_hash, g_str_equal);
 	sgr->businessByCity = g_hash_table_new(g_str_hash, g_str_equal);
-	sgr->businessByInicial = g_hash_table_new(g_int_hash, g_int_equal);
+	sgr->businessByInicial = g_hash_table_new(g_str_hash, g_str_equal);
 	sgr->review = g_hash_table_new(g_str_hash, g_str_equal);
 	sgr->reviewByBusId = g_hash_table_new(g_str_hash, g_str_equal);
 	sgr->reviewByUserId = g_hash_table_new(g_str_hash, g_str_equal);
@@ -68,11 +68,11 @@ void *threadBusiness(void* value){
 	
 	SGR sgr = (SGR) value;
 	
-	transStructToTable(sgr->business,sgr->bus,getBusId);
+	//transStructToTable(sgr->business,sgr->bus,getBusId);
 
-	transStructToTable(sgr->businessByCity,sgr->bus,getBusCity);
+	//transStructToTable(sgr->businessByCity,sgr->bus,getBusCity);
 
-	transStructToTableInt(sgr->businessByInicial,sgr->bus,getBusNameInicial);
+	transStructToTable(sgr->businessByInicial,sgr->bus,getBusNameInicial);
 
 
 	return NULL;
@@ -165,9 +165,26 @@ SGR load_sgr(char *fileBus, char *fileReviews, char *fileUsers){
 
 TABLE businesses_started_by_letter(SGR sgr, char letter){
 
+	
+	char str[2] = "\0";
+    str[0] = toupper(letter);
 
+	GSList* list =  g_hash_table_lookup(sgr->businessByInicial,str);
 
+	printf("There are %d keys in the hash table\n",
+        g_hash_table_size(sgr->businessByInicial));
 
+	if (list == NULL) {
+		printf("BUSINESS WHIT THAT INICIAL LETTER DOES NOT EXIST\n");
+		return NULL;
+	}
+
+ 	int nBus = g_slist_length(list);	
+
+	//printf("%s %s\n", getBusId(list->data),getBusName(list->data));
+	while (list = g_slist_next(list)) {
+	printf("%s %s\n", getBusId(list->data),getBusName(list->data));	
+	}
 
 }
 
@@ -206,24 +223,24 @@ TABLE business_info(SGR sgr, char *business_id){
 TABLE businesses_reviewed(SGR sgr, char *user_id){
 
 
-	if (g_hash_table_contains(sgr->reviewByUserId,user_id))
-	{
+	if (g_hash_table_contains(sgr->reviewByUserId,user_id)){
 		printf("EXISTE\n");
-	
-	GSList* list = g_hash_table_lookup(sgr->reviewByUserId,user_id );
-	printf("%s",getReviewUser(list->data));
-	
-	
-	
 
-	GSList* list2 =  g_hash_table_lookup(sgr->business,getReviewBus(list->data));
-	
-	printf("%s %s\n", getBusId(list2->data),getBusName(list2->data));
-	while (list = g_slist_next(list)) {
-	
-	list2 =  g_hash_table_lookup(sgr->business,getReviewBus(list->data));
-	printf("%s %s\n", getBusId(list2->data),getBusName(list2->data));
-	}
+		GSList* list = g_hash_table_lookup(sgr->reviewByUserId,user_id );
+		printf("%s",getReviewUser(list->data));
+
+
+
+
+		GSList* list2 =  g_hash_table_lookup(sgr->business,getReviewBus(list->data));
+
+		printf("%s %s\n", getBusId(list2->data),getBusName(list2->data));
+		while (list = g_slist_next(list)) {
+		
+			list2 =  g_hash_table_lookup(sgr->business,getReviewBus(list->data));
+			printf("%s %s\n", getBusId(list2->data),getBusName(list2->data));
+		}
+
 	}else{
 		printf("NAO EXISTE\n");
 	}

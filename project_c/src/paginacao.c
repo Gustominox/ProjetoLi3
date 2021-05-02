@@ -25,7 +25,7 @@ int getNumLinTotal(TABLE table){
 void setNumLinTotal(TABLE table, int newNumLinTotal){
     table->numLinTotal = newNumLinTotal;
 }
-
+/*
 char*** getVariaveis(TABLE table){
     char ***variaveis = NULL;
     int i = 0, j= 0;
@@ -46,7 +46,7 @@ char*** getVariaveis(TABLE table){
 void setVariaveis(TABLE table, char*** newVariaveis){
     table->variaveis = newVariaveis;
 }
-
+*/
 
 
 TABLE init_table(){
