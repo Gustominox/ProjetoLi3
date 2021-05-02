@@ -68,9 +68,9 @@ void *threadBusiness(void* value){
 	
 	SGR sgr = (SGR) value;
 	
-	//transStructToTable(sgr->business,sgr->bus,getBusId);
+	transStructToTable(sgr->business,sgr->bus,getBusId);
 
-	//transStructToTable(sgr->businessByCity,sgr->bus,getBusCity);
+	transStructToTable(sgr->businessByCity,sgr->bus,getBusCity);
 
 	transStructToTable(sgr->businessByInicial,sgr->bus,getBusNameInicial);
 
@@ -284,3 +284,32 @@ TABLE businesses_with_stars_and_city(SGR sgr, float stars, char *city){
 		}
 	}
 }
+
+
+/** query 7 
+ * \brief  Determinar a lista de ids de utilizadores e o número total de utilizadores que tenham visitado mais de um estado
+ * @param sgr sgr
+*/
+TABLE international_users(SGR sgr){
+
+	GSList* list = g_hash_table_get_values (sgr->reviewByUserId);
+	
+	while (list) {
+		int flag=0;
+		GSList* reviews = list->data ;
+		while (reviews)
+		{
+			
+			printf("Business: %s\n",getReviewBus(reviews->data));
+			
+			reviews = g_slist_next(reviews);
+		}
+		
+
+ 		list = g_slist_next(list);
+	}
+
+}
+
+
+
