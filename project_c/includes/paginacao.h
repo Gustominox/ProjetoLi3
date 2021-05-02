@@ -86,11 +86,13 @@ void previousLine(TABLE table, int numLinAtual);
 void printLinha (char **variaveis);
 
 
+void printPagina (TABLE table);
+
 /**
 * \brief Dependendo do comando, avança ou recua na linha
 * @param table table 
 * @param tecla comando 
 */
-void acao(TABLE table, char tecla);
+int acao(TABLE table);
 
 #endif

@@ -81,6 +81,15 @@ char *getBusName(BUSINESS bus);
 */
 void setBusName(BUSINESS bus, char newName[]);
 
+
+
+
+int getBusNameInicial(BUSINESS bus);
+
+
+
+
+
 /**
 * \brief Obtém a cidade onde está situado o negócio
 * @param bus Negócio
@@ -348,6 +357,8 @@ void transStrToTable(char path[],GHashTable* hash ,void* (*funcao) (char info[])
 
 void transStructToTable( GHashTable* hash,void**arrStr,char* (*funcao) (void* bus) );
 
+void 
+transStructToTableInt( GHashTable* hash,void**arrStr,int (*funcao) (void* bus) );
 
 
 /**

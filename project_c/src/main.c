@@ -42,6 +42,7 @@ fgets(linha, 1024, stdin);
 //interpretador();
 
 //printf("LOADING...\n");
+
 SGR sgr = init_sgr();
 sgr = load_sgr(NULL,NULL,NULL);
 //printf("FINISHED!\n");

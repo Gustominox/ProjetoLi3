@@ -1,4 +1,4 @@
-/*
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -39,7 +39,7 @@ char** getVariaveis(TABLE table){
     variaveis[i] = NULL;
     return variaveis;
 }
-
+*/
 
 void printLinha (char **variaveis){
 
@@ -94,4 +94,3 @@ int acao(TABLE table){
 
 
 
-*/

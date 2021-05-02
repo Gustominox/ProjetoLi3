@@ -46,6 +46,11 @@ void setBusName(BUSINESS bus, char newName[]){
   strcpy(bus->name,newName);
 }
 
+int getBusNameInicial(BUSINESS bus){
+    int r = bus->name[0]; 
+    return r;
+}
+
 char *getBusCity(BUSINESS bus){
   return strdup(bus->city);
 }
@@ -345,6 +350,30 @@ transStructToTable( GHashTable* hash,void**arrStr,char* (*funcao) (void* bus) ){
 
 }
 
+void 
+transStructToTableInt( GHashTable* hash,void**arrStr,int (*funcao) (void* bus) ){
+    
+    for(int i=0; arrStr[i] != NULL; i++){
+    
+        int id = funcao(arrStr[i]); 
+        //free(temp);
+        //  printf("[%d] hash: %s\n",i,id);
+        
+        GSList *head = NULL;
+        
+        if(head = g_hash_table_lookup(hash,id)){
+            head = g_slist_prepend (head, arrStr[i]);
+            g_hash_table_insert(hash,id,head);
+        }else{
+            GSList *list = NULL;
+            list = g_slist_prepend (list, arrStr[i]);
+    
+            g_hash_table_insert(hash,id,list);
+        
+        }
+    }
+
+}
 
 BUSINESS addBusiness ( char info[]){
 

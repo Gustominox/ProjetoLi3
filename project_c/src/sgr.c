@@ -12,6 +12,7 @@ struct sgr{
 	USER *use;
 	GHashTable* business;
 	GHashTable* businessByCity;
+	GHashTable* businessByInicial;
 	GHashTable* review;
 	GHashTable* reviewByBusId;
 	GHashTable* reviewByUserId;
@@ -29,6 +30,7 @@ SGR init_sgr(){
 
 	sgr->business = g_hash_table_new(g_str_hash, g_str_equal);
 	sgr->businessByCity = g_hash_table_new(g_str_hash, g_str_equal);
+	sgr->businessByInicial = g_hash_table_new(g_int_hash, g_int_equal);
 	sgr->review = g_hash_table_new(g_str_hash, g_str_equal);
 	sgr->reviewByBusId = g_hash_table_new(g_str_hash, g_str_equal);
 	sgr->reviewByUserId = g_hash_table_new(g_str_hash, g_str_equal);
@@ -43,6 +45,7 @@ void free_sgr(SGR sgr){
 	freeBusiness (sgr->bus[0]);
 	g_hash_table_destroy(sgr->business);
 	g_hash_table_destroy(sgr->businessByCity);
+	g_hash_table_destroy(sgr->businessByInicial);
 	g_hash_table_destroy(sgr->review);
 	g_hash_table_destroy(sgr->reviewByBusId);
 	g_hash_table_destroy(sgr->reviewByUserId);
@@ -68,6 +71,9 @@ void *threadBusiness(void* value){
 	transStructToTable(sgr->business,sgr->bus,getBusId);
 
 	transStructToTable(sgr->businessByCity,sgr->bus,getBusCity);
+
+	transStructToTableInt(sgr->businessByInicial,sgr->bus,getBusNameInicial);
+
 
 	return NULL;
 }
@@ -108,11 +114,11 @@ SGR load_sgr(char *fileBus, char *fileReviews, char *fileUsers){
 	info = lerFichCsv(&tmh,fileBus);
 	sgr->bus = transStrToBus(info,&tmh,sgr->bus);
 	
-	info = lerFichCsv(&tmh,"input/reviews_1M.csv");
+	info = lerFichCsv(&tmh,fileReviews);
 	sgr->rev = transStrToRev(info,&tmh,sgr->rev);
 	
 	
-	info = lerFichCsv(&tmh,"input/users_full.csv");
+	info = lerFichCsv(&tmh,fileUsers);
 	sgr->use = transStrToUsers(info,&tmh,sgr->use);
 	
 	pthread_t thread1,thread2,thread3;
@@ -135,8 +141,8 @@ SGR load_sgr(char *fileBus, char *fileReviews, char *fileUsers){
 	
 	// *DEBUG*
 	//
-	//printf("There are %d keys in the hash table\n",
-    //    g_hash_table_size(sgr->business));
+	printf("There are %d keys in the hash table\n",
+        g_hash_table_size(sgr->businessByInicial));
 	//
 	//printf("There are %d keys in the hash table\n",
     //    g_hash_table_size(sgr->review));
@@ -148,6 +154,20 @@ SGR load_sgr(char *fileBus, char *fileReviews, char *fileUsers){
     //    g_hash_table_size(sgr->user));
 
 	return sgr;
+
+}
+/** QUERY 2 
+ * 
+ * Determinar a lista de nomes de negócios e o número total de negócios cujo 
+ * nome inicia por uma dada letra. Note que a procura não deverá ser case sensitive
+ * 
+*/
+
+TABLE businesses_started_by_letter(SGR sgr, char letter){
+
+
+
+
 
 }
 
@@ -172,6 +192,7 @@ TABLE business_info(SGR sgr, char *business_id){
 		float nRevF = nRev/1.0;
 		sumStars = sumStars/nRevF;
 	}
+	//printf("LETRA: %d\n\n",getBusNameInicial(bus));
 	printf("NAME: %s\n", getBusName(bus));
 	printf("CITY: %s\n", getBusCity(bus));
 	printf("STATE: %s\n", getBusState(bus));

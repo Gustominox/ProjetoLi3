@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "interpretador.h"
-
+#include "paginacao.h"
 
 #define EXIT_CODE 0
 #define ERRO_IO 1
