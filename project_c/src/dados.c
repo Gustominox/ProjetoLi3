@@ -277,8 +277,7 @@ USER* transStrToUsers(char **info,int *tmh,USER *users){
 }
 
 
-void transStrToTable(char path[], GHashTable* hash, void* (*funcao) (char info[]),
-                int mode ){
+void transStrToTable(char path[], GHashTable* hash, void* (*funcao) (char info[]), int mode ){
 
     FILE *fp = fopen(path, "r");
     
@@ -320,8 +319,7 @@ void transStrToTable(char path[], GHashTable* hash, void* (*funcao) (char info[]
     fclose (fp);
 }
 
-void 
-transStructToTable( GHashTable* hash,void**arrStr,char* (*funcao) (void* bus) ){
+void transStructToTable( GHashTable* hash,void**arrStr,char* (*funcao) (void* bus) ){
     
     for(int i=0; arrStr[i] != NULL; i++){
     
