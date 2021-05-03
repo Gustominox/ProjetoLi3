@@ -1,3 +1,6 @@
+#ifndef INTERPRETADOR_H
+#define INTERPRETADOR_H
+
 /**
 * @file interpretador.h
 * \brief Ficheiro que suporta a interpretação de uma sequência de um ou mais comandos.
@@ -11,11 +14,6 @@
 #include "auxiliares.h"
 #include "sgr.h"
 
-typedef enum{
-    LT,
-    EQ,
-    GT
-} OPERATOR;
 
 typedef struct var *VAR;
 
@@ -108,7 +106,7 @@ int isAssignment(char *linha);
  * @param var variável 
  * @return posição se a variavel existir no array, -1 se não existir
  */
-int verificaVar(struct var vars[], int N, char* var);
+int verificaVar(VAR vars, int N, char* var);
 
 
 /**
@@ -116,4 +114,4 @@ int verificaVar(struct var vars[], int N, char* var);
  */
 int interpretador();
 
-
+#endif

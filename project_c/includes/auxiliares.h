@@ -1,3 +1,6 @@
+#ifndef AUXILIARES_H
+#define AUXILIARES_H
+
 /**
 * @file auxiliares.h
 * \brief Ficheiro com funções auxiliares usadas.
@@ -60,3 +63,6 @@ void ordenaDecresc(int ***arr, int linhas);
  * @return OPERATOR
  */
 OPERATOR stringToOperator(char* oper);
+
+
+#endif

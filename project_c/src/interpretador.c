@@ -4,6 +4,7 @@
 #include "interpretador.h"
 #include "paginacao.h"
 #include "auxiliares.h"
+#include "sgr.h"
 
 #define EXIT_CODE 0
 #define ERRO_IO 1
@@ -19,12 +20,12 @@ struct var{
 
 
 char **doRegex (const gchar *string){
-  // Print all uppercase-only words.
+
   GRegex *regex;
   GMatchInfo *match_info;
   char **info = NULL;
   int i = 0;
-  regex = g_regex_new ("[A-z0-9/;.=]+", 0, 0, NULL);//[A-z]+ = [A-z]+[(][a-z]+, '[A-z]'[)];
+  regex = g_regex_new ("[A-z0-9/;.=]+", 0, 0, NULL);
   g_regex_match (regex, string, 0, &match_info);
 
 
@@ -47,7 +48,6 @@ char **doRegex (const gchar *string){
   g_match_info_free (match_info);
   g_regex_unref (regex);
   return info;
-//	print_uppercase_words("x = businesses_started_by_letter(sgr, 'T');");
 }
 
 
@@ -228,7 +228,7 @@ int isAssignment(char *linha){
     else return 0;    
 }
 
-int verificaVar(struct var vars[], int N, char* var){
+int verificaVar(VAR vars, int N, char* var){
     int j = 0, posicao = 0;
     while(j<N && strcmp(vars[j].nome, var) != 0){
         j++;
@@ -295,7 +295,7 @@ int interpretador(){
         else if (strcmp("top_businesses_by_city",funcao) == 0)
         {
                 vars[i].nome = info[0];
-                vars[i].table = top_businesses_by_city(sgr, atoi(info [4]));
+                //vars[i].table = top_businesses_by_city(sgr, atoi(info [4]));
                 i++;
         }
         else if (strcmp("international_users",funcao) == 0)
@@ -307,13 +307,13 @@ int interpretador(){
         else if (strcmp("top_businesses_with_category",funcao) == 0)
         {
                 vars[i].nome = info[0];
-                vars[i].table = top_businesses_with_category(sgr, atoi(info[4]), info[5]);
+                //vars[i].table = top_businesses_with_category(sgr, atoi(info[4]), info[5]);
                 i++;
         }           
         else if (strcmp("reviews_with_word",funcao) == 0)
         {
                 vars[i].nome = info[0];
-                vars[i].table = reviews_with_word(sgr, atoi(info[4]), info[5]);
+                //vars[i].table = reviews_with_word(sgr, atoi(info[4]), info[5]);
                 i++;
         }
         else if (strcmp("show",funcao) == 0) 
@@ -348,7 +348,7 @@ int interpretador(){
                 int posicao = verificaVar(vars, i+1, info[3]);
                 if(posicao != -1){
                     vars[i].nome = info[0];
-                    vars[i].table = proj(vars[posicao].table, atoi(info[4]))
+                    vars[i].table = proj(vars[posicao].table, atoi(info[4]));
                     i++;
                 }
         } 
@@ -357,7 +357,7 @@ int interpretador(){
                 int posicao = verificaVar(vars, i+1, info[2]);
                 if(posicao != -1){
                     vars[i].nome = info[0];
-                    vars[i].table = proj(vars[posicao].table, atoi(info[3]), atoi(info[4]));
+                    vars[i].table = indexa(vars[posicao].table, atoi(info[3]), atoi(info[4]));
                     i++;
                 }
         } 
