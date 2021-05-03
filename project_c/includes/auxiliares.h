@@ -6,11 +6,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
+typedef enum{
+    LT,
+    EQ,
+    GT
+} OPERATOR;
+
+
 /**
 * \brief Testa se uma string contem um float
 * @return 1 se verdadeiro, 0 se falso
 */
 int isFloat (char *s);
+
 
 /**
 * \brief Testa se uma string contem um integer
