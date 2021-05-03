@@ -52,3 +52,21 @@ void swap(char **xp, char **yp);
  * @param linhas número de linhas
  */
 void ordenaDecresc(int ***arr, int linhas);
+
+
+/**
+ * \brief Função que verifica se uma variável existe no array
+ * @param vars array com o nome das variáveis 
+ * @param N numero de posições ocupadas no array
+ * @param var variável 
+ * @return posição se a variavel existir no array, -1 se não existir
+ */
+int verificaVar(struct var vars[], int N, char* var);
+
+
+/**
+ * \brief Função que transforma uma string num OPERATOR
+ * @param oper string cujo contuedo refere um OPERATOR
+ * @return OPERATOR
+ */
+OPERATOR stringToOperator(char* oper);

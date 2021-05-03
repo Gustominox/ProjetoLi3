@@ -53,16 +53,6 @@ TABLE fromCSV(char filepath[] ,char *delim);
 
 
 /**
- * \brief Função que compara o conteúdo de uma table, numa dada coluna, com o valor de comparação que é dado
- * @param content conteúdo da table recebida, numa dada coluna
- * @param value valor de comparação 
- * @param oper operador de comparação
- * @return zero se tiver sucesso, 1 caso contrário
- */ 
-int compare(char* content, char* value, OPERATOR oper);
-
-
-/**
  * \brief Função que filtra dados de uma tabela, dada uma coluna, um valor de comparação e um operador de comparação
  * @param table table
  * @param columName nome da coluna especifica cujos conteúdos serão comparados ao value
@@ -109,24 +99,6 @@ void maxOrMin(TABLE table, char columName[], OPERATOR op);
  * @return 1 se for encontrado, 0 caso contrário
  */
 int isAssignment(char *linha);
-
-
-/**
- * \brief Função que verifica se uma variável existe no array
- * @param vars array com o nome das variáveis 
- * @param N numero de posições ocupadas no array
- * @param var variável 
- * @return posição se a variavel existir no array, -1 se não existir
- */
-int verificaVar(struct var vars[], int N, char* var);
-
-
-/**
- * \brief Função que transforma uma string num OPERATOR
- * @param oper string cujo contuedo refere um OPERATOR
- * @return OPERATOR
- */
-OPERATOR stringToOperator(char* oper);
 
 
 /**

@@ -1,9 +1,9 @@
-/*
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "interpretador.h"
 #include "paginacao.h"
+#include "auxiliares.h"
 
 #define EXIT_CODE 0
 #define ERRO_IO 1
@@ -83,7 +83,6 @@ void toCSV(TABLE table, char delim, char path[]){
             if (i != 0) fputc(delim, fd);
             fprintf(fd, "%s", aux[j][i]);
         }
-        fputc('\n', fd);
         j++;
    }
    fclose(fd);
@@ -100,11 +99,9 @@ TABLE fromCSV(char filepath[] ,char *delim){
     }
 
     char *buffer;
-    char ** linha;
+    char **linha;
     buffer = malloc(sizeof(char)*180000);
     int j=0, i;
-
-    //table->variaveis = NULL;
     
     while(fgets(buffer,180000,fd)){//para cada linha
 
@@ -115,207 +112,110 @@ TABLE fromCSV(char filepath[] ,char *delim){
             linha = add_palavra(linha,strsep(&temp, delim));
         }
         add_linha(table,linha);
-        /*
-        table->variaveis = realloc(table->variaveis,sizeof(char**)*(j+1));
-        table->variaveis[j] = NULL;
-        
-        for(i = 0; temp != NULL; i++){
-            table->variaveis[j]= realloc(table->variaveis[j],sizeof(char*)*(i+1));
-            table->variaveis[j][i]= strdup(strsep(&temp, delim));
-        }
-        table->variaveis[j][i-1] = strsep(&table->variaveis[j][i-1], "\n");
-        table->variaveis[j] = realloc(table->variaveis[j],sizeof(char*)*(i+1));
-        table->variaveis[j][i] = NULL;
-        
-        j++;
     }
-    setNumLinTotal(table,j);
-    setNumLin(table,0);
-
     free(buffer);
     fclose(fd);
 
     return table;
 }
 
-int compare(char* content, char* value, OPERATOR oper){
-    int isValid = 1;
-    
-    switch(oper){
-
-        case LT:
-            if(isInteger(value)){
-                if(atoi(content) < atoi(value)) isValid = 0;
-            }
-            else if(isFloat(value)){
-                if(atof(content) < atof(value)) isValid = 0;
-            } else {
-                int k = 0;
-                while(k < strlen(value) && k < strlen(content)){
-                    if(content[k] == value[k])
-                        k++;
-                    else if(content[k] < value[k]){
-                        break;
-                    }
-                    else if(content[k] > value[k]){
-                        isValid = 0;
-                        break;
-                    }
-                }
-            }
-            break;
-        
-        case EQ:
-            if(isInteger(value)){
-                if(atoi(content) == atoi(value)) isValid = 0;
-            }
-            else if(isFloat(value)){
-                if(atof(content) == atof(value)) isValid = 0;
-            } else {
-                int k = 0;
-                while(k < strlen(value) && k < strlen(content)){
-                    if(content[k] == value[k]){
-                        isValid = 0;
-                        k++;
-                    }
-                    else{
-                        isValid = 1;
-                        break;
-                    }
-                }
-            }
-            break;
-
-        case GT:
-            if(isInteger(value)){
-                if(atoi(content) > atoi(value)) isValid = 0;
-            }
-            else if(isFloat(value)){
-                if(atof(content) > atof(value)) isValid = 0;
-            } else {
-                int k = 0;
-                while(k < strlen(value) && k < strlen(content)){
-                    if(content[k] == value[k])
-                        k++;
-                    else if(content[k] > value[k]){
-                        break;
-                    }
-                    else if(content[k] < value[k] || content[k] == '\n'){
-                        isValid = 0;
-                        break;
-                    }
-                }
-            }
-            break;
-    }
-    return isValid;
-}
 
 TABLE filter(TABLE table, char columName[], char* value, OPERATOR oper){
 
-    TABLE novaTable = malloc(sizeof(struct table));
-    setNumLinTotal(novaTable, 0);
-
     int i, linhas = 1, j = 1, flag = 0, col;
-    
-    novaTable->variaveis = NULL;
-    novaTable->variaveis = realloc(novaTable->variaveis, sizeof(char**));
 
-    novaTable->variaveis[0] = NULL;
+    TABLE novaTable = init_table();
+    char **linha;
 
-    for(int i = 0; table->variaveis[0][i] != NULL; i++){
-        if(strcmp(table->variaveis[0][i], columName) == 0) col = i;
-        novaTable->variaveis[0] = realloc(novaTable->variaveis[0], sizeof(char*)*(i+1));
-        novaTable->variaveis[0][i] = strdup(table->variaveis[0][i]);
+    char ***variaveis = getVariaveis(table);
+    linha = init_linha();
+
+    //escrever cabeçalho
+    for(int i = 0; variaveis[0][i] != NULL; i++){
+        if(strcmp(variaveis[0][i], columName) == 0) col = i;
+        linha = add_palavra(linha,variaveis[0][i]);
     }
+    add_linha(novaTable,linha);
 
     while(j < getNumLinTotal(table)){
         
-        novaTable->variaveis = realloc(novaTable->variaveis, sizeof(char**)*(linhas+1));
-
-        if(compare(table->variaveis[j][col], value, oper) == 0) flag = 1;
-
-        novaTable->variaveis[linhas] = NULL;
+        if(compare(variaveis[j][col], value, oper) == 0) flag = 1;
 
         if(flag){
-            for(i = 0; table->variaveis[j][i] != NULL; i++){
-                novaTable->variaveis[linhas] = realloc(novaTable->variaveis[linhas], sizeof(char*)*(i+1));
-                novaTable->variaveis[linhas][i] = strdup(table->variaveis[j][i]);
+            linha = init_linha();
+            for(i = 0; variaveis[j][i] != NULL; i++){
+                linha = add_palavra(linha, variaveis[j][i]);
             }
-            novaTable->variaveis[linhas] = realloc(novaTable->variaveis[linhas], sizeof(char*)*(i+1));
-            novaTable->variaveis[linhas][i] = NULL;
-            linhas++;
+            add_linha(novaTable,linha);
         }
         flag = 0;
         j++;
     }
-    setNumLinTotal(novaTable, linhas);
-    setNumLin(table, 0);
     return novaTable;
 }
+
 
 TABLE proj(TABLE table, int cols){
 
-    TABLE novaTable = malloc(sizeof(struct table));
+    TABLE novaTable = init_table();
+
+    char ***variaveis = getVariaveis(table);
+
+    char **linha;
 
     int j = 0, i;
-    novaTable->variaveis = NULL;
 
     while(j < getNumLinTotal(table)){
-
-        novaTable->variaveis = realloc(novaTable->variaveis, sizeof(char**)*(j+1));
-        novaTable->variaveis[j] = NULL;
-
-        for(i = 0; table->variaveis[j][i] != NULL && i < cols; i++){
-            novaTable->variaveis[j] = realloc(novaTable->variaveis[j], sizeof(char*)*(i+1));
-            novaTable->variaveis[j][i] = strdup(table->variaveis[j][i]);
+        linha = init_linha();
+        for(i = 0; variaveis[j][i] != NULL && i < cols; i++){
+            linha = add_palavra(linha, variaveis[j][i]);
         }
-        novaTable->variaveis[j] = realloc(novaTable->variaveis[j],sizeof(char*)*(i+1));
-        novaTable->variaveis[j][i] = NULL;
         j++;
+        linha = add_palavra(linha,"\n");
+        add_linha(novaTable, linha);
     }
-    setNumLinTotal(novaTable, getNumLinTotal(table));
-    setNumLin(novaTable, getNumLin(table));
     return novaTable;
 }
 
-TABLE indexa (TABLE table, int linha, int coluna){
 
-    TABLE resultado = malloc(sizeof(struct table));
+TABLE indexa (TABLE table, int lin, int col){
+
+    TABLE resultado = init_table();
+    char ***variaveis = getVariaveis(table);
     
-    resultado->variaveis = NULL;
-    resultado->variaveis = realloc(table->variaveis,sizeof(char**)*2);
+    char **linha = init_linha();
 
-    resultado->variaveis[0] = NULL;
-    resultado->variaveis[0]= realloc(table->variaveis[0],sizeof(char*)*2);
+    linha = add_palavra(linha, variaveis[0][col]);
+    linha = add_palavra(linha,"\n");
+    add_linha(resultado, linha);
 
-    resultado->variaveis[0][0]= strdup(table->variaveis[0][coluna]);
-    resultado->variaveis[0][1] = NULL;
-    
-    resultado->variaveis[1][0]= strdup(table->variaveis[linha][coluna]);
-    resultado->variaveis[1][1] = NULL;
+    linha = init_linha();
+    linha = add_palavra(linha,variaveis[lin][col]);
+    linha = add_palavra(linha,"\n");
+    add_linha(resultado,linha);
 
-    setNumLinTotal(resultado, 2);
     return resultado;
 }
+
 
 void maxOrMin(TABLE table, char columName[], OPERATOR op){
 
     int col;
+    char ***variaveis = getVariaveis(table);
 
-    for(int i = 0; table->variaveis[0][i] != NULL; i++)
-        if(strcmp(table->variaveis[0][i], columName) == 0){
+    for(int i = 0; variaveis[0][i] != NULL; i++)
+        if(strcmp(variaveis[0][i], columName) == 0){
             col = i;
-            printf("%s: ", table->variaveis[0][i]);
+            printf("%s: ", variaveis[0][i]);
             break;
         }
 
     char* extremo = malloc(sizeof(char*));
-    extremo = table->variaveis[1][col];
+    extremo = variaveis[1][col];
 
     for(int j = 1; j < getNumLinTotal(table); j++){
-        if(compare(table->variaveis[j][col], extremo, op) == 0){
-            extremo = strdup(table->variaveis[j][col]);
+        if(compare(variaveis[j][col], extremo, op) == 0){
+            extremo = variaveis[j][col];
         }
     }
 
@@ -328,33 +228,6 @@ int isAssignment(char *linha){
     else return 0;    
 }
 
-int verificaVar(struct var vars[], int N, char* var){
-    int j = 0, posicao = 0;
-    while(j<N && strcmp(vars[j]->nome, var) != 0){
-        j++;
-    }
-    posicao = j;
-    if(posicao<N) return posicao;
-    else return posicao = -1;
-}
-
-OPERATOR stringToOperator(char* oper){
-        OPERATOR operador;
-
-        if(strcmp("LT",oper) == 0){
-                operador = LT;
-        }
-
-        if(strcmp("EQ",oper) == 0){
-                operador = EQ;
-        }
-
-        if(strcmp("GT",oper) == 0){
-                operador = GT;
-        }
-
-        return operador;
-}
 
 int interpretador(){
     char linha[BUF_SIZE];
@@ -504,4 +377,3 @@ int interpretador(){
         }
     }
 }
-*/
