@@ -102,6 +102,16 @@ int isAssignment(char *linha);
 
 
 /**
+ * \brief Função que verifica se uma variável existe no array
+ * @param vars array com o nome das variáveis 
+ * @param N numero de posições ocupadas no array
+ * @param var variável 
+ * @return posição se a variavel existir no array, -1 se não existir
+ */
+int verificaVar(struct var vars[], int N, char* var);
+
+
+/**
  * 
  */
 int interpretador();

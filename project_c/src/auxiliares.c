@@ -114,15 +114,6 @@ void ordenaDecresc(int ***arr, int linhas){
           swap(arr[linhaAtual], arr[linhaPost]);
 }
 
-int verificaVar(struct var vars[], int N, char* var){
-    int j = 0, posicao = 0;
-    while(j<N && strcmp(vars[j].nome, var) != 0){
-        j++;
-    }
-    posicao = j;
-    if(posicao<N) return posicao;
-    else return posicao = -1;
-}
 
 OPERATOR stringToOperator(char* oper){
         OPERATOR operador;
