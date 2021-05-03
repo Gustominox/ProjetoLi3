@@ -79,34 +79,22 @@ TABLE load_table(char ***info);
 
 
 /**
-* \brief Avança para a próxima linha
-* @param table table
-* @param numLinAtual número de linha atual
-*/
-void nextLine(TABLE table, int numLinAtual);
-
-
-/**
-* \brief Recua para a linha anterior
-* @param table table
-* @param numLinAtual número da linha atual
-*/
-void previousLine(TABLE table, int numLinAtual);
-
-
-/**
 * \brief Imprime uma linha do array de variaveis
 * @param variaveis variaveis
 */
 void printLinha (char **variaveis);
 
 
+/**
+ * \brief Função que imprime uma página (10 linhas por página)
+ * @param table table
+ */
 void printPagina (TABLE table);
 
 /**
 * \brief Dependendo do comando, avança ou recua na linha
 * @param table table 
-* @param tecla comando 
+* @return 1 para parar a visaulização de pagínas, 0 se for para continuar a visualizar
 */
 int acao(TABLE table);
 

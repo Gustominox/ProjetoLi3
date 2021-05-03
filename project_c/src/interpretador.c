@@ -340,7 +340,7 @@ OPERATOR stringToOperator(char* oper){
         }
 
         if(strcmp("GT",oper) == 0){
-                operador = QT;
+                operador = GT;
         }
 
         return operador;

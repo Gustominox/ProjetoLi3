@@ -1,0 +1,18 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"stdio.h": "c",
+			"glib.h": "c",
+			"string.h": "c",
+			"paginacao.h": "c",
+			"stdlib.h": "c",
+			"interpretador.h": "c",
+			"dados.h": "c"
+		}
+	}
+}
