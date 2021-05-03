@@ -4,9 +4,8 @@
 #include <stdio.h>
 #include "sgr.h"
 #include "paginacao.h"
-#include <ctype.h>\
-
-
+#include <ctype.h>
+#include "auxiliares.h"
 
 int main(int argc, char *argv[]) {
 
@@ -19,15 +18,6 @@ info = lerFichCsv(&tmh,"input/users_full.csv");
 printf("Espera\n");
 fgets(linha, 1024, stdin);
 USER *bus = NULL;
-bus = transStrToUsers(info,&tmh,bus);
-
-//printf("%s\n",info[0]);
-GHashTable* hash = g_hash_table_new(g_str_hash, g_str_equal);
-GHashTable* hash1 = g_hash_table_new(g_str_hash, g_str_equal);
-GHashTable* hash2 = g_hash_table_new(g_str_hash, g_str_equal);
-
-transStructToTable(hash,bus,getUserId);
-transStructToTable(hash1,bus,getUserId);
 transStructToTable(hash2,bus,getUserName);
 
 printf("There are %d keys in the hash table\n",
@@ -44,31 +34,25 @@ fgets(linha, 1024, stdin);
 //interpretador();
 
 //printf("LOADING...\n");
-/*
-int *id ;
-*id=65;
-GHashTable* hash = g_hash_table_new(g_str_hash, g_str_equal);
-g_hash_table_insert(hash,'A',"head");
-printf ("%s\n",g_hash_table_lookup(hash,id));
-*/
 
 
-SGR sgr = init_sgr();
-sgr = load_sgr(NULL,NULL,NULL);
+SGR sgr = load_sgr(NULL,NULL,NULL);
+
 //printf("FINISHED!\n");
 
 //TABLE table = business_info(sgr,"pCFTvC1v0B9Wilm8XixKDw");
 
-TABLE table = businesses_started_by_letter(sgr, '4');
-//international_users(sgr);
+//TABLE table = businesses_started_by_letter(sgr, '4');
+TABLE table= businesses_with_stars_and_city(sgr,3.0,"Melrose");
+printPagina(table);
 
+//TABLE table = international_users(sgr);
 //table = fromCSV("input/business_full.csv",";");
 //TABLE table = businesses_reviewed(sgr,"GwEUFjgs2WnsRINLEhkViQ");
 
 printPagina(table);
 char buffer[1024];
 fgets(buffer, 1024, stdin);
-//businesses_with_stars_and_city(sgr,3.0,"Melrose");
 //show(table);
 free_sgr(sgr);    
 

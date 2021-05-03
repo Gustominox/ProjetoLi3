@@ -183,7 +183,8 @@ TABLE businesses_started_by_letter(SGR sgr, char letter){
 	
 	//cabecalho
 	linha = add_palavra(linha,"BUS ID");
-	linha = add_palavra(linha,"NAME\n");
+	linha = add_palavra(linha,"NAME");
+	linha = add_palavra(linha,"\n");
 	add_linha(table,linha);
 
 	while (list) {// enq houver elems na lista
@@ -233,7 +234,8 @@ TABLE business_info(SGR sgr, char *business_id){
 	linha = add_palavra(linha,"CITY");
 	linha = add_palavra(linha,"STATE");
 	linha = add_palavra(linha,"STARS");								  
-	linha = add_palavra(linha,"Num Reviews\n");
+	linha = add_palavra(linha,"Num Reviews");
+	linha = add_palavra(linha,"\n");	
 	add_linha(table,linha);
 	
 	linha = init_linha();
@@ -258,17 +260,18 @@ TABLE businesses_reviewed(SGR sgr, char *user_id){
 	if (g_hash_table_contains(sgr->reviewByUserId,user_id)){
 
 		GSList* list = g_hash_table_lookup(sgr->reviewByUserId,user_id );
-		//printf("%s",getReviewUser(list->data));
-		
+	
 		TABLE table = init_table();
 		char **linha = init_linha();
 
 		//cabecalho
 		linha = add_palavra(linha,"BUS ID");
-		linha = add_palavra(linha,"NAME\n");
+		linha = add_palavra(linha,"NAME");
+		linha = add_palavra(linha,"\n");	
 		add_linha(table,linha);
 
 		GSList *list2;
+
 		while (list) {
 			list2 =  g_hash_table_lookup(sgr->business,getReviewBus(list->data));
 		
@@ -278,9 +281,8 @@ TABLE businesses_reviewed(SGR sgr, char *user_id){
 			linha = add_palavra(linha, getBusName(list2->data));
 			linha = add_palavra(linha, "\n");
 			add_linha(table,linha);
-		
-			//printf("%s %s\n", getBusId(list2->data),getBusName(list2->data));
-		list = g_slist_next(list);
+
+			list = g_slist_next(list);
 		}
 
 
@@ -299,20 +301,20 @@ TABLE businesses_with_stars_and_city(SGR sgr, float stars, char *city){
 	GSList* list = g_hash_table_lookup(sgr->businessByCity,city );
 
 	//printf("%s\n", getBusId( list->data ));
-	GSList* list2 = g_hash_table_lookup(sgr->reviewByBusId, getBusId( list->data ));
+	GSList* list2; 
 
-	int nRev = g_slist_length(list2);	
-	if (nRev > 0){
-		printf("nRev: %d\n", nRev);
-		float sumStars = getReviewStars (list2->data);
-		while (list2 = g_slist_next(list2)) sumStars +=  getReviewStars (list->data);
-		float nRevF = nRev/1.0;
-		sumStars = sumStars/nRevF;
+	TABLE table = init_table();
+	char **linha = init_linha();
+	char buf[15];
 
-		if(sumStars > stars) printf("%s %s %f\n", getBusId(list->data),getBusName(list->data),sumStars);
-		
-	}
-	while (list = g_slist_next(list)) {
+	//cabecalho
+	linha = add_palavra(linha,"BUS ID");
+	linha = add_palavra(linha,"NAME");
+	linha = add_palavra(linha,"STARS");	
+	linha = add_palavra(linha,"\n");		
+	add_linha(table,linha);
+
+	while (list) {
 	
 
 		list2 = g_hash_table_lookup(sgr->reviewByBusId, getBusId( list->data ));
@@ -325,9 +327,22 @@ TABLE businesses_with_stars_and_city(SGR sgr, float stars, char *city){
 			float nRevF = nRev/1.0;
 			sumStars = sumStars/nRevF;
 
-			if(sumStars > stars) printf("%s %s %f\n", getBusId(list->data),getBusName(list->data),sumStars);
+			if(sumStars > stars) {
+				linha = init_linha();
+
+				linha = add_palavra(linha, getBusId(list->data));
+				linha = add_palavra(linha, getBusName(list->data));
+				sprintf(buf,"%f",sumStars);
+				linha = add_palavra(linha,buf);
+				linha = add_palavra(linha, "\n");
+				
+				add_linha(table,linha);
+				//printf("%s %s %f\n", getBusId(list->data),getBusName(list->data),sumStars);
+			}
 		}
+		 list = g_slist_next(list);
 	}
+	return table;
 }
 
 
@@ -340,13 +355,22 @@ TABLE international_users(SGR sgr){
 	int nUsers = 0;
 	GSList* list = g_hash_table_get_values (sgr->reviewByUserId);
 	
+	TABLE table = init_table();
+	char **linha = init_linha();
+	
+	//cabecalho
+	linha = add_palavra(linha,"USER ID");
+	linha = add_palavra(linha,"\n");	
+	add_linha(table,linha);
+
 	while (list) {
 		int flag=0;
 		
 		GSList* reviews = list->data ;
 		GSList* aux = g_hash_table_lookup(sgr->business,getReviewBus(reviews->data));
 		char *state;
-		if(aux)state = getBusState(aux->data);
+		if(aux)	state = getBusState(aux->data);
+
 		while (reviews){
 			
 			GSList* head = g_hash_table_lookup(sgr->business,getReviewBus(reviews->data));
@@ -361,13 +385,16 @@ TABLE international_users(SGR sgr){
 		GSList* user = list->data ;
 		if (flag){
 			nUsers++;
-			printf("%s : INTERNACIONAL\n",getReviewUser(user->data));
+			linha = init_linha();
+			linha = add_palavra(linha,getReviewUser(user->data));
+			linha = add_palavra(linha,"\n");
+			add_linha(table,linha);
 
-		} else printf("%s : NOT INTERNACIONAL\n",getReviewUser(user->data));
+		} //else printf("%s : NOT INTERNACIONAL\n",getReviewUser(user->data));
 
  		list = g_slist_next(list);
 	}
-
+	return table;
 }
 
 
