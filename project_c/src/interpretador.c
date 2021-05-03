@@ -1,4 +1,4 @@
-
+/*
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -126,7 +126,7 @@ TABLE fromCSV(char filepath[] ,char *delim){
         table->variaveis[j][i-1] = strsep(&table->variaveis[j][i-1], "\n");
         table->variaveis[j] = realloc(table->variaveis[j],sizeof(char*)*(i+1));
         table->variaveis[j][i] = NULL;
-        */
+        
         j++;
     }
     setNumLinTotal(table,j);
