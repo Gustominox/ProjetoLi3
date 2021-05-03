@@ -3,9 +3,10 @@
 #include <glib-2.0/glib.h>
 #include <stdio.h>
 #include "sgr.h"
-#include "interpretador.h"
 #include "paginacao.h"
-#include <ctype.h>
+#include <ctype.h>\
+
+
 
 int main(int argc, char *argv[]) {
 
@@ -60,6 +61,12 @@ sgr = load_sgr(NULL,NULL,NULL);
 
 TABLE table = businesses_started_by_letter(sgr, '4');
 //international_users(sgr);
+printPagina(table);
+//char*** vars = getVariaveis(table);
+//printf("%s\n\n",vars[0][0]);
+
+table = fromCSV("input/business_full.csv",";");
+printPagina(table);
 char buffer[1024];
 fgets(buffer, 1024, stdin);
 //businesses_reviewed(sgr,"HWzMPRalNgsGEnfBwiSf9Q");

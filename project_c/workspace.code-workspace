@@ -12,7 +12,8 @@
 			"paginacao.h": "c",
 			"stdlib.h": "c",
 			"interpretador.h": "c",
-			"dados.h": "c"
+			"dados.h": "c",
+			"ctype.h": "c"
 		}
 	}
 }

@@ -55,8 +55,6 @@ void show (TABLE table){
 
     int r = 0;
 
-    
-
     printPagina(table);
 
     printf("\n");
@@ -70,16 +68,20 @@ void show (TABLE table){
 void toCSV(TABLE table, char delim, char path[]){
 
     FILE *fd = fopen(path, "a");
+
     if (fd == NULL){
         printf("Error opening file\n");
         return;
-    } 
+    }
+    
+    char ***aux = getVariaveis(table);
+
     int j = 0;
     while(j < getNumLinTotal(table)){
 
-        for(int i = 0; table->variaveis[j][i] != NULL; i++){
+        for(int i = 0; aux[j][i] != NULL; i++){
             if (i != 0) fputc(delim, fd);
-            fprintf(fd, "%s", table->variaveis[j][i]);
+            fprintf(fd, "%s", aux[j][i]);
         }
         fputc('\n', fd);
         j++;
@@ -89,7 +91,7 @@ void toCSV(TABLE table, char delim, char path[]){
 
 TABLE fromCSV(char filepath[] ,char *delim){
 
-    TABLE table = malloc(sizeof(struct table));
+    TABLE table = init_table();
 
     FILE *fd = fopen(filepath, "r");
     if (fd == NULL){
@@ -98,15 +100,22 @@ TABLE fromCSV(char filepath[] ,char *delim){
     }
 
     char *buffer;
+    char ** linha;
     buffer = malloc(sizeof(char)*180000);
     int j=0, i;
 
-    table->variaveis = NULL;
-
-    while(fgets(buffer,180000,fd)){
+    //table->variaveis = NULL;
+    
+    while(fgets(buffer,180000,fd)){//para cada linha
 
         char *temp = strdup(buffer);
         
+        linha = init_linha();
+        for(i = 0; temp != NULL; i++){
+            linha = add_palavra(linha,strsep(&temp, delim));
+        }
+        add_linha(table,linha);
+        /*
         table->variaveis = realloc(table->variaveis,sizeof(char**)*(j+1));
         table->variaveis[j] = NULL;
         
@@ -117,6 +126,7 @@ TABLE fromCSV(char filepath[] ,char *delim){
         table->variaveis[j][i-1] = strsep(&table->variaveis[j][i-1], "\n");
         table->variaveis[j] = realloc(table->variaveis[j],sizeof(char*)*(i+1));
         table->variaveis[j][i] = NULL;
+        */
         j++;
     }
     setNumLinTotal(table,j);
@@ -494,3 +504,4 @@ int interpretador(){
         }
     }
 }
+*/

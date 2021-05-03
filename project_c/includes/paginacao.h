@@ -52,7 +52,7 @@ void setNumLinTotal(TABLE table, int newNumLinTotal);
 * @param table table
 * @return variaveis da table
 */
-char** getVariaveis(TABLE table);
+char*** getVariaveis(TABLE table);
 
 
 /**

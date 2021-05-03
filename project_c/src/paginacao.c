@@ -30,28 +30,40 @@ int getNumLinTotal(TABLE table){
 void setNumLinTotal(TABLE table, int newNumLinTotal){
     table->numLinTotal = newNumLinTotal;
 }
-/*
+
 char*** getVariaveis(TABLE table){
-    char ***variaveis = NULL;
-    int i = 0, j= 0;
-    while(table->variaveis){
+    char ***variaveis;
+
+    variaveis = malloc(sizeof(char**));
+    variaveis[0] = NULL;
+
+    int i = 0, j = 0;
+    
+    while(table->variaveis[j]){
+        
+        table->variaveis[j][i] = malloc(sizeof(char*));
+        table->variaveis[j][i] = NULL;
+        
+        for(i = 0; table->variaveis[j][i]; i++){
+            variaveis[j] = realloc(variaveis[j], sizeof(char*)*(i+1));
+            variaveis[j][i] = strdup(table->variaveis[j][i]);
+        }
+        variaveis[j] = realloc(variaveis[j], sizeof(char*)*(i+1));
+        variaveis[j][i] = NULL;
+
+        j++;
 
         variaveis = realloc(variaveis, sizeof(char**)*(j+1));
         variaveis[j] = NULL;
-
-        for(i = 0; table->variaveis[j]; i++){
-            variaveis[j] = realloc(variaveis[j], sizeof(char*)*(i+1));
-            variaveis[j][i] = strdup(table->variaveis[j][i]);
     }
-    variaveis[j] = realloc(variaveis[j], sizeof(char*)*(i+1));
-    variaveis[j][i] = NULL;
 
     return variaveis;
 }
+
 void setVariaveis(TABLE table, char*** newVariaveis){
     table->variaveis = newVariaveis;
 }
-*/
+
 
 TABLE init_table(){
 
@@ -125,7 +137,7 @@ void printLinha (char **variaveis){
     for(int i = 0; variaveis[i] != NULL; i++){
         printf("| %s", variaveis[i]);
     }
-    printf("\n");
+    //printf("\n");
 }
 
 

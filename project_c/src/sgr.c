@@ -178,23 +178,23 @@ TABLE businesses_started_by_letter(SGR sgr, char letter){
 
  	int nBus = g_slist_length(list);	
 	
-	
 	TABLE table = init_table();
 	char **linha = init_linha();
 	char buf[15];
 	//cabecalho
 	linha = add_palavra(linha,"BUS ID");
-	linha = add_palavra(linha,"NAME");
+	linha = add_palavra(linha,"NAME\n");
 	add_linha(table,linha);
 
 	while (list) {// enq houver elems na lista
-	linha = init_linha();
+		linha = init_linha();
 
-	linha = add_palavra(linha, getBusId(list->data));
-	linha = add_palavra(linha, getBusName(list->data));
-	add_linha(table,linha);
-	//printf("%s %s\n", getBusId(list->data),getBusName(list->data));	
-	list = g_slist_next(list);
+		linha = add_palavra(linha, getBusId(list->data));
+		linha = add_palavra(linha, getBusName(list->data));
+		linha = add_palavra(linha, "\n");
+		add_linha(table,linha);
+
+		list = g_slist_next(list);
 	}
 
 	return table;
@@ -233,7 +233,7 @@ TABLE business_info(SGR sgr, char *business_id){
 	linha = add_palavra(linha,"CITY");
 	linha = add_palavra(linha,"STATE");
 	linha = add_palavra(linha,"STARS");								  
-	linha = add_palavra(linha,"Num Reviews");
+	linha = add_palavra(linha,"Num Reviews\n");
 	add_linha(table,linha);
 	
 	linha = init_linha();
@@ -242,7 +242,7 @@ TABLE business_info(SGR sgr, char *business_id){
 	linha = add_palavra(linha,getBusState(bus));
 	sprintf(buf,"%f",sumStars);
 	linha = add_palavra(linha,buf);
-	sprintf(buf,"%d",nRev);
+	sprintf(buf,"%d\n",nRev);
 	linha = add_palavra(linha,buf);
 	add_linha(table,linha);
 
