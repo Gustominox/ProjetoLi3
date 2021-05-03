@@ -15,13 +15,18 @@ struct table{
 int getNumLin(TABLE table){
     return table->numLin;
 }
+
+
 void setNumLin(TABLE table, int newNumLin){
     table->numLin = newNumLin;
 }
 
+
 int getNumLinTotal(TABLE table){
     return table->numLinTotal;
 }
+
+
 void setNumLinTotal(TABLE table, int newNumLinTotal){
     table->numLinTotal = newNumLinTotal;
 }
@@ -59,6 +64,7 @@ TABLE init_table(){
 	return table;
 }
 
+
 TABLE load_table(char ***info){
 
     TABLE table = init_table();
@@ -95,6 +101,7 @@ void printLinha (char **variaveis){
     printf("\n");
 }
 
+
 void printPagina (TABLE table){
     
     int linha, maxPorPag;
@@ -109,6 +116,7 @@ void printPagina (TABLE table){
     }
     setNumLin(table, linha);
 }
+
 
 int acao(TABLE table){
     
