@@ -180,7 +180,7 @@ TABLE businesses_started_by_letter(SGR sgr, char letter){
 	
 	TABLE table = init_table();
 	char **linha = init_linha();
-	char buf[15];
+	
 	//cabecalho
 	linha = add_palavra(linha,"BUS ID");
 	linha = add_palavra(linha,"NAME\n");
@@ -256,25 +256,38 @@ TABLE businesses_reviewed(SGR sgr, char *user_id){
 
 
 	if (g_hash_table_contains(sgr->reviewByUserId,user_id)){
-		printf("EXISTE\n");
 
 		GSList* list = g_hash_table_lookup(sgr->reviewByUserId,user_id );
-		printf("%s",getReviewUser(list->data));
-
-
-
-
-		GSList* list2 =  g_hash_table_lookup(sgr->business,getReviewBus(list->data));
-
-		printf("%s %s\n", getBusId(list2->data),getBusName(list2->data));
-		while (list = g_slist_next(list)) {
+		//printf("%s",getReviewUser(list->data));
 		
+		TABLE table = init_table();
+		char **linha = init_linha();
+
+		//cabecalho
+		linha = add_palavra(linha,"BUS ID");
+		linha = add_palavra(linha,"NAME\n");
+		add_linha(table,linha);
+
+		GSList *list2;
+		while (list) {
 			list2 =  g_hash_table_lookup(sgr->business,getReviewBus(list->data));
-			printf("%s %s\n", getBusId(list2->data),getBusName(list2->data));
+		
+			linha = init_linha();
+
+			linha = add_palavra(linha, getBusId(list2->data));
+			linha = add_palavra(linha, getBusName(list2->data));
+			linha = add_palavra(linha, "\n");
+			add_linha(table,linha);
+		
+			//printf("%s %s\n", getBusId(list2->data),getBusName(list2->data));
+		list = g_slist_next(list);
 		}
 
+
+		return table;
 	}else{
-		printf("NAO EXISTE\n");
+		printf("NAO EXISTE REVIEWS\n");
+		return NULL;
 	}
 }
 

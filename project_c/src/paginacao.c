@@ -32,19 +32,18 @@ void setNumLinTotal(TABLE table, int newNumLinTotal){
 }
 
 char*** getVariaveis(TABLE table){
-    char ***variaveis;
 
-    variaveis = malloc(sizeof(char**));
-    variaveis[0] = NULL;
+    char ***variaveis = malloc(sizeof(char**));
+    variaveis = NULL;
 
     int i = 0, j = 0;
     
-    while(table->variaveis[j]){
+    while(j < getNumLinTotal(table)){
         
-        table->variaveis[j][i] = malloc(sizeof(char*));
-        table->variaveis[j][i] = NULL;
-        
-        for(i = 0; table->variaveis[j][i]; i++){
+        variaveis = realloc(variaveis, sizeof(char**)*(j+1));
+        variaveis[j] = NULL;
+
+        for(i = 0; table->variaveis[j][i] != NULL; i++){
             variaveis[j] = realloc(variaveis[j], sizeof(char*)*(i+1));
             variaveis[j][i] = strdup(table->variaveis[j][i]);
         }
@@ -52,14 +51,9 @@ char*** getVariaveis(TABLE table){
         variaveis[j][i] = NULL;
 
         j++;
-
-        variaveis = realloc(variaveis, sizeof(char**)*(j+1));
-        variaveis[j] = NULL;
     }
-
     return variaveis;
 }
-
 void setVariaveis(TABLE table, char*** newVariaveis){
     table->variaveis = newVariaveis;
 }

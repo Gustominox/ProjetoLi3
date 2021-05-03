@@ -61,15 +61,13 @@ sgr = load_sgr(NULL,NULL,NULL);
 
 TABLE table = businesses_started_by_letter(sgr, '4');
 //international_users(sgr);
-printPagina(table);
-//char*** vars = getVariaveis(table);
-//printf("%s\n\n",vars[0][0]);
 
-table = fromCSV("input/business_full.csv",";");
+//table = fromCSV("input/business_full.csv",";");
+//TABLE table = businesses_reviewed(sgr,"GwEUFjgs2WnsRINLEhkViQ");
+
 printPagina(table);
 char buffer[1024];
 fgets(buffer, 1024, stdin);
-//businesses_reviewed(sgr,"HWzMPRalNgsGEnfBwiSf9Q");
 //businesses_with_stars_and_city(sgr,3.0,"Melrose");
 //show(table);
 free_sgr(sgr);    
