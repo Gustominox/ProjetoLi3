@@ -52,11 +52,39 @@ TABLE init_table(){
 
 	TABLE table = malloc(sizeof(struct table));
 	
-	table->variaveis  = NULL;
+	table->variaveis = malloc(sizeof(char**));
+    table->variaveis[0] = NULL;
 	table->numLin  = 0;
 	table->numLinTotal = 0;
 	
 	return table;
+}
+
+void add_linha(TABLE table, char** linha){
+    int nLinhas = getNumLinTotal(table);
+    table->variaveis[nLinhas] = linha;
+    nLinhas++;
+    table->variaveis = realloc(table->variaveis, sizeof(char**)*(nLinhas+1));
+    table->variaveis[nLinhas] = NULL;
+    setNumLinTotal(table, nLinhas);
+}
+
+
+char** init_linha(){
+    char ** linha = malloc(sizeof(char*));
+    linha[0]=NULL;
+    return linha;
+}
+
+char** add_palavra(char **linha, char* palavra){
+    int nPalavras =0;
+    while(linha[nPalavras]) nPalavras++;
+    
+    linha[nPalavras] = strdup(palavra);
+    nPalavras ++;
+    linha = realloc(linha, sizeof(char*)*(nPalavras+1));
+    linha[nPalavras] = NULL;
+    return linha;
 }
 
 TABLE load_table(char ***info){
@@ -98,7 +126,13 @@ void printLinha (char **variaveis){
 void printPagina (TABLE table){
     
     int linha, maxPorPag;
-
+    
+    printf("|");
+    for(int i = 0; i < 100 ; i++){
+        printf("-");
+    } 
+    printf("\n");
+    
     for(linha = getNumLin(table), maxPorPag = 0; linha < getNumLinTotal(table) && maxPorPag < 10; linha++, maxPorPag++){
         printLinha(table->variaveis[linha]);
         printf("|");

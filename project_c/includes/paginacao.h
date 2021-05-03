@@ -110,4 +110,13 @@ void printPagina (TABLE table);
 */
 int acao(TABLE table);
 
+
+void add_linha(TABLE table, char** linha);
+
+
+char** init_linha();
+
+char** add_palavra(char **linha, char* palavra);
+
+
 #endif

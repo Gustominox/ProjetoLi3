@@ -1,4 +1,4 @@
-/*
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -55,11 +55,7 @@ void show (TABLE table){
 
     int r = 0;
 
-    printf("|");
-    for(int i = 0; i < 100 ; i++){
-        printf("-");
-    } 
-    printf("\n");
+    
 
     printPagina(table);
 
@@ -498,4 +494,3 @@ int interpretador(){
         }
     }
 }
-*/
