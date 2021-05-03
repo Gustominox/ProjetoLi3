@@ -346,6 +346,60 @@ TABLE businesses_with_stars_and_city(SGR sgr, float stars, char *city){
 }
 
 
+/** QUERY 6 */
+
+TABLE top_businesses_by_city(SGR sgr, int top){
+
+    GSList* list = g_hash_table_get_value(sgr->businessByCity);
+
+    while (list){ // Dentro de uma só cidade
+
+        GSList* head = list->data; // lista de business da cidade iterada
+
+		list2 = g_hash_table_lookup(sgr->reviewByBusId, getBusId(head->data)); // reviews de um busioness
+
+        GSList* temp = list2;
+
+        char ***listBus = malloc(sizeof(char**)); // array que vai guardar os negócios de uma cidade
+        listBus = NULL;
+
+        int j = 0;
+		while(head){ // Iterar negócio a negócio
+
+            listBus = realloc(listBus, sizeof(char**)*(j+1));
+
+            int nRev = g_slist_length(temp);	
+		    if (nRev > 0){
+			    float sumStars = getReviewStars (temp->data);
+			    while (temp = g_slist_next(temp)) sumStars +=  getReviewStars(temp->data);
+			    float nRevF = nRev/1.0;
+			    sumStars = sumStars/nRevF;
+            }
+
+            listBus[j] = realloc(listBus[j], sizeof(char*)*3);
+
+            listBus[j][0] = getBusId(list->data);
+            listBus[j][1] = getBusName(list->data);
+            char starsToStr[15] = sprintf(starsToStr, "%f", getReviewStars(list2->data));
+            listBus[j][2] = starsToStr;
+
+            // printf("%s %s %s\n", listBus[j][0], listBus[j][1], listBus[j][2]);
+            j++;
+            head = g_slist_next(head);
+
+        }
+        ordenaDecresc(listBus, j);
+
+        while(k < top){
+            // construir a table
+            // avaçar na table
+        }
+
+        list = g_slist_next(list);
+    }
+}
+
+
 /** query 7 
  * \brief  Determinar a lista de ids de utilizadores e o número total de utilizadores que tenham visitado mais de um estado
  * @param sgr sgr
