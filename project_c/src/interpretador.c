@@ -199,6 +199,12 @@ int isAssignment(char *linha){
     else return 0;    
 }
 
+int indexaAux(char *linha){
+
+    if(strchr(linha, '[') != NULL) return 1;
+    else return 0;
+}
+
 int verificaVar(VAR vars, int N, char* var){
     int j = 0, posicao = 0;
     while(j<N && strcmp(vars[j].nome, var) != 0){
@@ -323,7 +329,7 @@ int interpretador(){
                     i++;
                 }
         } 
-        else if (strcmp("indexa",funcao) == 0)
+        else if (indexaAux(linha))
         {
                 int posicao = verificaVar(vars, i, info[2]);
                 if(posicao != -1){
