@@ -58,7 +58,7 @@ typedef struct review *REVIEW;
 * @param bus Negócio
 * @return identificação do negócio
 */
-char *getBusId(BUSINESS bus);
+char* getBusId(BUSINESS bus);
 
 /**
 * \brief Muda a identificação do negócio
@@ -72,7 +72,7 @@ void setBusId(BUSINESS bus, char newId[]);
 * @param bus Negócio
 * @return nome do negócio
 */
-char *getBusName(BUSINESS bus);
+char* getBusName(BUSINESS bus);
 
 /**
 * \brief Muda o nome do negócio
@@ -81,21 +81,19 @@ char *getBusName(BUSINESS bus);
 */
 void setBusName(BUSINESS bus, char newName[]);
 
-
-
-
+/**
+* \brief Obtém a inicial do nome de um negócio
+* @param bus Negócio
+* @return a inicial de um nome
+*/
 char* getBusNameInicial(BUSINESS bus);
-
-
-
-
 
 /**
 * \brief Obtém a cidade onde está situado o negócio
 * @param bus Negócio
 * @return cidade onde está o negócio
 */
-char *getBusCity(BUSINESS bus);
+char* getBusCity(BUSINESS bus);
 
 /**
 * \brief Muda a cidade onde está situado o negócio
@@ -137,7 +135,7 @@ void setBusCategories(BUSINESS bus, char** newCategories);
 * @param user Usuário
 * @return identificação do usuário
 */
-char *getUserId (USER user);
+char* getUserId (USER user);
 
 /**
 * \brief Muda a identificação do usuário
@@ -151,7 +149,7 @@ void setUserId(USER user, char newId[]);
 * @param user Usuário
 * @return nome do usuário
 */
-char *getUserName (USER user);
+char* getUserName (USER user);
 
 /**
 * \brief Muda o nome do usuário
@@ -165,7 +163,7 @@ void setUserName(USER user, char newName[]);
 * @param user Usuário
 * @return amigos do usuário
 */
-char **getUserFriends (USER user);
+char** getUserFriends (USER user);
 
 /**
 * \brief Muda os amigos do usuário
@@ -179,7 +177,7 @@ void setUserFriends(USER user, char **newFriends);
 * @param review Review
 * @return identificação da review
 */
-char *getReviewId (REVIEW review);
+char* getReviewId (REVIEW review);
 
 /**
 * \brief Muda a identificação da review
@@ -193,7 +191,7 @@ void setReviewId(REVIEW review, char newId[]);
 * @param review Review
 * @return identificação do usuário
 */
-char *getReviewUser (REVIEW review);
+char* getReviewUser (REVIEW review);
 
 /**
 * \brief Muda a identificação do usuário
@@ -207,7 +205,7 @@ void setReviewUser(REVIEW review, char newUser[]);
 * @param review Review
 * @return identificação da negócio
 */
-char *getReviewBus (REVIEW review);
+char* getReviewBus (REVIEW review);
 
 /**
 * \brief Muda a identificação do negócio
@@ -277,7 +275,7 @@ void setReviewCool(REVIEW review, int newCool);
 * @param review Review
 * @return data de criação do negócio
 */
-char *getReviewDate (REVIEW review);
+char* getReviewDate (REVIEW review);
 
 /**
 * \brief Muda a data de criação do negócio
@@ -291,15 +289,20 @@ void setReviewDate(REVIEW review, char newDate[]);
 * @param review Review
 * @return review do negócio
 */
-char *getReviewText (REVIEW review);
+char* getReviewText (REVIEW review);
+
+/**
+* \brief Obtém as palavras (do texto) da review do negócio
+* @param review Review
+* @return um array de palavras
+*/
+char** getReviewWords (REVIEW review);
 
 /**
 * \brief Muda a review (texto) do negócio
 * @param review Review
 * @param newText nova review do negócio
 */
-char **getReviewWords (REVIEW review);
-
 void setReviewText(REVIEW review, char newText[]);
 
 /************************************************ Leitura e Tratamento dos dados ************************************************/
@@ -307,9 +310,9 @@ void setReviewText(REVIEW review, char newText[]);
 /**
 * \brief Função que faz a leitura do ficheiro e retorna a matriz dinâmica de strings em que cada linha é uma linha do fich
 *
-* @param info é o array que guarda o conteúdo do ficheiro lido
-* @param tmh é o número de linhas que tem o ficheiro (é o tamanho do array de strings, info)
-* @param path é o nome do ficheiro
+* @param info o array que guarda o conteúdo do ficheiro lido
+* @param tmh o número de linhas que tem o ficheiro (é o tamanho do array de strings, info)
+* @param path o nome do ficheiro
 * @return matriz dinâmica
 */
 char** lerFichCsv (int* tmh, char path[]);
@@ -318,9 +321,9 @@ char** lerFichCsv (int* tmh, char path[]);
 /**
 * \brief Função que converte uma String num BUSINESS
 *
-* @param info é o array que guarda o conteúdo do ficheiro lido
-* @param tmh é o tamanho do array de strings, info
-* @param business é o array onde será guardado o conteúdo do ficheiro, mas convertido para structs do tipo BUSINESS
+* @param info o array que guarda o conteúdo do ficheiro lido
+* @param tmh o tamanho do array de strings, info
+* @param business o array onde será guardado o conteúdo do ficheiro, mas convertido para structs do tipo BUSINESS
 * @return array que guarda o conteúdo do ficheiro lido, convertido para structs do tipo BUSINESS
 */
 BUSINESS* transStrToBus(char **info,int *tmh, BUSINESS *business);
@@ -329,9 +332,9 @@ BUSINESS* transStrToBus(char **info,int *tmh, BUSINESS *business);
 /**
 * \brief Função que converte uma String num BUSINESS
 *
-* @param info é o array que guarda o conteúdo do ficheiro lido
-* @param tmh é o tamanho do array de strings, info
-* @param review é o array onde será guardado o conteúdo do ficheiro, mas convertido para structs do tipo REVIEW
+* @param info o array que guarda o conteúdo do ficheiro lido
+* @param tmh o tamanho do array de strings, info
+* @param review o array onde será guardado o conteúdo do ficheiro, mas convertido para structs do tipo REVIEW
 * @return array que guarda o conteúdo do ficheiro lido, convertido para structs do tipo REVIEW
 */
 REVIEW* transStrToRev(char **info,int *tmh, REVIEW *review);
@@ -340,9 +343,9 @@ REVIEW* transStrToRev(char **info,int *tmh, REVIEW *review);
 /**
 * \brief Função que converte uma String num BUSINESS
 *
-* @param info é o array que guarda o conteúdo do ficheiro lido
-* @param tmh é o tamanho do array de strings, info
-* @param user é o array onde será guardado o conteúdo do ficheiro, mas convertido para structs do tipo USER
+* @param info o array que guarda o conteúdo do ficheiro lido
+* @param tmh o tamanho do array de strings
+* @param user o array onde será guardado o conteúdo do ficheiro, mas convertido para structs do tipo USER
 * @return array que guarda o conteúdo do ficheiro lido, convertido para structs do tipo USER
 */
 USER* transStrToUsers(char **info,int *tmh, USER *users);
@@ -351,16 +354,31 @@ USER* transStrToUsers(char **info,int *tmh, USER *users);
 /**
 * \brief Função que converte uma String numa TABLE
 *
-* @param path
-* @param hash
-* @param funcao
+* @param path o nome do ficheiro a abrir
+* @param hash a tabela de hash 
+* @param funcao a função a executar
 */
 void transStrToTable(char path[],GHashTable* hash ,void* (*funcao) (char info[]),int mode);
 
+
+/**
+* \brief Função que converte uma Struct numa TABLE
+*
+* @param hash a tabela de hash 
+* @param arrStr 
+* @param funcao a função a executar
+*/
 void transStructToTable( GHashTable* hash,void**arrStr,char* (*funcao) (void* bus) );
 
-void 
-transStructToTableCate( GHashTable* hash,void**arrStr,int* (*funcao) (void* bus) );
+
+/**
+* \brief Função que converte uma Struct numa TABLE
+*
+* @param hash a tabela de hash 
+* @param arrStr 
+* @param funcao a função a executar
+*/
+void transStructToTableCate( GHashTable* hash,void**arrStr,int* (*funcao) (void* bus) );
 
 
 /**
@@ -370,6 +388,14 @@ transStructToTableCate( GHashTable* hash,void**arrStr,int* (*funcao) (void* bus)
 * @param info é o array que guarda o conteúdo do ficheiro lido
 */
 BUSINESS addBusiness (char info[]);
+
+
+/**
+* \brief Função que liberta os campos da struct do tipo BUSINESS
+*
+* @param bus é o array que guarda o conteúdo do ficheiro, convertido para structs do tipo BUSINESS
+*/
+void freeBusiness(BUSINESS bus);
 
 
 /**

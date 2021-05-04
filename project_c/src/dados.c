@@ -32,14 +32,14 @@ struct review{
 };
 
 
-char *getBusId(BUSINESS bus){
+char* getBusId(BUSINESS bus){
   return strdup(bus->business_id);
 }
 void setBusId(BUSINESS bus, char newId[]){
   strcpy(bus->business_id,newId);
 }
 
-char *getBusName(BUSINESS bus){
+char* getBusName(BUSINESS bus){
   return strdup(bus->name);
 }
 void setBusName(BUSINESS bus, char newName[]){
@@ -53,7 +53,7 @@ char* getBusNameInicial(BUSINESS bus){
     return strdup(str);
 }
 
-char *getBusCity(BUSINESS bus){
+char* getBusCity(BUSINESS bus){
   return strdup(bus->city);
 }
 void setBusCity(BUSINESS bus, char newCity[]){
@@ -82,21 +82,21 @@ void setBusCategories(BUSINESS bus, char** newCategories){
   bus->categories = newCategories;
 }
 
-char *getUserId (USER user){
+char* getUserId (USER user){
     return strdup(user->id);
 }
 void setUserId(USER user, char newId[]){
     strcpy (user->id, newId);
 }
 
-char *getUserName (USER user){
+char* getUserName (USER user){
     return strdup(user->name);
 }
 void setUserName(USER user, char newName[]){
     strcpy (user->name, newName);
 }
 
-char **getUserFriends (USER user){
+char** getUserFriends (USER user){
     char** friends = NULL;
     int i;
     for( i = 0; user->friends[i] != NULL; i++){
@@ -111,17 +111,17 @@ void setUserFriends(USER user, char **newFriends){
     user->friends = newFriends;
 }
 
-char *getReviewId (REVIEW review){
+char* getReviewId (REVIEW review){
     return strdup(review->review_id);
 }
-char *getReviewUser (REVIEW review){
+char* getReviewUser (REVIEW review){
     return strdup(review->user_id);
 }
 void setReviewUser(REVIEW review, char newUser[]){
     strcpy (review->user_id, newUser);
 }
 
-char *getReviewBus (REVIEW review){
+char* getReviewBus (REVIEW review){
     return strdup(review->business_id);
 }
 void setReviewBus(REVIEW review, char newBus[]){
@@ -156,25 +156,25 @@ void setReviewCool(REVIEW review, int newCool){
     review->cool = newCool;
 }
 
-char *getReviewDate (REVIEW review){
+char* getReviewDate (REVIEW review){
     return strdup(review->date);
 }
 void setReviewDate(REVIEW review, char newDate[]){
     strcpy (review->date, newDate);
 }
 
-char *getReviewText (REVIEW review){
+char* getReviewText (REVIEW review){
     return strdup(review->text);
 }
 char **getReviewWords (REVIEW review){
-    char **r = doRegex(review->text,"[A-z0-9]+");
+    char** r = doRegex(review->text,"[A-z0-9]+");
     return r;
 }
 void setReviewText(REVIEW review, char newText[]){
     strcpy (review->text, newText);
 }
 
-// le um fich e retorna a matriz dinamica de strings em que cada linha é uma linha do fich
+
 char** lerFichCsv (int* tmh, char path[]){
     
     char **info = NULL;
@@ -269,7 +269,6 @@ USER* transStrToUsers(char **info,int *tmh,USER *users){
         //printf("%s\n",getReviewId( reviews[tmhUser]));
 
         if(users[tmhUser] == NULL) {
-            
             free(users[tmhUser]);
             tmhUser--; 
         }
@@ -330,13 +329,13 @@ void transStrToTable(char path[], GHashTable* hash, void* (*funcao) (char info[]
     fclose (fp);
 }
 
+
 void transStructToTable( GHashTable* hash,void**arrStr,char* (*funcao) (void* bus) ){
     
     for(int i=0; arrStr[i] != NULL; i++){
     
         char *id = funcao(arrStr[i]); 
        
-        
         GSList *head = NULL;
         
         if(head = g_hash_table_lookup(hash,id)){
@@ -347,14 +346,13 @@ void transStructToTable( GHashTable* hash,void**arrStr,char* (*funcao) (void* bu
             list = g_slist_prepend (list, arrStr[i]);
     
             g_hash_table_insert(hash,id,list);
-        
         }
     }
 
 }
 
-void 
-transStructToTableCate( GHashTable* hash,void**arrStr,int* (*funcao) (void* bus) ){
+
+void transStructToTableCate( GHashTable* hash,void**arrStr,int* (*funcao) (void* bus) ){
     
     for(int i=0; arrStr[i] != NULL; i++){
     
@@ -379,6 +377,7 @@ transStructToTableCate( GHashTable* hash,void**arrStr,int* (*funcao) (void* bus)
         }
     }
 }
+
 
 BUSINESS addBusiness ( char info[]){
 
@@ -416,6 +415,7 @@ BUSINESS addBusiness ( char info[]){
     //printf("%s\n",getBusId(bus));
     return bus;
 }
+
 
 void freeBusiness(BUSINESS bus){
 
