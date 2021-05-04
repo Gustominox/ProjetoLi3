@@ -160,7 +160,7 @@ void printPagina (TABLE table){
 int acao(TABLE table){
     
     int r = 0;
-
+    int numLinAnterior = 0;
     printf("Que página pretende ver a seguir?\n");
 
     while(r == 0){
@@ -169,12 +169,25 @@ int acao(TABLE table){
         int numLinAtual = getNumLin(table);
 
         if (tecla == 'k' || tecla == 'K'){ // Avança na página
+            numLinAnterior = numLinAtual;
             setNumLin(table, numLinAtual++);
             printPagina(table);
+            numLinAtual = getNumLin(table);
         }
         else if (tecla == 'j' || tecla == 'J'){ // Recua na página 
-            setNumLin(table, numLinAtual-20);
-            printPagina(table);
+            int dif = numLinAtual - numLinAnterior;
+            if(dif == 10){
+                numLinAnterior = numLinAtual;
+                setNumLin(table, numLinAtual - 20);
+                printPagina(table);
+                numLinAtual = getNumLin(table);
+            }
+            else{
+                numLinAnterior = numLinAtual;
+                setNumLin(table, numLinAtual - (10 + dif));
+                printPagina(table);
+                numLinAtual = getNumLin(table);
+            }
         }
         else if (tecla == 'q'){
             r = 1;
