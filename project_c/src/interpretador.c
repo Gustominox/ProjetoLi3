@@ -230,7 +230,7 @@ int interpretador(){
         return ERRO_IO;
 
     int i = 0;
-
+    int flagQuery9 = 1;
     while(linha){
         
         info = doRegex(linha,"[A-z0-9/;.=]+");
@@ -289,8 +289,12 @@ int interpretador(){
         }           
         else if (strcmp("reviews_with_word",funcao) == 0)
         {
+                if (flagQuery9) {
+                    threadQuery9(sgr);
+                    flagQuery9 = 0;
+                }
                 vars[i].nome = info[0];
-                //vars[i].table = reviews_with_word(sgr, atoi(info[4]), info[5]);
+                vars[i].table = reviews_with_word(sgr, atoi(info[4]), info[5]);
                 i++;
         }
         else if (strcmp("show",funcao) == 0) 

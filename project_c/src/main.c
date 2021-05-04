@@ -31,12 +31,12 @@ fgets(linha, 1024, stdin);
 */
 
 
-//interpretador();
+interpretador();
 
 //printf("LOADING...\n");
 
 
-SGR sgr = load_sgr(NULL,NULL,NULL);
+//SGR sgr = load_sgr(NULL,NULL,NULL);
 
 //printf("FINISHED!\n");
 

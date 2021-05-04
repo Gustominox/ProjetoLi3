@@ -60,7 +60,7 @@ void free_sgr(SGR sgr){
 }	
 
 
-void *threadUsers(void* value){
+void *threadQuery9(void* value){
 	
 	SGR sgr = (SGR) value;
 	printf("LOADING Table Reviews by Words...\nThis may take a while\n\n");
@@ -148,7 +148,7 @@ SGR load_sgr(char *fileBus, char *fileReviews, char *fileUsers){
 	pthread_create(&thread3,NULL,threadReviews,sgr);
 	
     // espera pela thread1
-	pthread_join(thread1,NULL);
+	//pthread_join(thread1,NULL);
     // espera pela thread2
 	pthread_join(thread2,NULL);
     // espera pela thread3
