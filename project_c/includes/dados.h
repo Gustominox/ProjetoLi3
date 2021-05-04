@@ -358,7 +358,7 @@ void transStrToTable(char path[],GHashTable* hash ,void* (*funcao) (char info[])
 void transStructToTable( GHashTable* hash,void**arrStr,char* (*funcao) (void* bus) );
 
 void 
-transStructToTableInt( GHashTable* hash,void**arrStr,int* (*funcao) (void* bus) );
+transStructToTableCate( GHashTable* hash,void**arrStr,int* (*funcao) (void* bus) );
 
 
 /**

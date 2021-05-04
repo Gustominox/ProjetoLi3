@@ -296,7 +296,7 @@ void transStrToTable(char path[], GHashTable* hash, void* (*funcao) (char info[]
     char buff[180000];
     
     while(fgets(buff,180000,fp)){
-        //variaveis[0] = {busid,nome}
+
         char *id; 
         char *temp = strdup(buff);
 
@@ -331,8 +331,7 @@ void transStructToTable( GHashTable* hash,void**arrStr,char* (*funcao) (void* bu
     for(int i=0; arrStr[i] != NULL; i++){
     
         char *id = funcao(arrStr[i]); 
-        //free(temp);
-        //printf("[%d] hash: %s\n",i,id);
+       
         
         GSList *head = NULL;
         
@@ -351,28 +350,30 @@ void transStructToTable( GHashTable* hash,void**arrStr,char* (*funcao) (void* bu
 }
 
 void 
-transStructToTableInt( GHashTable* hash,void**arrStr,int* (*funcao) (void* bus) ){
+transStructToTableCate( GHashTable* hash,void**arrStr,int* (*funcao) (void* bus) ){
     
     for(int i=0; arrStr[i] != NULL; i++){
     
-        int *id = funcao(arrStr[i]); 
+        char **id = funcao(arrStr[i]); 
         //free(temp);
-          printf("[%d] hash: %d\n",i,*id);
-        
-        GSList *head = NULL;
-        
-        if(head = g_hash_table_lookup(hash,id)){
-            head = g_slist_prepend (head, arrStr[i]);
-            g_hash_table_insert(hash,id,head);
-        }else{
-            GSList *list = NULL;
-            list = g_slist_prepend (list, arrStr[i]);
-    
-            g_hash_table_insert(hash,id,list);
-        
+        //printf("[%d] hash: %s\n",i,id);
+        int j=0;
+        while(id[j]){
+            
+            GSList *head = NULL;
+
+            if(head = g_hash_table_lookup(hash,id[j])){
+                head = g_slist_prepend (head, arrStr[i]);
+                g_hash_table_insert(hash,id[j],head);
+            }else{
+                GSList *list = NULL;
+                list = g_slist_prepend (list, arrStr[i]);
+
+                g_hash_table_insert(hash,id[j],list);
+            }
+        j++;
         }
     }
-
 }
 
 BUSINESS addBusiness ( char info[]){
@@ -444,7 +445,7 @@ USER addUser ( char info[]){
     //printf("TEMP: %s\n",temp);
 
     //user->friends=malloc (sizeof(char*));
-    user->friends = strdup(strsep(&info, "\n"));;
+    //user->friends = strdup(strsep(&info, "\n"));;
     //printf("\n\n%s\n", user->friends[0]);
     /*
     int i;

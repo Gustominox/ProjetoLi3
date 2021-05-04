@@ -13,6 +13,7 @@ struct sgr{
 	GHashTable* business;
 	GHashTable* businessByCity;
 	GHashTable* businessByInicial;
+	GHashTable* businessByCategory;
 	GHashTable* review;
 	GHashTable* reviewByBusId;
 	GHashTable* reviewByUserId;
@@ -31,6 +32,7 @@ SGR init_sgr(){
 	sgr->business = g_hash_table_new(g_str_hash, g_str_equal);
 	sgr->businessByCity = g_hash_table_new(g_str_hash, g_str_equal);
 	sgr->businessByInicial = g_hash_table_new(g_str_hash, g_str_equal);
+	sgr->businessByCategory = g_hash_table_new(g_str_hash, g_str_equal);
 	sgr->review = g_hash_table_new(g_str_hash, g_str_equal);
 	sgr->reviewByBusId = g_hash_table_new(g_str_hash, g_str_equal);
 	sgr->reviewByUserId = g_hash_table_new(g_str_hash, g_str_equal);
@@ -74,7 +76,8 @@ void *threadBusiness(void* value){
 
 	transStructToTable(sgr->businessByInicial,sgr->bus,getBusNameInicial);
 
-
+	transStructToTableCate(sgr->businessByCategory,sgr->bus,getBusCategories);
+	
 	return NULL;
 }
 
@@ -142,7 +145,9 @@ SGR load_sgr(char *fileBus, char *fileReviews, char *fileUsers){
 	// *DEBUG*
 	//
 	//printf("There are %d keys in the hash table\n",
-    //    g_hash_table_size(sgr->businessByInicial));
+    //    g_hash_table_size(sgr->businessByCategory));
+	GSList* head = g_hash_table_lookup(sgr->businessByCategory,"Shopping\n");
+	//if (head)printf("%s %s\n",getBusName(head->data),getBusCategories(head->data)[0]);
 	//
 	//printf("There are %d keys in the hash table\n",
     //    g_hash_table_size(sgr->review));
@@ -156,18 +161,13 @@ SGR load_sgr(char *fileBus, char *fileReviews, char *fileUsers){
 	return sgr;
 
 }
-/** QUERY 2 
- * 
- * Determinar a lista de nomes de negócios e o número total de negócios cujo 
- * nome inicia por uma dada letra. Note que a procura não deverá ser case sensitive
- * 
-*/
+/** QUERY 2 */
 
 TABLE businesses_started_by_letter(SGR sgr, char letter){
 
 	
-	char str[2] = "\0";//{'\0','\0'}
-    str[0] = toupper(letter);
+	char str[2] = "\0";// str[] = {'\0','\0'}
+    str[0] = toupper(letter);// str[] = {letter,'\0'}
 	
 	GSList* list =  g_hash_table_lookup(sgr->businessByInicial,str);
 
@@ -212,6 +212,7 @@ TABLE business_info(SGR sgr, char *business_id){
 		printf("BUSINESS DOES NOT EXIST\n");
 		return NULL;
 	}
+
 	BUSINESS bus = list->data;
 
 	list = g_hash_table_lookup(sgr->reviewByBusId,business_id );
@@ -244,8 +245,9 @@ TABLE business_info(SGR sgr, char *business_id){
 	linha = add_palavra(linha,getBusState(bus));
 	sprintf(buf,"%f",sumStars);
 	linha = add_palavra(linha,buf);
-	sprintf(buf,"%d\n",nRev);
+	sprintf(buf,"%d",nRev);
 	linha = add_palavra(linha,buf);
+	linha = add_palavra(linha,"\n");	
 	add_linha(table,linha);
 
 	return table;
@@ -350,8 +352,8 @@ TABLE businesses_with_stars_and_city(SGR sgr, float stars, char *city){
 
 TABLE top_businesses_by_city(SGR sgr, int top){
 
-    GSList* list = g_hash_table_get_value(sgr->businessByCity);
-
+    GSList* list = g_hash_table_get_values(sgr->businessByCity);
+	GSList* list2;
     while (list){ // Dentro de uma só cidade
 
         GSList* head = list->data; // lista de business da cidade iterada
@@ -360,40 +362,44 @@ TABLE top_businesses_by_city(SGR sgr, int top){
 
         GSList* temp = list2;
 
-        char ***listBus = malloc(sizeof(char**)); // array que vai guardar os negócios de uma cidade
-        listBus = NULL;
+        //char ***listBus = malloc(sizeof(char**)); // array que vai guardar os negócios de uma cidade
+        char ***listBus = NULL;
 
         int j = 0;
 		while(head){ // Iterar negócio a negócio
-
+			
             listBus = realloc(listBus, sizeof(char**)*(j+1));
-
+			listBus[j] = NULL;
+			double sumStars;
             int nRev = g_slist_length(temp);	
 		    if (nRev > 0){
-			    float sumStars = getReviewStars (temp->data);
+			    sumStars = getReviewStars (temp->data);
 			    while (temp = g_slist_next(temp)) sumStars +=  getReviewStars(temp->data);
-			    float nRevF = nRev/1.0;
+			    double nRevF = nRev/1.0;
 			    sumStars = sumStars/nRevF;
             }
 
             listBus[j] = realloc(listBus[j], sizeof(char*)*3);
 
-            listBus[j][0] = getBusId(list->data);
-            listBus[j][1] = getBusName(list->data);
-            char starsToStr[15] = sprintf(starsToStr, "%f", getReviewStars(list2->data));
+            listBus[j][0] = getBusCity(head->data);
+            listBus[j][1] = getBusName(head->data);
+            char starsToStr[15];
+			sprintf(starsToStr, "%g", sumStars);
             listBus[j][2] = starsToStr;
 
-            // printf("%s %s %s\n", listBus[j][0], listBus[j][1], listBus[j][2]);
+            //printf("%s %s %f\n", listBus[j][0], listBus[j][1], starsToStr);
             j++;
             head = g_slist_next(head);
 
         }
         ordenaDecresc(listBus, j);
+		int k=0;
+		printf("TOP 10:\n\n\n");
+        while((k < top)&&( k < j)){
 
-        while(k < top){
-            // construir a table
-            // avaçar na table
-        }
+			printf("%s %s %s\n", listBus[k][0], listBus[k][1], listBus[k][2]);
+			k++;
+		}
 
         list = g_slist_next(list);
     }

@@ -31,30 +31,32 @@ fgets(linha, 1024, stdin);
 */
 
 
-//interpretador();
+interpretador();
 
 //printf("LOADING...\n");
 
 
-SGR sgr = load_sgr(NULL,NULL,NULL);
+//SGR sgr = load_sgr(NULL,NULL,NULL);
 
 //printf("FINISHED!\n");
 
 //TABLE table = business_info(sgr,"pCFTvC1v0B9Wilm8XixKDw");
 
 //TABLE table = businesses_started_by_letter(sgr, '4');
-TABLE table= businesses_with_stars_and_city(sgr,3.0,"Melrose");
-printPagina(table);
+//TABLE table= businesses_with_stars_and_city(sgr,3.0,"Melrose");
+//printPagina(table);
 
 //TABLE table = international_users(sgr);
 //table = fromCSV("input/business_full.csv",";");
 //TABLE table = businesses_reviewed(sgr,"GwEUFjgs2WnsRINLEhkViQ");
 
-printPagina(table);
-char buffer[1024];
-fgets(buffer, 1024, stdin);
+//printPagina(table);
+//top_businesses_by_city(sgr, 10);
+
+//char buffer[1024];
+//fgets(buffer, 1024, stdin);
 //show(table);
-free_sgr(sgr);    
+//free_sgr(sgr);    
 
     return 0;
 }
