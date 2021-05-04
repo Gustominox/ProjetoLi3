@@ -8,7 +8,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <glib-2.0/glib.h>
 
 typedef enum{
     LT,
@@ -63,6 +63,13 @@ void ordenaDecresc(int ***arr, int linhas);
  * @return OPERATOR
  */
 OPERATOR stringToOperator(char* oper);
+
+/**
+ * \brief
+ * @param
+ * @return
+ */
+char ** doRegex (const gchar *string, char * pattern);
 
 
 #endif

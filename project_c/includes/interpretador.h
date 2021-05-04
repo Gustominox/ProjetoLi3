@@ -17,13 +17,6 @@
 
 typedef struct var *VAR;
 
-/**
- * \brief
- * @param
- * @return
- */
-char ** doRegex (const gchar *string);
-
 
 /**
  * \brief Função que visualiza o valor de uma variável num formato visual, sob a forma de uma tabela

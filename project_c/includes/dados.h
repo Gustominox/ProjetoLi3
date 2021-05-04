@@ -298,6 +298,8 @@ char *getReviewText (REVIEW review);
 * @param review Review
 * @param newText nova review do negócio
 */
+char **getReviewWords (REVIEW review);
+
 void setReviewText(REVIEW review, char newText[]);
 
 /************************************************ Leitura e Tratamento dos dados ************************************************/

@@ -19,36 +19,7 @@ struct var{
 };
 
 
-char **doRegex (const gchar *string){
 
-  GRegex *regex;
-  GMatchInfo *match_info;
-  char **info = NULL;
-  int i = 0;
-  regex = g_regex_new ("[A-z0-9/;.=]+", 0, 0, NULL);
-  g_regex_match (regex, string, 0, &match_info);
-
-
-  while (g_match_info_matches (match_info)){
-
-    gchar *word = g_match_info_fetch (match_info, 0);
-      
-    info = realloc(info,sizeof(char*)*(i+1));
-    info[i] = strdup(word);
-
-    i++;
-
-    //g_print ("%s\n", word);
-    
-    g_free (word);
-    g_match_info_next (match_info, NULL);
-    }
-    info = realloc(info,sizeof(char*)*(i+1));
-    info[i] = NULL;
-  g_match_info_free (match_info);
-  g_regex_unref (regex);
-  return info;
-}
 
 
 void show (TABLE table){
@@ -256,7 +227,7 @@ int interpretador(){
 
     while(linha){
         
-        info = doRegex(linha);
+        info = doRegex(linha,"[A-z0-9/;.=]+");
         //printLinha(info);
 
         if(isAssignment(linha)) strcpy(funcao, info[2]);

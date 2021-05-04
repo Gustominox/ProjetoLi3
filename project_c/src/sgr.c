@@ -3,6 +3,7 @@
 #include <string.h>
 #include <glib.h>
 #include "sgr.h"
+#include "auxiliares.h"
 #include <pthread.h>
 
 struct sgr{
@@ -15,6 +16,7 @@ struct sgr{
 	GHashTable* businessByInicial;
 	GHashTable* businessByCategory;
 	GHashTable* review;
+	GHashTable* reviewByText;
 	GHashTable* reviewByBusId;
 	GHashTable* reviewByUserId;
 	GHashTable* user;
@@ -33,10 +35,11 @@ SGR init_sgr(){
 	sgr->businessByCity = g_hash_table_new(g_str_hash, g_str_equal);
 	sgr->businessByInicial = g_hash_table_new(g_str_hash, g_str_equal);
 	sgr->businessByCategory = g_hash_table_new(g_str_hash, g_str_equal);
-	sgr->review = g_hash_table_new(g_str_hash, g_str_equal);
+	//sgr->review = g_hash_table_new(g_str_hash, g_str_equal);
+	sgr->reviewByText = g_hash_table_new(g_str_hash, g_str_equal);
 	sgr->reviewByBusId = g_hash_table_new(g_str_hash, g_str_equal);
 	sgr->reviewByUserId = g_hash_table_new(g_str_hash, g_str_equal);
-	sgr->user = g_hash_table_new(g_str_hash, g_str_equal);
+	//sgr->user = g_hash_table_new(g_str_hash, g_str_equal);
 	
 	return sgr;
 }
@@ -60,7 +63,8 @@ void free_sgr(SGR sgr){
 void *threadUsers(void* value){
 	
 	SGR sgr = (SGR) value;
-	transStructToTable(sgr->user,sgr->use,getUserId);
+	
+	//transStructToTableCate(sgr->reviewByText ,sgr->rev,getReviewWords );
 
 	return NULL;
 }
@@ -86,7 +90,6 @@ void *threadReviews(void* value){
 	
 	SGR sgr = (SGR) value;
 	
-	transStructToTable(sgr->review,sgr->rev,getReviewId);
 
 	transStructToTable(sgr->reviewByUserId,sgr->rev,getReviewUser);
 
@@ -146,8 +149,8 @@ SGR load_sgr(char *fileBus, char *fileReviews, char *fileUsers){
 	//
 	//printf("There are %d keys in the hash table\n",
     //    g_hash_table_size(sgr->businessByCategory));
-	GSList* head = g_hash_table_lookup(sgr->businessByCategory,"Shopping\n");
-	//if (head)printf("%s %s\n",getBusName(head->data),getBusCategories(head->data)[0]);
+	GSList* head = g_hash_table_lookup(sgr->reviewByText,"good");
+	if (head)printf("%s %s\n",getReviewId(head->data),getReviewText(head->data));
 	//
 	//printf("There are %d keys in the hash table\n",
     //    g_hash_table_size(sgr->review));
@@ -459,3 +462,15 @@ TABLE international_users(SGR sgr){
 
 
 
+
+/** query 9 
+ * \brief Dada uma palavra, determinar a lista de ids de reviews que a referem no campo text
+ * @param sgr sgr
+ * @param top número de top negócios
+ * @param word palavra referida no campo text
+*/
+TABLE reviews_with_word(SGR sgr, int top, char *word){
+
+
+
+}

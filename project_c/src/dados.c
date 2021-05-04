@@ -3,7 +3,7 @@
 #include <string.h>
 #include <ctype.h>
 #include "dados.h"
-// #include "auxiliares.h"
+#include "auxiliares.h"
 
 struct user{
 	char *id;
@@ -165,6 +165,10 @@ void setReviewDate(REVIEW review, char newDate[]){
 
 char *getReviewText (REVIEW review){
     return strdup(review->text);
+}
+char **getReviewWords (REVIEW review){
+    char **r = doRegex(review->text,"[A-z0-9]+");
+    return r;
 }
 void setReviewText(REVIEW review, char newText[]){
     strcpy (review->text, newText);
