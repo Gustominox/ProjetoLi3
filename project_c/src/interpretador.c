@@ -19,9 +19,6 @@ struct var{
 };
 
 
-
-
-
 void show (TABLE table){
 
     int r = 0;
@@ -234,7 +231,6 @@ int interpretador(){
     while(linha){
         
         info = doRegex(linha,"[A-z0-9/;.=]+");
-        //printLinha(info);
 
         if(isAssignment(linha)) strcpy(funcao, info[2]);
         else strcpy(funcao, info[0]);
@@ -243,9 +239,11 @@ int interpretador(){
             return MEM_FULL;
         }
 
-        //table->variaveis[0] = realloc(table->variaveis[0], sizeof(char*)*(i+1));
-
-        if (strcmp("businesses_started_by_letter",funcao) == 0)
+        if(strcmp("load_sgr", funcao) == 0)
+        {
+            sgr = load_sgr(info[1],info[2],info[3]);
+        }
+        else if (strcmp("businesses_started_by_letter",funcao) == 0)
         {   
                 vars[i].nome = info[0];
                 vars[i].table = businesses_started_by_letter(sgr, info[4][0]);     
