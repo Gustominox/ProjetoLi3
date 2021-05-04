@@ -17,10 +17,10 @@ vpath %.c $(SRC_DIR)
 .DEFAULT_GOAL = build
 
 $(BLD_DIR)/%.o: %.c
-	$(CC) -g -c -I $(INC_DIR) $(PKG) $^ -o $@
+	$(CC) -g -c -I $(INC_DIR) $(PKG) $^ -o $@ # -Wall -std=c99
 
 $(PROG): $(OBJS)
-	$(CC) -g -I $(INC_DIR) $^ $(PKG) -o $@ -lpthread -O2
+	$(CC) -g -I $(INC_DIR) $^ $(PKG) -o $@ -lpthread -O2 -Wall -std=c99
 
 setup:
 	@mkdir -p $(BLD_DIR)

@@ -51,7 +51,7 @@ void free_sgr(SGR sgr);
  * \brief
  * @param value
  */
-void *threadUsers(void* value);
+void *threadQuery9(void* value);
 
 
 /**
