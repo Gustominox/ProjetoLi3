@@ -488,6 +488,76 @@ TABLE international_users(SGR sgr){
 	return table;
 }
 
+
+/** query 8*/
+TABLE top_businesses_with_category(SGR sgr, int top, char *category){  
+
+    GSList* list =  g_hash_table_lookup(sgr->businessByCategory, category);
+    // list de negocios que tem na categoria
+
+    if (list == NULL) {
+    printf("CATEGORY DOES NOT EXIST\n");    
+    return NULL;
+    }
+    
+
+    TABLE table = init_table();
+    char **linha = init_linha();
+    char buf[15];
+
+    //cabecalho
+    linha = add_palavra(linha,"BUS ID");
+    linha = add_palavra(linha,"NAME");
+    linha = add_palavra(linha,"STARS");    
+    linha = add_palavra(linha,"\n");        
+    add_linha(table,linha);
+
+    char ***listBus = NULL;
+    int j = 0;
+    while(list){ // Iterar de negócio em negócio da categoria dada como arg
+        GSList* temp = g_hash_table_lookup(sgr->reviewByBusId, getBusId(list->data));
+        // list de reviews do negocio atual
+        
+        int nRev = g_slist_length(temp);
+        double sumStars = 0.0;
+        if (nRev > 0){    // as stars médias do negocio
+            sumStars = getReviewStars(temp->data);
+            while (temp = g_slist_next(temp)) sumStars +=  getReviewStars(temp->data);
+            double nRevF = nRev/1.0;
+            sumStars = sumStars/nRevF;
+        }
+
+        listBus = realloc(listBus, sizeof(char**)*(j+1));
+        listBus[j] = NULL;
+
+        listBus[j] = realloc(listBus[j], sizeof(char*)*3);
+
+        listBus[j][0] = getBusId(list->data);
+        listBus[j][1] = getBusName(list->data);
+        sprintf(buf, "%g", sumStars);
+        listBus[j][2] = buf;
+
+        // printf("%s %s %s\n", listBus[j][0], listBus[j][1], listBus[j][2]);
+        j++;
+        list = g_slist_next(list);
+    }
+    ordenaDecresc(listBus, j);
+
+    int k = 0;
+    while(k < top && k < j){
+
+        linha = init_linha();
+        for(int i = 0; i < 3; i++){
+            linha = add_palavra(linha, listBus[k][i]);
+        }
+        linha = add_palavra(linha, "\n");
+        add_linha(table, linha);
+        k++;
+    }
+    return table;
+}
+
+
 /** query 9 
  * \brief Dada uma palavra, determinar a lista de ids de reviews que a referem no campo text
  * @param sgr sgr
