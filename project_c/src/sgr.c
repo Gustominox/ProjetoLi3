@@ -63,7 +63,7 @@ void free_sgr(SGR sgr){
 void *threadQuery9(void* value){
 	
 	SGR sgr = (SGR) value;
-	printf("LOADING Table Reviews by Words...\nThis may take a while\n\n");
+	printf("LOADING Table Reviews by Words...\nThis may take a while but only occurs once\n\n");
 	transStructToTableCate(sgr->reviewByText ,sgr->rev,getReviewWords );
 	printf("FINISHED Table Reviews by Words!!!\n\n");
 	return NULL;
@@ -481,7 +481,7 @@ TABLE international_users(SGR sgr){
 			linha = add_palavra(linha,"\n");
 			add_linha(table,linha);
 
-		} //else printf("%s : NOT INTERNACIONAL\n",getReviewUser(user->data));
+		} 
 
  		list = g_slist_next(list);
 	}
@@ -566,6 +566,26 @@ TABLE top_businesses_with_category(SGR sgr, int top, char *category){
 */
 TABLE reviews_with_word(SGR sgr, int top, char *word){
 
+	GSList* list =  g_hash_table_lookup(sgr->reviewByText, word);
+    TABLE table = init_table();
+	char **linha = init_linha();
+	//cabecalho
+	linha = add_palavra(linha,"REVIEW ID");
+	linha = add_palavra(linha,"\n");	
+	add_linha(table,linha);
+	
+	while (list){
+		linha = init_linha();
 
+		linha = add_palavra(linha, getReviewId(list->data));
+		linha = add_palavra(linha, "\n");	
+		add_linha(table,linha);
+		list = g_slist_remove_all (list,list->data);
+
+
+		//list = g_slist_next(list);
+	}
+	
+return table;
 
 }
