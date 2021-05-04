@@ -24,15 +24,6 @@
 */
 typedef struct sgr *SGR;
 
-/*!
-* @typedef sthread
-*
-* @field   file        Ficheiro a receber
-* @field   sgr         SGR
-* @field   funcao      Função a aplicar
-*/
-typedef struct sthread *STHREAD;
-
 
 /**
 * \brief Inicializa as estruturas de dados correspondentes
