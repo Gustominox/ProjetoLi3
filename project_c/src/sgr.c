@@ -63,9 +63,9 @@ void free_sgr(SGR sgr){
 void *threadUsers(void* value){
 	
 	SGR sgr = (SGR) value;
-	
-	//transStructToTableCate(sgr->reviewByText ,sgr->rev,getReviewWords );
-
+	printf("LOADING Table Reviews by Words...\nThis may take a while\n\n");
+	transStructToTableCate(sgr->reviewByText ,sgr->rev,getReviewWords );
+	printf("FINISHED Table Reviews by Words!!!\n\n");
 	return NULL;
 }
 
@@ -73,15 +73,21 @@ void *threadUsers(void* value){
 void *threadBusiness(void* value){
 	
 	SGR sgr = (SGR) value;
-	
+	printf("LOADING Table Business...\n");
 	transStructToTable(sgr->business,sgr->bus,getBusId);
+	printf("FINISHED Table Business.\n\n");
 
+	printf("LOADING Table Business por Cidade...\n");
 	transStructToTable(sgr->businessByCity,sgr->bus,getBusCity);
+	printf("FINISHED Table Business por Cidade.\n\n");
 
+	printf("LOADING Table Business por letra inicial...\n");
 	transStructToTable(sgr->businessByInicial,sgr->bus,getBusNameInicial);
+	printf("FINISHED Table Business por letra inicial.\n\n");
 
+	printf("LOADING Table Business por categoria...\n");
 	transStructToTableCate(sgr->businessByCategory,sgr->bus,getBusCategories);
-	
+	printf("FINISHED Table Business por categoria.\n\n");
 	return NULL;
 }
 
@@ -90,11 +96,14 @@ void *threadReviews(void* value){
 	
 	SGR sgr = (SGR) value;
 	
-
+	printf("LOADING Table Reviews by User...\n");
 	transStructToTable(sgr->reviewByUserId,sgr->rev,getReviewUser);
+	printf("FINISHED Table Business by User.\n\n");
 
-	transStructToTable(sgr->reviewByBusId,sgr->rev,getReviewBus);
-
+	printf("LOADING Table Reviews by Business...\n");
+	transStructToTable(sgr->reviewByBusId,sgr->rev,getReviewBus);	
+	printf("FINISHED Table Business by Business.\n\n");
+	
 	return NULL;
 }
 
@@ -130,7 +139,7 @@ SGR load_sgr(char *fileBus, char *fileReviews, char *fileUsers){
 	pthread_t thread1,thread2,thread3;
 
 	//inicio da thread relativa ao fich com users
-	pthread_create(&thread1,NULL,threadUsers,sgr);
+	//pthread_create(&thread1,NULL,threadUsers,sgr);
 	
 	//inicio da thread relativa ao fich com businesses
 	pthread_create(&thread2,NULL,threadBusiness,sgr);
@@ -149,8 +158,8 @@ SGR load_sgr(char *fileBus, char *fileReviews, char *fileUsers){
 	//
 	//printf("There are %d keys in the hash table\n",
     //    g_hash_table_size(sgr->businessByCategory));
-	GSList* head = g_hash_table_lookup(sgr->reviewByText,"good");
-	if (head)printf("%s %s\n",getReviewId(head->data),getReviewText(head->data));
+	//GSList* head = g_hash_table_lookup(sgr->reviewByText,"good");
+	//if (head)printf("%s %s\n",getReviewId(head->data),getReviewText(head->data));
 	//
 	//printf("There are %d keys in the hash table\n",
     //    g_hash_table_size(sgr->review));
@@ -352,28 +361,42 @@ TABLE businesses_with_stars_and_city(SGR sgr, float stars, char *city){
 
 
 /** QUERY 6 */
-
 TABLE top_businesses_by_city(SGR sgr, int top){
 
     GSList* list = g_hash_table_get_values(sgr->businessByCity);
+
+	TABLE table = init_table();
 	GSList* list2;
+	char **linha;
+	char buf[15];
+
     while (list){ // Dentro de uma só cidade
 
         GSList* head = list->data; // lista de business da cidade iterada
 
-		list2 = g_hash_table_lookup(sgr->reviewByBusId, getBusId(head->data)); // reviews de um busioness
+		list2 = g_hash_table_lookup(sgr->reviewByBusId, getReviewBus(head->data)); // reviews de um busioness
 
         GSList* temp = list2;
 
-        //char ***listBus = malloc(sizeof(char**)); // array que vai guardar os negócios de uma cidade
-        char ***listBus = NULL;
+		linha = init_linha();
+		linha = add_palavra(linha,"CITY: ");
+		linha = add_palavra(linha, getBusCity(head->data));
+		linha = add_palavra(linha,"\n");
+		add_linha(table,linha);
+		printLinha(linha);
+		linha = init_linha();
+		linha = add_palavra(linha,"BUS ID");
+		linha = add_palavra(linha,"NAME");
+		linha = add_palavra(linha,"STARS");	
+		linha = add_palavra(linha,"\n");		
+		add_linha(table,linha);
+
+        char ***listBus = NULL; // array que vai guardar os negócios de uma cidade
 
         int j = 0;
+		double sumStars ;
 		while(head){ // Iterar negócio a negócio
-			
-            listBus = realloc(listBus, sizeof(char**)*(j+1));
-			listBus[j] = NULL;
-			double sumStars;
+
             int nRev = g_slist_length(temp);	
 		    if (nRev > 0){
 			    sumStars = getReviewStars (temp->data);
@@ -382,32 +405,37 @@ TABLE top_businesses_by_city(SGR sgr, int top){
 			    sumStars = sumStars/nRevF;
             }
 
+            listBus = realloc(listBus, sizeof(char**)*(j+1));
+			listBus[j] = NULL;
+
             listBus[j] = realloc(listBus[j], sizeof(char*)*3);
 
-            listBus[j][0] = getBusCity(head->data);
+            listBus[j][0] = getBusId(head->data);
             listBus[j][1] = getBusName(head->data);
-            char starsToStr[15];
-			sprintf(starsToStr, "%g", sumStars);
-            listBus[j][2] = starsToStr;
+            sprintf(buf, "%g", sumStars);
+            listBus[j][2] = buf;
 
-            //printf("%s %s %f\n", listBus[j][0], listBus[j][1], starsToStr);
+            // printf("%s %s %s\n", listBus[j][0], listBus[j][1], listBus[j][2]);
             j++;
             head = g_slist_next(head);
 
         }
         ordenaDecresc(listBus, j);
-		int k=0;
-		printf("TOP 10:\n\n\n");
-        while((k < top)&&( k < j)){
-
-			printf("%s %s %s\n", listBus[k][0], listBus[k][1], listBus[k][2]);
+		int k =0;
+        while(k < top && k < j){
+            
+			linha = init_linha();
+			for(int i = 0; i < 3; i++){
+				linha = add_palavra(linha,listBus[k][i]);
+			}
+			linha = add_palavra(linha,"\n");
+			add_linha(table, linha);
 			k++;
-		}
-
+        }
         list = g_slist_next(list);
     }
+	return table;
 }
-
 
 /** query 7 
  * \brief  Determinar a lista de ids de utilizadores e o número total de utilizadores que tenham visitado mais de um estado
@@ -459,9 +487,6 @@ TABLE international_users(SGR sgr){
 	}
 	return table;
 }
-
-
-
 
 /** query 9 
  * \brief Dada uma palavra, determinar a lista de ids de reviews que a referem no campo text
