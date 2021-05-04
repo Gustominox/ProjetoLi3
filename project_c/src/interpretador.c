@@ -25,10 +25,10 @@ struct var{
 void show (TABLE table){
 
     int r = 0;
-
+    
     printPagina(table);
 
-    printf("\n");
+    printf("\n%d %d\n",getNumLinTotal(table),getNumLin(table));
 
     while((getNumLinTotal(table) - 10) > 0 && (getNumLin(table) < (getNumLinTotal(table) - 10)) && !r){
         r = acao(table);
