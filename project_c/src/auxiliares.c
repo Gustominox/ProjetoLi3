@@ -135,7 +135,7 @@ void ordenaDecresc(int ***arr, int linhas){
 
 
 OPERATOR stringToOperator(char* oper){
-        OPERATOR operador;
+        OPERATOR operador = -1;
 
         if(strcmp("LT",oper) == 0){
                 operador = LT;
@@ -159,7 +159,7 @@ char **doRegex (const gchar *string, char * pattern){
     GMatchInfo *match_info;
     char **info = NULL;
     int i = 0;
-    regex = g_regex_new (pattern, 0, 0, NULL);
+    regex = g_regex_new (pattern, 0, 0, NULL);//"[A-z0-9/;.=]+"
     g_regex_match (regex, string, 0, &match_info);
 
     while (g_match_info_matches (match_info)){
@@ -171,6 +171,8 @@ char **doRegex (const gchar *string, char * pattern){
         
         i++;
 
+        //g_print ("%s\n", word);
+    
         g_free (word);
         g_match_info_next (match_info, NULL);
     }
@@ -187,7 +189,7 @@ char ** doRegexSingular (const gchar *string, char * pattern){
   GMatchInfo *match_info;
   char **info = NULL;
   int i = 0;
-  regex = g_regex_new (pattern, 0, 0, NULL);
+  regex = g_regex_new (pattern, 0, 0, NULL);//"[A-z0-9/;.=]+"
   g_regex_match (regex, string, 0, &match_info);
 
   while (g_match_info_matches (match_info)){
@@ -200,6 +202,9 @@ char ** doRegexSingular (const gchar *string, char * pattern){
 
         i++;
     }
+    
+
+    //g_print ("%s\n", word);
     
     g_free (word);
     g_match_info_next (match_info, NULL);

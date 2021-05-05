@@ -219,9 +219,6 @@ int interpretador(SGR sgr){
     char **info;
     char funcao[100];
     struct var vars[10];
-    
-    
-    
 
     int i = 0;
     int flagQuery9 = 1;
@@ -229,8 +226,11 @@ int interpretador(SGR sgr){
         prompt();
         if(fgets(linha, BUF_SIZE, stdin) == NULL)
         return ERRO_IO;
+        //printf("%s\n",strchr(linha,'['));
         info = doRegex(linha,"[A-z0-9/;.=]+");
         int length = len(info);
+        
+        printLinha(info);
 
         if(isAssignment(linha)) strcpy(funcao, info[2]);
         else strcpy(funcao, info[0]);
@@ -347,7 +347,11 @@ int interpretador(SGR sgr){
                     i++;
                 }
         } 
+<<<<<<< HEAD
         else if ((!(strcmp("indexa", funcao)))&&(length==6))
+=======
+        else if ((!(strchr(linha,'[')))&&(length==6))
+>>>>>>> 123eb64b78e323fbbd8b7b2796decf4a45e4ffcb
         {
                 int posicao = verificaVar(vars, i, info[3]);
                 if(posicao != -1){
