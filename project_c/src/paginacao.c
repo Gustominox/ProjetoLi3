@@ -182,32 +182,17 @@ int acao(TABLE table){
     
   
         if (tecla == 'k' || tecla == 'K'){ // Avança na página
-            //numLinAnterior = numLinAtual;
+           
             if(numLinAtual+10 < numLinTotal)
                 setNumLin(table, numLinAtual+10);
             clearScreen();
-            //printPagina(table);
-            //numLinAtual = getNumLin(table);
+            
         }
         else if (tecla == 'j' || tecla == 'J'){ // Recua na página 
-            //int dif = numLinAtual - numLinAnterior;
+        
             if(0 <= numLinAtual-10)
                 setNumLin(table, numLinAtual-10);
             clearScreen();
-          /*
-            if(dif == 10){
-                numLinAnterior = numLinAtual;
-                setNumLin(table, numLinAtual - 20);
-                //printPagina(table);
-                numLinAtual = getNumLin(table);
-            }
-            else{
-                numLinAnterior = numLinAtual;
-                setNumLin(table, numLinAtual - (10 + dif));
-                //printPagina(table);
-                numLinAtual = getNumLin(table);
-            }
-        */
         }
         else if (tecla == 'q' || tecla == 'Q'){
             r = 1;

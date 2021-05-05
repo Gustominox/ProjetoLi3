@@ -24,7 +24,7 @@ void show (TABLE table){
     int r = 0;
     setNumLin(table,0);
 
-    while((getNumLinTotal(table) - 10) > 0 && (getNumLin(table) < (getNumLinTotal(table) - 10)) && !r){
+    while(!r){
         int pagTotal = (getNumLinTotal(table)/10)+1;
         int pagAtual = (getNumLin(table)/10)+1;
         printf("\n   Pag %d out of %d\n\n",pagAtual,pagTotal);
