@@ -59,7 +59,7 @@ fgets(linha, 1024, stdin);
 //sgr = load_sgr(NULL,NULL,NULL);
 //threadQuery9(sgr);
 //printf("FINISHED!\n");
-//TABLE table = reviews_with_word(sgr, 10, "1");
+//TABLE table = reviews_with_word(sgr, 10, "good");
 //TABLE table = business_info(sgr,"pCFTvC1v0B9Wilm8XixKDw");
 //TABLE table = top_businesses_by_city(sgr, 10);
 //TABLE table = top_businesses_with_category(sgr, 100, "Food");

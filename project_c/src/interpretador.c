@@ -23,13 +23,15 @@ void show (TABLE table){
 
     int r = 0;
     setNumLin(table,0);
-    printPagina(table);
+    
 
-    printf("\npag %d de %d\n",getNumLin(table)%10,getNumLinTotal(table)%10);
-
+    int pagTotal = (getNumLinTotal(table)/10)+1;
+    int pagAtual = (getNumLin(table)/10)+1;
     while((getNumLinTotal(table) - 10) > 0 && (getNumLin(table) < (getNumLinTotal(table) - 10)) && !r){
-        r = acao(table);
-        if(r != 0) r = 1;
+        printf("\npag %d de %d\n",pagAtual,pagTotal);
+        printPagina(table);
+        if(pagAtual <= pagTotal) r = acao(table);
+        
     }
 }
 
@@ -308,6 +310,7 @@ int interpretador(SGR sgr){
                 int posicao = verificaVar(vars, i, info[1]);
                 if(posicao != -1) show(vars[posicao].table);
                 else printf("A TABLE nao existe\n");
+                printf("SHOW TERMINOU\n");
         }         
         else if ((!(strcmp("toCSV",funcao)))&&(length==5)) 
         {

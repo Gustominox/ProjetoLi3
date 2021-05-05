@@ -163,7 +163,7 @@ int acao(TABLE table){
     int numLinAnterior = 0;
     printf("Que página pretende ver a seguir?\n");
 
-    while(r == 0){
+    
         char tecla = getchar();
 
         int numLinAtual = getNumLin(table);
@@ -171,7 +171,7 @@ int acao(TABLE table){
         if (tecla == 'k' || tecla == 'K'){ // Avança na página
             numLinAnterior = numLinAtual;
             setNumLin(table, numLinAtual++);
-            printPagina(table);
+            //printPagina(table);
             numLinAtual = getNumLin(table);
         }
         else if (tecla == 'j' || tecla == 'J'){ // Recua na página 
@@ -179,13 +179,13 @@ int acao(TABLE table){
             if(dif == 10){
                 numLinAnterior = numLinAtual;
                 setNumLin(table, numLinAtual - 20);
-                printPagina(table);
+                //printPagina(table);
                 numLinAtual = getNumLin(table);
             }
             else{
                 numLinAnterior = numLinAtual;
                 setNumLin(table, numLinAtual - (10 + dif));
-                printPagina(table);
+                //printPagina(table);
                 numLinAtual = getNumLin(table);
             }
         }
@@ -194,7 +194,7 @@ int acao(TABLE table){
         }
         else
             if(tecla != 0x0A) printf("comando inexistente \n");
-    }
+    
     return r;
 }
 
