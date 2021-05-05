@@ -116,26 +116,26 @@ int compare(char* content, char* value, OPERATOR oper){
 }
 
 
-void swap(char **xp, char **yp){
-    char** temp = xp; 
-    xp = yp; 
-    yp = temp; 
+void swap(char ***xp, char ***yp){
+    char** temp = *xp;
+    *xp = *yp;
+    *yp = temp; 
 }
 
 
-void ordenaDecresc(int ***arr, int linhas){ 
+void ordenaDecresc(char ***arr, int linhas){ 
     int linhaAtual, linhaPost;
 
-    for (linhaAtual = 0; linhaAtual < linhas - 1; linhaAtual++)
+    for (linhaAtual = 1; linhaAtual < linhas - 1; linhaAtual++)
       for (linhaPost = linhaAtual+1; linhaPost < linhas; linhaPost++)
 
-        if(!(compare(arr[linhaAtual][2],arr[linhaPost][2],GT)) )
-          swap(arr[linhaAtual], arr[linhaPost]);
+        if(compare(arr[linhaAtual][2], arr[linhaPost][2], LT) == 0)
+            swap(&(arr[linhaAtual]), &(arr[linhaPost]));
 }
 
 
 OPERATOR stringToOperator(char* oper){
-        OPERATOR operador = -1;
+        OPERATOR operador;
 
         if(strcmp("LT",oper) == 0){
                 operador = LT;
@@ -159,7 +159,7 @@ char **doRegex (const gchar *string, char * pattern){
     GMatchInfo *match_info;
     char **info = NULL;
     int i = 0;
-    regex = g_regex_new (pattern, 0, 0, NULL);//"[A-z0-9/;.=]+"
+    regex = g_regex_new (pattern, 0, 0, NULL);
     g_regex_match (regex, string, 0, &match_info);
 
     while (g_match_info_matches (match_info)){
@@ -171,8 +171,6 @@ char **doRegex (const gchar *string, char * pattern){
         
         i++;
 
-        //g_print ("%s\n", word);
-    
         g_free (word);
         g_match_info_next (match_info, NULL);
     }
@@ -183,13 +181,13 @@ char **doRegex (const gchar *string, char * pattern){
   return info;
 }
 
-char ** doRegexSingular (const gchar *string, char * pattern){
+char **doRegexSingular (const gchar *string, char * pattern){
 
   GRegex *regex;
   GMatchInfo *match_info;
   char **info = NULL;
   int i = 0;
-  regex = g_regex_new (pattern, 0, 0, NULL);//"[A-z0-9/;.=]+"
+  regex = g_regex_new (pattern, 0, 0, NULL);
   g_regex_match (regex, string, 0, &match_info);
 
   while (g_match_info_matches (match_info)){
@@ -202,9 +200,6 @@ char ** doRegexSingular (const gchar *string, char * pattern){
 
         i++;
     }
-    
-
-    //g_print ("%s\n", word);
     
     g_free (word);
     g_match_info_next (match_info, NULL);

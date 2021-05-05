@@ -56,10 +56,10 @@ int compare(char* content, char* value, OPERATOR oper);
 
 /**
  * \brief Troca dois arrays de strings
- * @param xp um array de strings
- * @param yp outro array de strings
+ * @param xp apontador para um array de strings
+ * @param yp apontador para outro array de strings
  */
-void swap(char **xp, char **yp);
+void swap(char ***xp, char ***yp);
 
 
 /**
@@ -67,7 +67,7 @@ void swap(char **xp, char **yp);
  * @param arr matriz
  * @param linhas número de linhas
  */
-void ordenaDecresc(int ***arr, int linhas);
+void ordenaDecresc(char ***arr, int linhas);
 
 
 /**
