@@ -18,13 +18,14 @@ Função que controla o progama.
 
 int main(int argc, char *argv[]) {
 
+int r = 0;
+
 clearScreen();
 printf("STARTED LOADING SGR...\n");
 SGR sgr = load_sgr(NULL,NULL,NULL);
 printf("FINISHED LOADING SGR!\n");
 clearScreen();
 
-int r = 0;
 r = interpretador(sgr);
 
 
@@ -55,14 +56,12 @@ fgets(linha, 1024, stdin);
 //printf("LOADING...\n");
 
 
-//SGR sgr = load_sgr(NULL,NULL,NULL);
 //sgr = load_sgr(NULL,NULL,NULL);
 //threadQuery9(sgr);
 //printf("FINISHED!\n");
 //TABLE b = reviews_with_word(sgr, 10, "bad");
 //TABLE table = business_info(sgr,"pCFTvC1v0B9Wilm8XixKDw");
 //TABLE table = top_businesses_by_city(sgr, 10);
-//TABLE table = top_businesses_with_category(sgr, 100, "Food");
 //TABLE y = businesses_with_stars_and_city(sgr,4.5,"Columbus");
 
 //printPagina(table);
@@ -71,7 +70,18 @@ fgets(linha, 1024, stdin);
 //table = fromCSV("input/business_full.csv",";");
 //TABLE table = businesses_reviewed(sgr,"GwEUFjgs2WnsRINLEhkViQ");
 
-//show(table);
+/*
+
+SGR sgr = load_sgr(NULL,NULL,NULL);
+TABLE table = top_businesses_with_category(sgr, 100, "Food");
+
+char * str = strdup("ola");
+char * str1 = strdup("mundo");
+swap(str,str1);
+printf("%s %s\n",str,str1);
+show(table);
+*/
+
 //top_businesses_by_city(sgr, 10);
 
 //char buffer[1024];

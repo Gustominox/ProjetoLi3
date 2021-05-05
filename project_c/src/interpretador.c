@@ -230,7 +230,7 @@ int interpretador(SGR sgr){
         info = doRegex(linha,"[A-z0-9/;.=]+");
         int length = len(info);
         
-        printLinha(info);
+        
 
         if(isAssignment(linha)) strcpy(funcao, info[2]);
         else strcpy(funcao, info[0]);
@@ -347,16 +347,12 @@ int interpretador(SGR sgr){
                     i++;
                 }
         } 
-<<<<<<< HEAD
-        else if ((!(strcmp("indexa", funcao)))&&(length==6))
-=======
-        else if ((!(strchr(linha,'[')))&&(length==6))
->>>>>>> 123eb64b78e323fbbd8b7b2796decf4a45e4ffcb
+        else if ((!(strcmp("indexa", funcao)))&&(length==7))
         {
                 int posicao = verificaVar(vars, i, info[3]);
                 if(posicao != -1){
                     vars[i].nome = info[0];
-                    vars[i].table = indexa(vars[posicao].table, atoi(info[3]), atoi(info[4]));
+                    vars[i].table = indexa(vars[posicao].table, atoi(info[4]), atoi(info[5]));
                     i++;
                 }
         } 

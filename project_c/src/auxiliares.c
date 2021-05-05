@@ -129,7 +129,7 @@ void ordenaDecresc(int ***arr, int linhas){
     for (linhaAtual = 0; linhaAtual < linhas - 1; linhaAtual++)
       for (linhaPost = linhaAtual+1; linhaPost < linhas; linhaPost++)
 
-        if(arr[linhaAtual][2] < arr[linhaPost][2])
+        if(!(compare(arr[linhaAtual][2],arr[linhaPost][2],GT)) )
           swap(arr[linhaAtual], arr[linhaPost]);
 }
 

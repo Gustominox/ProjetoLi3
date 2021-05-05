@@ -536,7 +536,7 @@ TABLE top_businesses_with_category(SGR sgr, int top, char *category){
 
     TABLE table = init_table();
     char **linha = init_linha();
-    char buf[15];
+    
 
     //cabecalho
     linha = add_palavra(linha,"BUS ID");
@@ -552,11 +552,11 @@ TABLE top_businesses_with_category(SGR sgr, int top, char *category){
         // list de reviews do negocio atual
         
         int nRev = g_slist_length(temp);
-        double sumStars = 0.0;
+        float sumStars = 0.0;
         if (nRev > 0){    // as stars médias do negocio
             sumStars = getReviewStars(temp->data);
             while (temp = g_slist_next(temp)) sumStars +=  getReviewStars(temp->data);
-            double nRevF = nRev/1.0;
+            float nRevF = nRev/1.0;
             sumStars = sumStars/nRevF;
         }
 
@@ -567,14 +567,24 @@ TABLE top_businesses_with_category(SGR sgr, int top, char *category){
 
         listBus[j][0] = getBusId(list->data);
         listBus[j][1] = getBusName(list->data);
-        sprintf(buf, "%g", sumStars);
-        listBus[j][2] = buf;
-
+		//printf("%f\n",sumStars);
+		char buf[15];
+        sprintf(buf, "%f", sumStars);
+        listBus[j][2] = strdup(buf);
+		//printf("%s\n",listBus[j][2]);
+		
         j++;
+		
         list = g_slist_next(list);
     }
-    ordenaDecresc(listBus, j);
 
+    ordenaDecresc(listBus, j);
+	printf("\n\n\n\n\n");
+	for (size_t i = 0; i < j; i++)
+	{
+		printf("%s\n",listBus[i][2]);
+	}
+	
     int k = 0;
     while(k < top && k < j){
 
