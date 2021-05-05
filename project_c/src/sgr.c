@@ -129,6 +129,7 @@ SGR load_sgr(char *fileBus, char *fileReviews, char *fileUsers){
     
 	clock_t Ticks[2];
     Ticks[0] = clock();
+	
 	// init struct sgr
 	SGR sgr = init_sgr();
 	
@@ -561,7 +562,6 @@ TABLE top_businesses_with_category(SGR sgr, int top, char *category){
 /** QUERY 9 */
 TABLE reviews_with_word(SGR sgr, int top, char *word){
 
-	
 	GSList* list =  g_hash_table_lookup(sgr->reviewByText, word);
     
 	if (list == NULL) {

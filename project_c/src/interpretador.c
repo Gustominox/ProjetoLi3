@@ -258,7 +258,6 @@ int interpretador(SGR sgr){
         {   
                 vars[i].nome = info[0];
 
-                
                 vars[i].table = businesses_started_by_letter(sgr, info[4][0]);     
                 
                 
