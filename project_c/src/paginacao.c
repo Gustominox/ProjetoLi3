@@ -2,8 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "paginacao.h"
-// #include <glib.h>
-
 
 struct table{
     char ***variaveis;        
@@ -131,7 +129,6 @@ void printLinha (char **variaveis){
     for(int i = 0; variaveis[i] != NULL; i++){
         printf("| %s", variaveis[i]);
     }
-    //printf("\n");
 }
 
 

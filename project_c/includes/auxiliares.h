@@ -30,12 +30,18 @@ int isFloat (char *s);
 */
 int isInteger (char *s);
 
+/**
+* \brief Calcula o tamanho de um array de strings (char*)
+* @return Tamanho do array
+*/
 int len(char **arr);
 
 
+/**
+* \brief Verifica se word (char*) é elemento de arr (char**)
+* @return 1 se é elemento, 0 se nao é elemento
+*/
 int in(char **arr,int len, char* word);
-
-
 
 
 /**
@@ -72,12 +78,22 @@ void ordenaDecresc(int ***arr, int linhas);
 OPERATOR stringToOperator(char* oper);
 
 /**
- * \brief
- * @param
- * @return
+ * \brief Dado um padrao de regular expression e uma string retorna o array de 
+ * tokens do tipo string(char*) obtido ao aplicar o padrao na string
+ * @param string string a qual se aplica o padrao
+ * @param pattern padrao a ser aplicado
+ * @return array de tokens
  */
 char ** doRegex (const gchar *string, char * pattern);
 
+/**
+ * \brief Dado um padrao de regular expression e uma string retorna o array de 
+ * tokens do tipo string(char*) obtido ao aplicar o padrao na string, onde
+ * NAO EXISTE repeticoes de um mesmo token
+ * @param string string a qual se aplica o padrao
+ * @param pattern padrao a ser aplicado
+ * @return array de tokens
+ */
 char ** doRegexSingular (const gchar *string, char * pattern);
 
 #endif

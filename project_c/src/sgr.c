@@ -126,7 +126,10 @@ void *threadReviews(void* value){
 /** QUERY 1 */
 
 SGR load_sgr(char *fileBus, char *fileReviews, char *fileUsers){
-    // init struct sgr
+    
+	clock_t Ticks[2];
+    Ticks[0] = clock();
+	// init struct sgr
 	SGR sgr = init_sgr();
 	
 	//DEFAULT VALUES DE FICH INPUT
@@ -164,7 +167,11 @@ SGR load_sgr(char *fileBus, char *fileReviews, char *fileUsers){
 	pthread_join(thread1,NULL);
     // espera pela thread2
 	pthread_join(thread2,NULL);
-   
+    
+	Ticks[1] = clock();
+    double time = (Ticks[1] - Ticks[0]) * 1.0 / CLOCKS_PER_SEC;
+    printf("\nTempo de execucao da QUERY (segundos): %g\n",time);
+    
 	return sgr;
 
 }
@@ -172,7 +179,9 @@ SGR load_sgr(char *fileBus, char *fileReviews, char *fileUsers){
 
 TABLE businesses_started_by_letter(SGR sgr, char letter){
 
-	
+	clock_t Ticks[2];
+    Ticks[0] = clock();
+                
 	char str[2] = "\0";// str[] = {'\0','\0'}
     str[0] = toupper(letter);// str[] = {letter,'\0'}
 	
@@ -204,7 +213,10 @@ TABLE businesses_started_by_letter(SGR sgr, char letter){
 
 		list = g_slist_next(list);
 	}
-
+	Ticks[1] = clock();
+    double time = (Ticks[1] - Ticks[0]) * 1.0 / CLOCKS_PER_SEC;
+    printf("\nTempo de execucao da QUERY (segundos): %g\n",time);
+                
 	return table;
 }
 
@@ -549,6 +561,7 @@ TABLE top_businesses_with_category(SGR sgr, int top, char *category){
 /** QUERY 9 */
 TABLE reviews_with_word(SGR sgr, int top, char *word){
 
+	
 	GSList* list =  g_hash_table_lookup(sgr->reviewByText, word);
     
 	if (list == NULL) {

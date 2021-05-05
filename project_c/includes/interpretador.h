@@ -101,9 +101,13 @@ int isAssignment(char *linha);
  */
 int verificaVar(VAR vars, int N, char* var);
 
-void prompt ();
 /**
- * 
+ * \brief prompt para a UI da aplicacao
+ */
+void prompt ();
+
+/**
+ * \brief prompt para a UI da aplicacao
  */
 int interpretador(SGR sgr);
 

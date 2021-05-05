@@ -5,6 +5,8 @@
 #include "paginacao.h"
 #include "auxiliares.h"
 #include "sgr.h"
+#include <time.h>
+
 
 #define EXIT_CODE 0
 #define ERRO_IO 1
@@ -255,7 +257,11 @@ int interpretador(SGR sgr){
         else if (!(strcmp("businesses_started_by_letter",funcao))&&(length==6))
         {   
                 vars[i].nome = info[0];
+
+                
                 vars[i].table = businesses_started_by_letter(sgr, info[4][0]);     
+                
+                
                 i++;
         }   
         else if ((!strcmp("business_info",funcao))&&(length==6))
@@ -296,12 +302,19 @@ int interpretador(SGR sgr){
         }           
         else if ((!(strcmp("reviews_with_word",funcao)))&&(length==7))
         {
+                clock_t Ticks[2];
+                Ticks[0] = clock();
+	
                 if (flagQuery9) {
                     threadQuery9(sgr);
                     flagQuery9 = 0;
                 }
                 vars[i].nome = info[0];
                 vars[i].table = reviews_with_word(sgr, atoi(info[4]), info[5]);
+                Ticks[1] = clock();
+                double time = (Ticks[1] - Ticks[0]) * 1.0 / CLOCKS_PER_SEC;
+                printf("\nTempo de execucao da QUERY (segundos): %g\n",time);
+    
                 i++;
         }
         else if ((!(strcmp("show",funcao)))&&(length==3)) 
@@ -350,7 +363,7 @@ int interpretador(SGR sgr){
                     i++;
                 }
         } 
-        else if ((!(strcmp("max",funcao)))&&(length==5))  //max(x,nomeColuna, Operador)
+        else if ((!(strcmp("max",funcao)))&&(length==5)) 
         {
                 int posicao = verificaVar(vars, i, info[1]);
                 if(posicao != -1){

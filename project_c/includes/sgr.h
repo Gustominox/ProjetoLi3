@@ -24,34 +24,34 @@ typedef struct sgr *SGR;
 
 
 /**
-* \brief Inicializa as estruturas de dados correspondentes
+* \brief Inicializa as estruturas de dados a ser usadas nas querys
 */
 SGR init_sgr();
 
 
 /** 
-* \brief 
+* \brief Liberta a memoria usada pela struct sgr
 * @param sgr sgr
 */
 void free_sgr(SGR sgr);
 
 
 /**
- * \brief
+ * \brief Cria a Hash table para executar a query 9
  * @param value
  */
 void *threadQuery9(void* value);
 
 
 /**
- * \brief
+ * \brief Cria as Hash table's relativas ao fich dos Businesses
  * @param value
  */
 void *threadBusiness(void* value);
 
 
 /**
- * \brief 
+ * \brief Cria as Hash table's relativas ao fich das Reviews
  * @param value
  */
 void *threadReviews(void* value);

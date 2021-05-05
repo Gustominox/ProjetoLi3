@@ -10,7 +10,7 @@ SRC_DIR = src
 INC_DIR = includes
 FILES 	= $(shell ls $(SRC_DIR)/*.c)
 OBJS  	= $(patsubst $(SRC_DIR)/%.c,$(BLD_DIR)/%.o,$(FILES))
-PROG  	= reviews
+PROG  	= program
 
 vpath %.c $(SRC_DIR)
 

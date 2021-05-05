@@ -383,10 +383,8 @@ BUSINESS addBusiness (char info[]);
 /**
 * \brief Função que liberta os campos da struct do tipo BUSINESS
 *
-* @param bus é o array que guarda o conteúdo do ficheiro, convertido para structs do tipo BUSINESS
+* @param bus Struct a ser libertada
 */
-
-
 void freeBusiness(BUSINESS bus);
 
 
@@ -398,6 +396,12 @@ void freeBusiness(BUSINESS bus);
 */
 USER addUser ( char info[]);
 
+
+/**
+* \brief Função que liberta os campos da struct do tipo USER
+*
+* @param user Struct a ser libertada
+*/
 void freeUser(USER user);
 
 
@@ -409,6 +413,12 @@ void freeUser(USER user);
 */
 REVIEW addReview ( char info[]);
 
+
+/**
+* \brief Função que liberta os campos da struct do tipo REVIEW
+*
+* @param rev Struct a ser libertada
+*/
 void freeReview(REVIEW rev);
 
 
