@@ -126,7 +126,7 @@ void swap(char ***xp, char ***yp){
 void ordenaDecresc(char ***arr, int linhas){ 
     int linhaAtual, linhaPost;
 
-    for (linhaAtual = 1; linhaAtual < linhas - 1; linhaAtual++)
+    for (linhaAtual = 0; linhaAtual < linhas - 1; linhaAtual++)
       for (linhaPost = linhaAtual+1; linhaPost < linhas; linhaPost++)
 
         if(compare(arr[linhaAtual][2], arr[linhaPost][2], LT) == 0)

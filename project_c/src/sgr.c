@@ -567,11 +567,10 @@ TABLE top_businesses_with_category(SGR sgr, int top, char *category){
 
         listBus[j][0] = getBusId(list->data);
         listBus[j][1] = getBusName(list->data);
-		//printf("%f\n",sumStars);
+		
 		char buf[15];
         sprintf(buf, "%f", sumStars);
         listBus[j][2] = strdup(buf);
-		//printf("%s\n",listBus[j][2]);
 		
         j++;
 		
@@ -579,11 +578,8 @@ TABLE top_businesses_with_category(SGR sgr, int top, char *category){
     }
 
     ordenaDecresc(listBus, j);
-	printf("\n\n\n\n\n");
-	for (size_t i = 0; i < j; i++)
-	{
-		printf("%s\n",listBus[i][2]);
-	}
+	
+	
 	
     int k = 0;
     while(k < top && k < j){
