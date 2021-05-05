@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/***************************************************** Estruturas de dados *****************************************************/
 
 /*!
 * @typedef table
@@ -14,6 +15,8 @@
 */
 typedef struct table *TABLE;
 
+
+/****************************************************** Funções get e set ******************************************************/
 
 /**
 * \brief Obtém o número da linha atual
@@ -63,6 +66,9 @@ char*** getVariaveis(TABLE table);
 void setVariaveis(TABLE table, char ***newVariaveis);
 
 
+/************************************************ Funções sobre Paginação ************************************************/
+
+
 /**
 * \brief Inicializa a estrutura de dados table
 * @return a table inicializada
@@ -79,10 +85,34 @@ TABLE load_table(char ***info);
 
 
 /**
+* \brief Inicializa uma linha
+* @return a linha inicializada
+*/
+char** init_linha();
+
+
+/**
+* \brief Adiciona uma palavra à linha
+* @param linha linha onde será adicionada a palavra
+* @param palavra palavra adicionada
+* @return linha com a palavra adicionada
+*/
+char** add_palavra(char **linha, char* palavra);
+
+
+/**
+* \brief Adiciona uma linha à table
+* @param table table onde será adicionada a linha
+* @param linha linha adicionada
+*/
+void add_linha(TABLE table, char** linha);
+
+
+/**
 * \brief Imprime uma linha do array de variaveis
 * @param variaveis variaveis
 */
-void printLinha (char **variaveis);
+void printLinha (char** variaveis);
 
 
 /**
@@ -91,6 +121,7 @@ void printLinha (char **variaveis);
  */
 void printPagina (TABLE table);
 
+
 /**
 * \brief Dependendo do comando, avança ou recua na linha
 * @param table table 
@@ -98,13 +129,6 @@ void printPagina (TABLE table);
 */
 int acao(TABLE table);
 
-
-void add_linha(TABLE table, char** linha);
-
-
-char** init_linha();
-
-char** add_palavra(char **linha, char* palavra);
 
 
 #endif

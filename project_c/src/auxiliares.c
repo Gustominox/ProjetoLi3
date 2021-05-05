@@ -142,28 +142,29 @@ OPERATOR stringToOperator(char* oper){
         return operador;
 }
 
+
 char **doRegex (const gchar *string, char * pattern){
 
-  GRegex *regex;
-  GMatchInfo *match_info;
-  char **info = NULL;
-  int i = 0;
-  regex = g_regex_new (pattern, 0, 0, NULL);//"[A-z0-9/;.=]+"
-  g_regex_match (regex, string, 0, &match_info);
+    GRegex *regex;
+    GMatchInfo *match_info;
+    char **info = NULL;
+    int i = 0;
+    regex = g_regex_new (pattern, 0, 0, NULL);//"[A-z0-9/;.=]+"
+    g_regex_match (regex, string, 0, &match_info);
 
-  while (g_match_info_matches (match_info)){
+    while (g_match_info_matches (match_info)){
 
-    gchar *word = g_match_info_fetch (match_info, 0);
+        gchar *word = g_match_info_fetch (match_info, 0);
       
-    info = realloc(info,sizeof(char*)*(i+1));
-    info[i] = strdup(word);
+        info = realloc(info,sizeof(char*)*(i+1));
+        info[i] = strdup(word);
+        
+        i++;
 
-    i++;
-
-    //g_print ("%s\n", word);
+        //g_print ("%s\n", word);
     
-    g_free (word);
-    g_match_info_next (match_info, NULL);
+        g_free (word);
+        g_match_info_next (match_info, NULL);
     }
     info = realloc(info,sizeof(char*)*(i+1));
     info[i] = NULL;
