@@ -133,5 +133,5 @@ void printPagina (TABLE table);
 int acao(TABLE table);
 
 
-
+void clearScreen();
 #endif

@@ -14,12 +14,18 @@ Função que controla o progama.
 #include "paginacao.h"
 #include <ctype.h>
 #include "auxiliares.h"
+#include "interpretador.h"
 
 int main(int argc, char *argv[]) {
 
+clearScreen();
+printf("STARTED LOADING SGR...\n");
+SGR sgr = load_sgr(NULL,NULL,NULL);
+printf("FINISHED LOADING SGR!\n");
+clearScreen();
 
 int r = 0;
-r = interpretador();
+r = interpretador(sgr);
 
 
 

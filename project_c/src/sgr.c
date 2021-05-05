@@ -569,7 +569,7 @@ TABLE reviews_with_word(SGR sgr, int top, char *word){
 		
 		linha = add_palavra(linha, getReviewId(list->data));
 		linha = add_palavra(linha, "\n");	
-		printLinha(linha);
+		
 		add_linha(table,linha);
 		
 

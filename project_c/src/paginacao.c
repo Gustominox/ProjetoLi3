@@ -197,3 +197,7 @@ int acao(TABLE table){
     }
     return r;
 }
+
+void clearScreen(){
+    printf("\e[1;1H\e[2J");
+}

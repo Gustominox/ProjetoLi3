@@ -22,10 +22,10 @@ struct var{
 void show (TABLE table){
 
     int r = 0;
-    
+    setNumLin(table,0);
     printPagina(table);
 
-    printf("\n%d %d\n",getNumLinTotal(table),getNumLin(table));
+    printf("\npag %d de %d\n",getNumLin(table)%10,getNumLinTotal(table)%10);
 
     while((getNumLinTotal(table) - 10) > 0 && (getNumLin(table) < (getNumLinTotal(table) - 10)) && !r){
         r = acao(table);
@@ -212,24 +212,26 @@ int verificaVar(VAR vars, int N, char* var){
     else return posicao = -1;
 }
 
-int interpretador(){
+void prompt (){
+    printf ("\n# ");
+    printf ("> ");
+}
+
+int interpretador(SGR sgr){
     char linha[BUF_SIZE];
     char **info;
     char funcao[100];
     struct var vars[10];
     
-
-    printf("LOADING...\n");
-    SGR sgr = load_sgr(NULL,NULL,NULL);
-    printf("FINISHED!\n");
-
-    if(fgets(linha, BUF_SIZE, stdin) == NULL)
-        return ERRO_IO;
+    
+    
 
     int i = 0;
     int flagQuery9 = 1;
     while(linha){
-        
+        prompt();
+        if(fgets(linha, BUF_SIZE, stdin) == NULL)
+        return ERRO_IO;
         info = doRegex(linha,"[A-z0-9/;.=]+");
         int length = len(info);
 
@@ -246,51 +248,52 @@ int interpretador(){
             if (!strcmp(info[2],"NULL")) info[2] = NULL;
             if (!strcmp(info[3],"NULL")) info[3] = NULL;
             free_sgr(sgr);
+            flagQuery9 =1;
             sgr = load_sgr(NULL,NULL,NULL);
         }
-        else if (strcmp("businesses_started_by_letter",funcao) == 0)
+        else if (!(strcmp("businesses_started_by_letter",funcao))&&(length==6))
         {   
                 vars[i].nome = info[0];
                 vars[i].table = businesses_started_by_letter(sgr, info[4][0]);     
                 i++;
         }   
-        else if (strcmp("business_info",funcao) == 0)
+        else if ((!strcmp("business_info",funcao))&&(length==6))
         {
                 vars[i].nome= info[0];
                 vars[i].table = business_info(sgr, info[4]);
                 i++;
         }
-        else if (strcmp("businesses_reviewed",funcao) == 0)
+        else if (!(strcmp("businesses_reviewed",funcao))&&(length==6))
         {
                 vars[i].nome = info[0];
                 vars[i].table = businesses_reviewed(sgr, info[4]);
                 i++;
         }
-        else if (strcmp("businesses_with_stars_and_city",funcao) == 0)
+        else if ((!strcmp("businesses_with_stars_and_city",funcao))&&(length==7))
         {
                 vars[i].nome = info[0];
                 vars[i].table =businesses_with_stars_and_city(sgr, atof(info [4]), info[5]);
                 i++;
         }
-        else if (strcmp("top_businesses_by_city",funcao) == 0)
+        else if ((!(strcmp("top_businesses_by_city",funcao)))&&(length==6))
         {
                 vars[i].nome = info[0];
                 vars[i].table = top_businesses_by_city(sgr, atoi(info [4]));
                 i++;
         }
-        else if (strcmp("international_users",funcao) == 0)
+        else if ((!(strcmp("international_users",funcao)))&&(length==5))
         {
                 vars[i].nome = info[0];
                 vars[i].table = international_users(sgr);
                 i++;
         }    
-        else if (strcmp("top_businesses_with_category",funcao) == 0)
+        else if ((!(strcmp("top_businesses_with_category",funcao)))&&(length==7))
         {
                 vars[i].nome = info[0];
                 vars[i].table = top_businesses_with_category(sgr, atoi(info[4]), info[5]);
                 i++;
         }           
-        else if (strcmp("reviews_with_word",funcao) == 0)
+        else if ((!(strcmp("reviews_with_word",funcao)))&&(length==7))
         {
                 if (flagQuery9) {
                     threadQuery9(sgr);
@@ -300,25 +303,25 @@ int interpretador(){
                 vars[i].table = reviews_with_word(sgr, atoi(info[4]), info[5]);
                 i++;
         }
-        else if (strcmp("show",funcao) == 0) 
+        else if ((!(strcmp("show",funcao)))&&(length==3)) 
         {
                 int posicao = verificaVar(vars, i, info[1]);
                 if(posicao != -1) show(vars[posicao].table);
                 else printf("A TABLE nao existe\n");
         }         
-        else if (strcmp("toCSV",funcao) == 0)
+        else if ((!(strcmp("toCSV",funcao)))&&(length==5)) 
         {
                 int posicao = verificaVar(vars, i, info[1]);
                 if(posicao != -1) toCSV(vars[posicao].table, info[2][0], info[3]);
                 else printf("A TABLE nao existe\n");
         } 
-        else if (strcmp("fromCSV",funcao) == 0)
+        else if ((!(strcmp("fromCSV",funcao)))&&(length==6)) 
         {
                 vars[i].nome = info[0];
                 vars[i].table = fromCSV(info[3], info[4]);
                 i++;
         } 
-        else if (strcmp("filter",funcao) == 0)
+        else if ((!(strcmp("filter",funcao)))&&(length==8)) 
         {
                 int posicao = verificaVar(vars, i, info[3]);
                 if(posicao != -1){
@@ -327,7 +330,7 @@ int interpretador(){
                     i++;
                 }
         } 
-        else if (strcmp("proj",funcao) == 0)
+        else if ((!(strcmp("proj",funcao)))&&(length==5)) 
         {
                 int posicao = verificaVar(vars, i, info[3]);
                 if(posicao != -1){
@@ -336,7 +339,7 @@ int interpretador(){
                     i++;
                 }
         } 
-        else if (indexaAux(linha))
+        else if ((indexaAux(linha))&&(length==6))
         {
                 int posicao = verificaVar(vars, i, info[2]);
                 if(posicao != -1){
@@ -345,14 +348,14 @@ int interpretador(){
                     i++;
                 }
         } 
-        else if (strcmp("max",funcao) == 0) //max(x,nomeColuna, Operador)
+        else if ((!(strcmp("max",funcao)))&&(length==5))  //max(x,nomeColuna, Operador)
         {
                 int posicao = verificaVar(vars, i, info[1]);
                 if(posicao != -1){
                     maxOrMin(vars[posicao].table, info[2], stringToOperator(info[3]));
                 }
         } 
-        else if (strcmp("min",funcao) == 0)
+        else if ((!(strcmp("min",funcao)))&&(length==5))
         {
                 int posicao = verificaVar(vars, i, info[1]);
                 if(posicao != -1){
@@ -368,6 +371,6 @@ int interpretador(){
              
             printf("Sintaxe errada, tente novamente. \n");
         }
-        fgets(linha, BUF_SIZE, stdin);
+        
     }
 }

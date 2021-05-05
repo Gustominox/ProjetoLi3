@@ -101,10 +101,10 @@ int isAssignment(char *linha);
  */
 int verificaVar(VAR vars, int N, char* var);
 
-
+void prompt ();
 /**
  * 
  */
-int interpretador();
+int interpretador(SGR sgr);
 
 #endif
