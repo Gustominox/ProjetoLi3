@@ -1,6 +1,9 @@
 #ifndef PAGINACAO_H
 #define PAGINACAO_H
-
+/**
+@file paginacao.h
+\brief Ficheiro sobre o modulo de paginacao.
+*/
 #include <stdio.h>
 #include <stdlib.h>
 

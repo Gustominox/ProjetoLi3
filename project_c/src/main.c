@@ -1,3 +1,11 @@
+/**
+@file main.c
+Função que controla o progama.
+*/
+/**
+@mainpage Projeto Li3
+
+*/
 #include <stdio.h>
 #include "dados.h"
 #include <glib-2.0/glib.h>
@@ -8,6 +16,13 @@
 #include "auxiliares.h"
 
 int main(int argc, char *argv[]) {
+
+
+int r;
+r = interpretador();
+
+return r;
+
 
 /*
 char linha[1024];
@@ -31,12 +46,11 @@ fgets(linha, 1024, stdin);
 */
 
 
-//interpretador();
 
 //printf("LOADING...\n");
 
 
-SGR sgr = load_sgr(NULL,NULL,NULL);
+//SGR sgr = load_sgr(NULL,NULL,NULL);
 //threadQuery9(sgr);
 //printf("FINISHED!\n");
 //TABLE table = reviews_with_word(sgr, 10, "1");
@@ -59,5 +73,4 @@ SGR sgr = load_sgr(NULL,NULL,NULL);
 //show(table);
 //free_sgr(sgr);    
 
-    return 0;
 }

@@ -1,10 +1,17 @@
+/**
+@file dados.c
+Construção do código correspondente às funções que modificam e criam as 
+estruturas de dados.
+*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
 #include "dados.h"
 #include "auxiliares.h"
-
+/*
+* \brief users do fich
+*/
 struct user{
 	char *id;
 	char *name;
@@ -102,7 +109,7 @@ void setUserName(USER user, char newName[]){
     strcpy (user->name, newName);
 }
 
-
+/*
 char** getUserFriends (USER user){
     char** friends = NULL;
     int i;
@@ -117,7 +124,7 @@ char** getUserFriends (USER user){
 void setUserFriends(USER user, char **newFriends){
     user->friends = newFriends;
 }
-
+*/
 
 char* getReviewId (REVIEW review){
     return strdup(review->review_id);
@@ -253,9 +260,7 @@ REVIEW* transStrToRev(char **info,int *tmh,REVIEW *reviews){
     for (int i = 0; info[i]; i++){
         reviews = realloc(reviews,sizeof(REVIEW)*(tmhRev+1));
         reviews[tmhRev] = addReview( info[i]);
-        //if (reviews[tmhRev]!=NULL)
-        //printf("%s\n",getReviewId( reviews[tmhRev]));
-
+    
         if(reviews[tmhRev] == NULL) {
             
             free(reviews[tmhRev]);
@@ -263,7 +268,6 @@ REVIEW* transStrToRev(char **info,int *tmh,REVIEW *reviews){
         }
         
         tmhRev++;
-        //printf("[%d] i:%d\n", tmhRev,i);
     }
     reviews = realloc(reviews,sizeof(REVIEW)*(tmhRev+1));
     reviews[tmhRev] = NULL ;
@@ -282,8 +286,6 @@ USER* transStrToUsers(char **info,int *tmh,USER *users){
     for (int i = 0; info[i]; i++){
         users = realloc(users,sizeof(USER)*(tmhUser+1));
         users[tmhUser] = addUser( info[i]);
-        //if (reviews[tmhUser]!=NULL)
-        //printf("%s\n",getReviewId( reviews[tmhUser]));
 
         if(users[tmhUser] == NULL) {
             free(users[tmhUser]);
@@ -291,7 +293,7 @@ USER* transStrToUsers(char **info,int *tmh,USER *users){
         }
         
         tmhUser++;
-        //printf("[%d] i:%d\n", tmhUser,i);
+    
     }
     users = realloc(users,sizeof(USER)*(tmhUser+1));
     users[tmhUser] = NULL;
@@ -302,50 +304,6 @@ USER* transStrToUsers(char **info,int *tmh,USER *users){
     *tmh = tmhUser;
     return users; 
 }
-
-
-void transStrToTable(char path[], GHashTable* hash, void* (*funcao) (char info[]), int mode ){
-
-    FILE *fp = fopen(path, "r");
-    
-    if (fp == NULL){
-        printf ("Error opening file\n");
-        return;
-    }
-
-    char buff[180000];
-    
-    while(fgets(buff,180000,fp)){
-
-        char *id; 
-        char *temp = strdup(buff);
-
-        for (int i = 0; i < mode; i++){
-        strsep(&temp,";");    
-        }
-
-        id =  strdup (strsep(&temp,";"));
-        
-        //free(temp);
-        
-        void* obj = funcao(buff);
-        GSList *head = NULL;
-        if (obj){
-            if(head = g_hash_table_lookup(hash,id)){
-                head = g_slist_prepend (head, obj);
-                g_hash_table_insert(hash,id,head);
-            }else{
-                GSList *list = NULL;
-                list = g_slist_prepend (list, obj);
-        
-                g_hash_table_insert(hash,id,list);
-            
-            }
-        }
-    }
-    fclose (fp);
-}
-
 
 void transStructToTable( GHashTable* hash,void**arrStr,char* (*funcao) (void* bus) ){
     
@@ -369,13 +327,12 @@ void transStructToTable( GHashTable* hash,void**arrStr,char* (*funcao) (void* bu
 }
 
 
-void transStructToTableCate( GHashTable* hash,void**arrStr,int* (*funcao) (void* bus) ){
+void transStructToTableCate( GHashTable* hash,void**arrStr,char** (*funcao) (void* bus) ){
     
     for(int i=0; arrStr[i] != NULL; i++){
     
         char **id = funcao(arrStr[i]); 
-        //free(temp);
-        //printf("[%d] hash: %s\n",i,id);
+        
         int j=0;
         while(id[j]){
             
@@ -411,25 +368,20 @@ BUSINESS addBusiness ( char info[]){
 
      
     bus->state = strdup(strsep(&info, ";"));     
-    /*
-    if(strlen(getBusState(bus)) != 2) return NULL;           
-    for(int i = 0; i < 2; i++)                  
-        if(isupper(bus->state[i]) != 1) return NULL;   
-*/
+    
     char* temp = strdup(strsep(&info, "\n"));   
-    //printf("TEMP: %s\n",temp);
+    
     bus->categories=NULL;
     int i;
     for( i = 0; temp != NULL; i++){
         bus->categories = realloc(bus->categories,sizeof(char*)*(i+1));
-        bus->categories[i] = strdup(strsep(&temp, ","));  // Na primeira posição do array aux, será guardado a primeira categoria (separadas por ",").
-        //printf("%s\n",bus->categories[i]);
+        bus->categories[i] = strdup(strsep(&temp, ","));
     }
     bus->categories = realloc(bus->categories,sizeof(char*)*(i+1));
     bus->categories[i] = NULL;
-    //printf("TEMP: %s\n",temp);
+    
     free(temp);
-    //printf("%s\n",getBusId(bus));
+
     return bus;
 }
 
@@ -451,42 +403,26 @@ void freeBusiness(BUSINESS bus){
 USER addUser ( char info[]){
 
     USER user = (USER) malloc(sizeof(struct user));
-    //user->id = strdup(info));
-	//printf("INFO: %s\n", info);
-   
+
     user->id = strdup(strsep(&info,";"));
-    //printf("ID: %s\n", user->id);
     if(strlen(user->id) != 22) return NULL;
     
     user->name = strdup(strsep(&info,";"));
-    //printf("NAME: %s\n", user->name);
     if(strcmp(user->name,"") == 0) return NULL;
     
-    //char* temp = strdup(strsep(&info, "\n"));   
-    //printf("TEMP: %s\n",temp);
-
-    //user->friends=malloc (sizeof(char*));
     //user->friends = strdup(strsep(&info, "\n"));;
-    //printf("\n\n%s\n", user->friends[0]);
-    /*
-    int i;
-    for( i = 0; temp != NULL; i++){
-        user->friends = realloc(user->friends,sizeof(char*)*(i+1));
-        user->friends[i] = strdup(strsep(&temp, ","));  // Na primeira posição do array aux, será guardado a primeira categoria (separadas por ",").
-        //printf("%s\n",bus->categories[i]);
-    }
-    //user->friends = realloc(user->friends,sizeof(char*)*(i+1));
-    //user->friends[i] = NULL;
-    free(temp);
-    //printf("FRIENDS:\n");
-    //for (int i = 0; user->friends[i] != NULL; i++){
-        //printf("%s\n", user->friends[i]);
-    //}
-    
-*/
+
     return user;
 }
 
+void freeUser(USER user){
+
+    free(user->id);
+    free(user->name);
+    //free(user->friends);
+     
+    free(user);
+}
 
 REVIEW addReview (char info[]){
 	
@@ -506,46 +442,27 @@ REVIEW addReview (char info[]){
 	
     rev->useful = atoi(strsep(&info, ";"));                           
     
-    //char* strUseful = strdup(strsep(&info, ";"));
     
-    //for (int i = 0; i < strlen(strUseful); i++)              
-    //    if (isdigit(strUseful[i]) != 1) return NULL;          
-    //rev->useful = atoi(strUseful);                           
-    //if(getReviewUseful(rev) < 0) return NULL;
-
     rev->funny = atoi(strsep(&info, ";"));
-/*
-    char* strFunny = strdup(strsep(&info, ";"));
-    for (int i = 0; i < strlen(strFunny); i++)                           
-        if (isdigit(strFunny[i]) != 1) return NULL;   
-    rev->funny = atoi(strFunny);
-    if(rev->review_id < 0) return NULL;
-  */  
     
     rev->cool = atoi(strsep(&info, ";"));
-/*
-    char* strCool = strdup(strsep(&info, ";"));
-    for (int i = 0; i < strlen(strCool); i++)                           
-        if (isdigit(strCool[i]) != 1) return NULL;   
-    rev->cool = atoi(strCool);
-    if(getReviewCool(rev) < 0) return NULL;
-*/
+
     rev->date = strdup(strsep(&info, ";"));
     if(strlen(rev->date) != 19) return NULL; // YYYY-MM-DD HH:MM:SS
     
     rev->text = strdup(strsep(&info, ";"));
-
-/*
-    printf("%s\n",getReviewId(rev));
-    printf("%s\n",getReviewUser(rev));
-	printf("%s\n",getReviewBus(rev));
-    printf("%f\n",getReviewStars(rev));                
-    printf("%d\n",getReviewUseful(rev));
-    printf("%d\n",getReviewFunny(rev));
-    printf("%d\n",getReviewCool(rev));
-    printf("%s\n",getReviewDate(rev));
-    printf("%s\n",getReviewText(rev));
-*/
     
     return rev;   
+}
+
+void freeReview (REVIEW rev){
+
+    free(rev->review_id);
+    free(rev->user_id);
+    free(rev->business_id);
+    
+    free(rev->date);
+    free(rev->text);
+    
+    free(rev);
 }

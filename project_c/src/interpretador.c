@@ -282,7 +282,7 @@ int interpretador(){
         else if (strcmp("top_businesses_with_category",funcao) == 0)
         {
                 vars[i].nome = info[0];
-                //vars[i].table = top_businesses_with_category(sgr, atoi(info[4]), info[5]);
+                vars[i].table = top_businesses_with_category(sgr, atoi(info[4]), info[5]);
                 i++;
         }           
         else if (strcmp("reviews_with_word",funcao) == 0)
@@ -356,10 +356,11 @@ int interpretador(){
         }
         else if (strcmp("quit",funcao) == 0)
         {
-                return EXIT_CODE;
+            free_sgr(sgr);
+            return EXIT_CODE;
         }
         else{
-            free_sgr(sgr);  
+             
             printf("Sintaxe errada, tente novamente. \n");
         }
         fgets(linha, BUF_SIZE, stdin);

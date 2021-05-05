@@ -1,45 +1,45 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include <glib.h>
+#include <pthread.h>
 #include "sgr.h"
 #include "auxiliares.h"
-#include <pthread.h>
 
 struct sgr{
 	
 	BUSINESS *bus;
 	REVIEW *rev;
 	USER *use;
+
 	GHashTable* business;
 	GHashTable* businessByCity;
 	GHashTable* businessByInicial;
 	GHashTable* businessByCategory;
-	GHashTable* review;
+
 	GHashTable* reviewByText;
 	GHashTable* reviewByBusId;
 	GHashTable* reviewByUserId;
-	GHashTable* user;
 };
 
 SGR init_sgr(){
 
 	SGR sgr = malloc(sizeof(struct sgr));
 	
-	sgr->bus  = NULL;
-	sgr->rev  = NULL;
+	sgr->bus = NULL;
+	sgr->rev = NULL;
 	sgr->use = NULL;
 
 
-	sgr->business = g_hash_table_new(g_str_hash, g_str_equal);
-	sgr->businessByCity = g_hash_table_new(g_str_hash, g_str_equal);
-	sgr->businessByInicial = g_hash_table_new(g_str_hash, g_str_equal);
+	sgr->business 			= g_hash_table_new(g_str_hash, g_str_equal);
+	sgr->businessByCity 	= g_hash_table_new(g_str_hash, g_str_equal);
+	sgr->businessByInicial  = g_hash_table_new(g_str_hash, g_str_equal);
 	sgr->businessByCategory = g_hash_table_new(g_str_hash, g_str_equal);
-	//sgr->review = g_hash_table_new(g_str_hash, g_str_equal);
-	sgr->reviewByText = g_hash_table_new(g_str_hash, g_str_equal);
-	sgr->reviewByBusId = g_hash_table_new(g_str_hash, g_str_equal);
+	
+	sgr->reviewByText 	= g_hash_table_new(g_str_hash, g_str_equal);
+	sgr->reviewByBusId 	= g_hash_table_new(g_str_hash, g_str_equal);
 	sgr->reviewByUserId = g_hash_table_new(g_str_hash, g_str_equal);
-	//sgr->user = g_hash_table_new(g_str_hash, g_str_equal);
 	
 	return sgr;
 }
@@ -47,14 +47,30 @@ SGR init_sgr(){
 // todo: INCOMPLETA
 void free_sgr(SGR sgr){
 	
-	freeBusiness (sgr->bus[0]);
+	int i = 0;
+	while(sgr->bus[i]){
+		freeBusiness (sgr->bus[i]);
+		i++;
+	}
+	i = 0;
+	while(sgr->rev[i]){
+		freeReview (sgr->rev[i]);
+		i++;
+	}
+	i = 0;
+	while(sgr->use[i]){
+		freeUser (sgr->use[i]);
+		i++;
+	}
+
 	g_hash_table_destroy(sgr->business);
 	g_hash_table_destroy(sgr->businessByCity);
 	g_hash_table_destroy(sgr->businessByInicial);
-	g_hash_table_destroy(sgr->review);
+	g_hash_table_destroy(sgr->businessByCategory);
+
+	g_hash_table_destroy(sgr->reviewByText);
 	g_hash_table_destroy(sgr->reviewByBusId);
 	g_hash_table_destroy(sgr->reviewByUserId);
-	g_hash_table_destroy(sgr->user);
 	
 	free(sgr);
 }	

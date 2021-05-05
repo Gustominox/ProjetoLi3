@@ -1,6 +1,9 @@
 #ifndef ___GLIBW_H___
 #define ___GLIBW_H___
-
+/**
+@file glibw.h
+\brief Ficheiro que ignora warnings da glib.
+*/
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wpedantic" 
 #pragma GCC diagnostic ignored "-Wvariadic-macros"

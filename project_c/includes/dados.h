@@ -3,22 +3,18 @@
 
 
 /**
-* @file dados.h
-* \brief Ficheiro sobre as estruturas de dados, inclusive a leitura de um ficheiro e o tratamento dos dados.
+@file dados.h
+\brief Ficheiro sobre as estruturas de dados.
 */
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <glib-2.0/glib.h>
+#include "glibWarningAvoid.h"
 
-/***************************************************** Estruturas de dados *****************************************************/
+/************************* # Estruturas de dados **********************************/
 
-/*!
-* @typedef user
-*
-* @field   id        Identificação de um usuário
-* @field   name      Nome do usuário
-* @field   friends   Amigos do usuário
+/*
+* \brief users do fich
 */
 typedef struct user *USER;
 
@@ -31,6 +27,10 @@ typedef struct user *USER;
 * @field   city          Cidade onde está o negócio
 * @field   state         Estado do negócio
 * @field   categorias    Categorias do negócio
+*/
+
+/**
+\brief Tipo de dados para as coordenadas
 */
 typedef struct business *BUSINESS; 
 
@@ -51,7 +51,7 @@ typedef struct business *BUSINESS;
 typedef struct review *REVIEW;
 
 
-/****************************************************** Funções get e set ******************************************************/
+/************************ # Funções get e set ***********************************/
 
 /**
 * \brief Obtém a identificação do negócio
@@ -305,7 +305,7 @@ char** getReviewWords (REVIEW review);
 */
 void setReviewText(REVIEW review, char newText[]);
 
-/************************************************ Leitura e Tratamento dos dados ************************************************/
+/********************* # Leitura e Tratamento dos dados **************************/
 
 /**
 * \brief Função que faz a leitura do ficheiro e retorna a matriz dinâmica de strings em que cada linha é uma linha do fich
@@ -350,35 +350,25 @@ REVIEW* transStrToRev(char **info,int *tmh, REVIEW *review);
 */
 USER* transStrToUsers(char **info,int *tmh, USER *users);
 
-
 /**
-* \brief Função que converte uma String numa TABLE
-*
-* @param path o nome do ficheiro a abrir
-* @param hash a tabela de hash 
-* @param funcao a função a executar
-*/
-void transStrToTable(char path[],GHashTable* hash ,void* (*funcao) (char info[]),int mode);
-
-
-/**
-* \brief Função que converte uma Struct numa TABLE
+* \brief Função que converte um array de Struct's numa Hash Table
 *
 * @param hash a tabela de hash 
-* @param arrStr 
-* @param funcao a função a executar
+* @param arrStr array das struct's
+* @param funcao a função a executar na struct para obter a key a intruduzir
 */
 void transStructToTable( GHashTable* hash,void**arrStr,char* (*funcao) (void* bus) );
 
 
 /**
-* \brief Função que converte uma Struct numa TABLE
+* \brief Função que converte array de Struct's numa Hash Table, similar a transStructToTable
+@see transStructToTable(hash,arrStr,funcao);
 *
 * @param hash a tabela de hash 
 * @param arrStr 
 * @param funcao a função a executar
 */
-void transStructToTableCate( GHashTable* hash,void**arrStr,int* (*funcao) (void* bus) );
+void transStructToTableCate( GHashTable* hash,void**arrStr,char** (*funcao) (void* bus) );
 
 
 /**
@@ -395,6 +385,8 @@ BUSINESS addBusiness (char info[]);
 *
 * @param bus é o array que guarda o conteúdo do ficheiro, convertido para structs do tipo BUSINESS
 */
+
+
 void freeBusiness(BUSINESS bus);
 
 
@@ -406,6 +398,8 @@ void freeBusiness(BUSINESS bus);
 */
 USER addUser ( char info[]);
 
+void freeUser(USER user);
+
 
 /**
 * \brief Função que preenche os campos da struct do tipo REVIEW
@@ -414,6 +408,8 @@ USER addUser ( char info[]);
 * @param info é o array que guarda o conteúdo do ficheiro lido
 */
 REVIEW addReview ( char info[]);
+
+void freeReview(REVIEW rev);
 
 
 #endif
