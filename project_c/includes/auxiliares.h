@@ -30,7 +30,7 @@ int isFloat (char *s);
 */
 int isInteger (char *s);
 
-
+int in(char **arr,int len, char* word);
 /**
  * \brief Função que compara o conteúdo de uma table, numa dada coluna, com o valor de comparação que é dado
  * @param content conteúdo da table recebida, numa dada coluna
@@ -71,5 +71,6 @@ OPERATOR stringToOperator(char* oper);
  */
 char ** doRegex (const gchar *string, char * pattern);
 
+char ** doRegexSingular (const gchar *string, char * pattern);
 
 #endif

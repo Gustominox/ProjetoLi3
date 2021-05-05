@@ -46,7 +46,7 @@ SGR init_sgr(){
 
 // todo: INCOMPLETA
 void free_sgr(SGR sgr){
-
+	
 	freeBusiness (sgr->bus[0]);
 	g_hash_table_destroy(sgr->business);
 	g_hash_table_destroy(sgr->businessByCity);
@@ -136,40 +136,19 @@ SGR load_sgr(char *fileBus, char *fileReviews, char *fileUsers){
 	info = lerFichCsv(&tmh,fileUsers);
 	sgr->use = transStrToUsers(info,&tmh,sgr->use);
 	
-	pthread_t thread1,thread2,thread3;
+	pthread_t thread1,thread2;
 
-	//inicio da thread relativa ao fich com users
-	//pthread_create(&thread1,NULL,threadUsers,sgr);
-	
 	//inicio da thread relativa ao fich com businesses
-	pthread_create(&thread2,NULL,threadBusiness,sgr);
+	pthread_create(&thread1,NULL,threadBusiness,sgr);
 	
 	//inicio da thread relativa ao fich com reviews
-	pthread_create(&thread3,NULL,threadReviews,sgr);
+	pthread_create(&thread2,NULL,threadReviews,sgr);
 	
     // espera pela thread1
-	//pthread_join(thread1,NULL);
+	pthread_join(thread1,NULL);
     // espera pela thread2
 	pthread_join(thread2,NULL);
-    // espera pela thread3
-	pthread_join(thread3,NULL);
-	
-	// *DEBUG*
-	//
-	//printf("There are %d keys in the hash table\n",
-    //    g_hash_table_size(sgr->businessByCategory));
-	//GSList* head = g_hash_table_lookup(sgr->reviewByText,"good");
-	//if (head)printf("%s %s\n",getReviewId(head->data),getReviewText(head->data));
-	//
-	//printf("There are %d keys in the hash table\n",
-    //    g_hash_table_size(sgr->review));
-	//
-	//printf("There are %d keys in the hash table\n",
-    //    g_hash_table_size(sgr->reviewByBusId));
-	//
-	//printf("There are %d keys in the hash table\n",
-    //    g_hash_table_size(sgr->user));
-
+   
 	return sgr;
 
 }
@@ -311,10 +290,8 @@ TABLE businesses_reviewed(SGR sgr, char *user_id){
 /** QUERY 5 */
 TABLE businesses_with_stars_and_city(SGR sgr, float stars, char *city){
 	
-	//printf("\n\n\n\n\n");
 	GSList* list = g_hash_table_lookup(sgr->businessByCity,city );
 
-	//printf("%s\n", getBusId( list->data ));
 	GSList* list2; 
 
 	TABLE table = init_table();
@@ -351,7 +328,6 @@ TABLE businesses_with_stars_and_city(SGR sgr, float stars, char *city){
 				linha = add_palavra(linha, "\n");
 				
 				add_linha(table,linha);
-				//printf("%s %s %f\n", getBusId(list->data),getBusName(list->data),sumStars);
 			}
 		}
 		 list = g_slist_next(list);
@@ -437,10 +413,7 @@ TABLE top_businesses_by_city(SGR sgr, int top){
 	return table;
 }
 
-/** query 7 
- * \brief  Determinar a lista de ids de utilizadores e o número total de utilizadores que tenham visitado mais de um estado
- * @param sgr sgr
-*/
+/** QUERY 7 */
 TABLE international_users(SGR sgr){
 
 	int nUsers = 0;
@@ -489,7 +462,7 @@ TABLE international_users(SGR sgr){
 }
 
 
-/** query 8*/
+/** QUERY 8 */
 TABLE top_businesses_with_category(SGR sgr, int top, char *category){  
 
     GSList* list =  g_hash_table_lookup(sgr->businessByCategory, category);
@@ -537,7 +510,6 @@ TABLE top_businesses_with_category(SGR sgr, int top, char *category){
         sprintf(buf, "%g", sumStars);
         listBus[j][2] = buf;
 
-        // printf("%s %s %s\n", listBus[j][0], listBus[j][1], listBus[j][2]);
         j++;
         list = g_slist_next(list);
     }
@@ -558,17 +530,19 @@ TABLE top_businesses_with_category(SGR sgr, int top, char *category){
 }
 
 
-/** query 9 
- * \brief Dada uma palavra, determinar a lista de ids de reviews que a referem no campo text
- * @param sgr sgr
- * @param top número de top negócios
- * @param word palavra referida no campo text
-*/
+/** QUERY 9 */
 TABLE reviews_with_word(SGR sgr, int top, char *word){
 
 	GSList* list =  g_hash_table_lookup(sgr->reviewByText, word);
-    TABLE table = init_table();
+    
+	if (list == NULL) {
+		printf("WORD DOES NOT EXIST\n");
+		return NULL;
+	}
+
+	TABLE table = init_table();
 	char **linha = init_linha();
+	
 	//cabecalho
 	linha = add_palavra(linha,"REVIEW ID");
 	linha = add_palavra(linha,"\n");	
@@ -576,14 +550,14 @@ TABLE reviews_with_word(SGR sgr, int top, char *word){
 	
 	while (list){
 		linha = init_linha();
-
+		
 		linha = add_palavra(linha, getReviewId(list->data));
 		linha = add_palavra(linha, "\n");	
+		printLinha(linha);
 		add_linha(table,linha);
-		list = g_slist_remove_all (list,list->data);
+		
 
-
-		//list = g_slist_next(list);
+		list = g_slist_next(list);
 	}
 	
 return table;

@@ -167,7 +167,7 @@ char* getReviewText (REVIEW review){
     return strdup(review->text);
 }
 char **getReviewWords (REVIEW review){
-    char** r = doRegex(review->text,"[A-z0-9]+");
+    char** r = doRegexSingular(review->text,"[A-z0-9]+");
     return r;
 }
 void setReviewText(REVIEW review, char newText[]){
@@ -207,9 +207,7 @@ BUSINESS* transStrToBus(char **info,int *tmh,BUSINESS *business){
     for (int i = 0; info[i]; i++){
         business = realloc(business,sizeof(BUSINESS)*(tmhBus+1));
         business[tmhBus] = addBusiness( info[i]);
-        //if (business[tmhBus]!=NULL)
-        //printf("%s\n",getBusId( business[tmhBus]));
-
+        
         if(business[tmhBus] == NULL) {
             
             free(business[tmhBus]);
@@ -217,7 +215,6 @@ BUSINESS* transStrToBus(char **info,int *tmh,BUSINESS *business){
         }
         
         tmhBus++;
-        //printf("[%d] i:%d\n", tmhBus,i);   
     }
     
     business = realloc(business,sizeof(BUSINESS)*(tmhBus+1));

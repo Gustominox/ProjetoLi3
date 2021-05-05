@@ -22,6 +22,15 @@ int isInteger (char *s){
   return 1;
 }
 
+int in(char **arr,int len, char* word){
+
+    for(int i = 0; i < len; ++i){
+        if(!strcmp(arr[i], word)){
+            return 1;
+        }
+    }
+    return 0;
+}
 
 int compare(char* content, char* value, OPERATOR oper){
     int isValid = 1;
@@ -150,6 +159,39 @@ char **doRegex (const gchar *string, char * pattern){
     info[i] = strdup(word);
 
     i++;
+
+    //g_print ("%s\n", word);
+    
+    g_free (word);
+    g_match_info_next (match_info, NULL);
+    }
+    info = realloc(info,sizeof(char*)*(i+1));
+    info[i] = NULL;
+  g_match_info_free (match_info);
+  g_regex_unref (regex);
+  return info;
+}
+
+char ** doRegexSingular (const gchar *string, char * pattern){
+
+  GRegex *regex;
+  GMatchInfo *match_info;
+  char **info = NULL;
+  int i = 0;
+  regex = g_regex_new (pattern, 0, 0, NULL);//"[A-z0-9/;.=]+"
+  g_regex_match (regex, string, 0, &match_info);
+
+  while (g_match_info_matches (match_info)){
+
+    gchar *word = g_match_info_fetch (match_info, 0);
+
+    if (!in(info,i,word)){
+        info = realloc(info,sizeof(char*)*(i+1));
+        info[i] = strdup(word);
+
+        i++;
+    }
+    
 
     //g_print ("%s\n", word);
     
