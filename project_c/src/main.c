@@ -18,10 +18,9 @@ Função que controla o progama.
 int main(int argc, char *argv[]) {
 
 
-int r;
+int r = 0;
 r = interpretador();
 
-return r;
 
 
 /*
@@ -51,6 +50,7 @@ fgets(linha, 1024, stdin);
 
 
 //SGR sgr = load_sgr(NULL,NULL,NULL);
+//sgr = load_sgr(NULL,NULL,NULL);
 //threadQuery9(sgr);
 //printf("FINISHED!\n");
 //TABLE table = reviews_with_word(sgr, 10, "1");
@@ -73,4 +73,5 @@ fgets(linha, 1024, stdin);
 //show(table);
 //free_sgr(sgr);    
 
+return r;
 }

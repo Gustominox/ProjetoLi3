@@ -30,7 +30,14 @@ int isFloat (char *s);
 */
 int isInteger (char *s);
 
+int len(char **arr);
+
+
 int in(char **arr,int len, char* word);
+
+
+
+
 /**
  * \brief Função que compara o conteúdo de uma table, numa dada coluna, com o valor de comparação que é dado
  * @param content conteúdo da table recebida, numa dada coluna

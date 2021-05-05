@@ -231,6 +231,7 @@ int interpretador(){
     while(linha){
         
         info = doRegex(linha,"[A-z0-9/;.=]+");
+        int length = len(info);
 
         if(isAssignment(linha)) strcpy(funcao, info[2]);
         else strcpy(funcao, info[0]);
@@ -239,9 +240,13 @@ int interpretador(){
             return MEM_FULL;
         }
 
-        if(strcmp("load_sgr", funcao) == 0)
+        if(!(strcmp("load_sgr", funcao))&&(length==5))
         {
-            sgr = load_sgr(info[1],info[2],info[3]);
+            if (!strcmp(info[1],"NULL")) info[1] = NULL;
+            if (!strcmp(info[2],"NULL")) info[2] = NULL;
+            if (!strcmp(info[3],"NULL")) info[3] = NULL;
+            free_sgr(sgr);
+            sgr = load_sgr(NULL,NULL,NULL);
         }
         else if (strcmp("businesses_started_by_letter",funcao) == 0)
         {   
@@ -270,7 +275,7 @@ int interpretador(){
         else if (strcmp("top_businesses_by_city",funcao) == 0)
         {
                 vars[i].nome = info[0];
-                //vars[i].table = top_businesses_by_city(sgr, atoi(info [4]));
+                vars[i].table = top_businesses_by_city(sgr, atoi(info [4]));
                 i++;
         }
         else if (strcmp("international_users",funcao) == 0)

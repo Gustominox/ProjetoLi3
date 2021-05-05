@@ -209,7 +209,7 @@ char** lerFichCsv (int* tmh, char path[]){
     FILE *fp = fopen(path, "r");
     // if file is null termina a func
     if (fp == NULL){
-        printf ("Error opening file\n");
+        printf ("\nERROR OPENING FILE\n");
         return NULL;
     }
     
@@ -231,7 +231,8 @@ char** lerFichCsv (int* tmh, char path[]){
 BUSINESS* transStrToBus(char **info,int *tmh,BUSINESS *business){
 
     int tmhBus = 0;
-    for (int i = 0; info[i]; i++){
+    for (int i = 0; i<*tmh; i++){
+        
         business = realloc(business,sizeof(BUSINESS)*(tmhBus+1));
         business[tmhBus] = addBusiness( info[i]);
         
@@ -257,7 +258,7 @@ BUSINESS* transStrToBus(char **info,int *tmh,BUSINESS *business){
 REVIEW* transStrToRev(char **info,int *tmh,REVIEW *reviews){
 
     int tmhRev = 0;
-    for (int i = 0; info[i]; i++){
+    for (int i = 0; i<*tmh; i++){
         reviews = realloc(reviews,sizeof(REVIEW)*(tmhRev+1));
         reviews[tmhRev] = addReview( info[i]);
     
@@ -283,7 +284,7 @@ REVIEW* transStrToRev(char **info,int *tmh,REVIEW *reviews){
 USER* transStrToUsers(char **info,int *tmh,USER *users){
 
     int tmhUser = 0;
-    for (int i = 0; info[i]; i++){
+    for (int i = 0; i<*tmh; i++){
         users = realloc(users,sizeof(USER)*(tmhUser+1));
         users[tmhUser] = addUser( info[i]);
 

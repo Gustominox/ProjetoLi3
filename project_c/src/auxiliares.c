@@ -22,6 +22,16 @@ int isInteger (char *s){
   return 1;
 }
 
+int len(char **arr){
+    int len=0;
+    while (arr[len])
+    {
+        len++;
+    }
+    
+    return len;
+}
+
 int in(char **arr,int len, char* word){
 
     for(int i = 0; i < len; ++i){

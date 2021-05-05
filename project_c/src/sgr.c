@@ -142,7 +142,7 @@ SGR load_sgr(char *fileBus, char *fileReviews, char *fileUsers){
 	int tmh;
 	char **info;
 
-	info = lerFichCsv(&tmh,fileBus);
+	info = lerFichCsv(&tmh,fileBus);	
 	sgr->bus = transStrToBus(info,&tmh,sgr->bus);
 	
 	info = lerFichCsv(&tmh,fileReviews);
