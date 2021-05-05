@@ -153,29 +153,48 @@ void printPagina (TABLE table){
         }
         printf("\n");
     }
-    setNumLin(table, linha);
+    
 }
-
+void promptPag (){
+    printf ("\n# ");
+    printf (">> ");
+}
 
 int acao(TABLE table){
     
     int r = 0;
     int numLinAnterior = 0;
-    printf("Que página pretende ver a seguir?\n");
-
     
-        char tecla = getchar();
+    printf("\nINSTRUCTIONS\n");
+    printf("k or K to go DOWN\n");
+    printf("j or J to go UP\n");
+    printf("q or Q to QUIT\n");
+    promptPag();
+        char str[1028];
+        fgets(str,1028,stdin);
+        char tecla = str[0];
 
         int numLinAtual = getNumLin(table);
-
+        int numLinTotal = getNumLinTotal(table);
+        int pagTotal = (getNumLinTotal(table)/10)+1;
+        int pagAtual = (getNumLin(table)/10)+1;
+    
+    
+  
         if (tecla == 'k' || tecla == 'K'){ // Avança na página
-            numLinAnterior = numLinAtual;
-            setNumLin(table, numLinAtual++);
+            //numLinAnterior = numLinAtual;
+            if(numLinAtual+10 < numLinTotal)
+                setNumLin(table, numLinAtual+10);
+            clearScreen();
             //printPagina(table);
-            numLinAtual = getNumLin(table);
+            //numLinAtual = getNumLin(table);
         }
         else if (tecla == 'j' || tecla == 'J'){ // Recua na página 
-            int dif = numLinAtual - numLinAnterior;
+            //int dif = numLinAtual - numLinAnterior;
+            if(0 <= numLinAtual-10)
+                setNumLin(table, numLinAtual-10);
+            clearScreen();
+          /*
             if(dif == 10){
                 numLinAnterior = numLinAtual;
                 setNumLin(table, numLinAtual - 20);
@@ -188,13 +207,17 @@ int acao(TABLE table){
                 //printPagina(table);
                 numLinAtual = getNumLin(table);
             }
+        */
         }
-        else if (tecla == 'q'){
+        else if (tecla == 'q' || tecla == 'Q'){
             r = 1;
         }
-        else
-            if(tecla != 0x0A) printf("comando inexistente \n");
-    
+        else {
+            
+            clearScreen();
+            promptPag();
+            printf("        !COMANDO INEXISTENTE! \n");//if(tecla != 0x0A)
+        }
     return r;
 }
 

@@ -20,18 +20,17 @@ struct var{
 
 
 void show (TABLE table){
-
+    clearScreen();
     int r = 0;
     setNumLin(table,0);
-    
 
-    int pagTotal = (getNumLinTotal(table)/10)+1;
-    int pagAtual = (getNumLin(table)/10)+1;
     while((getNumLinTotal(table) - 10) > 0 && (getNumLin(table) < (getNumLinTotal(table) - 10)) && !r){
-        printf("\npag %d de %d\n",pagAtual,pagTotal);
+        int pagTotal = (getNumLinTotal(table)/10)+1;
+        int pagAtual = (getNumLin(table)/10)+1;
+        printf("\n   Pag %d out of %d\n\n",pagAtual,pagTotal);
         printPagina(table);
-        if(pagAtual <= pagTotal) r = acao(table);
         
+        r = acao(table);
     }
 }
 
