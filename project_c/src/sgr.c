@@ -129,7 +129,6 @@ SGR load_sgr(char *fileBus, char *fileReviews, char *fileUsers){
     
 	clock_t Ticks[2];
     Ticks[0] = clock();
-	
 	// init struct sgr
 	SGR sgr = init_sgr();
 	
@@ -224,7 +223,8 @@ TABLE businesses_started_by_letter(SGR sgr, char letter){
 /** QUERY 3 */
 TABLE business_info(SGR sgr, char *business_id){
 
-	
+	clock_t Ticks[2];
+    Ticks[0] = clock();
 
 	GSList* list =  g_hash_table_lookup(sgr->business,business_id);
 
@@ -270,14 +270,19 @@ TABLE business_info(SGR sgr, char *business_id){
 	linha = add_palavra(linha,"\n");	
 	add_linha(table,linha);
 
-	return table;
+	Ticks[1] = clock();
+    double time = (Ticks[1] - Ticks[0]) * 1.0 / CLOCKS_PER_SEC;
+    printf("\nTempo de execucao da QUERY (segundos): %g\n",time);
 
+	return table;
 }
 
 
 /** QUERY 4 */
 TABLE businesses_reviewed(SGR sgr, char *user_id){
 
+	clock_t Ticks[2];
+    Ticks[0] = clock();
 
 	if (g_hash_table_contains(sgr->reviewByUserId,user_id)){
 
@@ -306,7 +311,9 @@ TABLE businesses_reviewed(SGR sgr, char *user_id){
 
 			list = g_slist_next(list);
 		}
-
+		Ticks[1] = clock();
+		double time = (Ticks[1] - Ticks[0]) * 1.0 / CLOCKS_PER_SEC;
+    	("\nTempo de execucao da QUERY (segundos): %g\n",time);
 
 		return table;
 	}else{
@@ -319,6 +326,9 @@ TABLE businesses_reviewed(SGR sgr, char *user_id){
 /** QUERY 5 */
 TABLE businesses_with_stars_and_city(SGR sgr, float stars, char *city){
 	
+	clock_t Ticks[2];
+    Ticks[0] = clock();
+
 	GSList* list = g_hash_table_lookup(sgr->businessByCity,city );
 
 	GSList* list2; 
@@ -361,12 +371,19 @@ TABLE businesses_with_stars_and_city(SGR sgr, float stars, char *city){
 		}
 		 list = g_slist_next(list);
 	}
+	Ticks[1] = clock();
+    double time = (Ticks[1] - Ticks[0]) * 1.0 / CLOCKS_PER_SEC;
+    printf("\nTempo de execucao da QUERY (segundos): %g\n",time);
+
 	return table;
 }
 
 
 /** QUERY 6 */
 TABLE top_businesses_by_city(SGR sgr, int top){
+
+	clock_t Ticks[2];
+    Ticks[0] = clock();
 
     GSList* list = g_hash_table_get_values(sgr->businessByCity);
 
@@ -439,11 +456,18 @@ TABLE top_businesses_by_city(SGR sgr, int top){
         }
         list = g_slist_next(list);
     }
+	Ticks[1] = clock();
+    double time = (Ticks[1] - Ticks[0]) * 1.0 / CLOCKS_PER_SEC;
+    printf("\nTempo de execucao da QUERY (segundos): %g\n",time);
+
 	return table;
 }
 
 /** QUERY 7 */
 TABLE international_users(SGR sgr){
+
+	clock_t Ticks[2];
+    Ticks[0] = clock();
 
 	int nUsers = 0;
 	GSList* list = g_hash_table_get_values (sgr->reviewByUserId);
@@ -487,12 +511,19 @@ TABLE international_users(SGR sgr){
 
  		list = g_slist_next(list);
 	}
+	Ticks[1] = clock();
+    double time = (Ticks[1] - Ticks[0]) * 1.0 / CLOCKS_PER_SEC;
+    printf("\nTempo de execucao da QUERY (segundos): %g\n",time);
+
 	return table;
 }
 
 
 /** QUERY 8 */
 TABLE top_businesses_with_category(SGR sgr, int top, char *category){  
+
+	clock_t Ticks[2];
+    Ticks[0] = clock();
 
     GSList* list =  g_hash_table_lookup(sgr->businessByCategory, category);
     // list de negocios que tem na categoria
@@ -555,6 +586,10 @@ TABLE top_businesses_with_category(SGR sgr, int top, char *category){
         add_linha(table, linha);
         k++;
     }
+	Ticks[1] = clock();
+    double time = (Ticks[1] - Ticks[0]) * 1.0 / CLOCKS_PER_SEC;
+    printf("\nTempo de execucao da QUERY (segundos): %g\n",time);
+
     return table;
 }
 
@@ -562,6 +597,7 @@ TABLE top_businesses_with_category(SGR sgr, int top, char *category){
 /** QUERY 9 */
 TABLE reviews_with_word(SGR sgr, int top, char *word){
 
+	
 	GSList* list =  g_hash_table_lookup(sgr->reviewByText, word);
     
 	if (list == NULL) {
@@ -589,6 +625,5 @@ TABLE reviews_with_word(SGR sgr, int top, char *word){
 		list = g_slist_next(list);
 	}
 	
-return table;
-
+	return table;
 }
