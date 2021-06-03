@@ -1,4 +1,24 @@
 #BlueJ class context
 comment0.target=User
 comment0.text=\r\n\ Escreva\ a\ descri\u00E7\u00E3o\ da\ classe\ User\ aqui.\r\n\ \r\n\ @author\ (seu\ nome)\ \r\n\ @version\ (n\u00FAmero\ de\ vers\u00E3o\ ou\ data)\r\n
-numComments=1
+comment1.params=
+comment1.target=User()
+comment10.params=
+comment10.target=java.lang.String\ toString()
+comment2.params=user_id\ name
+comment2.target=User(java.lang.String,\ java.lang.String)
+comment3.params=user
+comment3.target=User(User)
+comment4.params=
+comment4.target=java.lang.String\ getUserId()
+comment5.params=
+comment5.target=java.lang.String\ getName()
+comment6.params=userId
+comment6.target=void\ setUserId(java.lang.String)
+comment7.params=name
+comment7.target=void\ setName(java.lang.String)
+comment8.params=
+comment8.target=User\ clone()
+comment9.params=obj
+comment9.target=boolean\ equals(java.lang.Object)
+numComments=11
