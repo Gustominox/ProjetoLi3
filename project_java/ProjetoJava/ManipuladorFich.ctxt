@@ -1,0 +1,6 @@
+#BlueJ class context
+comment0.target=ManipuladorFich
+comment1.params=path
+comment1.target=void\ leitor(java.lang.String)
+comment1.text=\n\ Esse\ m\u00E9todo\ recorre\ \u00E0\ classe\ BufferedReader\ que\ gerar\u00E1\ o\ buffer\ que\ ser\u00E1\ utilizado\ para\ realizar\ a\ leitura\ do\ arquivo\ .txt.\n
+numComments=2

@@ -93,7 +93,6 @@ void setBusCategories(BUSINESS bus, char** newCategories){
   bus->categories = newCategories;
 }
 
-
 char* getUserId (USER user){
     return strdup(user->id);
 }
@@ -213,11 +212,12 @@ char** lerFichCsv (int* tmh, char path[]){
         return NULL;
     }
     
-    int auxTmh =0;
+    int auxTmh = 0;    // indice de linha
     char buff[180000];
-    // read file linha por linha
+
+    // estratégia: read file linha por linha
     while(fgets(buff,180000,fp)){
-        // alocar memoria para a matriz
+        // alocar memoria para o array info
         info = realloc(info, sizeof(char*)*(auxTmh+1));
 	    info[auxTmh] = strdup(buff); // malloc + strcpy.
 	    auxTmh++;
@@ -229,7 +229,7 @@ char** lerFichCsv (int* tmh, char path[]){
 } 
 
 BUSINESS* transStrToBus(char **info,int *tmh,BUSINESS *business){
-
+// cada linha do ficheiro é um business; daí criarmos um array de business com tantas posições quantas linhas
     int tmhBus = 0;
     for (int i = 0; i<*tmh; i++){
         
@@ -306,8 +306,11 @@ USER* transStrToUsers(char **info,int *tmh,USER *users){
     return users; 
 }
 
+
 void transStructToTable( GHashTable* hash,void**arrStr,char* (*funcao) (void* bus) ){
-    
+// usa estes arrays dinamicos (das outras funções transStrTo...) para a criacao
+// das hash tables que facilitam o processamento das query’s.
+
     for(int i=0; arrStr[i] != NULL; i++){
     
         char *id = funcao(arrStr[i]); 
@@ -324,7 +327,6 @@ void transStructToTable( GHashTable* hash,void**arrStr,char* (*funcao) (void* bu
             g_hash_table_insert(hash,id,list);
         }
     }
-
 }
 
 
@@ -367,12 +369,10 @@ BUSINESS addBusiness ( char info[]){
     bus->city = strdup(strsep(&info, ";"));
     if(strlen(getBusCity(bus)) == 0) return NULL;
 
-     
     bus->state = strdup(strsep(&info, ";"));     
-    
-    char* temp = strdup(strsep(&info, "\n"));   
-    
-    bus->categories=NULL;
+
+    char* temp = strdup(strsep(&info, "\n"));
+    bus->categories = NULL;
     int i;
     for( i = 0; temp != NULL; i++){
         bus->categories = realloc(bus->categories,sizeof(char*)*(i+1));
@@ -397,7 +397,7 @@ void freeBusiness(BUSINESS bus){
     for (size_t i = 0; bus->categories[i] != NULL; i++){
         free(bus->categories[i]);
     }
-     free(bus);
+    free(bus);
 }
 
 
@@ -441,9 +441,8 @@ REVIEW addReview (char info[]){
     rev->stars = atof(strsep(&info, ";"));
     if((rev->stars > 5.0) || (rev->stars <= 0.0)) return NULL;
 	
-    rev->useful = atoi(strsep(&info, ";"));                           
-    
-    
+    rev->useful = atoi(strsep(&info, ";"));
+
     rev->funny = atoi(strsep(&info, ";"));
     
     rev->cool = atoi(strsep(&info, ";"));
@@ -453,7 +452,7 @@ REVIEW addReview (char info[]){
     
     rev->text = strdup(strsep(&info, ";"));
     
-    return rev;   
+    return rev;
 }
 
 void freeReview (REVIEW rev){
