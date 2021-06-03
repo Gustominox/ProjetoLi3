@@ -116,22 +116,29 @@ int compare(char* content, char* value, OPERATOR oper){
 }
 
 
+<<<<<<< HEAD
 void swap(char **xp, char **yp){
     char** temp = malloc(sizeof(char*));
     strcpy(temp, xp);
     strcpy(xp, yp);
     strcpy(yp, temp);
+=======
+void swap(char ***xp, char ***yp){
+    char** temp = *xp;
+    *xp = *yp;
+    *yp = temp; 
+>>>>>>> de4ab11c61ba8e32c6531e6421b2ee39574325eb
 }
 
 
-void ordenaDecresc(int ***arr, int linhas){ 
+void ordenaDecresc(char ***arr, int linhas){ 
     int linhaAtual, linhaPost;
 
     for (linhaAtual = 0; linhaAtual < linhas - 1; linhaAtual++)
       for (linhaPost = linhaAtual+1; linhaPost < linhas; linhaPost++)
 
-        if(arr[linhaAtual][2] < arr[linhaPost][2])
-          swap(arr[linhaAtual], arr[linhaPost]);
+        if(compare(arr[linhaAtual][2], arr[linhaPost][2], LT) == 0)
+            swap(&(arr[linhaAtual]), &(arr[linhaPost]));
 }
 
 
@@ -182,7 +189,7 @@ char **doRegex (const gchar *string, char * pattern){
   return info;
 }
 
-char ** doRegexSingular (const gchar *string, char * pattern){
+char **doRegexSingular (const gchar *string, char * pattern){
 
   GRegex *regex;
   GMatchInfo *match_info;

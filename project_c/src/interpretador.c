@@ -199,12 +199,6 @@ int isAssignment(char *linha){
     else return 0;    
 }
 
-int indexaAux(char *linha){
-
-    if(strchr(linha, '[') != NULL) return 1;
-    else return 0;
-}
-
 int verificaVar(VAR vars, int N, char* var){
     int j = 0, posicao = 0;
     while(j<N && strcmp(vars[j].nome, var) != 0){
@@ -225,9 +219,6 @@ int interpretador(SGR sgr){
     char **info;
     char funcao[100];
     struct var vars[10];
-    
-    
-    
 
     int i = 0;
     int flagQuery9 = 1;
@@ -235,8 +226,11 @@ int interpretador(SGR sgr){
         prompt();
         if(fgets(linha, BUF_SIZE, stdin) == NULL)
         return ERRO_IO;
+        //printf("%s\n",strchr(linha,'['));
         info = doRegex(linha,"[A-z0-9/;.=]+");
         int length = len(info);
+        
+        
 
         if(isAssignment(linha)) strcpy(funcao, info[2]);
         else strcpy(funcao, info[0]);
@@ -353,12 +347,12 @@ int interpretador(SGR sgr){
                     i++;
                 }
         } 
-        else if ((indexaAux(linha))&&(length==6))
+        else if ((!(strcmp("indexa", funcao)))&&(length==7))
         {
-                int posicao = verificaVar(vars, i, info[2]);
+                int posicao = verificaVar(vars, i, info[3]);
                 if(posicao != -1){
                     vars[i].nome = info[0];
-                    vars[i].table = indexa(vars[posicao].table, atoi(info[3]), atoi(info[4]));
+                    vars[i].table = indexa(vars[posicao].table, atoi(info[4]), atoi(info[5]));
                     i++;
                 }
         } 
