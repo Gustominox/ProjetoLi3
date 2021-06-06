@@ -5,6 +5,7 @@
  * @version (número de versão ou data)
  */
 
+import java.io.*;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -33,6 +34,24 @@ public class User
         this.friends = user.getFriends();
     }
     
+    /**
+     * Construtor que cria um objeto User a partir da informação de um ficheiro.
+     */
+    public User(String[] info){
+        /*
+        ManipuladorFich mf = new ManipuladorFich();
+        String[][] info = mf.parse(nomeFich);
+        */
+        try{
+            addUser(info);
+        }
+        catch(UserNotValidException e){
+            System.out.println("Ocorreu um erro! A criar novo User..");
+            new User();
+            System.out.println("Novo User criado!");
+        }
+    }
+
     public String getUserId(){
         return this.userId;
     }
@@ -55,6 +74,28 @@ public class User
     
     public void setFriends(List<String> friends){
         this.friends = friends.stream().collect(Collectors.toList());
+    }
+    
+    /**
+     * Método que constrói um objeto User, caso todos os campos sejam válidos.
+     */
+    public void addUser(String[] info) throws UserNotValidException{
+        int i;
+        if(info[0].length() == 22)
+            this.userId = info[0];
+        else throw new UserNotValidException(info[0]);
+        
+        if(info[1] != null)
+            this.name = info[1];
+        else throw new UserNotValidException(info[1]);
+        
+        /*
+        CONVERTER UMA STRING PARA LISTA DE STRINGS
+        
+        if(info[2] != null)
+            this.name = info[1];
+        else throw new UserNotValidException(info[1]);
+        */
     }
     
     public User clone(){

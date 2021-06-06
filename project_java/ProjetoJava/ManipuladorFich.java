@@ -25,7 +25,7 @@ public class ManipuladorFich
         return lines;
     }
     
-    public static void parse(String nomeFich){
+    public static String[][] parse(String nomeFich){
         List<String> linhas = lerFicheiro(nomeFich);
         /**for(String s: linhas){
             System.out.println(s);
@@ -40,5 +40,7 @@ public class ManipuladorFich
            System.out.println(linhaPartida[i] );
             i++;
         }
+        
+        return linhaPartida;
     }    
 }
