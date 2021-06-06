@@ -1,0 +1,8 @@
+#BlueJ class context
+comment0.target=ReviewNotValidException
+comment0.text=\n\ Write\ a\ description\ of\ class\ UserNotValidException\ here.\n\n\ @author\ grupo\ 64\n\ @version\ (a\ version\ number\ or\ a\ date)\n
+comment1.params=
+comment1.target=ReviewNotValidException()
+comment2.params=msg
+comment2.target=ReviewNotValidException(java.lang.String)
+numComments=3
