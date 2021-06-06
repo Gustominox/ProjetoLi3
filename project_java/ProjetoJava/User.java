@@ -74,5 +74,5 @@ public class User
         sb.append("UserId: ").append(this.userId);
         sb.append("Name: ").append(this.name);
         return sb.toString();
-    }  
+    } 
 }

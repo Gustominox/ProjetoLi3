@@ -11,8 +11,8 @@ import java.io.IOException;
 public class Teste
 {
     public static void main(String args[]) throws IOException {
-	String path = "reviews.csv";
+    String path = "reviews1.csv";
 
-	ManipuladorFich.leitor(path);
+    ManipuladorFich.parse(path);
     }
 }
