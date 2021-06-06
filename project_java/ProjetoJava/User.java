@@ -4,25 +4,33 @@
  * @author (seu nome) 
  * @version (número de versão ou data)
  */
+
+import java.util.List;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
+
 public class User
 {
     private String userId;
     private String name;
-    //private String friends;
+    private List<String> friends;
     
     public User(){
         this.userId = "";
         this.name = "";
+        this.friends = new ArrayList<>();
     }
     
-    public User(String user_id, String name){
+    public User(String user_id, String name, List<String> friends){
         this.userId = userId;
         this.name = name;
+        this.friends = friends.stream().collect(Collectors.toList());
     }
     
     public User(User user){
         this.userId = user.getUserId();
         this.name = user.getName();
+        this.friends = user.getFriends();
     }
     
     public String getUserId(){
@@ -33,12 +41,20 @@ public class User
         return this.name;
     }
     
+    public List<String> getFriends(){
+        return this.friends;
+    }
+    
     public void setUserId(String userId){
         this.userId = userId;
     }
     
     public void setName(String name){
         this.name = name;
+    }
+    
+    public void setFriends(List<String> friends){
+        this.friends = friends.stream().collect(Collectors.toList());
     }
     
     public User clone(){
