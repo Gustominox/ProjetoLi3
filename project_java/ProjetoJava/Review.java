@@ -5,9 +5,10 @@
  * @version (número de versão ou data)
  */
 
+import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
 
-public class Reviews
+public class Review
 {
     private String reviewId;
     private String userId;
@@ -19,7 +20,7 @@ public class Reviews
     private LocalDateTime date;
     private String text;
     
-    public Reviews(){
+    public Review(){
          this.reviewId = "";
          this.userId = "";
          this.businessId = "";
@@ -31,7 +32,7 @@ public class Reviews
          this.text = "";
     }
 
-    public Reviews(String reviewId, String userId, String businessId, float stars, int useful,
+    public Review(String reviewId, String userId, String businessId, float stars, int useful,
                int funny, int cool, LocalDateTime date, String text){
          this.reviewId = reviewId;
          this.userId = userId;
@@ -44,7 +45,7 @@ public class Reviews
          this.text = text;
     }
 
-    public Reviews(Reviews rev){
+    public Review(Review rev){
          this.reviewId = rev.getReviewId();
          this.userId = rev.getUserId();
          this.businessId = rev.getBusinessId();
@@ -56,6 +57,24 @@ public class Reviews
          this.text = rev.getText();
     }
 
+    /**
+     * Construtor que cria um objeto User a partir de uma string.
+     */
+    public Review(String[] info){
+        /*
+        ManipuladorFich mf = new ManipuladorFich();
+        String[][] info = mf.parse(nomeFich);
+        */
+        try{
+            addReview(info);
+        }
+        catch(ReviewNotValidException e){
+            System.out.println("Ocorreu um erro! A criar novo User..");
+            new User();
+            System.out.println("Novo User criado!");
+        }
+    }
+    
     public String getReviewId(){
         return this.reviewId;
     }
@@ -128,14 +147,60 @@ public class Reviews
         this.text = text;
     }
 
-    public Reviews clone(){
-        return new Reviews(this);
+    /**
+     * Método que constrói um objeto User, caso todos os campos sejam válidos.
+     */
+    public void addReview(String[] info) throws ReviewNotValidException{
+        int i;
+        if(info[0].length() == 22)
+            this.reviewId = info[0];
+        else throw new ReviewNotValidException(info[0]);
+        
+        if(info[1].length() == 22)
+            this.userId = info[1];
+        else throw new ReviewNotValidException(info[1]);
+        
+        if(info[2].length() == 22)
+            this.businessId = info[2];
+        else throw new ReviewNotValidException(info[1]);
+        
+        float starsToFloat = Float.parseFloat(info[3]);
+        if(starsToFloat >= 1.0 && starsToFloat <= 5.0)
+            this.stars = starsToFloat;
+        else throw new ReviewNotValidException(info[3]);
+        
+        int usefulToInt = Integer.parseInt(info[4]);
+        if(usefulToInt >= 0)
+            this.useful = usefulToInt;
+        else throw new ReviewNotValidException(info[4]);
+        
+        int funnyToInt = Integer.parseInt(info[5]);
+        if(funnyToInt >= 0)
+            this.funny = funnyToInt;
+        else throw new ReviewNotValidException(info[5]);
+        
+        int coolToInt = Integer.parseInt(info[6]);
+        if(coolToInt >= 0)
+            this.cool = coolToInt;
+        else throw new ReviewNotValidException(info[6]);
+        
+        if(info[7] != null){
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            this.date = LocalDateTime.parse(info[7], formatter);
+        }
+        else throw new ReviewNotValidException(info[7]);
+        
+        this.text = info[8];
+    }
+    
+    public Review clone(){
+        return new Review(this);
     }
     
     public boolean equals(Object obj){
         if (obj == this) return true;
         if (obj == null || ! obj.getClass().equals(this.getClass())) return false;
-        Reviews rev = (Reviews) obj;
+        Review rev = (Review) obj;
         return  this.reviewId.equals(rev.getReviewId()) &&
             this.userId.equals(rev.getUserId())&&
             this.businessId.equals(rev.getBusinessId()) &&

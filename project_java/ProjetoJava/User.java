@@ -35,7 +35,7 @@ public class User
     }
     
     /**
-     * Construtor que cria um objeto User a partir da informação de um ficheiro.
+     * Construtor que cria um objeto User a partir de uma string.
      */
     public User(String[] info){
         /*
