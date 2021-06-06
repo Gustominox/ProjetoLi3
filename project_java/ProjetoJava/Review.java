@@ -69,9 +69,9 @@ public class Review
             addReview(info);
         }
         catch(ReviewNotValidException e){
-            System.out.println("Ocorreu um erro! A criar novo User..");
-            new User();
-            System.out.println("Novo User criado!");
+            System.out.println("Ocorreu um erro! A criar novo Review..");
+            new Review();
+            System.out.println("Novo Review criado!");
         }
     }
     
@@ -148,7 +148,7 @@ public class Review
     }
 
     /**
-     * Método que constrói um objeto User, caso todos os campos sejam válidos.
+     * Método que constrói um objeto Review, caso todos os campos sejam válidos.
      */
     public void addReview(String[] info) throws ReviewNotValidException{
         int i;

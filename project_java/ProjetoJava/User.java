@@ -92,9 +92,7 @@ public class User
         /*
         CONVERTER UMA STRING PARA LISTA DE STRINGS
         
-        if(info[2] != null)
-            this.name = info[1];
-        else throw new UserNotValidException(info[1]);
+        this.friends = ...
         */
     }
     

@@ -45,6 +45,21 @@ public class Business
         this.categories = bus.getCategories();
     }
     
+    public Business(String[] info){
+        /*
+        ManipuladorFich mf = new ManipuladorFich();
+        String[][] info = mf.parse(nomeFich);
+        */
+        try{
+            addBusiness(info);
+        }
+        catch(BusinessNotValidException e){
+            System.out.println("Ocorreu um erro! A criar novo Business..");
+            new Business();
+            System.out.println("Novo Business criado!");
+        }
+    }
+    
     public String getBusinessId(){
         return this.businessId;
     }
@@ -87,6 +102,34 @@ public class Business
           List<String>  subList2 = subList1.stream().collect(Collectors.toList());
           this.categories.add(subList2);
         }
+    }
+    
+    /**
+     * Método que constrói um objeto Business, caso todos os campos sejam válidos.
+     */
+    public void addBusiness(String[] info) throws BusinessNotValidException{
+        int i;
+        if(info[0].length() == 22)
+            this.businessId = info[0];
+        else throw new BusinessNotValidException(info[0]);
+        
+        if(info[1] != null)
+            this.name = info[1];
+        else throw new BusinessNotValidException(info[1]);
+        
+        if(info[2] != null)
+            this.city = info[2];
+        else throw new BusinessNotValidException(info[2]);
+        
+        if(info[3].length() == 2)
+            this.state = info[3];
+        else throw new BusinessNotValidException(info[3]);
+        
+        /*
+        CONVERTER UMA STRING PARA LISTA DE LISTA DE STRINGS
+        
+        this.categories = ...
+        */
     }
     
     public Business clone(){
