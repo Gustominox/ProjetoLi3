@@ -25,4 +25,20 @@ public class ManipuladorFich
         return lines;
     }
     
+    public static void parse(String nomeFich){
+        List<String> linhas = lerFicheiro(nomeFich);
+        /**for(String s: linhas){
+            System.out.println(s);
+        }*/
+        String[][] linhaPartida = new String[50][4];
+        String[] temp;
+        int i=0, j=0;
+        
+        for(String linha: linhas){
+           temp = linha.split(";",3);
+           linhaPartida[i]=temp;
+           System.out.println(linhaPartida[i] );
+            i++;
+        }
+    }    
 }
