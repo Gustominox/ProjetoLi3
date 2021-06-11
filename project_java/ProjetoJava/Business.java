@@ -8,6 +8,7 @@
 import java.util.List;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
+import java.util.Arrays;
 
 public class Business
 {
@@ -124,6 +125,16 @@ public class Business
                 this.categories.add(s);
         }
         else throw new BusinessNotValidException(info[4]);
+    }
+    
+    public static Business parse(String info){
+        String[] camposBus = info.split(";");
+        
+        return new Business(camposBus[0],
+                        camposBus[1],
+                        camposBus[2],
+                        camposBus[3],
+                        Arrays.asList(camposBus[4].split(",")));
     }
     
     public Business clone(){
