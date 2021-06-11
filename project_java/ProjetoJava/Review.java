@@ -7,6 +7,7 @@
 
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 
 public class Review
 {
@@ -191,6 +192,13 @@ public class Review
         else throw new ReviewNotValidException(info[7]);
         
         this.text = info[8];
+    }
+    
+    public static User parse(String info){
+        String[] camposUser = info.split(";");
+        return new User(camposUser[0],
+                        camposUser[1],
+                        Arrays.asList(camposUser[2].split(",")));
     }
     
     public Review clone(){
