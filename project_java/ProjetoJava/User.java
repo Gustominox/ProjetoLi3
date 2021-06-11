@@ -88,12 +88,6 @@ public class User
         if(info[1] != null)
             this.name = info[1];
         else throw new UserNotValidException(info[1]);
-        
-        /*
-        CONVERTER UMA STRING PARA LISTA DE STRINGS
-        
-        this.friends = ...
-        */
     }
     
     public User clone(){
@@ -103,15 +97,21 @@ public class User
     public boolean equals(Object obj){
         if (obj == this) return true;
         if (obj == null || ! obj.getClass().equals(this.getClass())) return false;
-        User bus = (User) obj;
-        return  this.userId.equals(bus.getUserId()) &&
-            this.name.equals(bus.getName());            
+        User user = (User) obj;
+        return  this.userId.equals(user.getUserId()) &&
+            this.name.equals(user.getName()) &&
+            this.friends.equals(user.getFriends());            
     }
     
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("UserId: ").append(this.userId);
         sb.append("Name: ").append(this.name);
+        String friendsString = "";
+        for (String s : this.friends){
+                friendsString += s + "\t";
+        }
+        sb.append("Friends: ").append(friendsString);
         return sb.toString();
     } 
 }

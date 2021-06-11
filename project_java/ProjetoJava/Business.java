@@ -15,26 +15,22 @@ public class Business
     private String name;
     private String city;
     private String state;
-    private List<List<String>> categories;
+    private List<String> categories;
     
     public Business(){
         this.businessId = "";
         this.name = "";
         this.city = "";
         this.state = "";
-        this.categories = new ArrayList<List<String>>();
+        this.categories = new ArrayList<String>();
     }
     
-    public Business(String businessId, String name, String city, String state, List<List<String>> categories){
+    public Business(String businessId, String name, String city, String state, List<String> categories){
         this.businessId = businessId;
         this.name = name;
         this.city = city;
         this.state = state;
-        this.categories = new ArrayList<List<String>>();
-        for(List<String> subList1 : categories){
-          List<String>  subList2 = subList1.stream().collect(Collectors.toList());
-          this.categories.add(subList2);
-        }
+        this.categories = categories.stream().collect(Collectors.toList());
     }
     
     public Business(Business bus){
@@ -76,7 +72,7 @@ public class Business
         return this.state;
     }
     
-    public List<List<String>> getCategories(){
+    public List<String> getCategories(){
         return this.categories;
     }
     
@@ -96,12 +92,8 @@ public class Business
         this.state = state;
     }
     
-    public void setCategories(List<List<String>> categories){
-        this.categories = new ArrayList<List<String>>();
-        for(List<String> subList1 : categories){
-          List<String>  subList2 = subList1.stream().collect(Collectors.toList());
-          this.categories.add(subList2);
-        }
+    public void setCategories(List<String> categories){
+        this.categories = categories.stream().collect(Collectors.toList());
     }
     
     /**
@@ -125,11 +117,13 @@ public class Business
             this.state = info[3];
         else throw new BusinessNotValidException(info[3]);
         
-        /*
-        CONVERTER UMA STRING PARA LISTA DE LISTA DE STRINGS
-        
-        this.categories = ...
-        */
+        if(info[4] != null){
+            String[] aux = info[4].split(",");
+            this.categories = new ArrayList<>();
+            for(String s: aux)
+                this.categories.add(s);
+        }
+        else throw new BusinessNotValidException(info[4]);
     }
     
     public Business clone(){
@@ -143,10 +137,8 @@ public class Business
         return  this.businessId.equals(bus.getBusinessId()) &&
             this.name.equals(bus.getName())&&
             this.city.equals(bus.getCity()) &&
-            this.state.equals(bus.getState());
-            
-            // falta para as categorias
-            
+            this.state.equals(bus.getState()) &&
+            this.categories.equals(bus.getCategories());
     }
     
     public String toString() {
@@ -155,9 +147,11 @@ public class Business
         sb.append("Name: ").append(this.name);
         sb.append("City: ").append(this.city);
         sb.append("State: ").append(this.state);
-        
-        //falta para as categorias
-        
+        String categString = "";
+        for (String s : this.categories){
+                categString += s + "\t";
+        }
+        sb.append("Categories: ").append(categString);
         return sb.toString();
     }            
 }
