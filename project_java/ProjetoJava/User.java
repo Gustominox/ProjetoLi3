@@ -9,6 +9,7 @@ import java.io.*;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
+import java.util.Arrays;
 
 public class User
 {
@@ -88,6 +89,13 @@ public class User
         if(info[1] != null)
             this.name = info[1];
         else throw new UserNotValidException(info[1]);
+    }
+    
+    public static User parse(String info){
+        String[] camposUser = info.split(";");
+        return new User(camposUser[0],
+                    camposUser[1],
+                    Arrays.asList(camposUser[2].split(",")));
     }
     
     public User clone(){
