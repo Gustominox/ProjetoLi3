@@ -13,14 +13,20 @@ import java.util.stream.Stream;
 
 public class Loadlog {
         
-        public boolean load(String path,
+        public boolean load(String[] path,
                             BusinessList businesses,
                             ReviewList reviews,
                             UserList users){
 
             try {
-                Files.lines(Paths.get(path))
-                        .forEach(fields -> parse(fields,businesses,reviews,users));
+                Files.lines(Paths.get(path[0]))
+                     .forEach(fields -> parse(fields,businesses));
+                
+                Files.lines(Paths.get(path[0]))
+                     .forEach(fields -> parse(fields,reviews));
+                        
+                Files.lines(Paths.get(path[0]))
+                     .forEach(fields -> parse(fields,users));        
                 return true;
             } catch (IOException e){
                 e.printStackTrace();
@@ -31,122 +37,79 @@ public class Loadlog {
 
        
         
-        public void parse ( String s,
-                            BusinessList businesses,
-                            ReviewList reviews,
-                            UserList users){
+        public void parse ( String s, BusinessList businesses){
             
-            String[] sDividida = s.split(":|,|->");  //.split(",");
+            String[] tokens = s.split(";");  
             
-                if (sDividida[0].equals("Equipa")){
-                    
-                    equipaList.criaEquipa(sDividida[1]);  
-                }else if(sDividida[0].equals("Jogo")){
-                    
-                Equipa casaInfo = equipaList.verEquipa(sDividida[1]);
-                Equipa foraInfo = equipaList.verEquipa(sDividida[2]);
-                
-                ArrayList<Jogador> titularesCasa = new ArrayList<>();
-                for(int i = 6;i < 17; i++){
-
-                titularesCasa.add(casaInfo.getJogador(Integer.parseInt( sDividida[i])));
-                    System.out.println(sDividida[i]);
-                }
-                ArrayList<Jogador> titularesFora = new ArrayList<>();
-                for(int i = 23;i < 34; i++)
-                titularesFora.add(foraInfo.getJogador(Integer.parseInt( sDividida[i])));
-
-                ArrayList<Jogador> suplentesCasa = new ArrayList<>();
-                ArrayList<Jogador> suplentesFora = new ArrayList<>();
-
-                ArrayList<SimpleEntry<Integer,Integer>> supCasa = new ArrayList<>();
-                ArrayList<SimpleEntry<Integer,Integer>> supFora = new ArrayList<>();
-
-                EquipaJogo casa = new EquipaJogo(sDividida[1], 
-                                                 Integer.parseInt( sDividida[3]),
-                                                                   Estado.NEUTRO,
-                                                                   titularesCasa,
-                                                                   suplentesCasa);
-                
-                for(int i = 17;i < 23; i=i+2){
-
-                    casa.substituir(casaInfo.getJogador(Integer.parseInt( sDividida[i+1])), 
-                    casaInfo.getJogador(Integer.parseInt( sDividida[i])));
-                    supCasa.add(new SimpleEntry<Integer,Integer>( 
-                        Integer.parseInt( sDividida[i+1]),
-                        Integer.parseInt( sDividida[i])));
-                    
-                }
-
-                EquipaJogo fora = new EquipaJogo( sDividida[2],
-                                                  Integer.parseInt( sDividida[4]),
-                                                                    Estado.NEUTRO, 
-                                                                    titularesFora, 
-                                                                    suplentesFora);
-
-                
-                for(int i = 34;i < 40; i=i+2){
-
-                     casa.substituir(casaInfo.getJogador(Integer.parseInt( sDividida[i+1])), 
-                    casaInfo.getJogador(Integer.parseInt( sDividida[i])));
-                    supFora.add(new SimpleEntry<Integer,Integer>( 
-                        Integer.parseInt( sDividida[i+1]),
-                        Integer.parseInt( sDividida[i])));
-                }
-                String[] sDivididaAux = sDividida[5].split("-");
-                Jogo jogo = new Jogo(LocalDate.of(Integer.parseInt( sDivididaAux[0]), 
-                                                  Integer.parseInt( sDivididaAux[1]), 
-                                                  Integer.parseInt( sDivididaAux[2])),
-                                                  casa,
-                                                  fora,
-                                                  3,
-                                                  3);
-
-                                                
-                jogoList.addJogo(jogo);
-                }else{
-                    
-                    Jogador jogador = new Jogador(sDividida[1], //nome
-                                                    Integer.parseInt(sDividida[3]), //velocidade
-                                                    Integer.parseInt(sDividida[4]), // destreza
-                                                    Integer.parseInt(sDividida[5]), // res
-                                                    Integer.parseInt(sDividida[6]), //impulsao
-                                                    Integer.parseInt(sDividida[7]), //jogo de cabeça
-                                                    Integer.parseInt(sDividida[8]), //remate
-                                                    Integer.parseInt(sDividida[9]), // cap de passe  
-                                                    new ArrayList<>(),
-                                                    Integer.parseInt(sDividida[2]));
-                    
-                    if (sDividida[0].equals("Guarda-Redes")){
-                        GuardaRedes guardaredes = new GuardaRedes(jogador , Integer.parseInt(sDividida[10]));
-                        equipaList.getLast().adicionarjogador(guardaredes,Integer.parseInt( sDividida[2]));
-                    
-                    } else if(sDividida[0].equals("Avancado")){
-                        Atacante atacante = new Atacante(jogador);
-                        equipaList.getLast().adicionarjogador(atacante,Integer.parseInt( sDividida[2]));
-    
-                    } else if(sDividida[0].equals("Medio")){
-                        Medio medio = new Medio(jogador , Integer.parseInt(sDividida[10]));
-                        equipaList.getLast().adicionarjogador(medio,Integer.parseInt( sDividida[2]));
-    
-                    } else if(sDividida[0].equals("Defesa")){
-                        Defesa defesa = new Defesa(jogador);
-                        equipaList.getLast().adicionarjogador(defesa,Integer.parseInt( sDividida[2]));
-    
-                    } else if(sDividida[0].equals("Lateral")){
-                        Lateral lateral = new Lateral(jogador , Integer.parseInt(sDividida[10]));
-                        equipaList.getLast().adicionarjogador(lateral, Integer.parseInt( sDividida[2]));
-    
-                    }
+            String[] categorias = tokens[4].split(",");  
             
+            ArrayList<String> categories = new ArrayList<>();
+
+            for(String categoria : categorias){
+                categories.add(categoria);
             }
+
+            Business business = new Business(tokens[0], tokens[1], tokens[2], tokens[3], categories);
+            
+            businesses.addBusiness(business);
+             
         }
 
-        public String getFichDefaut() {
-            String ficheirosDefault = new String();
-            ficheirosDefault ="log2.txt";
-            return ficheirosDefault;
+
+        public void parse ( String s, ReviewList reviews){
+            
+            String[] tokens = s.split(";");  
+            
+            String[] tokensDate = s.split("-| |:");  
+
+            LocalDateTime date = LocalDateTime.of(Integer.parseInt( tokensDate[0] ),
+                                                  Integer.parseInt( tokensDate[1] ), 
+                                                  Integer.parseInt( tokensDate[2] ), 
+                                                  Integer.parseInt( tokensDate[3] ), 
+                                                  Integer.parseInt( tokensDate[4] ), 
+                                                  Integer.parseInt( tokensDate[5] ));
+
+            Review review = new Review( tokens[0], 
+                                        tokens[1], 
+                                        tokens[2], 
+                                        Float.parseFloat( tokens[3]),
+                                        Integer.parseInt( tokens[4] ),
+                                        Integer.parseInt( tokens[5] ),
+                                        Integer.parseInt( tokens[6] ),
+                                        date,
+                                        tokens[8] );
+            
+            reviews.addReview(review);
+             
+        }
+        
+
+
+        public void parse ( String s, UserList users){
+            
+            String[] tokens = s.split(";");  
+            
+            String[] amigos = tokens[3].split(",");  
+            
+            ArrayList<String> friends = new ArrayList<>();
+
+            for(String amigo : amigos){
+                friends.add(amigo);
             }
+
+            User user = new User(tokens[0], tokens[1], friends);
+            
+            users.addUser(user);
+             
+        }
+
+        public String[] getFichDefaut() {
+            String[] ficheirosDefault = new String[3];
+            ficheirosDefault[0] ="business_full.csv";
+            ficheirosDefault[1] ="reviews_1M.csv";
+            ficheirosDefault[2] ="users_full.csv";
+            return ficheirosDefault;
+        }
 
         
 
