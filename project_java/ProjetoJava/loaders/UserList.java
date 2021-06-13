@@ -1,6 +1,6 @@
 package loaders;
 
-import model.User;
+import model.*;
 import view.View;
 
 import java.util.List;

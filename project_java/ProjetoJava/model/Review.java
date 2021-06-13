@@ -5,6 +5,8 @@
  * @version (número de versão ou data)
  */
 
+package model;
+
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
 import java.util.Arrays;

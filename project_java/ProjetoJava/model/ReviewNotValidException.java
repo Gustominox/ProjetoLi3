@@ -5,6 +5,8 @@
  * @author grupo 64
  * @version (a version number or a date)
  */
+
+package model;
 public class ReviewNotValidException extends Exception
 {
     public ReviewNotValidException(){

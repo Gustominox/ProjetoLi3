@@ -5,6 +5,8 @@
  * @version (número de versão ou data)
  */
 
+package model;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -154,15 +156,17 @@ public class Business
     
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("BusinessId: ").append(this.businessId);
-        sb.append("Name: ").append(this.name);
-        sb.append("City: ").append(this.city);
-        sb.append("State: ").append(this.state);
-        String categString = "";
+        sb.append("Business ");
+        sb.append("[ BusinessId: ").append(this.businessId);
+        sb.append("; Name: ").append(this.name);
+        sb.append("; City: ").append(this.city);
+        sb.append("; State: ").append(this.state);
+        sb.append("; Categories: ").append(this.state);
+        
         for (String s : this.categories){
-                categString += s + "\t";
+                sb.append(s).append(", ");
         }
-        sb.append("Categories: ").append(categString);
+        sb.append("]");
         return sb.toString();
     }            
 }

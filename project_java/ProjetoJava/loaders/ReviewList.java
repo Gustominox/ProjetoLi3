@@ -1,6 +1,6 @@
 package loaders;
 
-import model.Review;
+import model.*;
 import view.View;
 
 import java.util.List;
