@@ -1,5 +1,5 @@
 package loaders;
-//import model.*;
+import model.*;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -11,15 +11,16 @@ import java.util.ArrayList;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.stream.Stream;
 
-import org.graalvm.compiler.core.common.util.ReversedList;
-
 public class Loadlog {
         
-        public boolean load(String path,BusinessList bussinesses,ReviewList reviews,UserList users){
+        public boolean load(String path,
+                            BusinessList businesses,
+                            ReviewList reviews,
+                            UserList users){
 
             try {
                 Files.lines(Paths.get(path))
-                        .forEach(fields -> parse(equipa,fields,jogo));
+                        .forEach(fields -> parse(fields,businesses,reviews,users));
                 return true;
             } catch (IOException e){
                 e.printStackTrace();
@@ -30,7 +31,10 @@ public class Loadlog {
 
        
         
-        public void parse (EquipaList equipaList, String s, JogoList jogoList) {
+        public void parse ( String s,
+                            BusinessList businesses,
+                            ReviewList reviews,
+                            UserList users){
             
             String[] sDividida = s.split(":|,|->");  //.split(",");
             
