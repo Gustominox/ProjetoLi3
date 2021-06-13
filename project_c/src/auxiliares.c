@@ -116,10 +116,18 @@ int compare(char* content, char* value, OPERATOR oper){
 }
 
 
+<<<<<<< HEAD
+void swap(char **xp, char **yp){
+    char** temp = malloc(sizeof(char*));
+    strcpy(temp, xp);
+    strcpy(xp, yp);
+    strcpy(yp, temp);
+=======
 void swap(char ***xp, char ***yp){
     char** temp = *xp;
     *xp = *yp;
     *yp = temp; 
+>>>>>>> de4ab11c61ba8e32c6531e6421b2ee39574325eb
 }
 
 

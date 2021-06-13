@@ -173,17 +173,16 @@ SGR load_sgr(char *fileBus, char *fileReviews, char *fileUsers){
     printf("\nTempo de execucao da QUERY (segundos): %g\n",time);
     
 	return sgr;
-
 }
-/** QUERY 2 */
 
+/** QUERY 2 */
 TABLE businesses_started_by_letter(SGR sgr, char letter){
 
 	clock_t Ticks[2];
     Ticks[0] = clock();
                 
-	char str[2] = "\0";// str[] = {'\0','\0'}
-    str[0] = toupper(letter);// str[] = {letter,'\0'}
+	char str[2] = "\0"; // str[] = {'\0','\0'}
+    str[0] = toupper(letter); // str[] = {letter,'\0'}
 	
 	GSList* list =  g_hash_table_lookup(sgr->businessByInicial,str);
 
@@ -197,13 +196,13 @@ TABLE businesses_started_by_letter(SGR sgr, char letter){
 	TABLE table = init_table();
 	char **linha = init_linha();
 	
-	//cabecalho
+	// cabecalho
 	linha = add_palavra(linha,"BUS ID");
 	linha = add_palavra(linha,"NAME");
 	linha = add_palavra(linha,"\n");
 	add_linha(table,linha);
 
-	while (list) {// enq houver elems na lista
+	while (list) { // enq houver elems na lista
 		linha = init_linha();
 
 		linha = add_palavra(linha, getBusId(list->data));
@@ -228,14 +227,14 @@ TABLE business_info(SGR sgr, char *business_id){
 
 	GSList* list =  g_hash_table_lookup(sgr->business,business_id);
 
-	if (list == NULL) {
+	if (list == NULL){
 		printf("BUSINESS DOES NOT EXIST\n");
 		return NULL;
 	}
 
 	BUSINESS bus = list->data;
 
-	list = g_hash_table_lookup(sgr->reviewByBusId,business_id );
+	list = g_hash_table_lookup(sgr->reviewByBusId,business_id);
 
 	int nRev = g_slist_length(list);	
 	float sumStars = 0;
@@ -254,9 +253,9 @@ TABLE business_info(SGR sgr, char *business_id){
 	linha = add_palavra(linha,"NAME");
 	linha = add_palavra(linha,"CITY");
 	linha = add_palavra(linha,"STATE");
-	linha = add_palavra(linha,"STARS");								  
+	linha = add_palavra(linha,"STARS");
 	linha = add_palavra(linha,"Num Reviews");
-	linha = add_palavra(linha,"\n");	
+	linha = add_palavra(linha,"\n");
 	add_linha(table,linha);
 	
 	linha = init_linha();
