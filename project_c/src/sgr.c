@@ -405,7 +405,7 @@ TABLE top_businesses_by_city(SGR sgr, int top){
 		linha = add_palavra(linha, getBusCity(head->data));
 		linha = add_palavra(linha,"\n");
 		add_linha(table,linha);
-		printLinha(linha);
+		//printLinha(linha);
 		linha = init_linha();
 		linha = add_palavra(linha,"BUS ID");
 		linha = add_palavra(linha,"NAME");
