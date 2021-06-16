@@ -25,7 +25,7 @@ public class GestReviews
     }
     
     // Nome query1
-    public void principal(String[] infoRev, String[] infoBus, String[] infoUser){
+    public void query1(String[] infoRev, String[] infoBus, String[] infoUser){
 
         System.out.println("Nome do ficheiro: reviews.csv");
 

@@ -20,13 +20,14 @@ public class ManipuladorFich
      */    
     public static String[] lerFicheiro(String nomeFich) {
         List<String> lines;
-        String[] linesArray;
+        String[] linesArray = null;
         try { 
             lines = Files.readAllLines(Paths.get(nomeFich), StandardCharsets.UTF_8);
-            linesArray = lines.toArray(new String[0]);}
+            linesArray = new String[lines.size()];
+            linesArray = lines.toArray(linesArray);
+        }
         catch(IOException exc) {
             lines = new ArrayList<>();
-            linesArray = null;
         }
         return linesArray;
     }
