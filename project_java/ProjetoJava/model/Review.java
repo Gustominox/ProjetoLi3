@@ -140,54 +140,59 @@ public class Review
     /**
      * Método que constrói um objeto Review, caso todos os campos sejam válidos.
      */
-    public void addReview(String[] info) throws ReviewNotValidException{
+    public void addReview(String[] linha) throws ReviewNotValidException{
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         
-        if(info[0].length() != 22){
-            throw new ReviewNotValidException(info[0]);
+        if(linha[0].length() != 22){
+            throw new ReviewNotValidException(linha[0]);
         }
 
-        if(info[1].length() != 22){
-            throw new ReviewNotValidException(info[1]);
+        if(linha[1].length() != 22){
+            throw new ReviewNotValidException(linha[1]);
         }
         
-        if(info[2].length() != 22){
-            throw new ReviewNotValidException(info[1]);
+        if(linha[2].length() != 22){
+            throw new ReviewNotValidException(linha[1]);
         }
         
-        float starsToFloat = Float.parseFloat(info[3]);
+        float starsToFloat = Float.parseFloat(linha[3]);
         if(starsToFloat < 1.0 && starsToFloat > 5.0){
-            throw new ReviewNotValidException(info[3]);
+            throw new ReviewNotValidException(linha[3]);
         }
         
-        int usefulToInt = Integer.parseInt(info[4]);
+        int usefulToInt = Integer.parseInt(linha[4]);
         if(usefulToInt < 0){
-            throw new ReviewNotValidException(info[5]);
+            throw new ReviewNotValidException(linha[5]);
         }
         
-        int funnyToInt = Integer.parseInt(info[5]);
+        int funnyToInt = Integer.parseInt(linha[5]);
         if(funnyToInt < 0){
-            throw new ReviewNotValidException(info[5]);
+            throw new ReviewNotValidException(linha[5]);
         }
         
-        int coolToInt = Integer.parseInt(info[6]);
+        int coolToInt = Integer.parseInt(linha[6]);
         if(coolToInt < 0){
-            throw new ReviewNotValidException(info[5]);
+            throw new ReviewNotValidException(linha[5]);
         }
         
-        if(info[7].length() == 0){
-            throw new ReviewNotValidException(info[5]);
+        if(linha[7].length() == 0){
+            throw new ReviewNotValidException(linha[5]);
         }
         
-        this.reviewId = info[0];
-        this.userId = info[1];
-        this.businessId = info[2];
+        this.reviewId = linha[0];
+        this.userId = linha[1];
+        this.businessId = linha[2];
         this.stars = starsToFloat;
         this.useful = usefulToInt;
         this.funny = funnyToInt;
         this.cool = coolToInt;
-        this.date = LocalDateTime.parse(info[7], formatter);
-        this.text = info[8];
+        this.date = LocalDateTime.parse(linha[7], formatter);
+        this.text = linha[8];
+    }
+    
+    public static String[] parse(String info){
+        String[] camposRev = info.split(";");
+        return camposRev;
     }
     
     public Review clone(){

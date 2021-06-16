@@ -75,17 +75,19 @@ public class User
     /**
      * Método que constrói um objeto User, caso todos os campos sejam válidos.
      */
-    public void addUser(String[] info) throws UserNotValidException{
-        if(info[0].length() != 22)
-            throw new UserNotValidException(info[0]);
+    public void addUser(String[] linha) throws UserNotValidException{
+        System.out.println(linha[0]);
         
-        if(info[1].length() == 0)
-            throw new UserNotValidException(info[1]);
+        if(linha[0].length() != 22)
+            throw new UserNotValidException(linha[0]);
         
-        this.userId = info[0];
-        this.name = info[1];
+        if(linha[1].length() == 0)
+            throw new UserNotValidException(linha[1]);
         
-        String[] aux = info[2].split(",");
+        this.userId = linha[0];
+        this.name = linha[1];
+        
+        String[] aux = linha[2].split(",");
         this.friends = new ArrayList<>();
         for(String s: aux)
             this.friends.add(s);

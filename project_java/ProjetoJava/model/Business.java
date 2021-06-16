@@ -94,30 +94,30 @@ public class Business
     /**
      * Método que constrói um objeto Business, caso todos os campos sejam válidos.
      */
-    public void addBusiness(String[] info) throws BusinessNotValidException{
+    public void addBusiness(String[] linha) throws BusinessNotValidException{
 
-        if(info[0].length() != 22)
-            throw new BusinessNotValidException(info[0]);
+        if(linha[0].length() != 22)
+            throw new BusinessNotValidException(linha[0]);
         
-        if(info[1].length() == 0)
-            throw new BusinessNotValidException(info[1]);
+        if(linha[1].length() == 0)
+            throw new BusinessNotValidException(linha[1]);
         
-        if(info[2].length() == 0)
-            throw new BusinessNotValidException(info[2]);
+        if(linha[2].length() == 0)
+            throw new BusinessNotValidException(linha[2]);
         
-        if(info[3].length() != 2)
-            throw new BusinessNotValidException(info[3]);
+        if(linha[3].length() != 2)
+            throw new BusinessNotValidException(linha[3]);
         
-        if(info[4].length() == 0)
-            throw new BusinessNotValidException(info[4]);
+        if(linha[4].length() == 0)
+            throw new BusinessNotValidException(linha[4]);
         
-        this.businessId = info[0];
-        this.name = info[1];
-        this.city = info[2];
-        this.state = info[3];
+        this.businessId = linha[0];
+        this.name = linha[1];
+        this.city = linha[2];
+        this.state = linha[3];
         
         this.categories = new ArrayList<>();
-        String[] aux = info[4].split(",");
+        String[] aux = linha[4].split(",");
         this.categories = new ArrayList<>();
         for(String s: aux)
             this.categories.add(s);

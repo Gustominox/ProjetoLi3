@@ -78,7 +78,7 @@ public class GestReviews
             String[] camposBusiness = Business.parse(s);
             Business novoBusiness = new Business(camposBusiness);
 
-            if(novoBusiness != null){
+            if(novoBusiness.getBusinessId().length() != 0){
                 nrTotalBus++;
                 totBusAval += nrBusAvaliados(novoBusiness, reviewsValidas);
             }
