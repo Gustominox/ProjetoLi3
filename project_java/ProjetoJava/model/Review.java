@@ -1,6 +1,8 @@
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.List;
+import java.util.ArrayList;
 
 public class Review
 {
@@ -203,6 +205,36 @@ public class Review
         }
         this.text = info[8];
     }
+    
+    public List<Review> auxRev(String[] infoRev){
+
+        Review rev = new Review();
+
+        int nrRevErradas = 0;
+        int nrRevSemImp = 0;
+
+        List<Review> reviewsValidas = new ArrayList<>();
+
+        for(String s: infoRev){
+            String[] camposRev = rev.parse(s);
+            Review novoRev = new Review(camposRev);
+
+            if(novoRev == null) nrRevErradas++;
+            else reviewsValidas.add(novoRev.clone());
+            
+            int cool = novoRev.getCool();
+            int funny = novoRev.getFunny();
+            int useful = novoRev.getUseful();
+            int somatorio = cool + funny + useful;
+            if(somatorio == 0) nrRevSemImp++;
+        }
+
+        System.out.println("Número de reviews errados: " + nrRevErradas);
+        System.out.println("Número de reviews com 0 impacto: " + nrRevSemImp);
+
+        return reviewsValidas;
+    }
+    
     
         public static String[] parse(String info){
         String[] camposReview = info.split(";");
