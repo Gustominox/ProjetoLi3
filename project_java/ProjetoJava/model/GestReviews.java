@@ -299,6 +299,7 @@ public int TotalDifNegoAvaliadosNaoavaliados(){
 
 
 
+
 ////////// CONSULTAS ITERATIVAS 
     /// querie 1 
 
@@ -361,5 +362,5 @@ public Map<String,Map<String,List<SimpleEntry<String,Integer>>>> query10() {
 
 }
 
-
+}
 
