@@ -27,18 +27,17 @@ public class GestReviews
     public void query1(String[] infoRev, String[] infoBus, String[] infoUser){
 
         System.out.println("Nome do ficheiro: reviews.csv");
-
         List<Review> reviewsValidas = auxRev(infoRev);
-
+        System.out.println("\n");
         // ou List<Review> reviewsValidas = auxRev(infoRev).stream().collect(Collectors.toList());
 
         System.out.println("Nome do ficheiro: business.csv");
-
         auxBusiness(infoBus, reviewsValidas);
-
+        System.out.println("\n");
+        
         System.out.println("Nome do ficheiro: user.csv");
-
         auxUser(infoUser, reviewsValidas);
+        System.out.println("\n");
     }
     
     public List<Review> auxRev(String[] infoRev){
@@ -62,8 +61,8 @@ public class GestReviews
             if(somatorio == 0) nrRevSemImp++;
         }
 
-        System.out.println("Número de reviews errados: " + nrRevErradas);
-        System.out.println("Número de reviews com 0 impacto: " + nrRevSemImp);
+        System.out.println("    Número de reviews errados: " + nrRevErradas);
+        System.out.println("    Número de reviews com 0 impacto: " + nrRevSemImp);
 
         return reviewsValidas;
     }
@@ -84,9 +83,9 @@ public class GestReviews
             }
         }
 
-        System.out.println("Número de negócios: " + nrTotalBus);
-        System.out.println("Número de negócios avaliados: " + totBusAval);
-        System.out.println("Número de negócios não avaliados: " + (nrTotalBus - totBusAval));      
+        System.out.println("    Número de negócios: " + nrTotalBus);
+        System.out.println("    Número de negócios avaliados: " + totBusAval);
+        System.out.println("    Número de negócios não avaliados: " + (nrTotalBus - totBusAval));      
     }
     
     public void auxUser(String[] infoUser, List<Review> reviewsValidas){
@@ -107,9 +106,9 @@ public class GestReviews
         }
         usersNaoAval = nrUserTotal - usersAval;
 
-        System.out.println("Número total de users: " + nrUserTotal);
-        System.out.println("Número de users que fizeram reviews: " + usersAval);
-        System.out.println("Número de users que nada avaliaram: " + usersNaoAval); 
+        System.out.println("    Número total de users: " + nrUserTotal);
+        System.out.println("    Número de users que fizeram reviews: " + usersAval);
+        System.out.println("    Número de users que nada avaliaram: " + usersNaoAval); 
     }
 
     public int nrBusAvaliados(Business novoBusiness, List<Review> reviewsValidas){
