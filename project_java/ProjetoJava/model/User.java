@@ -91,11 +91,9 @@ public class User
         else throw new UserNotValidException(info[1]);
     }
     
-    public static User parse(String info){
+    public static String[] parse(String info){
         String[] camposUser = info.split(";");
-        return new User(camposUser[0],
-                    camposUser[1],
-                    Arrays.asList(camposUser[2].split(",")));
+        return camposUser;
     }
     
     public User clone(){

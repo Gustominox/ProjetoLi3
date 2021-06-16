@@ -226,19 +226,9 @@ public class Review
         this.text = info[8];
     }
     
-        public static Review parse(String info){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        
+        public static String[] parse(String info){
         String[] camposReview = info.split(";");
-        return new Review(camposReview[0],
-                camposReview[1],
-                camposReview[2],
-                Float.parseFloat(camposReview[3]),
-                Integer.parseInt(camposReview[4]),
-                Integer.parseInt(camposReview[5]),
-                Integer.parseInt(camposReview[6]),
-                LocalDateTime.parse(camposReview[7], formatter),
-                camposReview[8]);
+        return camposReview;
     }
     
     public Review clone(){

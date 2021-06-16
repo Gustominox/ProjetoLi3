@@ -138,14 +138,9 @@ public class Business
         setNrTotalBus(getNrTotalBus() + 1);
     }
     
-    public static Business parse(String info){
+    public static String[] parse(String info){
         String[] camposBus = info.split(";");
-        
-        return new Business(camposBus[0],
-                        camposBus[1],
-                        camposBus[2],
-                        camposBus[3],
-                        Arrays.asList(camposBus[4].split(",")));
+        return camposBus;
     }
     
     public Business clone(){
