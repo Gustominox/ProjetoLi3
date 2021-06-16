@@ -13,7 +13,6 @@ public class Review
     private int cool;
     private LocalDateTime date;
     private String text;
-    private int nrRevErradas;
     
     public Review(){
          this.reviewId = "";
@@ -53,20 +52,15 @@ public class Review
     }
 
     /**
-     * Construtor que cria um objeto User a partir de uma string.
+     * Construtor que cria um objeto User a partir de uma linha do ficheiro com os campos divididos.
      */
     public Review(String[] info){
-        /*
-        ManipuladorFich mf = new ManipuladorFich();
-        String[][] info = mf.parse(nomeFich);
-        */
         try{
             addReview(info);
         }
         catch(ReviewNotValidException e){
-            System.out.println("Ocorreu um erro! A criar novo Review..");
+            System.out.println("Ocorreu um erro! Review não é válido");
             new Review();
-            System.out.println("Novo Review criado!");
         }
     }
     
@@ -106,10 +100,6 @@ public class Review
         return this.text;
     }
     
-    public int getNrRevErradas(){
-        return this.nrRevErradas;
-    }
-    
     public void setReviewId(String reviewId){
         this.reviewId = reviewId;
     }
@@ -145,10 +135,6 @@ public class Review
     public void setText(String text){
         this.text = text;
     }
-    
-    public void setNrRevErradas(int nrRevErradas){
-        this.nrRevErradas = nrRevErradas;
-    }
 
     /**
      * Método que constrói um objeto Review, caso todos os campos sejam válidos.
@@ -159,7 +145,6 @@ public class Review
             this.reviewId = info[0];
         }
         else{
-            setNrRevErradas(getNrRevErradas() + 1);
             throw new ReviewNotValidException(info[0]);
         }
         
@@ -167,7 +152,6 @@ public class Review
             this.userId = info[1];
         }
         else{
-            setNrRevErradas(getNrRevErradas() + 1);
             throw new ReviewNotValidException(info[1]);
         }
         
@@ -175,7 +159,6 @@ public class Review
             this.businessId = info[2];
         }
         else{
-            setNrRevErradas(getNrRevErradas() + 1);
             throw new ReviewNotValidException(info[1]);
         }
         
@@ -184,7 +167,6 @@ public class Review
             this.stars = starsToFloat;
         }
         else{
-            setNrRevErradas(getNrRevErradas() + 1);
             throw new ReviewNotValidException(info[3]);
         }
         
@@ -193,7 +175,6 @@ public class Review
             this.useful = usefulToInt;
         }
         else{
-            setNrRevErradas(getNrRevErradas() + 1);
             throw new ReviewNotValidException(info[4]);
         }
         
@@ -202,7 +183,6 @@ public class Review
             this.funny = funnyToInt;
         }
         else{
-            setNrRevErradas(getNrRevErradas() + 1);
             throw new ReviewNotValidException(info[5]);
         }
         
@@ -211,7 +191,6 @@ public class Review
             this.cool = coolToInt;
         }
         else{
-            setNrRevErradas(getNrRevErradas() + 1);
             throw new ReviewNotValidException(info[6]);
         }
         
@@ -220,7 +199,6 @@ public class Review
             this.date = LocalDateTime.parse(info[7], formatter);
         }
         else{
-            setNrRevErradas(getNrRevErradas() + 1);
             throw new ReviewNotValidException(info[7]);
         }
         this.text = info[8];

@@ -39,17 +39,12 @@ public class User
      * Construtor que cria um objeto User a partir de uma string.
      */
     public User(String[] info){
-        /*
-        ManipuladorFich mf = new ManipuladorFich();
-        String[][] info = mf.parse(nomeFich);
-        */
         try{
             addUser(info);
         }
         catch(UserNotValidException e){
-            System.out.println("Ocorreu um erro! A criar novo User..");
+            System.out.println("Ocorreu um erro! User não é válido");
             new User();
-            System.out.println("Novo User criado!");
         }
     }
 

@@ -17,7 +17,6 @@ public class Business
     private String city;
     private String state;
     private List<String> categories;
-    private int nrTotalBus;
     
     public Business(){
         this.businessId = "";
@@ -44,17 +43,12 @@ public class Business
     }
     
     public Business(String[] info){
-        /*
-        ManipuladorFich mf = new ManipuladorFich();
-        String[][] info = mf.parse(nomeFich);
-        */
         try{
             addBusiness(info);
         }
         catch(BusinessNotValidException e){
-            System.out.println("Ocorreu um erro! A criar novo Business..");
+            System.out.println("Ocorreu um erro! Business não é válido");
             new Business();
-            System.out.println("Novo Business criado!");
         }
     }
     
@@ -73,10 +67,6 @@ public class Business
     public String getState(){
         return this.state;
     }
-    
-    public int getNrTotalBus(){
-        return this.nrTotalBus;
-    }    
     
     public List<String> getCategories(){
         return this.categories;
@@ -100,10 +90,6 @@ public class Business
     
     public void setCategories(List<String> categories){
         this.categories = categories.stream().collect(Collectors.toList());
-    }
-    
-    public void setNrTotalBus(int nrTotalBus){
-        this.nrTotalBus = nrTotalBus;
     }
     
     /**
@@ -135,7 +121,6 @@ public class Business
         }
         else throw new BusinessNotValidException(info[4]);
         
-        setNrTotalBus(getNrTotalBus() + 1);
     }
     
     public static String[] parse(String info){
