@@ -24,6 +24,20 @@ public class GestReviews
         fos.close();
     }
     
+    public List<Review> reviewsValidas(String[] infoRev){
+        List<Review> reviewsValidas = new ArrayList<>();
+        
+        for(String s: infoRev){
+            String[] camposRev = Review.parse(s);
+            Review novoRev = new Review(camposRev);
+            
+            if(novoRev.getReviewId().length() != 0)
+                reviewsValidas.add(novoRev.clone());
+        }
+        
+        return reviewsValidas;
+    }
+    
     /************************** QUERY 1 *****************************/
     public void query1(String[] infoRev, String[] infoBus, String[] infoUser){
 
