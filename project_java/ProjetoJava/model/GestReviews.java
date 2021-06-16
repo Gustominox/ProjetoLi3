@@ -45,7 +45,6 @@ public class GestReviews
     }
     
     public List<Review> auxRev(String[] infoRev){
-
         Review rev = new Review();
 
         int nrRevErradas = 0;
@@ -96,12 +95,47 @@ public class GestReviews
         System.out.println("Número de negócios não avaliados: " + (nrTotalBus - totBusAval));      
     }
     
+    public void auxUser(String[] infoUser, List<Review> reviewsValidas){
+
+        User user = new User();
+        int nrUserTotal = 0;
+        int usersAval = 0;
+        int usersNaoAval = 0;
+
+        for(String s: infoUser){
+
+            String[] camposUser = user.parse(s);
+            User novoUser = new User(camposUser);
+
+            if(novoUser != null){
+                nrUserTotal++;
+                usersAval += nrUsersAvaliaram(novoUser, reviewsValidas);
+            }         
+        }
+        usersNaoAval = nrUserTotal - usersAval;
+
+        System.out.println("Número total de users: " + nrUserTotal);
+        System.out.println("Número de users que fizeram reviews: " + usersAval);
+        System.out.println("Número de users que nada avaliaram: " + usersNaoAval); 
+    }
+
     public int nrBusAvaliados(Business novoBusiness, List<Review> reviewsValidas){
 
         String busId = novoBusiness.getBusinessId();
 
         for(Review rev: reviewsValidas){
             if(busId.equals(rev.getBusinessId())){
+                return 1;
+            }
+        }
+        return 0;
+    }
+    
+    public int nrUsersAvaliaram(User novoUser, List<Review> reviewsValidas){
+        String userId = novoUser.getUserId();
+
+        for(Review rev: reviewsValidas){
+            if(userId.equals(rev.getUserId())){
                 return 1;
             }
         }
