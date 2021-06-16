@@ -79,7 +79,7 @@ public class User
         if(info[0].length() != 22)
             throw new UserNotValidException(info[0]);
         
-        if(info[1] != null)
+        if(info[1].length() == 0)
             throw new UserNotValidException(info[1]);
         
         this.userId = info[0];

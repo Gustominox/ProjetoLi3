@@ -175,7 +175,7 @@ public class Review
             throw new ReviewNotValidException(info[5]);
         }
         
-        if(info[7] == null){
+        if(info[7].length() == 0){
             throw new ReviewNotValidException(info[5]);
         }
         

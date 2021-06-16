@@ -43,11 +43,10 @@ public class Business
     }
     
     public Business(String[] info){
-        try{
+         try{
             addBusiness(info);
         }
         catch(BusinessNotValidException e){
-            System.out.println("Ocorreu um erro! Business não é válido");
             new Business();
         }
     }
@@ -96,30 +95,32 @@ public class Business
      * Método que constrói um objeto Business, caso todos os campos sejam válidos.
      */
     public void addBusiness(String[] info) throws BusinessNotValidException{
-        int i;
-        if(info[0].length() == 22)
-            this.businessId = info[0];
-        else throw new BusinessNotValidException(info[0]);
+
+        if(info[0].length() != 22)
+            throw new BusinessNotValidException(info[0]);
         
-        if(info[1] != null)
-            this.name = info[1];
-        else throw new BusinessNotValidException(info[1]);
+        if(info[1].length() == 0)
+            throw new BusinessNotValidException(info[1]);
         
-        if(info[2] != null)
-            this.city = info[2];
-        else throw new BusinessNotValidException(info[2]);
+        if(info[2].length() == 0)
+            throw new BusinessNotValidException(info[2]);
         
-        if(info[3].length() == 2)
-            this.state = info[3];
-        else throw new BusinessNotValidException(info[3]);
+        if(info[3].length() != 2)
+            throw new BusinessNotValidException(info[3]);
         
-        if(info[4] != null){
-            String[] aux = info[4].split(",");
-            this.categories = new ArrayList<>();
-            for(String s: aux)
-                this.categories.add(s);
-        }
-        else throw new BusinessNotValidException(info[4]);
+        if(info[4].length() == 0)
+            throw new BusinessNotValidException(info[4]);
+        
+        this.businessId = info[0];
+        this.name = info[1];
+        this.city = info[2];
+        this.state = info[3];
+        
+        this.categories = new ArrayList<>();
+        String[] aux = info[4].split(",");
+        this.categories = new ArrayList<>();
+        for(String s: aux)
+            this.categories.add(s);
     }
         
     public static String[] parse(String info){
