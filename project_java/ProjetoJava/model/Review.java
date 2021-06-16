@@ -61,7 +61,6 @@ public class Review
             addReview(info);
         }
         catch(ReviewNotValidException e){
-            System.out.println("Ocorreu um erro! Review não é válido");
             new Review();
         }
     }
@@ -142,73 +141,53 @@ public class Review
      * Método que constrói um objeto Review, caso todos os campos sejam válidos.
      */
     public void addReview(String[] info) throws ReviewNotValidException{
-        int i;
-        if(info[0].length() == 22){
-            this.reviewId = info[0];
-        }
-        else{
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        
+        if(info[0].length() != 22){
             throw new ReviewNotValidException(info[0]);
         }
-        
-        if(info[1].length() == 22){
-            this.userId = info[1];
-        }
-        else{
+
+        if(info[1].length() != 22){
             throw new ReviewNotValidException(info[1]);
         }
         
-        if(info[2].length() == 22){
-            this.businessId = info[2];
-        }
-        else{
+        if(info[2].length() != 22){
             throw new ReviewNotValidException(info[1]);
         }
         
         float starsToFloat = Float.parseFloat(info[3]);
-        if(starsToFloat >= 1.0 && starsToFloat <= 5.0){
-            this.stars = starsToFloat;
-        }
-        else{
+        if(starsToFloat < 1.0 && starsToFloat > 5.0){
             throw new ReviewNotValidException(info[3]);
         }
         
         int usefulToInt = Integer.parseInt(info[4]);
-        if(usefulToInt >= 0){
-            this.useful = usefulToInt;
-        }
-        else{
-            throw new ReviewNotValidException(info[4]);
+        if(usefulToInt < 0){
+            throw new ReviewNotValidException(info[5]);
         }
         
         int funnyToInt = Integer.parseInt(info[5]);
-        if(funnyToInt >= 0){
-            this.funny = funnyToInt;
-        }
-        else{
+        if(funnyToInt < 0){
             throw new ReviewNotValidException(info[5]);
         }
         
         int coolToInt = Integer.parseInt(info[6]);
-        if(coolToInt >= 0){
-            this.cool = coolToInt;
-        }
-        else{
-            throw new ReviewNotValidException(info[6]);
+        if(coolToInt < 0){
+            throw new ReviewNotValidException(info[5]);
         }
         
-        if(info[7] != null){
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-            this.date = LocalDateTime.parse(info[7], formatter);
+        if(info[7] == null){
+            throw new ReviewNotValidException(info[5]);
         }
-        else{
-            throw new ReviewNotValidException(info[7]);
-        }
+        
+        this.reviewId = info[0];
+        this.userId = info[1];
+        this.businessId = info[2];
+        this.stars = starsToFloat;
+        this.useful = usefulToInt;
+        this.funny = funnyToInt;
+        this.cool = coolToInt;
+        this.date = LocalDateTime.parse(info[7], formatter);
         this.text = info[8];
-    }
-    
-        public static String[] parse(String info){
-        String[] camposReview = info.split(";");
-        return camposReview;
     }
     
     public Review clone(){
