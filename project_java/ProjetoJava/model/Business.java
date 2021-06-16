@@ -111,16 +111,16 @@ public class Business
         if(linha[4].length() == 0)
             throw new BusinessNotValidException(linha[4]);
         
-        this.businessId = linha[0];
-        this.name = linha[1];
-        this.city = linha[2];
-        this.state = linha[3];
-        
-        this.categories = new ArrayList<>();
+        setBusinessId(linha[0]);
+        setName(linha[1]);
+        setCity(linha[2]);
+        setState(linha[3]);
+
         String[] aux = linha[4].split(",");
-        this.categories = new ArrayList<>();
+        List<String> categorias = new ArrayList<>();
         for(String s: aux)
-            this.categories.add(s);
+            categorias.add(s);
+        setCategories(categorias);
     }
         
     public static String[] parse(String info){

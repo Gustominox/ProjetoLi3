@@ -179,15 +179,15 @@ public class Review
             throw new ReviewNotValidException(linha[5]);
         }
         
-        this.reviewId = linha[0];
-        this.userId = linha[1];
-        this.businessId = linha[2];
-        this.stars = starsToFloat;
-        this.useful = usefulToInt;
-        this.funny = funnyToInt;
-        this.cool = coolToInt;
-        this.date = LocalDateTime.parse(linha[7], formatter);
-        this.text = linha[8];
+        setReviewId(linha[0]);
+        setUserId(linha[1]);
+        setBusinessId(linha[2]);
+        setStars(starsToFloat);
+        setUseful(usefulToInt);
+        setFunny(funnyToInt);
+        setCool(coolToInt);
+        setDate(LocalDateTime.parse(linha[7], formatter));
+        setText(linha[8]);
     }
     
     public static String[] parse(String info){

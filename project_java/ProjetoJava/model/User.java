@@ -84,13 +84,14 @@ public class User
         if(linha[1].length() == 0)
             throw new UserNotValidException(linha[1]);
         
-        this.userId = linha[0];
-        this.name = linha[1];
+        setUserId(linha[0]);
+        setName(linha[1]);
         
         String[] aux = linha[2].split(",");
-        this.friends = new ArrayList<>();
+        List<String> friends = new ArrayList<>();
         for(String s: aux)
-            this.friends.add(s);
+            friends.add(s);
+        setFriends(friends);
     }
     
     public static String[] parse(String info){
