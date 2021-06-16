@@ -1,6 +1,5 @@
 package model.Reviews;
 
-
 import view.View;
 
 import java.util.List;
