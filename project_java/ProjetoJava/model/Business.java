@@ -121,41 +121,6 @@ public class Business
         }
         else throw new BusinessNotValidException(info[4]);
     }
-    
-    public void auxBusiness(String[] infoBus, List<Review> reviewsValidas){
-
-        Business bus = new Business();
-        
-        int nrTotalBus = 0;
-        int totBusAval = 0;
-    
-        for(String s: infoBus){
-
-            String[] camposBusiness = bus.parse(s);
-            Business novoBusiness = new Business(camposBusiness);
-
-            if(novoBusiness != null){
-                nrTotalBus++;
-                totBusAval += nrBusAvaliados(novoBusiness, reviewsValidas);
-            }
-        }
-
-        System.out.println("Número de negócios: " + nrTotalBus);
-        System.out.println("Número de negócios avaliados: " + totBusAval);
-        System.out.println("Número de negócios não avaliados: " + (nrTotalBus - totBusAval));      
-    }
-    
-    public int nrBusAvaliados(Business novoBusiness, List<Review> reviewsValidas){
-
-        String busId = novoBusiness.getBusinessId();
-
-        for(Review rev: reviewsValidas){
-            if(busId.equals(rev.getBusinessId())){
-                return 1;
-            }
-        }
-        return 0;
-    }
         
     public static String[] parse(String info){
         String[] camposBus = info.split(";");
