@@ -27,8 +27,6 @@ public class GestReviews
     // Nome query1
     public void principal(String[] infoRev, String[] infoBus, String[] infoUser){
 
-        ManipuladorFich fich = new ManipuladorFich();
-
         System.out.println("Nome do ficheiro: reviews.csv");
 
         List<Review> reviewsValidas = auxRev(infoRev);
@@ -45,7 +43,6 @@ public class GestReviews
     }
     
     public List<Review> auxRev(String[] infoRev){
-        Review rev = new Review();
 
         int nrRevErradas = 0;
         int nrRevSemImp = 0;
@@ -53,7 +50,7 @@ public class GestReviews
         List<Review> reviewsValidas = new ArrayList<>();
 
         for(String s: infoRev){
-            String[] camposRev = rev.parse(s);
+            String[] camposRev = Review.parse(s);
             Review novoRev = new Review(camposRev);
 
             if(novoRev == null) nrRevErradas++;
@@ -74,14 +71,12 @@ public class GestReviews
     
     public void auxBusiness(String[] infoBus, List<Review> reviewsValidas){
 
-        Business bus = new Business();
-        
         int nrTotalBus = 0;
         int totBusAval = 0;
     
         for(String s: infoBus){
 
-            String[] camposBusiness = bus.parse(s);
+            String[] camposBusiness = Business.parse(s);
             Business novoBusiness = new Business(camposBusiness);
 
             if(novoBusiness != null){
@@ -97,14 +92,13 @@ public class GestReviews
     
     public void auxUser(String[] infoUser, List<Review> reviewsValidas){
 
-        User user = new User();
         int nrUserTotal = 0;
         int usersAval = 0;
         int usersNaoAval = 0;
 
         for(String s: infoUser){
 
-            String[] camposUser = user.parse(s);
+            String[] camposUser = User.parse(s);
             User novoUser = new User(camposUser);
 
             if(novoUser != null){

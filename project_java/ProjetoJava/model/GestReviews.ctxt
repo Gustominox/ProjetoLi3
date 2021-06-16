@@ -2,4 +2,16 @@
 comment0.target=GestReviews
 comment1.params=nomeFich
 comment1.target=void\ guardaEstado(java.lang.String)
-numComments=2
+comment2.params=infoRev\ infoBus\ infoUser
+comment2.target=void\ principal(java.lang.String[],\ java.lang.String[],\ java.lang.String[])
+comment3.params=infoRev
+comment3.target=java.util.List\ auxRev(java.lang.String[])
+comment4.params=infoBus\ reviewsValidas
+comment4.target=void\ auxBusiness(java.lang.String[],\ java.util.List)
+comment5.params=infoUser\ reviewsValidas
+comment5.target=void\ auxUser(java.lang.String[],\ java.util.List)
+comment6.params=novoBusiness\ reviewsValidas
+comment6.target=int\ nrBusAvaliados(Business,\ java.util.List)
+comment7.params=novoUser\ reviewsValidas
+comment7.target=int\ nrUsersAvaliaram(User,\ java.util.List)
+numComments=8
