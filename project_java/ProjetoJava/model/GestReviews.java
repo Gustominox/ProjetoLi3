@@ -24,6 +24,7 @@ public class GestReviews
         fos.close();
     }
     
+    /************************** QUERY 1 *****************************/
     public void query1(String[] infoRev, String[] infoBus, String[] infoUser){
 
         System.out.println("Nome do ficheiro: reviews.csv");
@@ -132,5 +133,77 @@ public class GestReviews
             }
         }
         return 0;
+    }
+    
+    
+    /***************************** QUERY 2 **************************************/
+    public void revPorMes(List<Review> reviewsValidas){
+        int nrRev = 0;
+        int revJan=0, revFeb=0, revMar=0, revAbr=0, revMaio=0, revJun=0, revJul=0, revAgo=0, revSet=0, revOut=0, revNov=0, revDez=0;
+        
+        for(Review rev: reviewsValidas){
+            switch(rev.getDate().getMonthValue()){
+                case 1:
+                    revJan++;
+                    break;
+                    
+                case 2:
+                    revFeb++;
+                    break;
+                    
+                case 3:
+                    revMar++;
+                    break;
+                
+                case 4:
+                    revAbr++;
+                    break;
+                    
+                case 5:
+                    revMaio++;
+                    break;
+                
+                case 6:
+                    revJun++;
+                    break;
+                    
+                case 7:
+                    revJul++;
+                    break;
+                    
+                case 8:
+                    revAgo++;
+                    break;
+                    
+                case 9:
+                    revSet++;
+                    break;
+                    
+                case 10:
+                    revOut++;
+                    break;
+                    
+                case 11:
+                    revNov++;
+                    break;
+                    
+                case 12:
+                    revDez++;
+                    break;
+            }
+        }
+        
+        System.out.println("Reviews em janeiro: " + revJan);
+        System.out.println("Reviews em fevereiro: " + revFeb);
+        System.out.println("Reviews em março: " + revMar);
+        System.out.println("Reviews em abril: " + revAbr);
+        System.out.println("Reviews em maio: " + revMaio);
+        System.out.println("Reviews em junho: " + revJun);
+        System.out.println("Reviews em julho: " + revJul);
+        System.out.println("Reviews em agosto: " + revAgo);
+        System.out.println("Reviews em setembro: " + revSet);
+        System.out.println("Reviews em outobro: " + revOut);
+        System.out.println("Reviews em novembro: " + revNov);
+        System.out.println("Reviews em dezembro: " + revDez);
     }
 }
