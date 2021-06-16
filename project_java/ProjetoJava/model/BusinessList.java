@@ -1,4 +1,4 @@
-package loaders;
+package model;
 
 import model.*;
 import view.View;
