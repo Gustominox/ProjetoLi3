@@ -25,11 +25,11 @@ public class ManipuladorFich
         return lines;
     }
     
-    public static String[][] parse(String nomeFich){
+    /**public static String[][] parse(String nomeFich){
         List<String> linhas = lerFicheiro(nomeFich);
-        /**for(String s: linhas){
+        for(String s: linhas){
             System.out.println(s);
-        }*/
+        }
         String[][] linhaPartida = new String[50][4];
         String[] temp;
         int i=0, j=0;
@@ -42,5 +42,5 @@ public class ManipuladorFich
         }
         
         return linhaPartida;
-    }    
+    }*/   
 }

@@ -17,6 +17,7 @@ public class Business
     private String city;
     private String state;
     private List<String> categories;
+    private int nrTotalBus;
     
     public Business(){
         this.businessId = "";
@@ -73,6 +74,10 @@ public class Business
         return this.state;
     }
     
+    public int getNrTotalBus(){
+        return this.nrTotalBus;
+    }    
+    
     public List<String> getCategories(){
         return this.categories;
     }
@@ -95,6 +100,10 @@ public class Business
     
     public void setCategories(List<String> categories){
         this.categories = categories.stream().collect(Collectors.toList());
+    }
+    
+    public void setNrTotalBus(int nrTotalBus){
+        this.nrTotalBus = nrTotalBus;
     }
     
     /**
@@ -125,6 +134,8 @@ public class Business
                 this.categories.add(s);
         }
         else throw new BusinessNotValidException(info[4]);
+        
+        setNrTotalBus(getNrTotalBus() + 1);
     }
     
     public static Business parse(String info){
