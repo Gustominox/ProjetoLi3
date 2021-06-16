@@ -1,12 +1,3 @@
-/**
- * Escreva a descrição da classe Reviews aqui.
- * 
- * @author (seu nome) 
- * @version (número de versão ou data)
- */
-
-package model;
-
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -22,6 +13,7 @@ public class Review
     private int cool;
     private LocalDateTime date;
     private String text;
+    private int nrRevErradas;
     
     public Review(){
          this.reviewId = "";
@@ -114,6 +106,10 @@ public class Review
         return this.text;
     }
     
+    public int getNrRevErradas(){
+        return this.nrRevErradas;
+    }
+    
     public void setReviewId(String reviewId){
         this.reviewId = reviewId;
     }
@@ -149,50 +145,84 @@ public class Review
     public void setText(String text){
         this.text = text;
     }
+    
+    public void setNrRevErradas(int nrRevErradas){
+        this.nrRevErradas = nrRevErradas;
+    }
 
     /**
      * Método que constrói um objeto Review, caso todos os campos sejam válidos.
      */
     public void addReview(String[] info) throws ReviewNotValidException{
         int i;
-        if(info[0].length() == 22)
+        if(info[0].length() == 22){
             this.reviewId = info[0];
-        else throw new ReviewNotValidException(info[0]);
+        }
+        else{
+            setNrRevErradas(getNrRevErradas() + 1);
+            throw new ReviewNotValidException(info[0]);
+        }
         
-        if(info[1].length() == 22)
+        if(info[1].length() == 22){
             this.userId = info[1];
-        else throw new ReviewNotValidException(info[1]);
+        }
+        else{
+            setNrRevErradas(getNrRevErradas() + 1);
+            throw new ReviewNotValidException(info[1]);
+        }
         
-        if(info[2].length() == 22)
+        if(info[2].length() == 22){
             this.businessId = info[2];
-        else throw new ReviewNotValidException(info[1]);
+        }
+        else{
+            setNrRevErradas(getNrRevErradas() + 1);
+            throw new ReviewNotValidException(info[1]);
+        }
         
         float starsToFloat = Float.parseFloat(info[3]);
-        if(starsToFloat >= 1.0 && starsToFloat <= 5.0)
+        if(starsToFloat >= 1.0 && starsToFloat <= 5.0){
             this.stars = starsToFloat;
-        else throw new ReviewNotValidException(info[3]);
+        }
+        else{
+            setNrRevErradas(getNrRevErradas() + 1);
+            throw new ReviewNotValidException(info[3]);
+        }
         
         int usefulToInt = Integer.parseInt(info[4]);
-        if(usefulToInt >= 0)
+        if(usefulToInt >= 0){
             this.useful = usefulToInt;
-        else throw new ReviewNotValidException(info[4]);
+        }
+        else{
+            setNrRevErradas(getNrRevErradas() + 1);
+            throw new ReviewNotValidException(info[4]);
+        }
         
         int funnyToInt = Integer.parseInt(info[5]);
-        if(funnyToInt >= 0)
+        if(funnyToInt >= 0){
             this.funny = funnyToInt;
-        else throw new ReviewNotValidException(info[5]);
+        }
+        else{
+            setNrRevErradas(getNrRevErradas() + 1);
+            throw new ReviewNotValidException(info[5]);
+        }
         
         int coolToInt = Integer.parseInt(info[6]);
-        if(coolToInt >= 0)
+        if(coolToInt >= 0){
             this.cool = coolToInt;
-        else throw new ReviewNotValidException(info[6]);
+        }
+        else{
+            setNrRevErradas(getNrRevErradas() + 1);
+            throw new ReviewNotValidException(info[6]);
+        }
         
         if(info[7] != null){
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
             this.date = LocalDateTime.parse(info[7], formatter);
         }
-        else throw new ReviewNotValidException(info[7]);
-        
+        else{
+            setNrRevErradas(getNrRevErradas() + 1);
+            throw new ReviewNotValidException(info[7]);
+        }
         this.text = info[8];
     }
     

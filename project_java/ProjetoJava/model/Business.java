@@ -5,8 +5,6 @@
  * @version (número de versão ou data)
  */
 
-package model;
-
 import java.util.List;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
