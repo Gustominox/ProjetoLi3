@@ -100,7 +100,7 @@ public class GestReviews
             String[] camposUser = User.parse(s);
             User novoUser = new User(camposUser);
 
-            if(novoUser != null){
+            if(novoUser.getUserId().length() != 0){
                 nrUserTotal++;
                 usersAval += nrUsersAvaliaram(novoUser, reviewsValidas);
             }         
