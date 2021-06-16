@@ -5,8 +5,6 @@
  * @version (número de versão ou data)
  */
 
-package model;
-
 import java.util.List;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -45,17 +43,11 @@ public class Business
     }
     
     public Business(String[] info){
-        /*
-        ManipuladorFich mf = new ManipuladorFich();
-        String[][] info = mf.parse(nomeFich);
-        */
-        try{
+         try{
             addBusiness(info);
         }
         catch(BusinessNotValidException e){
-            System.out.println("Ocorreu um erro! A criar novo Business..");
             new Business();
-            System.out.println("Novo Business criado!");
         }
     }
     
@@ -102,41 +94,38 @@ public class Business
     /**
      * Método que constrói um objeto Business, caso todos os campos sejam válidos.
      */
-    public void addBusiness(String[] info) throws BusinessNotValidException{
-        int i;
-        if(info[0].length() == 22)
-            this.businessId = info[0];
-        else throw new BusinessNotValidException(info[0]);
+    public void addBusiness(String[] linha) throws BusinessNotValidException{
+
+        if(linha[0].length() != 22)
+            throw new BusinessNotValidException(linha[0]);
         
-        if(info[1] != null)
-            this.name = info[1];
-        else throw new BusinessNotValidException(info[1]);
+        if(linha[1].length() == 0)
+            throw new BusinessNotValidException(linha[1]);
         
-        if(info[2] != null)
-            this.city = info[2];
-        else throw new BusinessNotValidException(info[2]);
+        if(linha[2].length() == 0)
+            throw new BusinessNotValidException(linha[2]);
         
-        if(info[3].length() == 2)
-            this.state = info[3];
-        else throw new BusinessNotValidException(info[3]);
+        if(linha[3].length() != 2)
+            throw new BusinessNotValidException(linha[3]);
         
-        if(info[4] != null){
-            String[] aux = info[4].split(",");
-            this.categories = new ArrayList<>();
-            for(String s: aux)
-                this.categories.add(s);
-        }
-        else throw new BusinessNotValidException(info[4]);
+        if(linha[4].length() == 0)
+            throw new BusinessNotValidException(linha[4]);
+        
+        setBusinessId(linha[0]);
+        setName(linha[1]);
+        setCity(linha[2]);
+        setState(linha[3]);
+
+        String[] aux = linha[4].split(",");
+        List<String> categorias = new ArrayList<>();
+        for(String s: aux)
+            categorias.add(s);
+        setCategories(categorias);
     }
-    
-    public static Business parse(String info){
-        String[] camposBus = info.split(";");
         
-        return new Business(camposBus[0],
-                        camposBus[1],
-                        camposBus[2],
-                        camposBus[3],
-                        Arrays.asList(camposBus[4].split(",")));
+    public static String[] parse(String info){
+        String[] camposBus = info.split(";");
+        return camposBus;
     }
     
     public Business clone(){

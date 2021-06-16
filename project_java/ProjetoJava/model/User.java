@@ -5,8 +5,6 @@
  * @version (número de versão ou data)
  */
 
-package model;
-
 import java.io.*;
 import java.util.List;
 import java.util.ArrayList;
@@ -41,19 +39,14 @@ public class User
      * Construtor que cria um objeto User a partir de uma string.
      */
     public User(String[] info){
-        /*
-        ManipuladorFich mf = new ManipuladorFich();
-        String[][] info = mf.parse(nomeFich);
-        */
         try{
             addUser(info);
         }
         catch(UserNotValidException e){
-            System.out.println("Ocorreu um erro! A criar novo User..");
             new User();
-            System.out.println("Novo User criado!");
         }
     }
+
 
     public String getUserId(){
         return this.userId;
@@ -82,22 +75,28 @@ public class User
     /**
      * Método que constrói um objeto User, caso todos os campos sejam válidos.
      */
-    public void addUser(String[] info) throws UserNotValidException{
-        int i;
-        if(info[0].length() == 22)
-            this.userId = info[0];
-        else throw new UserNotValidException(info[0]);
+    public void addUser(String[] linha) throws UserNotValidException{
+        System.out.println(linha[0]);
         
-        if(info[1] != null)
-            this.name = info[1];
-        else throw new UserNotValidException(info[1]);
+        if(linha[0].length() != 22)
+            throw new UserNotValidException(linha[0]);
+        
+        if(linha[1].length() == 0)
+            throw new UserNotValidException(linha[1]);
+        
+        setUserId(linha[0]);
+        setName(linha[1]);
+        
+        String[] aux = linha[2].split(",");
+        List<String> friends = new ArrayList<>();
+        for(String s: aux)
+            friends.add(s);
+        setFriends(friends);
     }
     
-    public static User parse(String info){
+    public static String[] parse(String info){
         String[] camposUser = info.split(";");
-        return new User(camposUser[0],
-                    camposUser[1],
-                    Arrays.asList(camposUser[2].split(",")));
+        return camposUser;
     }
     
     public User clone(){

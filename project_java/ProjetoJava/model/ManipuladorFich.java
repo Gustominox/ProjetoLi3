@@ -18,18 +18,25 @@ public class ManipuladorFich
     /**
      * A partir de um contéudo de um ficheiro, este método devolve uma lista de strings em que cada string corresponde a uma linha do ficheiro
      */    
-    public static List<String> lerFicheiro(String nomeFich) {
+    public static String[] lerFicheiro(String nomeFich) {
         List<String> lines;
-        try { lines = Files.readAllLines(Paths.get(nomeFich), StandardCharsets.UTF_8); }
-        catch(IOException exc) { lines = new ArrayList<>(); }
-        return lines;
+        String[] linesArray = null;
+        try { 
+            lines = Files.readAllLines(Paths.get(nomeFich), StandardCharsets.UTF_8);
+            linesArray = new String[lines.size()];
+            linesArray = lines.toArray(linesArray);
+        }
+        catch(IOException exc) {
+            lines = new ArrayList<>();
+        }
+        return linesArray;
     }
     
-    public static String[][] parse(String nomeFich){
+    /**public static String[][] parse(String nomeFich){
         List<String> linhas = lerFicheiro(nomeFich);
-        /**for(String s: linhas){
+        for(String s: linhas){
             System.out.println(s);
-        }*/
+        }
         String[][] linhaPartida = new String[50][4];
         String[] temp;
         int i=0, j=0;
@@ -42,5 +49,5 @@ public class ManipuladorFich
         }
         
         return linhaPartida;
-    }    
+    }*/   
 }

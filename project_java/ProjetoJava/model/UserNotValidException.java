@@ -7,7 +7,7 @@
  */
 
 
-package model;
+ 
 public class UserNotValidException extends Exception
 {
     public UserNotValidException(){
