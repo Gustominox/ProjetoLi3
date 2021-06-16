@@ -20,6 +20,6 @@ public class Teste
         String[] infoUser = ManipuladorFich.lerFicheiro(path3);
         
         GestReviews gRev = new GestReviews();
-        gRev.principal(infoRev, infoBus, infoUser);
+        gRev.query1(infoRev, infoBus, infoUser);
     }
 }

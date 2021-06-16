@@ -197,7 +197,7 @@ public class Review
         }
         
         if(info[7] != null){
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             this.date = LocalDateTime.parse(info[7], formatter);
         }
         else{

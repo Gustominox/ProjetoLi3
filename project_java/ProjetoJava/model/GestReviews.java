@@ -24,7 +24,6 @@ public class GestReviews
         fos.close();
     }
     
-    // Nome query1
     public void query1(String[] infoRev, String[] infoBus, String[] infoUser){
 
         System.out.println("Nome do ficheiro: reviews.csv");
