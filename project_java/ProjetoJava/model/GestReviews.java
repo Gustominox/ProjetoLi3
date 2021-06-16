@@ -40,46 +40,43 @@ public class GestReviews
     
     /************************** QUERY 1 *****************************/
     public void query1(String[] infoRev, String[] infoBus, String[] infoUser){
-
+        List<Review> reviewsValidas = reviewsValidas(infoRev);
+        
         System.out.println("Nome do ficheiro: reviews.csv");
-        List<Review> reviewsValidas = auxRev(infoRev);
+        auxRev(infoRev);
         System.out.println("\n");
-        // ou List<Review> reviewsValidas = auxRev(infoRev).stream().collect(Collectors.toList());
 
         System.out.println("Nome do ficheiro: business.csv");
         auxBusiness(infoBus, reviewsValidas);
         System.out.println("\n");
         
-        System.out.println("Nome do ficheiro: user.csv");
+        System.out.println("Nome do ficheiro: users.csv");
         auxUser(infoUser, reviewsValidas);
         System.out.println("\n");
     }
     
-    public List<Review> auxRev(String[] infoRev){
+    public void auxRev(String[] infoRev){
 
         int nrRevErradas = 0;
         int nrRevSemImp = 0;
-
-        List<Review> reviewsValidas = new ArrayList<>();
 
         for(String s: infoRev){
             String[] camposRev = Review.parse(s);
             Review novoRev = new Review(camposRev);
 
-            if(novoRev == null) nrRevErradas++;
-            else reviewsValidas.add(novoRev.clone());
-            
-            int cool = novoRev.getCool();
-            int funny = novoRev.getFunny();
-            int useful = novoRev.getUseful();
-            int somatorio = cool + funny + useful;
-            if(somatorio == 0) nrRevSemImp++;
+            if(novoRev.getReviewId().length() == 0) nrRevErradas++;
+            else{
+                int cool = novoRev.getCool();
+                int funny = novoRev.getFunny();
+                int useful = novoRev.getUseful();
+                int somatorio = cool + funny + useful;
+                if(somatorio == 0) nrRevSemImp++;
+            }
         }
 
         System.out.println("    Número de reviews errados: " + nrRevErradas);
         System.out.println("    Número de reviews com 0 impacto: " + nrRevSemImp);
 
-        return reviewsValidas;
     }
     
     public void auxBusiness(String[] infoBus, List<Review> reviewsValidas){
