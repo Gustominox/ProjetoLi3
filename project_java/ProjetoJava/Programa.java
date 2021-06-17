@@ -1,4 +1,6 @@
-import model.*;
+import model.Business.*;
+import model.Reviews.*;
+import model.Users.*;
 //import controller.*;
 import view.*;
 import loaders.*;

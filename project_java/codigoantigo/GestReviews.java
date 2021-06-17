@@ -17,6 +17,7 @@ import model.Business.*;
 import model.Reviews.*;
 import model.Users.*;
 import java.util.stream.*;
+import view.*;
 
 
 public class GestReviews{
@@ -254,19 +255,22 @@ public int TotalDifNegoAvaliadosNaoavaliados(){
                     break;
             }
         }
-        
-        System.out.println("Reviews em janeiro: " + revJan);
-        System.out.println("Reviews em fevereiro: " + revFeb);
-        System.out.println("Reviews em março: " + revMar);
-        System.out.println("Reviews em abril: " + revAbr);
-        System.out.println("Reviews em maio: " + revMaio);
-        System.out.println("Reviews em junho: " + revJun);
-        System.out.println("Reviews em julho: " + revJul);
-        System.out.println("Reviews em agosto: " + revAgo);
-        System.out.println("Reviews em setembro: " + revSet);
-        System.out.println("Reviews em outobro: " + revOut);
-        System.out.println("Reviews em novembro: " + revNov);
-        System.out.println("Reviews em dezembro: " + revDez);
+        StringBuilder sb =  new StringBuilder();
+        sb.append("Reviews em janeiro: " + revJan);
+        sb.append("Reviews em fevereiro: " + revFeb);
+        sb.append("Reviews em março: " + revMar);
+        sb.append("Reviews em abril: " + revAbr);
+        sb.append("Reviews em maio: " + revMaio);
+        sb.append("Reviews em junho: " + revJun);
+        sb.append("Reviews em julho: " + revJul);
+        sb.append("Reviews em agosto: " + revAgo);
+        sb.append("Reviews em setembro: " + revSet);
+        sb.append("Reviews em outobro: " + revOut);
+        sb.append("Reviews em novembro: " + revNov);
+        sb.append("Reviews em dezembro: " + revDez);
+
+        View view = new View();
+        view.print(sb.toString());
     }
 
 
@@ -302,7 +306,7 @@ public int TotalDifNegoAvaliadosNaoavaliados(){
 
 ////////// CONSULTAS ITERATIVAS 
     /// querie 1 
-
+/*
 public  SimpleEntry<Integer,Set<String>> query1(){
         Set<String> aux = new TreeSet<String>(); // para ficar já orenado
         for(Business i: bus.getList()){ // vou percorrer os business tds 
@@ -314,8 +318,8 @@ public  SimpleEntry<Integer,Set<String>> query1(){
             int tamanho = aux.size();
             return new SimpleEntry(tamanho,aux);
         }
-
-
+*/
+/*
 public Map<String,Map<String,List<SimpleEntry<String,Integer>>>> query10() {
     int stars ; 
     int count=0;
@@ -347,7 +351,7 @@ public Map<String,Map<String,List<SimpleEntry<String,Integer>>>> query10() {
 
     return aux;    
 }
-
+*/
 
 
          //estado               //cidade                // id    // media  
@@ -362,5 +366,5 @@ public Map<String,Map<String,List<SimpleEntry<String,Integer>>>> query10() {
 
 }
 
-}
+
 

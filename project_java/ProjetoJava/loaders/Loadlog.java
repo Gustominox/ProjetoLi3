@@ -1,6 +1,7 @@
 package loaders;
-import model.*;
-
+import model.Business.*;
+import model.Reviews.*;
+import model.Users.*;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -89,7 +90,7 @@ public class Loadlog {
                 reviews.addReview(review);
             }
             catch(Exception e){
-
+        
             }
              
         }

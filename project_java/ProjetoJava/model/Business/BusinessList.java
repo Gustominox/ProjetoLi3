@@ -1,6 +1,6 @@
 package model.Business;
 
-import model.*;
+
 import view.View;
 
 import java.util.List;
@@ -89,11 +89,21 @@ public class BusinessList {
          Business procura =null;
          for ( Business business : list){
             if(business.getBusinessId().equals(id)){
-                procura = business;
+                procura = business.clone();
             }
          }
          return procura;
      }
-
+    
+     public BusinessList getBusinessEstado(String id) {
+        Business procura =null;
+        BusinessList lista = new BusinessList();
+        for ( Business business : list){
+           if(business.getState().equals(id)){
+               lista.addBusiness(business.clone());
+           }
+        }
+        return lista;
+    }
  }
  

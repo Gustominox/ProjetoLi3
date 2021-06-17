@@ -24,7 +24,7 @@ public class User
     }
     
     public User(String user_id, String name, List<String> friends){
-        this.userId = userId;
+        this.userId = user_id;
         this.name = name;
         this.friends = friends.stream().collect(Collectors.toList());
     }

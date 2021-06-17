@@ -7,6 +7,7 @@
 
 package model.Reviews;
 
+import model.Reviews.*;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
 
@@ -72,9 +73,7 @@ public class Review
             addReview(info);
         }
         catch(ReviewNotValidException e){
-            System.out.println("Ocorreu um erro! A criar novo Review..");
             new Review();
-            System.out.println("Novo Review criado!");
         }
     }
     
@@ -153,62 +152,59 @@ public class Review
     /**
      * Método que constrói um objeto Review, caso todos os campos sejam válidos.
      */
-    public void addReview(String[] info) throws ReviewNotValidException{
-        int i;
-        if(info[0].length() == 22)
-            this.reviewId = info[0];
-        else throw new ReviewNotValidException(info[0]);
+    public void addReview(String[] linha) throws ReviewNotValidException{
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         
-        if(info[1].length() == 22)
-            this.userId = info[1];
-        else throw new ReviewNotValidException(info[1]);
-        
-        if(info[2].length() == 22)
-            this.businessId = info[2];
-        else throw new ReviewNotValidException(info[1]);
-        
-        float starsToFloat = Float.parseFloat(info[3]);
-        if(starsToFloat >= 1.0 && starsToFloat <= 5.0)
-            this.stars = starsToFloat;
-        else throw new ReviewNotValidException(info[3]);
-        
-        int usefulToInt = Integer.parseInt(info[4]);
-        if(usefulToInt >= 0)
-            this.useful = usefulToInt;
-        else throw new ReviewNotValidException(info[4]);
-        
-        int funnyToInt = Integer.parseInt(info[5]);
-        if(funnyToInt >= 0)
-            this.funny = funnyToInt;
-        else throw new ReviewNotValidException(info[5]);
-        
-        int coolToInt = Integer.parseInt(info[6]);
-        if(coolToInt >= 0)
-            this.cool = coolToInt;
-        else throw new ReviewNotValidException(info[6]);
-        
-        if(info[7] != null){
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-            this.date = LocalDateTime.parse(info[7], formatter);
+        if(linha[0].length() != 22){
+            throw new ReviewNotValidException(linha[0]);
         }
-        else throw new ReviewNotValidException(info[7]);
+
+        if(linha[1].length() != 22){
+            throw new ReviewNotValidException(linha[1]);
+        }
         
-        this.text = info[8];
+        if(linha[2].length() != 22){
+            throw new ReviewNotValidException(linha[1]);
+        }
+        
+        float starsToFloat = Float.parseFloat(linha[3]);
+        if(starsToFloat < 1.0 && starsToFloat > 5.0){
+            throw new ReviewNotValidException(linha[3]);
+        }
+        
+        int usefulToInt = Integer.parseInt(linha[4]);
+        if(usefulToInt < 0){
+            throw new ReviewNotValidException(linha[5]);
+        }
+        
+        int funnyToInt = Integer.parseInt(linha[5]);
+        if(funnyToInt < 0){
+            throw new ReviewNotValidException(linha[5]);
+        }
+        
+        int coolToInt = Integer.parseInt(linha[6]);
+        if(coolToInt < 0){
+            throw new ReviewNotValidException(linha[5]);
+        }
+        
+        if(linha[7].length() == 0){
+            throw new ReviewNotValidException(linha[5]);
+        }
+        
+        setReviewId(linha[0]);
+        setUserId(linha[1]);
+        setBusinessId(linha[2]);
+        setStars(starsToFloat);
+        setUseful(usefulToInt);
+        setFunny(funnyToInt);
+        setCool(coolToInt);
+        setDate(LocalDateTime.parse(linha[7], formatter));
+        setText(linha[8]);
     }
     
-        public static Review parse(String info){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        
-        String[] camposReview = info.split(";");
-        return new Review(camposReview[0],
-                camposReview[1],
-                camposReview[2],
-                Float.parseFloat(camposReview[3]),
-                Integer.parseInt(camposReview[4]),
-                Integer.parseInt(camposReview[5]),
-                Integer.parseInt(camposReview[6]),
-                LocalDateTime.parse(camposReview[7], formatter),
-                camposReview[8]);
+    public static String[] parse(String info){
+        String[] camposRev = info.split(";");
+        return camposRev;
     }
     
     public Review clone(){
