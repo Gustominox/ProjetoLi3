@@ -25,6 +25,7 @@ public class Loadlog {
                 Files.lines(Paths.get(path[2]))
                      .forEach(fields -> parse(fields,users));        
                 return true;
+                
             } catch (IOException e){
                 e.printStackTrace();
                 return false;
@@ -32,98 +33,83 @@ public class Loadlog {
         }
     
 
-       
-        
-        public void parse ( String s, BusinessList businesses){
-            
-            String[] tokens = s.split(";");              
-            
-            ArrayList<String> categories = new ArrayList<>();
-            //for(String token : tokens) System.out.println(token);
-            if(tokens.length >4) {
 
-                String[] categorias = tokens[4].split(",");  
+    public void parse ( String s, BusinessList businesses){
+            
+        String[] tokens = s.split(";");              
+            
+        ArrayList<String> categories = new ArrayList<>();
+        //for(String token : tokens) System.out.println(token);
+        if(tokens.length >4) {
+
+            String[] categorias = tokens[4].split(",");  
                 
-
-                for(String categoria : categorias){
-                    categories.add(categoria);
+            for(String categoria : categorias){
+                categories.add(categoria);
             }
         }
-
-            Business business = new Business(tokens[0], tokens[1], tokens[2], tokens[3], categories);
+        Business business = new Business(tokens[0], tokens[1], tokens[2], tokens[3], categories);
             
-            businesses.addBusiness(business);
+        businesses.addBusiness(business.clone());
              
-        }
+    }
 
 
-        public void parse ( String s, ReviewList reviews){
-            
-            try{
-                String[] tokens = s.split(";");  
+    public void parse (String s, ReviewList reviews){
+       try{
+        String[] tokens = s.split(";");  
                 
-                String[] tokensDate = s.split("-| |:");  
+        String[] tokensDate = s.split("-| |:");  
 
-                LocalDateTime date;
+        LocalDateTime date;
 
-                if (tokensDate.length == 6){
-                    date = LocalDateTime.of(Integer.parseInt( tokensDate[0] ),
-                                            Integer.parseInt( tokensDate[1] ), 
-                                            Integer.parseInt( tokensDate[2] ), 
-                                            Integer.parseInt( tokensDate[3] ), 
-                                            Integer.parseInt( tokensDate[4] ), 
-                                            Integer.parseInt( tokensDate[5] ));
-                }else{
-                    date = LocalDateTime.now();
-                }
-
-                Review review = new Review( tokens[0], 
-                                            tokens[1], 
-                                            tokens[2], 
-                                            Float.parseFloat( tokens[3]),
-                                            Integer.parseInt( tokens[4] ),
-                                            Integer.parseInt( tokens[5] ),
-                                            Integer.parseInt( tokens[6] ),
-                                            date,
-                                            tokens[8] );
-
-                reviews.addReview(review);
-            }
-            catch(Exception e){
-        
-            }
-             
+        if (tokensDate.length == 6){
+            date = LocalDateTime.of(Integer.parseInt( tokensDate[0] ),
+                                    Integer.parseInt( tokensDate[1] ), 
+                                    Integer.parseInt( tokensDate[2] ), 
+                                    Integer.parseInt( tokensDate[3] ), 
+                                    Integer.parseInt( tokensDate[4] ), 
+                                    Integer.parseInt( tokensDate[5] ));
+        }else{
+            date = LocalDateTime.now();
         }
+        Review review = new Review( tokens[0], 
+                                    tokens[1], 
+                                    tokens[2], 
+                                    Float.parseFloat( tokens[3] ),
+                                    Integer.parseInt( tokens[4] ),
+                                    Integer.parseInt( tokens[5] ),
+                                    Integer.parseInt( tokens[6] ),
+                                    date,
+                                    tokens[8] );
+        reviews.addReview(review.clone());
+    }
+    catch(Exception e){
+    }
+    }
         
-
-
-        public void parse ( String s, UserList users){
+    public void parse ( String s, UserList users){
             
-            String[] tokens = s.split(";");  
+        String[] tokens = s.split(";");  
             
-            ArrayList<String> friends = new ArrayList<>();
-            if(tokens.length > 3) {
-                String[] amigos = tokens[3].split(",");  
+        ArrayList<String> friends = new ArrayList<>();
+        if(tokens.length > 3) {
+            String[] amigos = tokens[3].split(",");  
                 
-
-                for(String amigo : amigos){
+            for(String amigo : amigos){
                     friends.add(amigo);
-                }
             }
-            User user = new User(tokens[0], tokens[1], friends);
+        }
+        User user = new User(tokens[0], tokens[1], friends);
             
-            users.addUser(user);
-             
-        }
+        users.addUser(user.clone());
+    }
 
-        public String[] getFichDefaut() {
-            String[] ficheirosDefault = new String[3];
-            ficheirosDefault[0] ="./input/business_full.csv";
-            ficheirosDefault[1] ="./input/reviews_1M.csv";
-            ficheirosDefault[2] ="./input/users_full.csv";
-            return ficheirosDefault;
-        }
-
-        
-
+    public String[] getFichDefaut() {
+        String[] ficheirosDefault = new String[3];
+        ficheirosDefault[0] ="./input/business_full.csv";
+        ficheirosDefault[1] ="./input/reviews_1M.csv";
+        ficheirosDefault[2] ="./input/users_full.csv";
+        return ficheirosDefault;
+    }
 }
