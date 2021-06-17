@@ -1,4 +1,4 @@
-import model.Business.*;
+import model.Businesses.*;
 import model.Reviews.*;
 import model.Users.*;
 //import controller.*;

@@ -3,7 +3,9 @@ package model.Reviews;
 import view.View;
 
 import java.util.List;
+import java.util.Map;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ReviewList {
     private List<Review> list ; 
@@ -91,6 +93,15 @@ public class ReviewList {
          }
          return procura;
      }
+     
+     public Map<String,List<Review>> reviewsPorUser(){
+        Map <String,List<Review>> resultado = new HashMap<>();
+        for(Review rev: this.list){
+            resultado.putIfAbsent(rev.getUserId(),new ArrayList<>());
+            resultado.get(rev.getUserId()).add(rev.clone());
+        }
+        return resultado;
+    }
 
  }
 
