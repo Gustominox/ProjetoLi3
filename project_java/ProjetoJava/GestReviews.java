@@ -397,6 +397,42 @@ quantas vezes avaliou).
     }
 
 
+    public void consulta9(int x, String business_id, ReviewList reviews, UserList users){
+
+        StringBuilder sb =  new StringBuilder();
+
+        Business negocio = new Business(business_id);
+        ReviewList reviewsDoNegocio = negocio.getReviews(reviews);   // lista com todos as reviews daquele negócio
+
+        List<User> topUsersDoNeg = new ArrayList<>();    // lista com os top x usuários do dito negócio
+
+        for(Review rev: reviewsDoNegocio.getList()){
+            String user_id = rev.getUserId();
+            User user = new User(user_id);
+
+            if(!topUsersDoNeg.contains(user))
+                topUsersDoNeg.add(user.clone());
+        }
+       
+        Comparator<User> comp = (u1,u2) -> u2.nrReviewsTotal(reviewsDoNegocio) - u1.nrReviewsTotal(reviewsDoNegocio);
+        topUsersDoNeg.stream().map(User::clone).sorted(comp).limit(x).collect(Collectors.toList());
+
+        sb.append("Business Id: " + business_id);
+
+        int posicao = 1;
+        for(User user: topUsersDoNeg){
+            ReviewList reviewsDoUser = user.getReviews(reviewsDoNegocio);
+            float media = reviewsDoUser.getClassificacaoMedia();       // cálculo da classificação média de cada top user
+            
+            sb.append("  " + posicao + "º User Id (que mais o avaliou): " + user.getUserId());
+            sb.append("      Classificação média do négocio: " + media);
+            posicao++;
+        }
+        View view = new View();
+        view.print(sb.toString());
+    }
+
+
     
 
 
