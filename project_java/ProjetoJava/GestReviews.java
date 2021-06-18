@@ -145,53 +145,50 @@ quantas vezes avaliou).
         view.print(sb.toString()); 
     }
     
-    public void auxBusiness(String[] infoBus, List<Review> reviewsValidas){
+    public void dadosSobreBusiness(BusinessList businesses, ReviewList reviewsValidas){
 
-        int nrTotalBus = 0;
-        int totBusAval = 0;
-    
-        for(String s: infoBus){
+        int nrBusTotal = 0;
+        int busAval = 0;
+        StringBuilder sb =  new StringBuilder();
 
-            Business camposBusiness = Business.parse(s);
-            Business novoBusiness = new Business(camposBusiness);
+        for(Business bus: businesses){
 
-            if(novoBusiness.getBusinessId().length() != 0){
-                nrTotalBus++;
-                totBusAval += nrBusAvaliados(novoBusiness, reviewsValidas);
+            if(bus.getBusinessId().length() != 0){
+                nrBusTotal++;
+                busAval += nrBusAval(bus, reviewsValidas);
             }
         }
+        sb.append("    Número total de negócios: " + nrBusTotal);
+        sb.append("    Número de negócios avaliados: " + busAval);
+        sb.append("    Número de negócios não avaliados: " + (nrTotalBus - busAval)); 
 
-        System.out.println("    Número de negócios: " + nrTotalBus);
-        System.out.println("    Número de negócios avaliados: " + totBusAval);
-        System.out.println("    Número de negócios não avaliados: " + (nrTotalBus - totBusAval));      
+        View view = new View();
+        view.print(sb.toString());      
     }
     
-    public void auxUser(String[] infoUser, List<Review> reviewsValidas){
+    public void dadosSobreReview(ReviewList reviews){
 
-        int nrUserTotal = 0;
-        int usersAval = 0;
-        int usersNaoAval = 0;
+        int nrRevErradas = 0;
+        int nrRevSemImpacto = 0;
+        StringBuilder sb =  new StringBuilder();
 
-        for(String s: infoUser){
-
-            String[] camposUser = User.parse(s);
-            User novoUser = new User(camposUser);
-
-            if(novoUser.getUserId().length() != 0){
-                nrUserTotal++;
-                usersAval += nrUsersAvaliaram(novoUser, reviewsValidas);
-            }         
+        for(Review rev: reviews){
+            
+            if(rev.getReviewId().length() == 0) nrRevErradas++;
+            else{
+                int somatorio = rev.getCool() + rev.getFunny() + rev.getUseful();
+                if(somatorio == 0) nrRevSemImpacto++;
+            }
         }
-        usersNaoAval = nrUserTotal - usersAval;
+        sb.append("    Número de reviews errados: " + nrRevErradas);
+        sb.append("    Número de reviews com 0 impacto: " + nrRevSemImpacto);
 
-        System.out.println("    Número total de users: " + nrUserTotal);
-        System.out.println("    Número de users que fizeram reviews: " + usersAval);
-        System.out.println("    Número de users que nada avaliaram: " + usersNaoAval); 
+        View view = new View();
+        view.print(sb.toString());        
     }
 
-    public int nrBusAvaliados(Business novoBusiness, List<Review> reviewsValidas){
-
-        String busId = novoBusiness.getBusinessId();
+    public int nrBusAval(Business business, ReviewList reviewsValidas){
+        String busId = business.getBusinessId();
 
         for(Review rev: reviewsValidas){
             if(busId.equals(rev.getBusinessId())){
@@ -214,78 +211,38 @@ quantas vezes avaliou).
     
     
     /***************************** QUERY 2 **************************************/
-    public void revPorMes(List<Review> reviewsValidas){
-        int nrRev = 0;
-        int revJan=0, revFeb=0, revMar=0, revAbr=0, revMaio=0, revJun=0, revJul=0, revAgo=0, revSet=0, revOut=0, revNov=0, revDez=0;
-        
-        for(Review rev: reviewsValidas){
-            switch(rev.getDate().getMonthValue()){
-                case 1:
-                    revJan++;
-                    break;
-                    
-                case 2:
-                    revFeb++;
-                    break;
-                    
-                case 3:
-                    revMar++;
-                    break;
-                
-                case 4:
-                    revAbr++;
-                    break;
-                    
-                case 5:
-                    revMaio++;
-                    break;
-                
-                case 6:
-                    revJun++;
-                    break;
-                    
-                case 7:
-                    revJul++;
-                    break;
-                    
-                case 8:
-                    revAgo++;
-                    break;
-                    
-                case 9:
-                    revSet++;
-                    break;
-                    
-                case 10:
-                    revOut++;
-                    break;
-                    
-                case 11:
-                    revNov++;
-                    break;
-                    
-                case 12:
-                    revDez++;
-                    break;
-            }
+    public int[] nrRevPorMes(ReviewList reviews){
+        int[12] revMes;
+        for(Review rev: reviews.getList()){ //guardamos numa lista todas as reviews que o user fez
+            revMes[rev.getDate().getMonthValue()-1]++;
         }
-        StringBuilder sb =  new StringBuilder();
-        sb.append("Reviews em janeiro: " + revJan);
-        sb.append("Reviews em fevereiro: " + revFeb);
-        sb.append("Reviews em março: " + revMar);
-        sb.append("Reviews em abril: " + revAbr);
-        sb.append("Reviews em maio: " + revMaio);
-        sb.append("Reviews em junho: " + revJun);
-        sb.append("Reviews em julho: " + revJul);
-        sb.append("Reviews em agosto: " + revAgo);
-        sb.append("Reviews em setembro: " + revSet);
-        sb.append("Reviews em outobro: " + revOut);
-        sb.append("Reviews em novembro: " + revNov);
-        sb.append("Reviews em dezembro: " + revDez);
-
-        View view = new View();
-        view.print(sb.toString());
+    return revMes;
     }
+
+    public float[] classificacaoReview(int[] revMes, ReviewList reviews){
+
+        float[12] clasPorMes;
+        float[12] stars;
+        for(Review rev: reviews.getList()){ //guardamos numa lista todas as reviews que o user fez
+            stars[rev.getDate().getMonthValue()-1] += rev.getStars();
+
+        }
+        for(int i=0; i<12; i++){
+            clasPorMes[i] = stars[i] / revMes[i];
+        }
+        return clasPorMes;
+    }
+
+    public float mediaGlobalReview(ReviewList reviews){
+    float stars = 0;
+    int nrRev = 0;
+    for(Review rev: reviews.getList()){
+        nrRev++;
+        stars += rev.getStars();
+    }
+    float res = stars / nrRev;
+    return res;
+}
 
     public int[] userPorMes(ReviewList reviews, UserList users){
         //é uma lista com os user id
@@ -315,8 +272,97 @@ quantas vezes avaliou).
         return res;
     }
 
+    public void estatica2(ReviewList reviews, UserList users){
+        int[12] revPorMes = nrRevPorMes(reviews);
+        int[12] claPorMes = classificacaoReview(revPorMes, reviews);
+        float valorGlobal = mediaGlobalReview(reviews);
+        int[12] userPorMes = userPorMes(reviews, users);
 
+        StringBuilder sb =  new StringBuilder();
+        for(int i=1; i<=12; i++){
+            sp.append("  Mês " + i + ":");
+            sp.append("\n");
+            sp.append("    Número total de reviews - " + revPorMes[i]);
+            sp.append("    Média de classificação de reviews - " + claPorMes[i]);
+            sp.append("    Número de distintos utilizadores que avaliaram - " + userPorMes[i]);
+            sp.append("\n");
+        }
+        sp.append("  Média global de reviews - " + valorGlobal);
+        View view = new View();
+        view.print(sb.toString());
+    }
     /********************************* CONSULTAS INTERATIVAS ********************************/
+
+    /**
+Consulta 3
+
+Dado um código de utilizador, determinar, para cada mês, quantas reviews fez,
+quantos negócios distintos avaliou e que nota média atribuiu;
+
+ */
+
+public void consulta3(String userId, ReviewList review, BusinessList business){
+
+    float[12] stars;
+    int[12] revMes;
+    List<Review> novaList  = new ArrayList<>();
+    for(Review rev: review.getList()){ //guardamos numa lista todas as reviews que o user fez
+        if(rev.getUserId().equals(userId)){
+            novaList.add(rev.clone);
+            revMes[rev.getDate().getMonthValue()-1]++;
+            stars[rev.getDate().getMonthValue()-1] += rev.getStars();
+        }
+
+    }
+
+    int[12] busMes;
+    List<Business> novaList2  = new ArrayList<>();
+    for(Review rev: novaList){ //percurremos a lista de todas as reviews que o user fez
+        String id = rev.getBusinessId();
+        for(Business bus: business.getList()){ //guardamos numa lista todos os negocios que o user fez um review
+            if(bus.getBusinessId().equals(id) && !novaList2.contains(bus)){
+                novaList2.add(bus.clone());//para ver se já não fez uma review desse business antes
+                busMes[rev.getDate().getMonthValue()-1]++;
+            }
+
+        }
+
+        imprimeQuery3(revMes, busMes, stars);
+    }
+}
+
+
+public void imprimeQuery3(int[] revMes, int[] busMes, int[] stars){
+
+    StringBuilder sb =  new StringBuilder();
+    sb.append("  Janeiro:");
+    sb.append("    Número de reviews: " + revMes[0] + " , número de negócios avaliados: " + busMes[0] + " , nota média: " + stars[0]/revMes[0]);
+    sb.append("  Fevereiro:");
+    sb.append("    Número de reviews: " + revMes[1] + " , número de negócios avaliados: " + busMes[1] + " , nota média: " + stars[1]/revMes[1]);
+    sb.append("  Março:");
+    sb.append("    Número de reviews: " + revMes[2] + " , número de negócios avaliados: " + busMes[2] + " , nota média: " + stars[2]/revMes[2]);
+    sb.append("  Abril:");
+    sb.append("    Número de reviews: " + revMes[3] + " , número de negócios avaliados: " + busMes[3] + " , nota média: " + stars[3]/revMes[3]);
+    sb.append("  Maio:");
+    sb.append("    Número de reviews: " + revMes[4] + " , número de negócios avaliados: " + busMes[4] + " , nota média: " + stars[4]/revMes[4]);
+    sb.append("  Junho:");
+    sb.append("    Número de reviews: " + revMes[5] + " , número de negócios avaliados: " + busMes[5] + " , nota média: " + stars[5]/revMes[5]);
+    sb.append("  Julho:");
+    sb.append("    Número de reviews: " + revMes[6] + " , número de negócios avaliados: " + busMes[6] + " , nota média: " + stars[6]/revMes[6]);
+    sb.append("  Agosto:");
+    sb.append("    Número de reviews: " + revMes[7] + " , número de negócios avaliados: " + busMes[7] + " , nota média: " + stars[7]/revMes[7]);
+    sb.append("  Setembro:");
+    sb.append("    Número de reviews: " + revMes[8] + " , número de negócios avaliados: " + busMes[8] + " , nota média: " + stars[8]/revMes[8]);
+    sb.append("  Outubro:");
+    sb.append("    Número de reviews: " + revMes[9] + " , número de negócios avaliados: " + busMes[9] + " , nota média: " + stars[9]/revMes[9]);
+    sb.append("  Novembro:");
+    sb.append("    Número de reviews: " + revMes[10] + " , número de negócios avaliados: " + busMes[10] + " , nota média: " + stars[10]/revMes[10]);
+    sb.append("  Dezembro:");
+    sb.append("    Número de reviews: " + revMes[11] + " , número de negócios avaliados: " + busMes[11] + " , nota média: " + stars[11]/revMes[11]);
+    View view = new View();
+    view.print(sb.toString());
+}
+
 
     public void consulta5(int x, String user_id, ReviewList reviews, BusinessList businesses){
 
@@ -355,6 +401,69 @@ quantas vezes avaliou).
         View view = new View();
         view.print(sb.toString());
     }
+
+    /**
+Consulta 6
+
+Determinar o conjunto dos X negócios mais avaliados (com mais reviews) em cada
+ano, indicando o número total de distintos utilizadores que o avaliaram (X é um
+inteiro dado pelo utilizador)
+
+ */
+
+ public void consulta6(int x, BusinessList businesses, ReviewList reviews){
+        //ano             //lista de businesses desse ano
+    Map<Integer, BusinessList> res = new HashMap<>();
+
+        // business id        // users que avaliaram esse negócio
+    Map<String, List<User>> usersPorNeg = new HashMap<>();
+
+    Comparator<Business> comp = (b1,b2) -> b2.nrReviewsTotal(reviews) - b1.nrReviewsTotal(reviews);
+
+    for(Review rev: reviews.getList()){ //estamos a percorrer as reviews (mais especificamente o ano)
+        int ano = rev.getDate().getYear();
+        
+        if(!res.containsKey(ano)){ //se o ano nao se encontrar ainda no map
+
+            BusinessList negociosDoAno = rev.negociosDoAno(businesses);
+
+            if(negociosDoAno.getList().length() != 0){
+                negociosDoAno.getList().stream().map(Business::clone).sorted(comp).limit(x).collect(Collectors.toList());
+                res.put(rev.getDate().getYear(), negociosDoAno);
+            }
+        }
+    }
+
+    for(BusinessList negocios: res.values()){
+
+        for(Business negocio: negocios.getList()){
+            String business_id = bus.getBusinessId();
+            ReviewList revDoNegocio = negocio.getReviews(reviews);
+            
+            List<User> aux = new ArrayList<>();
+            for(Review rev: revDoNegocio.getList()){
+                String user_id = rev.getUserId();
+
+                User user = new User(user_id);
+                if(!aux.contains(user)){
+                    aux.add(user.clone());
+                }
+            }
+            usersPorNeg.put(business_id, aux);
+        }
+    }
+
+    StringBuilder sb =  new StringBuilder();
+    for(Map.Entry<Integer, BusinessList> entry: res.entrySet){
+        sb.append("  Ano " + entry.getKey());
+        for(Business bus: entry.getvalue().getList()){
+                sp.append("    Negócio: " + bus.getBusinessId());
+                sp.append("      " + usersPorNeg.get(bus.getBusinessId()).size() + "users avaliaram este negócio");
+        }
+    }
+    View view = new View();
+    view.print(sb.toString());
+ }
 
 
     public void consulta7(BusinessList businesses, ReviewList reviews){
@@ -396,6 +505,39 @@ quantas vezes avaliou).
         }
     }
 
+    /**
+Consulta 8
+
+Determinar os códigos dos X utilizadores (sendo X dado pelo utilizador) que
+avaliaram mais negócios diferentes, indicando quantos, sendo o critério de
+ordenação a ordem decrescente do número de negócios;
+
+ */
+
+
+ public void consulta8(int x, BusinessList businesses, ReviewList reviews, UserList users){
+        //user id
+    Map<String, BusinessList> res = new HashMap<>();
+    
+    Comparator<User> comp = (u1,u2) -> u2.nrBusinessTotal(reviews, businesses) - u1.nrBusinessTotal(reviews, businesses);
+
+    for(User user: users.getList()){
+        BusinesssList negociosDoUser = user.negociosDoUser(reviews, businesses);
+
+        if(negociosDoUser.getList().length() != 0){
+                negociosDoUser.getList().stream().map(Business::clone).sorted(comp).limit(x).collect(Collectors.toList());
+                res.put(user.getUserId(), negociosDoUser);
+            }
+    }
+
+    StringBuilder sb =  new StringBuilder();
+    for(Map.Entry<String, BusinessList> entry: res.entrySet){
+        sb.append("  User: " + entry.getKey());
+        sb.appende("    Número de negócios diferentes que avaliou: " + entry.getValue().getList().size());
+    }
+    View view = new View();
+    view.print(sb.toString());
+ }
 
     public void consulta9(int x, String business_id, ReviewList reviews, UserList users){
 

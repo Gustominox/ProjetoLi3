@@ -207,6 +207,20 @@ public class Review
         return camposRev;
     }
     
+    public BusinessList negociosDoAno(BusinessList businesses){
+        int ano = getDate().getYear();
+
+        BusinessList negocios = new BusinessList();
+        List<Business> aux = new ArrayList<>();
+
+        for(Business bus: businesses.getList()){
+            if(getBusinessId().equals(bus.getBusinessId()))
+                aux.add(bus.clone());
+        }
+        negocios.setList(aux);
+        return negocios;
+    }
+
     public Review clone(){
         return new Review(this);
     }
