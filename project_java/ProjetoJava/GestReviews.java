@@ -376,12 +376,13 @@ public void consulta5(int x, String user_id, ReviewList reviews, BusinessList bu
     }
     
     // ordenar os negócios com os critérios estipulados
-    List<Map.Entry<Business,Integer>> ordenados = busNr.entrySet().stream().sorted(cmp).limit(x).collect(Collectors.toList());
+    Map<Business,Integer> ordenados = busNr.entrySet().stream().sorted(cmp).limit(x)
+                                           .collect(Collectors.toMap(e->e.getKey().clone(), e->getValue()));
 
-    sb.append("User Id - ").append(user_id);
+    sb.append("User Id - ").append(user_id).append("\n");
 
     int posicao = 1;
-    for(Map.Entry<Business,Integer> bus: ordenados){
+    for(Map.Entry<Business,Integer> bus: ordenados.entrySet()){
         sb.append("  ").append(posicao).append("º Business Id (que avaliou ");
         sb.append(bus.getValue()).append(" vezes): ").append(bus.getKey().getBusinessId()).append("\n");
         posicao++;
@@ -566,7 +567,8 @@ ordenação a ordem decrescente do número de negócios;
     View view = new View();
     view.print(sb.toString());
  }
-/*
+
+
     public void consulta9(int x, String business_id, ReviewList reviews, UserList users){
 
         StringBuilder sb =  new StringBuilder();
@@ -574,34 +576,48 @@ ordenação a ordem decrescente do número de negócios;
         Business negocio = new Business(business_id);
         ReviewList reviewsDoNegocio = negocio.getReviews(reviews);   // lista com todos as reviews daquele negócio
 
-        List<User> topUsersDoNeg = new ArrayList<>();    // lista com os top x usuários do dito negócio
+        Map<String, List<Review>> userRev = new HashMap<>();
 
-        for(Review rev: reviewsDoNegocio.getList()){
-            String user_id = rev.getUserId();
-            User user = new User(user_id);
-
-            if(!topUsersDoNeg.contains(user))
-                topUsersDoNeg.add(user.clone());
+        for(Review r: reviewsDoNegocio.getList()){
+            if(!userRev.containsKey(r.getUserId())){
+                List<Review> aux = new ArrayList<>();
+                userRev.put(r.getUserId(), aux.add(r.clone()));
+            }else{
+                List<Review> aux = userRev.get(r.getUserId());
+                userRev.remove(r.getUserId());
+                userRev.put(r.getUserId(), aux.add(r.clone());
+            }
         }
        
-        Comparator<User> comp = (u1,u2) -> u2.nrReviewsTotal(reviewsDoNegocio) - u1.nrReviewsTotal(reviewsDoNegocio);
-        topUsersDoNeg.stream().map(User::clone).sorted(comp).limit(x).collect(Collectors.toList());
+        Comparator<Map.Entry<String,List<Review>>> cmp = (p1,p2) -> p2.getValue().size() - p1.getValue().size();
+        Map<String, List<Review>> ordenados = userRev.entrySet().stream().sorted(comp)
+                                                     .limit(x).collect(Collectors
+                                                     .toMap(e->e.getKey(), 
+                                                            e->e.getValue().stream().map(Review::clone)
+                                                                           .collect(Collectors.toList())));
 
-        sb.append("Business Id: " + business_id);
+        sb.append("Business Id: ").append(business_id).append("\n");
 
         int posicao = 1;
-        for(User user: topUsersDoNeg){
+        for(Map.Entry<String,List<Review>> user: ordenados.entrySet()){
+            /*
             ReviewList reviewsDoUser = user.getReviews(reviewsDoNegocio);
             float media = reviewsDoUser.getClassificacaoMedia();       // cálculo da classificação média de cada top user
-            
-            sb.append("  " + posicao + "º User Id (que mais o avaliou): " + user.getUserId());
-            sb.append("      Classificação média do négocio: " + media);
+            */
+            float classificacao = 0;
+            for(Review rev: user.getValue()){
+                classificacao += rev.getStars();
+            }
+            float media = classificacao / user.getValue().size();
+
+            sb.append("  ").append(posicao).append("º User Id (que mais o avaliou): ")
+                           .append(user.getUserId()).append("\n");
+            sb.append("      Classificação média do négocio: ").append(media).append("\n");
             posicao++;
         }
         View view = new View();
         view.print(sb.toString());
     }
-    */
 
 
     
