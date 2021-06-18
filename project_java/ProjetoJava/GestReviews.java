@@ -98,20 +98,26 @@ quantas vezes avaliou).
     }
     
     /************************** QUERY 1 *****************************/
-    public void query1(String[] infoRev, String[] infoBus, String[] infoUser){
-        List<Review> reviewsValidas = reviewsValidas(infoRev);
-        
-        System.out.println("Nome do ficheiro: reviews.csv");
-        auxRev(infoRev);
-        System.out.println("\n");
+    public void query1(ReviewList reviews, BusinessList businesses, UserList users){
 
-        System.out.println("Nome do ficheiro: business.csv");
-        auxBusiness(infoBus, reviewsValidas);
-        System.out.println("\n");
+        StringBuilder sb =  new StringBuilder();
+
+        ReviewList reviewsValidas = reviewsValidas(reviews);
+
+        sb.append("Nome do ficheiro: reviews.csv");
+        dadosSobreReview(reviews);
+        sb.append("\n");
+
+        sb.append("Nome do ficheiro: business.csv");
+        dadosSobreBusiness(businesses, reviewsValidas);
+        sb.append("\n");
         
-        System.out.println("Nome do ficheiro: users.csv");
-        auxUser(infoUser, reviewsValidas);
-        System.out.println("\n");
+        sb.append("Nome do ficheiro: users.csv");
+        dadosSobreUser(users, reviewsValidas);
+        sb.append("\n");
+
+        View view = new View();
+        view.print(sb.toString());
     }
     
     public void auxRev(String[] infoRev){
