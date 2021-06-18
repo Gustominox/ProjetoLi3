@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.util.Arrays;
+import model.Reviews.*;
 
 public class User
 {
@@ -86,7 +87,7 @@ public class User
     public int nrReviewsTotal(ReviewList reviews){
         int total = 0;
 
-        for(Review rev: reviews){
+        for(Review rev: reviews.getList()){
             if(this.userId.equals(rev.getUserId()))
                 total++;
         }

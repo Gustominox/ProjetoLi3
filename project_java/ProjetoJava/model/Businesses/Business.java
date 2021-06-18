@@ -11,6 +11,10 @@ import java.util.List;
 import java.util.Set;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
+
+import model.Reviews.Review;
+import model.Reviews.ReviewList;
+
 import java.util.Arrays;
 
 public class Business
@@ -105,7 +109,7 @@ public class Business
     public int nrReviewsTotal(ReviewList reviews){
         int total = 0;
 
-        for(Review rev: reviews){
+        for(Review rev: reviews.getList()){
             if(this.businessId.equals(rev.getBusinessId()))
                 total++;
         }

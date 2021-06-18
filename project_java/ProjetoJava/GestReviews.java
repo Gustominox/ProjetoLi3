@@ -353,9 +353,9 @@ public Map<Integer, List<Integer>> query4 (String businessId){
         int stars=0;
         List <Integer> lista2=new ArrayList<>();
         Set <String>lista = new TreeSet<>();
-        for( Review r : rev. getList()){
+        for( Review r : rev.getList()){
             if (r.getBusinessId().equals(businessId)){
-                if (r.getDate().getMonth().equals(mes-1) ){ // retorna o mes de 0 a 11
+                if (r.getDate().getMonthValue() == mes ){ // retorna o mes de 1 a 12
                     quantidade++;
                     lista.add(r.getUserId());
                     stars += r.getStars();
