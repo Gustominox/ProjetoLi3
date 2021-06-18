@@ -530,6 +530,39 @@ inteiro dado pelo utilizador)
         }
     }
 
+    /**
+Consulta 8
+
+Determinar os códigos dos X utilizadores (sendo X dado pelo utilizador) que
+avaliaram mais negócios diferentes, indicando quantos, sendo o critério de
+ordenação a ordem decrescente do número de negócios;
+
+ */
+
+
+ public void consulta8(int x, BusinessList businesses, ReviewList reviews, UserList users){
+        //user id
+    Map<String, BusinessList> res = new HashMap<>();
+    
+    Comparator<User> comp = (u1,u2) -> u2.nrBusinessTotal(reviews, businesses) - u1.nrBusinessTotal(reviews, businesses);
+
+    for(User user: users.getList()){
+        BusinesssList negociosDoUser = user.negociosDoUser(reviews, businesses);
+
+        if(negociosDoUser.getList().length() != 0){
+                negociosDoUser.getList().stream().map(Business::clone).sorted(comp).limit(x).collect(Collectors.toList());
+                res.put(user.getUserId(), negociosDoUser);
+            }
+    }
+
+    StringBuilder sb =  new StringBuilder();
+    for(Map.Entry<String, BusinessList> entry: res.entrySet){
+        sb.append("  User: " + entry.getKey());
+        sb.appende("    Número de negócios diferentes que avaliou: " + entry.getValue().getList().size());
+    }
+    View view = new View();
+    view.print(sb.toString());
+ }
 
     public void consulta9(int x, String business_id, ReviewList reviews, UserList users){
 
