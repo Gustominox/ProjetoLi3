@@ -275,7 +275,25 @@ quantas vezes avaliou).
         return res;
     }
 
+    public void estatica2(ReviewList reviews, UserList users){
+        int[12] revPorMes = nrRevPorMes(reviews);
+        int[12] claPorMes = classificacaoReview(revPorMes, reviews);
+        float valorGlobal = mediaGlobalReview(reviews);
+        int[12] userPorMes = userPorMes(reviews, users);
 
+        StringBuilder sb =  new StringBuilder();
+        for(int i=1; i<=12; i++){
+            sp.append("  Mês " + i + ":");
+            sp.append("\n");
+            sp.append("    Número total de reviews - " + revPorMes[i]);
+            sp.append("    Média de classificação de reviews - " + claPorMes[i]);
+            sp.append("    Número de distintos utilizadores que avaliaram - " + userPorMes[i]);
+            sp.append("\n");
+        }
+        sp.append("  Média global de reviews - " + valorGlobal);
+        View view = new View();
+        view.print(sb.toString());
+    }
     /********************************* CONSULTAS INTERATIVAS ********************************/
 
     /**
