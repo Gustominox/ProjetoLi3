@@ -577,7 +577,13 @@ ordenação a ordem decrescente do número de negócios;
     view.print(sb.toString());
  }
 
-/*
+
+
+
+
+
+
+ 
     public void consulta9(int x, String business_id, ReviewList reviews, UserList users){
 
         StringBuilder sb =  new StringBuilder();
@@ -601,7 +607,8 @@ ordenação a ordem decrescente do número de negócios;
         }
        
         Comparator<Map.Entry<String,List<Review>>> cmp = (p1,p2) -> p2.getValue().size() - p1.getValue().size();
-        Map<String, List<Review>> ordenados = userRev.entrySet().stream().sorted(comp)
+        
+        Map<String, List<Review>> ordenados = userRev.entrySet().stream().sorted(cmp)
                                                      .limit(x).collect(Collectors
                                                      .toMap(e->e.getKey(), 
                                                             e->e.getValue().stream().map(Review::clone)
@@ -611,10 +618,7 @@ ordenação a ordem decrescente do número de negócios;
 
         int posicao = 1;
         for(Map.Entry<String,List<Review>> user: ordenados.entrySet()){
-            /*
-            ReviewList reviewsDoUser = user.getReviews(reviewsDoNegocio);
-            float media = reviewsDoUser.getClassificacaoMedia();       // cálculo da classificação média de cada top user
-            
+          
             float classificacao = 0;
             for(Review rev: user.getValue()){
                 classificacao += rev.getStars();
@@ -622,13 +626,13 @@ ordenação a ordem decrescente do número de negócios;
             float media = classificacao / user.getValue().size();
 
             sb.append("  ").append(posicao).append("º User Id (que mais o avaliou): ")
-                           .append(user.getUserId()).append("\n");
+                           .append(user.getKey()).append("\n");
             sb.append("      Classificação média do négocio: ").append(media).append("\n");
             posicao++;
         }
         View view = new View();
         view.print(sb.toString());
-    }*/
+    }
 
 
     

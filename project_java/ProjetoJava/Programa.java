@@ -31,13 +31,13 @@ public class Programa {
         //reviews.mostrarReviews();
         // Map<Integer,List<Integer>>map =gest.query4("_bZOUUc6Sr_W3BxbOUJacw");
         // System.out.println( map.toString());
-        
+        gest.consulta9(3,"rQ8NMRJfhTTV77gFoVYHyA",reviews,users);
         //gest.consulta3("djp57omz9cccV1wI0_sqqA",reviews,businesses);
         //gest.estatistica1(reviews, businesses, users);
         //System.out.println( gest.consulta10().toString());
         //System.out.println( gest.consulta1().toString());
         //System.out.println( gest.consulta2(4,2014).toString());
-        gest.consulta5(10,"YoVfDbnISlW0f7abNQACIg",reviews);
+       // gest.consulta5(10,"YoVfDbnISlW0f7abNQACIg",reviews);
         
     }
 
