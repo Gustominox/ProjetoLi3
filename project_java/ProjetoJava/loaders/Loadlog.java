@@ -59,7 +59,7 @@ public class Loadlog {
        try{
         String[] tokens = s.split(";");  
                 
-        String[] tokensDate = s.split("-| |:");  
+        String[] tokensDate = tokens[7].split("-| |:");  
 
         LocalDateTime date;
 
@@ -85,6 +85,7 @@ public class Loadlog {
         reviews.addReview(review.clone());
     }
     catch(Exception e){
+    //e.printStackTrace();
     }
     }
         

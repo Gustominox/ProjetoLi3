@@ -9,7 +9,9 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.InputMismatchException;
+import java.util.Map;
 import java.util.Scanner ;
 
 public class Programa {
@@ -25,9 +27,9 @@ public class Programa {
         UserList users          = new UserList();
         
         log.load(log.getFichDefaut(), businesses, reviews, users);
-
-        businesses.mostrarBusinesss();
-
+        GestReviews gest = new GestReviews(businesses, reviews, users);
+        Map<Integer,List<Integer>>map =gest.query4("_bZOUUc6Sr_W3BxbOUJacw");
+        System.out.println( map.toString());
     }
 
 

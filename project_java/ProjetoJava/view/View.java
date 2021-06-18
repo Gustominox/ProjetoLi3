@@ -1,6 +1,9 @@
 package view;
 
-import model.*;
+import model.Businesses.*;
+import model.Reviews.*;
+import model.Users.*;
+
 import java.util.ArrayList;
 
 

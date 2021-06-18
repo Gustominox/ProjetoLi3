@@ -27,6 +27,8 @@ public class GestReviews{
      private UserList user ;
     
 
+
+
   /*  public void guardaEstado(String nomeFich) throws FileNotFoundException, IOException{
         FileOutputStream fos = new FileOutputStream(nomeFich);
         ObjectOutputStream oos = new ObjectOutputStream(fos);
@@ -66,6 +68,12 @@ quantas vezes avaliou).
 //     return  business.size();
 //    }
 
+
+    public GestReviews(BusinessList bus, ReviewList rev, UserList user) {
+        this.bus = bus;
+        this.rev = rev;
+        this.user = user;
+    }
 
     public void guardaEstado(String nomeFich) throws FileNotFoundException, IOException{
         FileOutputStream fos = new FileOutputStream(nomeFich);
@@ -139,7 +147,7 @@ quantas vezes avaliou).
     
         for(String s: infoBus){
 
-            String[] camposBusiness = Business.parse(s);
+            Business camposBusiness = Business.parse(s);
             Business novoBusiness = new Business(camposBusiness);
 
             if(novoBusiness.getBusinessId().length() != 0){
@@ -357,7 +365,9 @@ public Map<Integer, List<Integer>> query4 (String businessId){
     int valor =lista.size();
     lista2.add(quantidade);
     lista2.add(valor);
-    media= stars/quantidade;
+    if(quantidade > 0)
+        media= stars/quantidade;
+    else media = 0;
     lista2.add(media);
     map.put(mes,lista2);
 }
@@ -411,7 +421,7 @@ public  SimpleEntry<Integer,Set<String>> query1(){
             return new SimpleEntry(tamanho,aux);
         }
 */
-
+/*
 public Map<String,Map<String,List<SimpleEntry<String,Integer>>>> query10() {
     Map<String,Map<String,List<SimpleEntry<String,Integer>>>> ret = new HashMap <String,Map<String,List<SimpleEntry<String,Integer>>>>();
     for(Business aux : this.bus.getList()){ 
@@ -419,14 +429,14 @@ public Map<String,Map<String,List<SimpleEntry<String,Integer>>>> query10() {
         ret.get(aux.getState()).putIfAbsent(aux.getCity(), null); // ver se tem a cidade senao tiver acrescenta       
         String id = aux.getBusinessId();
         int media=(int) this.rev.getList().stream().filter(l->l.getBusinessId().equals(id)).
-                map(l->l.getStars()).collect(Collectors.toList())).average();
+                map(l->l.getStars()).collect(Collectors.toList());//.average();
         ret.get(aux.getState()).get(aux.getCity()).add( new SimpleEntry(id,media));
     
        }
        return ret;
     }
 
-
+*/
 
 
 

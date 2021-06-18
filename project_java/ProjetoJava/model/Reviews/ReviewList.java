@@ -54,13 +54,14 @@ public class ReviewList {
      // so o nome de tds as Reviews 
      public void mostrarReviews(){
         View view = new View();
-        StringBuilder sb = new StringBuilder();
         int aux = 0;
         for(Review review : list) {
             aux++;
+
+            StringBuilder sb = new StringBuilder();
             sb.append( aux + "-" + review.toString()).append("\n");
+            view.print(sb.toString());
         }
-        view.print(sb.toString());
  
      }
  
