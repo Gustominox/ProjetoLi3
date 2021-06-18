@@ -53,7 +53,7 @@ import java.util.Scanner ;
 
                 case 1:
                 view.menuEstatisticas();
-
+                scan.nextLine();
                 break;
                 case 2:
 

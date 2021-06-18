@@ -41,9 +41,11 @@ public class View {
         sb.append("  -total de users que nada avaliaram\n");
         sb.append("  -total de users inativos (sem reviews)\n");
         sb.append("  -reviews com 0 impacto (0 valores no somatório de cool, funny ou useful)\n");
-        sb.append("ESTATISCAS 1)\n  -Número total de reviews por mês\n");
+        sb.append("ESTATISCAS 2)\n  -Número total de reviews por mês\n");
         sb.append("  -Média de classificação de reviews por mês e o valor global (média global de reviews);\n");
         sb.append("  -Número de distintos utilizadores que avaliaram em cada mês .\n");
+
+        System.out.println(sb.toString());
     }
 
 

@@ -29,7 +29,7 @@ public class Controller {
 
 
  
-
+/*
 	public void menu(){
      Scanner scan= new Scanner(System.in);
      View view =new View();
@@ -93,5 +93,5 @@ public class Controller {
                 break;
         }
     }
-    
+    */
 }
