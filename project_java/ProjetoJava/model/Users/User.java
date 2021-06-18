@@ -24,6 +24,12 @@ public class User
         this.name = "";
         this.friends = new ArrayList<>();
     }
+
+    public User(String id){
+        this.userId = id;
+        this.name = "";
+        this.friends = new ArrayList<>();
+    }
     
     public User(String user_id, String name, List<String> friends){
         this.userId = user_id;
@@ -75,6 +81,28 @@ public class User
     
     public void setFriends(List<String> friends){
         this.friends = friends.stream().collect(Collectors.toList());
+    }
+
+    public int nrReviewsTotal(ReviewList reviews){
+        int total = 0;
+
+        for(Review rev: reviews){
+            if(this.userId.equals(rev.getUserId()))
+                total++;
+        }
+        return total;
+    }
+
+    public ReviewList getReviews(ReviewList reviews){
+        ReviewList reviewsDoUser = new ReviewList();
+        List<Review> aux = new ArrayList<>();
+
+        for(Review rev: reviews.getList()){
+            if(this.userId.equals(rev.getUserId()))
+                aux.add(rev.clone());
+        }
+        reviewsDoUser.setList(aux);
+        return reviewsDoUser;
     }
     
     /**
