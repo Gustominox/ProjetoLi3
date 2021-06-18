@@ -359,46 +359,46 @@ public void imprimeQuery3(int[] revMes, int[] busMes, float[] stars){
     view.print(sb.toString());
 }
 
-public void consulta5(int x, String user_id){
+    public void consulta5(int x, String user_id){
 
-    StringBuilder sb =  new StringBuilder();
-    View view = new View();
+        StringBuilder sb =  new StringBuilder();
+        View view = new View();
 
-    User user = new User(user_id);
-    ReviewList reviewsDoUser = user.getReviews(this.reviews);
+        User user = new User(user_id);
+        ReviewList reviewsDoUser = user.getReviews(this.rev);
 
-    Map<Business,Integer> busNr = new HashMap<>();
-    // usado para analisar se o business já existe (ou não) no map anterior pelo seu business id
-    List<String> busId = new ArrayList<>();
+        Map<Business,Integer> busNr = new HashMap<>();
+        // usado para analisar se o business já existe (ou não) no map anterior pelo seu business id
+        List<String> busId = new ArrayList<>();
 
-    Comparator<Map.Entry<Business,Integer>> cmp = (p1,p2)-> ( p1.getValue() != p2.getValue() ) ?
-                                                            ( p2.getValue() - p1.getValue() ) :
-                                                              p1.getKey().getName().compareTo(p2.getKey().getName());
+        Comparator<Map.Entry<Business,Integer>> cmp = (p1,p2)-> ( p1.getValue() != p2.getValue() ) ?
+                                                                ( p2.getValue() - p1.getValue() ) :
+                                                                  p1.getKey().getName().compareTo(p2.getKey().getName());
 
-    for(Review r: reviewsDoUser.getList()){
-        Business bus = this.bus.getBusiness(r.getBusinessId());
-        if( !busId.contains(bus.getBusinessId()) ){
-            busNr.put(bus.clone(), 1);
-            busId.add(bus.getBusinessId());
-        }else{
-            int n = busNr.get(bus);
-            busNr.remove(bus);
-            busNr.put(bus.clone(), n+1);
+        for(Review r: reviewsDoUser.getList()){
+            Business bus = this.bus.getBusiness(r.getBusinessId());
+            if( !busId.contains(bus.getBusinessId()) ){
+                busNr.put(bus.clone(), 1);
+                busId.add(bus.getBusinessId());
+            }else{
+                int n = busNr.get(bus);
+                busNr.remove(bus);
+                busNr.put(bus.clone(), n+1);
+            }
         }
-    }
-    Map<Business,Integer> ordenados = busNr.entrySet().stream().sorted(cmp).limit(x)
+        Map<Business,Integer> ordenados = busNr.entrySet().stream().sorted(cmp).limit(x)
                                            .collect(Collectors.toMap(e->e.getKey().clone(), e->e.getValue()));
 
-    sb.append("User Id - ").append(user_id).append("\n");
+        sb.append("User Id - ").append(user_id).append("\n");
 
-    int posicao = 1;
-    for(Map.Entry<Business,Integer> bus: ordenados.entrySet()){
-        sb.append("  ").append(posicao).append("º Business Id (que avaliou ");
-        sb.append(bus.getValue()).append(" vezes): ").append(bus.getKey().getBusinessId()).append("\n");
-        posicao++;
+        int posicao = 1;
+        for(Map.Entry<Business,Integer> bus: ordenados.entrySet()){
+            sb.append("  ").append(posicao).append("º Business Id (que avaliou ");
+            sb.append(bus.getValue()).append(" vezes): ").append(bus.getKey().getBusinessId()).append("\n");
+            posicao++;
+        }
+        view.print(sb.toString());
     }
-    view.print(sb.toString());
-}
 
     /**
 Consulta 6
@@ -585,46 +585,46 @@ ordenação a ordem decrescente do número de negócios;
 
 
  
-    public void consulta9(int x, String business_id, ReviewList reviews, UserList users){
+    public void consulta9(int x, String business_id){
 
         StringBuilder sb =  new StringBuilder();
 
         Business negocio = new Business(business_id);
-        ReviewList reviewsDoNegocio = negocio.getReviews(reviews);   // lista com todos as reviews daquele negócio
+        ReviewList reviewsDoNegocio = negocio.getReviews(this.rev);   // lista com todos as reviews daquele negócio
 
-        Map<String, List<Review>> userRev = new HashMap<>();
+        Map<String, SimpleEntry<Integer,List<Review>>> userRev = new HashMap<>();
 
         for(Review r: reviewsDoNegocio.getList()){
+
             if(!userRev.containsKey(r.getUserId())){
                 List<Review> aux = new ArrayList<>();
                 aux.add(r.clone());
-                userRev.put(r.getUserId(), aux);
+                userRev.put(r.getUserId(), new SimpleEntry<>(1, aux));
             }else{
-                List<Review> aux = userRev.get(r.getUserId());
+                int n = userRev.get(r.getUserId()).getKey();
+                List<Review> aux = userRev.get(r.getUserId()).getValue();
                 userRev.remove(r.getUserId());
                 aux.add(r.clone());
-                userRev.put(r.getUserId(), aux);
+                userRev.put(r.getUserId(), new SimpleEntry<>(n+1, aux));
             }
         }
        
-        Comparator<Map.Entry<String,List<Review>>> cmp = (p1,p2) -> p2.getValue().size() - p1.getValue().size();
+        Comparator<Map.Entry<String, SimpleEntry<Integer,List<Review>>>> cmp = (p1,p2) -> p2.getValue().getKey() - p1.getValue().getKey();
         
-        Map<String, List<Review>> ordenados = userRev.entrySet().stream().sorted(cmp)
-                                                     .limit(x).collect(Collectors
-                                                     .toMap(e->e.getKey(), 
-                                                            e->e.getValue().stream().map(Review::clone)
-                                                                           .collect(Collectors.toList())));
-
+        Map<String, SimpleEntry<Integer,List<Review>>> ordenados = userRev.entrySet().stream().sorted(cmp)
+                                                                          .limit(x).collect(Collectors
+                                                                          .toMap(e->e.getKey(), 
+                                                                                 e->e.getValue()));
         sb.append("Business Id: ").append(business_id).append("\n");
 
         int posicao = 1;
-        for(Map.Entry<String,List<Review>> user: ordenados.entrySet()){
+        for(Map.Entry<String,SimpleEntry<Integer,List<Review>>> user: ordenados.entrySet()){
           
             float classificacao = 0;
-            for(Review rev: user.getValue()){
+            for(Review rev: user.getValue().getValue()){
                 classificacao += rev.getStars();
             }
-            float media = classificacao / user.getValue().size();
+            float media = classificacao / user.getValue().getKey();
 
             sb.append("  ").append(posicao).append("º User Id (que mais o avaliou): ")
                            .append(user.getKey()).append("\n");
