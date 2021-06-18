@@ -318,6 +318,45 @@ quantas vezes avaliou).
 
     /********************************* CONSULTAS INTERATIVAS ********************************/
 
+    /**
+Consulta 3
+
+Dado um código de utilizador, determinar, para cada mês, quantas reviews fez,
+quantos negócios distintos avaliou e que nota média atribuiu;
+
+ */
+
+public void consulta3(String userId, ReviewList review, BusinessList business){
+
+    float[12] stars;
+    int[12] revMes;
+    List<Review> novaList  = new ArrayList<>();
+    for(Review rev: review.getList()){ //guardamos numa lista todas as reviews que o user fez
+        if(rev.getUserId().equals(userId)){
+            novaList.add(rev.clone);
+            revMes[rev.getDate().getMonthValue()-1]++;
+            stars[rev.getDate().getMonthValue()-1] += rev.getStars();
+        }
+
+    }
+
+    int[12] busMes;
+    List<Business> novaList2  = new ArrayList<>();
+    for(Review rev: novaList){ //percurremos a lista de todas as reviews que o user fez
+        String id = rev.getBusinessId();
+        for(Business bus: business.getList()){ //guardamos numa lista todos os negocios que o user fez um review
+            if(bus.getBusinessId().equals(id) && !novaList2.contains(bus)){
+                novaList2.add(bus.clone());//para ver se já não fez uma review desse business antes
+                busMes[rev.getDate().getMonthValue()-1]++;
+            }
+
+        }
+
+        imprimeQuery3(revMes, busMes, stars);
+    }
+}
+
+
     public void consulta5(int x, String user_id, ReviewList reviews, BusinessList businesses){
 
         StringBuilder sb =  new StringBuilder();
