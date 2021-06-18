@@ -287,6 +287,34 @@ quantas vezes avaliou).
         view.print(sb.toString());
     }
 
+    public int[] userPorMes(ReviewList reviews, UserList users){
+        //é uma lista com os user id
+        List<String> aux = new ArrayList<>();
+        int[12] nrUserMes;
+        for(int i=1; i<=12; i++){
+            ReviewList list = reviewsPorMes(reviews, i);
+            for(Review rev: list.getList()){
+                if(!list.contains(rev.getUserId())){
+                    aux.add(rev.getUserId());
+                    nrUserMes[i-1]++;
+                }
+            }
+        }
+        return nrUserMes;
+    }
+
+    public ReviewList reviewsPorMes(ReviewList reviews, int month){
+        ReviewList res = new ReviewList();
+        List<Review> aux = new ArrayLis<>();
+        for(Review rev: reviews.getList()){
+            if(rev.getDate().getMonthValue() == month){
+                aux.add(rev.clone());
+            }
+        }
+        res.setList(aux);
+        return res;
+    }
+
 
 
 
