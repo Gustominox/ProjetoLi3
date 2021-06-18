@@ -301,7 +301,7 @@ Dado um código de utilizador, determinar, para cada mês, quantas reviews fez,
 quantos negócios distintos avaliou e que nota média atribuiu;
 
  */
-
+//FEITA
 public void consulta3(String userId, ReviewList review, BusinessList business){
 
     float[] stars = new float[12];
@@ -350,43 +350,46 @@ public void imprimeQuery3(int[] revMes, int[] busMes, float[] stars){
 }
 
 
-    public void consulta5(int x, String user_id, ReviewList reviews, BusinessList businesses){
+public void consulta5(int x, String user_id, ReviewList reviews){
 
-        StringBuilder sb =  new StringBuilder();
+    StringBuilder sb =  new StringBuilder();
+    View view = new View();
 
-        User user = new User(user_id);
-        ReviewList reviewsDoUser = user.getReviews(reviews);
+    User user = new User(user_id);
+    ReviewList reviewsDoUser = user.getReviews(reviews);
 
-        // todos os negocios mais avaliados daquele user
-        BusinessList negociosMaisAval = new BusinessList();
-        List<Business> aux = new ArrayList<>();
+    Map<Business,Integer> busNr = new HashMap<>();
+    
+    
+    Comparator<Map.Entry<Business,Integer>> cmp = (p1,p2)-> ( p1.getValue() != p2.getValue() ) ?
+                                                            ( p2.getValue() - p1.getValue() ) :
+                                                              p1.getKey().getName().compareTo(p2.getKey().getName());
 
-        Comparator<Business> comp = (u1,u2)->( u1.nrReviewsTotal(reviewsDoUser) != u2.nrReviewsTotal(reviewsDoUser)) ?
-                                             ( u2.nrReviewsTotal(reviewsDoUser) - u1.nrReviewsTotal(reviewsDoUser)) :
-                                               u1.getName().compareTo(u2.getName());
-
-        for(Review rev: reviewsDoUser.getList()){
-            Business bus = new Business(rev.getBusinessId());
-
-            if(!aux.contains(bus)){
-                aux.add(bus.clone());
-            }
+    for(Review r: reviewsDoUser.getList()){
+        Business bus = new Business(r.getBusinessId());
+        if(!busNr.containsKey(bus)){
+            
+            busNr.put(bus.clone(), 1);
+        }else{
+            int n = busNr.get(bus);
+            busNr.remove(bus);
+            busNr.put(bus.clone(), n+1);
         }
-        negociosMaisAval.setList(aux);
-
-        // ordenar os negócios com os critérios estipulados
-        aux.stream().map(Business::clone).sorted(comp).limit(x).collect(Collectors.toList());
-
-        sb.append("User Id - " + user_id);
-
-        int posicao = 1;
-        for(Business bus: negociosMaisAval.getList()){
-            sb.append("  " + posicao + "º Business Id (que avaliou " + bus.nrReviewsTotal(reviewsDoUser) + " vezes): " + bus.getBusinessId());
-            posicao++;
-        }
-        View view = new View();
-        view.print(sb.toString());
     }
+    
+    // ordenar os negócios com os critérios estipulados
+    List<Map.Entry<Business,Integer>> ordenados = busNr.entrySet().stream().sorted(cmp).limit(x).collect(Collectors.toList());
+
+    sb.append("User Id - ").append(user_id);
+
+    int posicao = 1;
+    for(Map.Entry<Business,Integer> bus: ordenados){
+        sb.append("  ").append(posicao).append("º Business Id (que avaliou ")
+        sb.append(bus.getValue()).append(" vezes): ").append(bus.getKey().getBusinessId()).append("\n");
+        posicao++;
+    }
+    view.print(sb.toString());
+}
 
     /**
 Consulta 6
@@ -473,6 +476,7 @@ inteiro dado pelo utilizador)
     view.print(sb.toString());
  }
 
+// FEITA
 // retorna 3 neg mais famosos de cada cidade
     public void consulta7(BusinessList businesses, ReviewList reviews){
         
