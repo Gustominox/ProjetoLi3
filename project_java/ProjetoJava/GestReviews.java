@@ -442,7 +442,7 @@ inteiro dado pelo utilizador)
         sb.append("  Ano " + entry.getKey());
         for(Business bus: entry.getValue().getList()){
                 sb.append("    Negócio: " + bus.getBusinessId());
-                sb.append("      " + usersPorNeg.get(bus.getBusinessId()).size() + "users avaliaram este negócio");
+                sb.append("      " + usersPorNeg.get(bus.getBusinessId()).size() + " users avaliaram este negócio").append("\n");
         }
     }
     View view = new View();
