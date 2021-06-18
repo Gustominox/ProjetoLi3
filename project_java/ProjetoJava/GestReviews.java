@@ -500,30 +500,31 @@ quantas vezes avaliou).
 //por quantos users diferentes e a média de classificação;
 public Map<Integer, List<Integer>> query4 (String businessId){
     Map<Integer,List<Integer>>map = new HashMap<>();
-   for (int mes=1;mes<=12 ;mes++){
-        int quantidade =0;
-        int media;
-        int stars=0;
-        List <Integer> lista2=new ArrayList<>();
-        Set <String>lista = new TreeSet<>();
-        for( Review r : rev.getList()){
-            if (r.getBusinessId().equals(businessId)){
-                if (r.getDate().getMonthValue() == mes ){ // retorna o mes de 1 a 12
-                    quantidade++;
-                    lista.add(r.getUserId());
-                    stars += r.getStars();
-        }
+   
+    for (int mes=1;mes<=12 ;mes++){
+            int nRev =0;
+            int media;
+            int stars=0;
+            List <Integer> lista2=new ArrayList<>();
+            Set <String>set = new TreeSet<>();
+            for( Review r : rev.getList()){
+                if (r.getBusinessId().equals(businessId)){
+                    if (r.getDate().getMonthValue() == mes ){ // retorna o mes de 1 a 12
+                        nRev++;
+                        set.add(r.getUserId());
+                        stars += r.getStars();
+                    }
+                 }
+            }
+        int nUser =set.size();
+        lista2.add(nRev);
+        lista2.add(nUser);
+        if(nRev > 0)
+            media= stars/nRev;
+        else media = 0;
+        lista2.add(media);
+        map.put(mes,lista2);
     }
-}
-    int valor =lista.size();
-    lista2.add(quantidade);
-    lista2.add(valor);
-    if(quantidade > 0)
-        media= stars/quantidade;
-    else media = 0;
-    lista2.add(media);
-    map.put(mes,lista2);
-}
     return map;
 }
 
