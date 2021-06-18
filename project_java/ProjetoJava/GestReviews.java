@@ -89,8 +89,8 @@ quantas vezes avaliou).
         ReviewList reviewsValidas = new ReviewList();
         List<Review> aux = new ArrayList<>();
         
-        for(Review rev: reviews){
-            if(novoRev.getReviewId().length() != 0)
+        for(Review rev: reviews.getList()){
+            if(rev.getReviewId().length() != 0)
                 aux.add(rev.clone());
         }
         reviewsValidas.setList(aux);
@@ -128,7 +128,7 @@ quantas vezes avaliou).
         int usersAval = 0;
         int usersNaoAval = 0;
 
-        for(User user: users){
+        for(User user: users.getList()){
 
             if(user.getUserId().length() != 0){
                 nrUserTotal++;
@@ -204,7 +204,7 @@ quantas vezes avaliou).
     public int nrUsersAvaliaram(User user, ReviewList reviewsValidas){
         String userId = user.getUserId();
 
-        for(Review rev: reviewsValidas){
+        for(Review rev: reviewsValidas.getList()){
             if(userId.equals(rev.getUserId())){
                 return 1;
             }
@@ -290,11 +290,11 @@ quantas vezes avaliou).
     public int[] userPorMes(ReviewList reviews, UserList users){
         //é uma lista com os user id
         List<String> aux = new ArrayList<>();
-        int[12] nrUserMes;
+        int[] nrUserMes = new int[12];
         for(int i=1; i<=12; i++){
             ReviewList list = reviewsPorMes(reviews, i);
             for(Review rev: list.getList()){
-                if(!list.contains(rev.getUserId())){
+                if(!list.getList().contains(rev.getUserId())){
                     aux.add(rev.getUserId());
                     nrUserMes[i-1]++;
                 }
@@ -305,7 +305,7 @@ quantas vezes avaliou).
 
     public ReviewList reviewsPorMes(ReviewList reviews, int month){
         ReviewList res = new ReviewList();
-        List<Review> aux = new ArrayLis<>();
+        List<Review> aux = new ArrayList<>();
         for(Review rev: reviews.getList()){
             if(rev.getDate().getMonthValue() == month){
                 aux.add(rev.clone());
@@ -329,7 +329,7 @@ quantas vezes avaliou).
         BusinessList negociosMaisAval = new BusinessList();
         List<Business> aux = new ArrayList<>();
 
-        Comparator<Business> comp = (u1,u2)->( u1.nrReviewsTotal(reviewsDoUser) - u2.nrReviewsTotal(reviewsDoUser)) ?
+        Comparator<Business> comp = (u1,u2)->( u1.nrReviewsTotal(reviewsDoUser) != u2.nrReviewsTotal(reviewsDoUser)) ?
                                              ( u2.nrReviewsTotal(reviewsDoUser) - u1.nrReviewsTotal(reviewsDoUser)) :
                                                u1.getName().compareTo(u2.getName());
 
