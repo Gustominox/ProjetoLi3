@@ -18,6 +18,8 @@ import model.Businesses.*;
 import model.Reviews.*;
 import model.Users.*;
 import java.util.stream.*;
+
+
 import view.*;
 
 
@@ -357,8 +359,7 @@ public void imprimeQuery3(int[] revMes, int[] busMes, float[] stars){
     view.print(sb.toString());
 }
 
-
-public void consulta5(int x, String user_id, ReviewList reviews, BusinessList businesses){
+public void consulta5(int x, String user_id, ReviewList reviews){
 
     StringBuilder sb =  new StringBuilder();
     View view = new View();
@@ -373,7 +374,7 @@ public void consulta5(int x, String user_id, ReviewList reviews, BusinessList bu
                                                               p1.getKey().getName().compareTo(p2.getKey().getName());
 
     for(Review r: reviewsDoUser.getList()){
-        Business bus = businesses.getBusiness(r.getBusinessId());
+        Business bus = this.bus.getBusiness(r.getBusinessId());
         if(!busNr.containsKey(bus)){
             busNr.put(bus.clone(), 1);
         }else{
@@ -385,7 +386,7 @@ public void consulta5(int x, String user_id, ReviewList reviews, BusinessList bu
     
     // ordenar os negócios com os critérios estipulados
     Map<Business,Integer> ordenados = busNr.entrySet().stream().sorted(cmp).limit(x)
-                                           .collect(Collectors.toMap(e->e.getKey().clone(), e->getValue()));
+                                           .collect(Collectors.toMap(e->e.getKey().clone(), e->e.getValue()));
 
     sb.append("User Id - ").append(user_id).append("\n");
 
@@ -576,7 +577,7 @@ ordenação a ordem decrescente do número de negócios;
     view.print(sb.toString());
  }
 
-
+/*
     public void consulta9(int x, String business_id, ReviewList reviews, UserList users){
 
         StringBuilder sb =  new StringBuilder();
@@ -589,11 +590,13 @@ ordenação a ordem decrescente do número de negócios;
         for(Review r: reviewsDoNegocio.getList()){
             if(!userRev.containsKey(r.getUserId())){
                 List<Review> aux = new ArrayList<>();
-                userRev.put(r.getUserId(), aux.add(r.clone()));
+                aux.add(r.clone());
+                userRev.put(r.getUserId(), aux);
             }else{
                 List<Review> aux = userRev.get(r.getUserId());
                 userRev.remove(r.getUserId());
-                userRev.put(r.getUserId(), aux.add(r.clone());
+                aux.add(r.clone());
+                userRev.put(r.getUserId(), aux);
             }
         }
        
@@ -611,7 +614,7 @@ ordenação a ordem decrescente do número de negócios;
             /*
             ReviewList reviewsDoUser = user.getReviews(reviewsDoNegocio);
             float media = reviewsDoUser.getClassificacaoMedia();       // cálculo da classificação média de cada top user
-            */
+            
             float classificacao = 0;
             for(Review rev: user.getValue()){
                 classificacao += rev.getStars();
@@ -625,7 +628,7 @@ ordenação a ordem decrescente do número de negócios;
         }
         View view = new View();
         view.print(sb.toString());
-    }
+    }*/
 
 
     
@@ -651,10 +654,17 @@ ordenação a ordem decrescente do número de negócios;
 
     public  SimpleEntry<Integer,Set<String>> consulta1(){
         Set<String> aux = new TreeSet<String>(); // para ficar já ordenado
+        HashSet<String> avaliados = new HashSet<>();
+
+        for (Review r : rev.getList()) {
+            avaliados.add(r.getBusinessId());
+        }
+
         for(Business i: bus.getList()){ // vou percorrer os business tds 
             String id = i.getBusinessId(); // 
-             if ( !this.rev.getList().stream().anyMatch(l->l.getBusinessId().equals(id))){ // procura nas reviews o id 
+             if (!avaliados.contains(id)){ // procura nas reviews o id 
                 aux.add(id);  // 
+                //System.out.println(id);
                 }
             }
             int tamanho = aux.size();
@@ -667,22 +677,22 @@ ordenação a ordem decrescente do número de negócios;
 
  public SimpleEntry<Integer, Integer> consulta2 (int mes, int ano) throws DateTimeException{
     
-    if ((mes < 1 && mes > 12 || ano > 2021) || ano==2021 && mes>6) throw new DateTimeException("Data inserida nao e valida"); //ate a data atual 
-    else{
+    //if ((mes < 1 && mes > 12 || ano > 2021) || ano==2021 && mes>6) throw new DateTimeException("Data inserida nao e valida"); //ate a data atual 
+    //else{
         int qt=0;
         Set <String> user = new TreeSet<>();
         for (Review review : rev.getList()){
-        if (review.getDate().getMonth().equals(mes) ){
+        if (review.getDate().getMonthValue() == mes ){
             if(review.getDate().getYear() == ano){
                 qt++;
                 user.add(review.getUserId());
             }
         }
     }
-     user.size();      
-     return new SimpleEntry(qt,user);
+
+     return new SimpleEntry<>(qt,user.size());
     }
-}
+//}
 
 
 
@@ -755,47 +765,37 @@ public List<SimpleEntry<String, Integer>> query5(String userId){
 
 
 
-////////// CONSULTAS ITERATIVAS 
-    /// querie 1 
-/*
-public  SimpleEntry<Integer,Set<String>> query1(){
-        Set<String> aux = new TreeSet<String>(); // para ficar já orenado
-        for(Business i: bus.getList()){ // vou percorrer os business tds 
-            String id = i.getBusinessId(); // 
-             if ( !this.rev.getList().stream().anyMatch(l->l.getBusinessId().equals(id))){ // procura nas reviews o id 
-                aux.add(id);  // 
-                }
-            }
-            int tamanho = aux.size();
-            return new SimpleEntry(tamanho,aux);
-        }
-*/
-/*
-public Map<String,Map<String,List<SimpleEntry<String,Integer>>>> query10() {
-    Map<String,Map<String,List<SimpleEntry<String,Integer>>>> ret = new HashMap <String,Map<String,List<SimpleEntry<String,Integer>>>>();
+public static float sum(List<Float> list) {
+    int sum = 0;
+    for (Float i: list) {
+        sum += i;
+    }
+    return sum;
+}
+
+public Map<String,Map<String,List<SimpleEntry<String,Float>>>> consulta10() {
+    Map<String,Map<String,List<SimpleEntry<String,Float>>>> ret = new HashMap <String,Map<String,List<SimpleEntry<String,Float>>>>();
+    
+    //  Estado     Cidade  Lista de pares negocio e media
     for(Business aux : this.bus.getList()){ 
-        ret.putIfAbsent(aux.getState(),null);//// ver se tem o estado 
-        ret.get(aux.getState()).putIfAbsent(aux.getCity(), null); // ver se tem a cidade senao tiver acrescenta       
+        Map<String,List<SimpleEntry<String,Float>>> citys = new HashMap<>();
+        ret.putIfAbsent(aux.getState(),citys);//// ver se tem o estado 
+        List<SimpleEntry<String,Float>> city = new ArrayList<>();
+        ret.get(aux.getState()).putIfAbsent(aux.getCity(), city); // ver se tem a cidade senao tiver acrescenta       
         String id = aux.getBusinessId();
-        int media=(int) this.rev.getList().stream().filter(l->l.getBusinessId().equals(id)).
+        List<Float> media= this.rev.getList().stream().filter(l->l.getBusinessId().equals(id)).
                 map(l->l.getStars()).collect(Collectors.toList());//.average();
-        ret.get(aux.getState()).get(aux.getCity()).add( new SimpleEntry(id,media));
+        Float m =  sum(media)/media.size();
+        ret.get(aux.getState()).get(aux.getCity()).add( new SimpleEntry<>(id,m));
     
        }
        return ret;
     }
 
-*/
 
 
 
 
-
-         //estado               //cidade                // id    // media  
-//public Map<String,Map<String,List<SimpleEntry<String,Integer>>> func (int mes, int ano ){
-
-    //}
-    
 
 
 
