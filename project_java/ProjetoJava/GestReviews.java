@@ -402,23 +402,46 @@ inteiro dado pelo utilizador)
 
         // business id        // users que avaliaram esse negócio
     Map<String, List<User>> usersPorNeg = new HashMap<>();
+    
+    Map<String,Integer> busNr = new HashMap<>();
+    
+    for(Review r: reviews.getList()){
+        if(!busNr.containsKey(r.getBusinessId())){
+            
+            busNr.put(r.getBusinessId(), 1);
+        }else{
+            int n = busNr.get(r.getBusinessId());
+            busNr.remove(r.getBusinessId());
+            busNr.put(r.getBusinessId(), n+1);
+        }
+    }
+/*
+    for(Business b: businesses.getList()){
+        if(!busNr.containsKey(b.getBusinessId())){
+            
+            busNr.put(b.getBusinessId(), 0);
+        }
+    }
+*/
+    Comparator<Business> comp = (b1,b2) -> 
+    busNr.get(b2.getBusinessId()) - busNr.get(b1.getBusinessId());
 
-    Comparator<Business> comp = (b1,b2) -> b2.nrReviewsTotal(reviews) - b1.nrReviewsTotal(reviews);
-
+    //System.out.println(busNr.toString());
     for(Review rev: reviews.getList()){ //estamos a percorrer as reviews (mais especificamente o ano)
         int ano = rev.getDate().getYear();
-        
+  // 2001 -> [busId,BusId]      
         if(!res.containsKey(ano)){ //se o ano nao se encontrar ainda no map
 
-            BusinessList negociosDoAno = rev.negociosDoAno(businesses);
-
+            BusinessList negociosDoAno = rev.negociosDoAno(businesses,reviews, ano);
+            System.out.println(negociosDoAno.getList().toString());
             if(negociosDoAno.getList().size() != 0){
-                negociosDoAno.getList().stream().map(Business::clone).sorted(comp).limit(x).collect(Collectors.toList());
-                res.put(rev.getDate().getYear(), negociosDoAno);
+                List<Business> negociosDoAnoOrd = negociosDoAno.getList().stream().map(Business::clone).sorted(comp).limit(10).collect(Collectors.toList());
+                BusinessList busi = new BusinessList(negociosDoAnoOrd); 
+                res.put(rev.getDate().getYear(), busi);
             }
         }
     }
-
+    
     for(BusinessList negocios: res.values()){
         for(Business negocio: negocios.getList()){
             String business_id = negocio.getBusinessId();
@@ -470,6 +493,7 @@ inteiro dado pelo utilizador)
                 busNr.put(r.getBusinessId(), n+1);
             }
         }
+
         for(Business b: businesses.getList()){
 
             if(!cidadesVisitadas.contains(b.getCity())){

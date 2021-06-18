@@ -13,6 +13,10 @@ import java.util.stream.Collectors;
 public class BusinessList {
     private List<Business> list ; 
  
+    public BusinessList(List<Business> list) {
+        this.list = list;
+    }
+
     public BusinessList (){
         this.list = new ArrayList<>();
     }

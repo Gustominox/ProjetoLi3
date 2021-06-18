@@ -210,15 +210,17 @@ public class Review
         return camposRev;
     }
     
-    public BusinessList negociosDoAno(BusinessList businesses){
-        int ano = getDate().getYear();
-
+    public BusinessList negociosDoAno(BusinessList businesses,ReviewList review,int anoPar){
+       
         BusinessList negocios = new BusinessList();
         List<Business> aux = new ArrayList<>();
 
         for(Business bus: businesses.getList()){
-            if(getBusinessId().equals(bus.getBusinessId()))
-                aux.add(bus.clone());
+            for(Review r : review.getList())
+                if(r.getBusinessId().equals(bus.getBusinessId()))    
+                    if(r.getDate().getYear() == anoPar)
+                    aux.add(bus.clone());
+        
         }
         negocios.setList(aux);
         return negocios;

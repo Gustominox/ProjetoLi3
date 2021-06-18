@@ -31,7 +31,7 @@ public class Programa {
         //reviews.mostrarReviews();
         // Map<Integer,List<Integer>>map =gest.query4("_bZOUUc6Sr_W3BxbOUJacw");
         // System.out.println( map.toString());
-        gest.consulta8(3,businesses, reviews,users);
+        gest.consulta6(3,businesses, reviews);
         
     }
 
