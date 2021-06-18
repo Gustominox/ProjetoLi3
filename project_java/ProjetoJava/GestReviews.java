@@ -214,7 +214,14 @@ quantas vezes avaliou).
     
     
     /***************************** QUERY 2 **************************************/
-   
+    public int[] nrRevPorMes(ReviewList reviews){
+        int[12] revMes;
+        for(Review rev: reviews.getList()){ //guardamos numa lista todas as reviews que o user fez
+            revMes[rev.getDate().getMonthValue()-1]++;
+        }
+    return revMes;
+    }
+    
     public int[] userPorMes(ReviewList reviews, UserList users){
         //é uma lista com os user id
         List<String> aux = new ArrayList<>();
