@@ -145,25 +145,25 @@ quantas vezes avaliou).
         view.print(sb.toString()); 
     }
     
-    public void auxBusiness(String[] infoBus, List<Review> reviewsValidas){
+    public void dadosSobreBusiness(BusinessList businesses, ReviewList reviewsValidas){
 
-        int nrTotalBus = 0;
-        int totBusAval = 0;
-    
-        for(String s: infoBus){
+        int nrBusTotal = 0;
+        int busAval = 0;
+        StringBuilder sb =  new StringBuilder();
 
-            Business camposBusiness = Business.parse(s);
-            Business novoBusiness = new Business(camposBusiness);
+        for(Business bus: businesses){
 
-            if(novoBusiness.getBusinessId().length() != 0){
-                nrTotalBus++;
-                totBusAval += nrBusAvaliados(novoBusiness, reviewsValidas);
+            if(bus.getBusinessId().length() != 0){
+                nrBusTotal++;
+                busAval += nrBusAval(bus, reviewsValidas);
             }
         }
+        sb.append("    Número total de negócios: " + nrBusTotal);
+        sb.append("    Número de negócios avaliados: " + busAval);
+        sb.append("    Número de negócios não avaliados: " + (nrTotalBus - busAval)); 
 
-        System.out.println("    Número de negócios: " + nrTotalBus);
-        System.out.println("    Número de negócios avaliados: " + totBusAval);
-        System.out.println("    Número de negócios não avaliados: " + (nrTotalBus - totBusAval));      
+        View view = new View();
+        view.print(sb.toString());      
     }
     
     public void dadosSobreReview(ReviewList reviews){
