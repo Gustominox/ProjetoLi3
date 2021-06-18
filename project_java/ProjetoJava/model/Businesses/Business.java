@@ -28,6 +28,14 @@ public class Business
         this.state = "";
         this.categories = new ArrayList<String>();
     }
+
+    public Business(String id){
+        this.businessId = id;
+        this.name = "";
+        this.city = "";
+        this.state = "";
+        this.categories = new ArrayList<String>();
+    }
     
     public Business(String businessId, String name, String city, String state, List<String> categories){
         this.businessId = businessId;
@@ -92,6 +100,28 @@ public class Business
     
     public void setCategories(List<String> categories){
         this.categories = categories.stream().collect(Collectors.toList());
+    }
+
+    public int nrReviewsTotal(ReviewList reviews){
+        int total = 0;
+
+        for(Review rev: reviews){
+            if(this.businessId.equals(rev.getBusinessId()))
+                total++;
+        }
+        return total;
+    }
+
+    public ReviewList getReviews(ReviewList reviews){
+        ReviewList reviewsDoBus = new ReviewList();
+        List<Review> aux = new ArrayList<>();
+
+        for(Review rev: reviews.getList()){
+            if(this.businessId.equals(rev.getBusinessId()))
+                aux.add(rev.clone());
+        }
+        reviewsDoBus.setList(aux);
+        return reviewsDoBus;
     }
     
     /**
