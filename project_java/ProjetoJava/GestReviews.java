@@ -627,7 +627,7 @@ ordenação a ordem decrescente do número de negócios;
 ////////// CONSULTAS ITERATIVAS 
     /* querie 1 */
 
-    public  SimpleEntry<Integer,Set<String>> query1(){
+    public  SimpleEntry<Integer,Set<String>> consulta1(){
         Set<String> aux = new TreeSet<String>(); // para ficar já orenado
         for(Business i: bus.getList()){ // vou percorrer os business tds 
             String id = i.getBusinessId(); // 
@@ -636,19 +636,19 @@ ordenação a ordem decrescente do número de negócios;
                 }
             }
             int tamanho = aux.size();
-            return new SimpleEntry(tamanho,aux);
+            return new SimpleEntry<>(tamanho,aux);
         }
 
 
 
      /* querie 2 */
 
- public SimpleEntry<Integer, Integer> query2 (int mes, int ano) throws DateTimeException{
+ public SimpleEntry<Integer, Integer> consulta2 (int mes, int ano) throws DateTimeException{
     
     if ((mes < 1 && mes > 12 || ano > 2021) || ano==2021 && mes>6) throw new DateTimeException("Data inserida nao e valida"); //ate a data atual 
     else{
         int qt=0;
-        Set <String> user = new TreeSet();
+        Set <String> user = new TreeSet<>();
         for (Review review : rev.getList()){
         if (review.getDate().getMonth().equals(mes) ){
             if(review.getDate().getYear() == ano){
@@ -658,7 +658,7 @@ ordenação a ordem decrescente do número de negócios;
         }
     }
      user.size();      
-     return new SimpleEntry (qt,user);
+     return new SimpleEntry(qt,user);
     }
 }
 
