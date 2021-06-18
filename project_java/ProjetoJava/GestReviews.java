@@ -583,7 +583,7 @@ ordenação a ordem decrescente do número de negócios;
 
 
 
- 
+
     public void consulta9(int x, String business_id, ReviewList reviews, UserList users){
 
         StringBuilder sb =  new StringBuilder();
@@ -738,33 +738,7 @@ public Map<Integer, List<Integer>> query4 (String businessId){
 }
 
 
-/*
-public List<SimpleEntry<String, Integer>> query5(String userId){
-    List <Review> lista = this.rev.reviewsPorUser().get(userId);
-    List<SimpleEntry<String, Integer>> resultado = new ArrayList <>();
-    
-    if(lista != null){
-        for(Review r: lista){
-            for (Business i: bus.getList() ){
-                if ( i.getName().equals(userId))
-                 String nome = 
-            
-            
 
-
-            if(!resultado.stream().anyMatch(s->s.getKey().equals(nome))){
-                int count = (int) lista.stream().filter(s->s.getBusinessId().equals(r.getBusinessId())).count();
-                resultado.add(new SimpleEntry<String,Integer>(nome,count));
-            }            
-        }
-        
-        sort(resultados.values(),Collections.reverseOrder());;
-        return resultado;
-    }
-    else return null;
-}
-
-*/
 
 
 
@@ -777,24 +751,91 @@ public static float sum(List<Float> list) {
     return sum;
 }
 
-public Map<String,Map<String,List<SimpleEntry<String,Float>>>> consulta10() {
-    Map<String,Map<String,List<SimpleEntry<String,Float>>>> ret = new HashMap <String,Map<String,List<SimpleEntry<String,Float>>>>();
+public void consulta10() {
     
-    //  Estado     Cidade  Lista de pares negocio e media
-    for(Business aux : this.bus.getList()){ 
-        Map<String,List<SimpleEntry<String,Float>>> citys = new HashMap<>();
-        ret.putIfAbsent(aux.getState(),citys);//// ver se tem o estado 
-        List<SimpleEntry<String,Float>> city = new ArrayList<>();
-        ret.get(aux.getState()).putIfAbsent(aux.getCity(), city); // ver se tem a cidade senao tiver acrescenta       
-        String id = aux.getBusinessId();
-        List<Float> media= this.rev.getList().stream().filter(l->l.getBusinessId().equals(id)).
-                map(l->l.getStars()).collect(Collectors.toList());//.average();
-        Float m =  sum(media)/media.size();
-        ret.get(aux.getState()).get(aux.getCity()).add( new SimpleEntry<>(id,m));
-    
-       }
-       return ret;
+    Map<String,List<String>>state = new HashMap<>();
+    Map<String,List<Business>> cidades = new HashMap<>();
+
+    for(Business b : this.bus.getList()){ 
+        if(!cidades.containsKey(b.getCity())){
+            List<Business> aux = new ArrayList<>();
+            
+            aux.add(b.clone());
+            cidades.put(b.getCity(), aux);
+        }else{
+            List<Business> aux = cidades.get(b.getCity());
+            if(!aux.contains(b)){
+                cidades.remove(b.getCity());
+                aux.add(b.clone());
+            }
+            cidades.put(b.getCity(), aux);
+        }
     }
+
+    for(Business b : this.bus.getList()){ 
+        if(!state.containsKey(b.getState())){
+            List<String> aux = new ArrayList<>();
+            aux.add(b.getCity());
+            state.put(b.getState(), aux);
+        }
+        else{
+            List<String> aux = state.get(b.getState());
+            if(!aux.contains(b.getCity())){
+                state.remove(b.getState());
+                aux.add(b.getCity());    
+            }
+             state.put(b.getState(), aux);
+        }
+    }
+    
+    Map<String,SimpleEntry< Float,Integer>> busMedia = new HashMap<>();
+    
+    for(Review r: rev.getList()){
+        if(!busMedia.containsKey(r.getBusinessId())){
+            
+            busMedia.put(r.getBusinessId(), new SimpleEntry<>(r.getStars(), 1));
+        }else{
+            SimpleEntry<Float,Integer> n = busMedia.get(r.getBusinessId());
+            
+            busMedia.remove(r.getBusinessId());
+            busMedia.put(r.getBusinessId(), new SimpleEntry<>(n.getKey()+r.getStars(),n.getValue()+1));
+        }
+    }
+
+   // System.out.println(cidades.toString());
+    
+
+    StringBuilder sb = new StringBuilder();
+    for (Map.Entry<String,List<String>> entry : state.entrySet()) {
+
+        sb.append("State: ").append(entry.getKey()).append("\n");
+        for (String s : entry.getValue()) {
+            List<Business> bs = cidades.get(s);
+            sb.append("\tCity: ").append(s).append("\n");
+            for (Business business : bs) {
+
+                SimpleEntry<Float,Integer> m;
+                if(busMedia.containsKey(business.getBusinessId())) {
+
+                     m = busMedia.get(business.getBusinessId());
+                
+                }else {
+                     m =  new SimpleEntry<>(0.0f, 1);
+                }
+                
+                Float med = m.getKey()/m.getValue();
+                sb.append("\t\tBusiness: ").append(business.getName())
+                .append(" whit Stars: ").append(med).append("\n");
+                
+                //System.out.println(i);
+                //i++;
+            }
+        }
+
+    }
+    View view = new View();
+    view.print(sb.toString());
+}
 
 
 
