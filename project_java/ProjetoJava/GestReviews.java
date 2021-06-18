@@ -85,17 +85,15 @@ quantas vezes avaliou).
         fos.close();
     }
     
-    public List<Review> reviewsValidas(String[] infoRev){
-        List<Review> reviewsValidas = new ArrayList<>();
+    public ReviewList reviewsValidas(ReviewList reviews){
+        ReviewList reviewsValidas = new ReviewList();
+        List<Review> aux = new ArrayList<>();
         
-        for(String s: infoRev){
-            String[] camposRev = Review.parse(s);
-            Review novoRev = new Review(camposRev);
-            
+        for(Review rev: reviews){
             if(novoRev.getReviewId().length() != 0)
-                reviewsValidas.add(novoRev.clone());
+                aux.add(rev.clone());
         }
-        
+        reviewsValidas.setList(aux);
         return reviewsValidas;
     }
     
