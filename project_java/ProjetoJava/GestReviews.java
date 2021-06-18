@@ -221,7 +221,21 @@ quantas vezes avaliou).
         }
     return revMes;
     }
-    
+
+    public float[] classificacaoReview(int[] revMes, ReviewList reviews){
+
+        float[12] clasPorMes;
+        float[12] stars;
+        for(Review rev: reviews.getList()){ //guardamos numa lista todas as reviews que o user fez
+            stars[rev.getDate().getMonthValue()-1] += rev.getStars();
+
+        }
+        for(int i=0; i<12; i++){
+            clasPorMes[i] = stars[i] / revMes[i];
+        }
+        return clasPorMes;
+    }
+
     public int[] userPorMes(ReviewList reviews, UserList users){
         //é uma lista com os user id
         List<String> aux = new ArrayList<>();
