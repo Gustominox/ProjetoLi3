@@ -379,80 +379,67 @@ inteiro dado pelo utilizador)
 
  */
 
- public void consulta6(int x, BusinessList businesses, ReviewList reviews){
-        //ano             //lista de businesses desse ano
-    Map<Integer, BusinessList> res = new HashMap<>();
+ public void consulta6(){
+        //ano      //negocio 
+    Map<Integer, Map<String,List<Review>>> negPorAno = new HashMap<>();
+    List<Business> busList = new ArrayList<>();
 
-        // business id        // users que avaliaram esse negócio
-    Map<String, List<User>> usersPorNeg = new HashMap<>();
-    
-    Map<String,Integer> busNr = new HashMap<>();
-    
-    for(Review r: reviews.getList()){
-        if(!busNr.containsKey(r.getBusinessId())){
-            
-            busNr.put(r.getBusinessId(), 1);
+    for(Review review: this.rev.getList()){
+        int ano = review.getDate().getYear();
+        String busId = review.getBusinessId();
+
+        if(negPorAno.containsKey(ano)){
+            if(!negPorAno.get(ano).containsKey(busId)){
+                List<Review> revs1 = new ArrayList<>();
+                revs1.add(review.clone());
+                negPorAno.get(ano).put(busId,revs1);
+            }
+            else{
+                negPorAno.get(ano).get(busId).add(review.clone());
+            }
         }else{
-            int n = busNr.get(r.getBusinessId());
-            busNr.remove(r.getBusinessId());
-            busNr.put(r.getBusinessId(), n+1);
+            Map<String, List<Review>> aux = new HashMap<>();
+            List<Review> revs2 = new ArrayList<>();
+            revs2.add(review.clone());
+            aux.put(busId, revs2);
+            negPorAno.put(ano,aux);
         }
-    }
-/*
-    for(Business b: businesses.getList()){
-        if(!busNr.containsKey(b.getBusinessId())){
-            
-            busNr.put(b.getBusinessId(), 0);
-        }
-    }
-*/
-    Comparator<Business> comp = (b1,b2) -> 
-    busNr.get(b2.getBusinessId()) - busNr.get(b1.getBusinessId());
-
-    //System.out.println(busNr.toString());
-    for(Review rev: reviews.getList()){ //estamos a percorrer as reviews (mais especificamente o ano)
-        int ano = rev.getDate().getYear();
-  // 2001 -> [busId,BusId]      
-        if(!res.containsKey(ano)){ //se o ano nao se encontrar ainda no map
-
-            BusinessList negociosDoAno = rev.negociosDoAno(businesses,reviews, ano);
-            System.out.println(negociosDoAno.getList().toString());
-            if(negociosDoAno.getList().size() != 0){
-                List<Business> negociosDoAnoOrd = negociosDoAno.getList().stream().map(Business::clone).sorted(comp).limit(10).collect(Collectors.toList());
-                BusinessList busi = new BusinessList(negociosDoAnoOrd); 
-                res.put(rev.getDate().getYear(), busi);
-            }
-        }
-    }
-    
-    for(BusinessList negocios: res.values()){
-        for(Business negocio: negocios.getList()){
-            String business_id = negocio.getBusinessId();
-            ReviewList revDoNegocio = negocio.getReviews(reviews);
-            
-            List<User> aux = new ArrayList<>();
-            for(Review rev: revDoNegocio.getList()){
-                String user_id = rev.getUserId();
-
-                User user = new User(user_id);
-                if(!aux.contains(user)){
-                    aux.add(user.clone());
-                }
-            }
-            usersPorNeg.put(business_id, aux);
-        }
+ 
     }
 
     StringBuilder sb =  new StringBuilder();
-    for(Map.Entry<Integer, BusinessList> entry: res.entrySet()){
+    Comparator<Map.entry<String, List<Review>>> comp = (b1,b2) -> b2.getValue().size() - b1.getValue().size();
+    for(Map.Entry<Integer,Map<String, List<Review>>> entry: negPorAno.entrySet()){
+        int ano = entry.getKey();
+        sb.append("  Ano ").append(ano).append("\n");
+        Map<String, List<Review>> usersPorNeg = new HashMap<>;
+        for(Map.Entry<String, List<Review>> entry2: entry.get(ano).entrySet()){
+            List<String> userList = new ArrayList<>();
+            for(Review r: revs){
+                String userId = r.getUserId();
+                if(!userList.contains(userId)){
+                    userList.add(userId);
+                }
+            }
+            usersPorNeg.put(entry2.getKey(),userList);
+        }
+        Map<String, List<Review>> ordenados = usersPorNeg.entrySet().stream().sorted(comp).limit(x)
+                                                         .collect(Collectors.toMap(e->e.getKey(), e->e.getValue().stream().map(Review::clone)
+                                                         .collect(Collectors.toList())));
+    }
+
+
+    StringBuilder sb =  new StringBuilder();
+    for(Map.Entry<Integer,Map<String, List<Review>>> entry3: res.entrySet){
         sb.append("  Ano " + entry.getKey());
-        for(Business bus: entry.getValue().getList()){
-                sb.append("    Negócio: " + bus.getBusinessId());
-                sb.append("      " + usersPorNeg.get(bus.getBusinessId()).size() + " users avaliaram este negócio").append("\n");
+        for(Business bus: entry.getvalue().getList()){
+                sp.append("    Negócio: " + bus.getBusinessId());
+                sp.append("      " + usersPorNeg.get(bus.getBusinessId()).size() + "users avaliaram este negócio");
         }
     }
     View view = new View();
     view.print(sb.toString());
+
  }
 
 // FEITA
