@@ -100,39 +100,46 @@ quantas vezes avaliou).
     /************************** QUERY 1 *****************************/
     public void estatistica1(ReviewList reviews, BusinessList businesses, UserList users){
 
-        StringBuilder sb =  new StringBuilder();
-
-        ReviewList reviewsValidas = reviewsValidas(reviews);
-
-        sb.append("Nome do ficheiro: reviews.csv");
-        dadosSobreReview(reviews);
-        sb.append("\n");
-
-        sb.append("Nome do ficheiro: business.csv");
-        dadosSobreBusiness(businesses, reviewsValidas);
-        sb.append("\n");
-        
-        sb.append("Nome do ficheiro: users.csv");
-        dadosSobreUser(users, reviewsValidas);
-        sb.append("\n");
 
         View view = new View();
-        view.print(sb.toString());
+        ReviewList reviewsValidas = reviewsValidas(reviews);
+
+        
+        view.print("Nome do ficheiro: reviews.csv\n");
+        Map<String,Integer> businessAvaliados= dadosSobreReview(reviews);
+        
+
+        view.print("Nome do ficheiro: business.csv\n");
+        dadosSobreBusiness(businesses, reviewsValidas,businessAvaliados);
+        
+        view.print("Nome do ficheiro: users.csv\n");
+        dadosSobreUser(users, reviewsValidas);
+        
+
     }
     
     public void dadosSobreUser(UserList users, ReviewList reviewsValidas){
 
         StringBuilder sb =  new StringBuilder();
 
+        View view = new View();
         int nrUserTotal = 0;
         int usersAval = 0;
         int usersNaoAval = 0;
 
+        Map<String,Integer>userAvaliados = new HashMap<>();
+
+        for (Review rev: reviewsValidas.getList()) {
+            
+            userAvaliados.put(rev.getUserId(),0);
+        }
         for(User user: users.getList()){
 
             if(user.getUserId().length() != 0){
                 nrUserTotal++;
-                usersAval += nrUsersAvaliaram(user, reviewsValidas);
+                
+                if (userAvaliados.containsKey(user.getUserId()))
+                    usersAval++;
             }         
         }
         usersNaoAval = nrUserTotal - usersAval;
@@ -141,11 +148,10 @@ quantas vezes avaliou).
         sb.append("    Número de users que fizeram reviews: " + usersAval);
         sb.append("    Número de users que nada avaliaram: " + usersNaoAval);
 
-        View view = new View();
         view.print(sb.toString()); 
     }
     
-    public void dadosSobreBusiness(BusinessList businesses, ReviewList reviewsValidas){
+    public void dadosSobreBusiness(BusinessList businesses, ReviewList reviewsValidas, Map<String,Integer> businessAvaliados){
 
         int nrBusTotal = 0;
         int busAval = 0;
@@ -156,7 +162,8 @@ quantas vezes avaliou).
 
             if(bus.getBusinessId().length() != 0){
                 nrBusTotal++;
-                busAval += nrBusAval(bus, reviewsValidas);
+                if (businessAvaliados.containsKey(bus.getBusinessId()))
+                    busAval++;
             }
         }
         sb.append("    Número total de negócios: " + nrBusTotal);
@@ -167,14 +174,14 @@ quantas vezes avaliou).
         view.print(sb.toString());      
     }
     
-    public void dadosSobreReview(ReviewList reviews){
+    public Map<String,Integer> dadosSobreReview(ReviewList reviews){
 
         int nrRevErradas = 0;
         int nrRevSemImpacto = 0;
         StringBuilder sb =  new StringBuilder();
-
+        Map<String,Integer>busAvaliados = new HashMap<>();
         for(Review rev: reviews.getList()){
-            
+            busAvaliados.put(rev.getBusinessId(),0);
             if(rev.getReviewId().length() == 0) nrRevErradas++;
             else{
                 int somatorio = rev.getCool() + rev.getFunny() + rev.getUseful();
@@ -185,7 +192,8 @@ quantas vezes avaliou).
         sb.append("    Número de reviews com 0 impacto: " + nrRevSemImpacto);
 
         View view = new View();
-        view.print(sb.toString());        
+        view.print(sb.toString());   
+        return busAvaliados;     
     }
 
     public int nrBusAval(Business business, ReviewList reviewsValidas){
@@ -628,7 +636,7 @@ ordenação a ordem decrescente do número de negócios;
     /* querie 1 */
 
     public  SimpleEntry<Integer,Set<String>> consulta1(){
-        Set<String> aux = new TreeSet<String>(); // para ficar já orenado
+        Set<String> aux = new TreeSet<String>(); // para ficar já ordenado
         for(Business i: bus.getList()){ // vou percorrer os business tds 
             String id = i.getBusinessId(); // 
              if ( !this.rev.getList().stream().anyMatch(l->l.getBusinessId().equals(id))){ // procura nas reviews o id 
