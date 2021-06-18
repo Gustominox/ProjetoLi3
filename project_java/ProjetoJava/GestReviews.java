@@ -357,6 +357,46 @@ quantas vezes avaliou).
     }
 
 
+    public void consulta7(BusinessList businesses, ReviewList reviews){
+
+        StringBuilder sb =  new StringBuilder();
+
+        // key: cidade, value: três negócios mais famosos dessa cidade
+        Map<String, BusinessList> todosNegPorCidade = new HashMap<>();
+
+        Comparator<Business> comp = (b1,b2) -> b2.nrReviewsTotal(reviews) - b1.nrReviewsTotal(reviews);
+
+        for(Business bus1: businesses.getList()){
+            String cidade = bus1.getCity();
+
+            // map com todos os negocios de uma determinada cidade
+            if(!todosNegPorCidade.containsKey(cidade)){
+                BusinessList negocios = new BusinessList();
+                List<Business> aux = new ArrayList<>();
+
+                for(Business bus2: businesses.getList()){
+                    if(cidade.equals(bus2.getCity()))
+                        aux.add(bus2.clone());
+                }
+                aux.stream().map(Business::clone).sorted(comp).limit(3).collect(Collectors.toList());
+                negocios.setList(aux);
+
+                todosNegPorCidade.put(cidade, negocios);
+
+                sb.append("Cidade - " + cidade);
+
+                int posicao = 1;
+                for(Business bus3: negocios.getList()){
+                    sb.append("  " + posicao + "º Business Id (mais famoso): " + bus3.getBusinessId());
+                    posicao++;
+                }
+            }
+            View view = new View();
+            view.print(sb.toString());
+        }
+    }
+
+
     
 
 
