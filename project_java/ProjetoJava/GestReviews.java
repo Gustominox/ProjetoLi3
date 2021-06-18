@@ -98,7 +98,7 @@ quantas vezes avaliou).
     }
     
     /************************** QUERY 1 *****************************/
-    public void query1(ReviewList reviews, BusinessList businesses, UserList users){
+    public void estatistica1(ReviewList reviews, BusinessList businesses, UserList users){
 
         StringBuilder sb =  new StringBuilder();
 
@@ -120,28 +120,29 @@ quantas vezes avaliou).
         view.print(sb.toString());
     }
     
-    public void auxRev(String[] infoRev){
+    public void dadosSobreUser(UserList users, ReviewList reviewsValidas){
 
-        int nrRevErradas = 0;
-        int nrRevSemImp = 0;
+        StringBuilder sb =  new StringBuilder();
 
-        for(String s: infoRev){
-            String[] camposRev = Review.parse(s);
-            Review novoRev = new Review(camposRev);
+        int nrUserTotal = 0;
+        int usersAval = 0;
+        int usersNaoAval = 0;
 
-            if(novoRev.getReviewId().length() == 0) nrRevErradas++;
-            else{
-                int cool = novoRev.getCool();
-                int funny = novoRev.getFunny();
-                int useful = novoRev.getUseful();
-                int somatorio = cool + funny + useful;
-                if(somatorio == 0) nrRevSemImp++;
-            }
+        for(User user: users){
+
+            if(user.getUserId().length() != 0){
+                nrUserTotal++;
+                usersAval += nrUsersAvaliaram(user, reviewsValidas);
+            }         
         }
+        usersNaoAval = nrUserTotal - usersAval;
 
-        System.out.println("    Número de reviews errados: " + nrRevErradas);
-        System.out.println("    Número de reviews com 0 impacto: " + nrRevSemImp);
+        sb.append("    Número total de users: " + nrUserTotal);
+        sb.append("    Número de users que fizeram reviews: " + usersAval);
+        sb.append("    Número de users que nada avaliaram: " + usersNaoAval);
 
+        View view = new View();
+        view.print(sb.toString()); 
     }
     
     public void auxBusiness(String[] infoBus, List<Review> reviewsValidas){
@@ -200,8 +201,8 @@ quantas vezes avaliou).
         return 0;
     }
     
-    public int nrUsersAvaliaram(User novoUser, List<Review> reviewsValidas){
-        String userId = novoUser.getUserId();
+    public int nrUsersAvaliaram(User user, ReviewList reviewsValidas){
+        String userId = user.getUserId();
 
         for(Review rev: reviewsValidas){
             if(userId.equals(rev.getUserId())){
