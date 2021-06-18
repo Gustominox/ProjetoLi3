@@ -427,6 +427,69 @@ public void imprimeQuery3(int[] revMes, int[] busMes, int[] stars){
         view.print(sb.toString());
     }
 
+    /**
+Consulta 6
+
+Determinar o conjunto dos X negócios mais avaliados (com mais reviews) em cada
+ano, indicando o número total de distintos utilizadores que o avaliaram (X é um
+inteiro dado pelo utilizador)
+
+ */
+
+ public void consulta6(int x, BusinessList businesses, ReviewList reviews){
+        //ano             //lista de businesses desse ano
+    Map<Integer, BusinessList> res = new HashMap<>();
+
+        // business id        // users que avaliaram esse negócio
+    Map<String, List<User>> usersPorNeg = new HashMap<>();
+
+    Comparator<Business> comp = (b1,b2) -> b2.nrReviewsTotal(reviews) - b1.nrReviewsTotal(reviews);
+
+    for(Review rev: reviews.getList()){ //estamos a percorrer as reviews (mais especificamente o ano)
+        int ano = rev.getDate().getYear();
+        
+        if(!res.containsKey(ano)){ //se o ano nao se encontrar ainda no map
+
+            BusinessList negociosDoAno = rev.negociosDoAno(businesses);
+
+            if(negociosDoAno.getList().length() != 0){
+                negociosDoAno.getList().stream().map(Business::clone).sorted(comp).limit(x).collect(Collectors.toList());
+                res.put(rev.getDate().getYear(), negociosDoAno);
+            }
+        }
+    }
+
+    for(BusinessList negocios: res.values()){
+
+        for(Business negocio: negocios.getList()){
+            String business_id = bus.getBusinessId();
+            ReviewList revDoNegocio = negocio.getReviews(reviews);
+            
+            List<User> aux = new ArrayList<>();
+            for(Review rev: revDoNegocio.getList()){
+                String user_id = rev.getUserId();
+
+                User user = new User(user_id);
+                if(!aux.contains(user)){
+                    aux.add(user.clone());
+                }
+            }
+            usersPorNeg.put(business_id, aux);
+        }
+    }
+
+    StringBuilder sb =  new StringBuilder();
+    for(Map.Entry<Integer, BusinessList> entry: res.entrySet){
+        sb.append("  Ano " + entry.getKey());
+        for(Business bus: entry.getvalue().getList()){
+                sp.append("    Negócio: " + bus.getBusinessId());
+                sp.append("      " + usersPorNeg.get(bus.getBusinessId()).size() + "users avaliaram este negócio");
+        }
+    }
+    View view = new View();
+    view.print(sb.toString());
+ }
+
 
     public void consulta7(BusinessList businesses, ReviewList reviews){
 
