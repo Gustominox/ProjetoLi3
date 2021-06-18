@@ -1,5 +1,6 @@
 JAVAC = javac
-CLASS_FILES = view/*.class model/Businesses/*.class model/Reviews/*.class model/Users/*.class loaders/*.class
+CLASS_FILES = ./*.class
+# view/*.class model/Businesses/*.class model/Reviews/*.class model/Users/*.class loaders/*.class
 
 Default: $(CLASS_FILES)
 

@@ -28,8 +28,11 @@ public class Programa {
         
         log.load(log.getFichDefaut(), businesses, reviews, users);
         GestReviews gest = new GestReviews(businesses, reviews, users);
-        Map<Integer,List<Integer>>map =gest.query4("_bZOUUc6Sr_W3BxbOUJacw");
-        System.out.println( map.toString());
+        //reviews.mostrarReviews();
+        // Map<Integer,List<Integer>>map =gest.query4("_bZOUUc6Sr_W3BxbOUJacw");
+        // System.out.println( map.toString());
+        gest.consulta7(businesses, reviews);
+        
     }
 
 

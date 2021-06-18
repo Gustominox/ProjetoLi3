@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.util.Arrays;
+
+import model.Businesses.*;
 import model.Reviews.*;
 
 public class User
@@ -115,26 +117,26 @@ public class User
             if(rev.getUserId().equals(getUserId())){
                for(Business bus: businesses.getList()){
                     if(bus.getBusinessId().equals(rev.getBusinessId()) && !busList.contains(bus)){
-                        busList.add(bus.clone);
+                        busList.add(bus.clone());
                     }
                 }
             }
         }
 
-        negocios.setList(aux);
+        negocios.setList(busList);
         return negocios;
     }
 
     //método que devolve o numero de negocios diferentes que o utilizador avaliou
-public int nrBusinessTotal(ReviewList reviews, BusinessList business){
+public int nrBusinessTotal(ReviewList reviews, BusinessList businesses){
         int total = 0;
         List<Business> busList = new ArrayList<>();
 
         for(Review rev: reviews.getList()){
-            if(rev.getUserId.equals(getUserid()))
+            if(rev.getUserId().equals(getUserId()))
 
                 for(Business bus: businesses.getList()){
-                    if(bus.getBusinessId.equals(rev.getBusinessId) && !busList.contains(bus)){
+                    if(bus.getBusinessId().equals(rev.getBusinessId()) && !busList.contains(bus)){
                         busList.add(bus.clone());
                         total++;
                     }
