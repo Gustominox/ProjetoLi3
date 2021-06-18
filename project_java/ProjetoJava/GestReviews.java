@@ -328,8 +328,9 @@ public void consulta3(String userId, ReviewList review, BusinessList business){
 
         }
 
-        imprimeQuery3(revMes, busMes, stars);
     }
+
+    imprimeQuery3(revMes, busMes, stars);
 }
 
 
