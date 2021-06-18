@@ -166,27 +166,25 @@ quantas vezes avaliou).
         System.out.println("    Número de negócios não avaliados: " + (nrTotalBus - totBusAval));      
     }
     
-    public void auxUser(String[] infoUser, List<Review> reviewsValidas){
+    public void dadosSobreReview(ReviewList reviews){
 
-        int nrUserTotal = 0;
-        int usersAval = 0;
-        int usersNaoAval = 0;
+        int nrRevErradas = 0;
+        int nrRevSemImpacto = 0;
+        StringBuilder sb =  new StringBuilder();
 
-        for(String s: infoUser){
-
-            String[] camposUser = User.parse(s);
-            User novoUser = new User(camposUser);
-
-            if(novoUser.getUserId().length() != 0){
-                nrUserTotal++;
-                usersAval += nrUsersAvaliaram(novoUser, reviewsValidas);
-            }         
+        for(Review rev: reviews){
+            
+            if(rev.getReviewId().length() == 0) nrRevErradas++;
+            else{
+                int somatorio = rev.getCool() + rev.getFunny() + rev.getUseful();
+                if(somatorio == 0) nrRevSemImpacto++;
+            }
         }
-        usersNaoAval = nrUserTotal - usersAval;
+        sb.append("    Número de reviews errados: " + nrRevErradas);
+        sb.append("    Número de reviews com 0 impacto: " + nrRevSemImpacto);
 
-        System.out.println("    Número total de users: " + nrUserTotal);
-        System.out.println("    Número de users que fizeram reviews: " + usersAval);
-        System.out.println("    Número de users que nada avaliaram: " + usersNaoAval); 
+        View view = new View();
+        view.print(sb.toString());        
     }
 
     public int nrBusAvaliados(Business novoBusiness, List<Review> reviewsValidas){
