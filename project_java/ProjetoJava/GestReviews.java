@@ -384,7 +384,7 @@ public void consulta5(int x, String user_id, ReviewList reviews){
 
     int posicao = 1;
     for(Map.Entry<Business,Integer> bus: ordenados){
-        sb.append("  ").append(posicao).append("º Business Id (que avaliou ")
+        sb.append("  ").append(posicao).append("º Business Id (que avaliou ");
         sb.append(bus.getValue()).append(" vezes): ").append(bus.getKey().getBusinessId()).append("\n");
         posicao++;
     }
