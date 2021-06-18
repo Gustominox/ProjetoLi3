@@ -125,6 +125,24 @@ public class User
         return negocios;
     }
 
+    //método que devolve o numero de negocios diferentes que o utilizador avaliou
+public int nrBusinessTotal(ReviewList reviews, BusinessList business){
+        int total = 0;
+        List<Business> busList = new ArrayList<>();
+
+        for(Review rev: reviews.getList()){
+            if(rev.getUserId.equals(getUserid()))
+
+                for(Business bus: businesses.getList()){
+                    if(bus.getBusinessId.equals(rev.getBusinessId) && !busList.contains(bus)){
+                        busList.add(bus.clone());
+                        total++;
+                    }
+                }
+        }
+        return total;
+    }
+
     /**
      * Método que constrói um objeto User, caso todos os campos sejam válidos.
      */
