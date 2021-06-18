@@ -350,7 +350,7 @@ public void imprimeQuery3(int[] revMes, int[] busMes, float[] stars){
 }
 
 
-public void consulta5(int x, String user_id, ReviewList reviews){
+public void consulta5(int x, String user_id, ReviewList reviews, BusinessList businesses){
 
     StringBuilder sb =  new StringBuilder();
     View view = new View();
@@ -360,15 +360,13 @@ public void consulta5(int x, String user_id, ReviewList reviews){
 
     Map<Business,Integer> busNr = new HashMap<>();
     
-    
     Comparator<Map.Entry<Business,Integer>> cmp = (p1,p2)-> ( p1.getValue() != p2.getValue() ) ?
                                                             ( p2.getValue() - p1.getValue() ) :
                                                               p1.getKey().getName().compareTo(p2.getKey().getName());
 
     for(Review r: reviewsDoUser.getList()){
-        Business bus = new Business(r.getBusinessId());
+        Business bus = businesses.getBusiness(r.getBusinessId());
         if(!busNr.containsKey(bus)){
-            
             busNr.put(bus.clone(), 1);
         }else{
             int n = busNr.get(bus);
