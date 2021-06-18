@@ -21,6 +21,10 @@ public class UserList {
         List<User> nova =list;
      return nova;
     }
+
+    public void setList(List<User> novaList){
+        this.list = novaList.stream().map(User::clone).collect(Collectors.toList());
+    }
  
     public User getLast(){
         User e = list.get(list.size()-1);

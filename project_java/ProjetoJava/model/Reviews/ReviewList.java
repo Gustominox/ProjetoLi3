@@ -18,6 +18,10 @@ public class ReviewList {
         List<Review> nova =list;
      return nova;
     }
+
+    public void setList(List<Review> novaList){
+        this.list = novaList.stream().map(Review::clone).collect(Collectors.toList());
+    }
  
     public Review getLast(){
         Review e = list.get(list.size()-1);

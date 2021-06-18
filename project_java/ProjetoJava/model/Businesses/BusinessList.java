@@ -20,6 +20,10 @@ public class BusinessList {
         List<Business> nova =list;
      return nova;
     }
+
+    public void setList(List<Business> novaList){
+        this.list = novaList.stream().map(Business::clone).collect(Collectors.toList());
+    }
  
     public Business getLast(){
         Business e = list.get(list.size()-1);
