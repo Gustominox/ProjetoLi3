@@ -187,9 +187,8 @@ quantas vezes avaliou).
         view.print(sb.toString());        
     }
 
-    public int nrBusAvaliados(Business novoBusiness, List<Review> reviewsValidas){
-
-        String busId = novoBusiness.getBusinessId();
+    public int nrBusAval(Business business, ReviewList reviewsValidas){
+        String busId = business.getBusinessId();
 
         for(Review rev: reviewsValidas){
             if(busId.equals(rev.getBusinessId())){
