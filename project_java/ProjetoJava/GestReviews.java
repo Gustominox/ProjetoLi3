@@ -451,44 +451,68 @@ inteiro dado pelo utilizador)
 
 // retorna 3 neg mais famosos de cada cidade
     public void consulta7(BusinessList businesses, ReviewList reviews){
-
-        StringBuilder sb =  new StringBuilder();
+        
+        View view = new View();
 
         // key: cidade, value: três negócios mais famosos dessa cidade
         //Map<String, BusinessList> todosNegPorCidade = new HashMap<>(); // visitados?
         List<String> cidadesVisitadas = new ArrayList<>();
+        Map<String,List<SimpleEntry<Business,Integer>>> cidades = new HashMap<>();
 
-        Comparator<Business> comp = (b1,b2) -> b2.nrReviewsTotal(reviews) - b1.nrReviewsTotal(reviews);
+        Map<String,Integer> busNr = new HashMap<>();
+        Comparator<SimpleEntry<Business,Integer>> comp = (b1,b2) -> b2.getValue() - b1.getValue();
 
-        for(Business bus1: businesses.getList()){ 
-            System.out.println("Para cada cidade\n"); // para cada cidade
-            String cidade = bus1.getCity();
-            if(!cidadesVisitadas.contains(cidade)){
-                List<Business> aux = new ArrayList<>();
-
-                for(Business bus2: businesses.getList()){
-                     // para cada cidade
-                    if(cidade.equals(bus2.getCity()))
-                        System.out.println("Para cada business da cidade\n");
-                        aux.add(bus2.clone());
-                }
-                BusinessList negociosOrdenados = new BusinessList();
-                negociosOrdenados.setList( aux.stream().map(Business::clone).sorted(comp).limit(3).collect(Collectors.toList()));
+        for(Review r: reviews.getList()){
+            if(!busNr.containsKey(r.getBusinessId())){
                 
-
-                cidadesVisitadas.add(cidade);
-
-                sb.append("Cidade - " + cidade);
-
-                int posicao = 1;
-                for(Business bus3: negociosOrdenados.getList()){
-                    sb.append("  " + posicao + "º Business Id (mais famoso): " + bus3.getBusinessId());
-                    posicao++;
-                }
+                busNr.put(r.getBusinessId(), 1);
+            }else{
+                int n = busNr.get(r.getBusinessId());
+                busNr.remove(r.getBusinessId());
+                busNr.put(r.getBusinessId(), n+1);
             }
-            View view = new View();
+        }
+
+        //System.out.println(busNr.toString());
+
+
+        for(Business b: businesses.getList()){
+            if(!cidadesVisitadas.contains(b.getCity())){
+                ArrayList<SimpleEntry<Business,Integer>> idBusCidade = new ArrayList<>();
+                if(busNr.containsKey(b.getBusinessId()))
+                    idBusCidade.add(new SimpleEntry<>( b.clone(),busNr.get(b.getBusinessId())));
+                else idBusCidade.add(new SimpleEntry<>( b.clone(),0));
+                //cidades.remove(b.getCity());
+                cidades.put(b.getCity(), idBusCidade);
+                cidadesVisitadas.add(b.getCity());
+            }else{
+                List<SimpleEntry<Business,Integer>> idBusCidade = cidades.get(b.getCity());
+                if(busNr.containsKey(b.getBusinessId()))
+                    idBusCidade.add(new SimpleEntry<>( b.clone(),busNr.get(b.getBusinessId())));
+                else idBusCidade.add(new SimpleEntry<>( b.clone(),0));
+                cidades.remove(b.getCity());
+                cidades.put(b.getCity(), idBusCidade);
+            }
+        }
+        System.out.println(cidades.values().toString());
+            for (Map.Entry<String, List<SimpleEntry<Business,Integer>>> entry : cidades.entrySet()) {
+
+                StringBuilder sb =  new StringBuilder();
+                sb.append("Cidade - " + entry.getKey()).append("\n");
+
+                List<SimpleEntry<Business,Integer>> ordenados = entry.getValue().stream().sorted(comp).limit(3).collect(Collectors.toList());
+                int posicao = 1;
+                for (SimpleEntry<Business,Integer> bus : ordenados) {
+
+                sb.append("  " + posicao + "º Business Id (mais famoso): " + bus.getKey().getBusinessId() + bus.getValue()).append("\n");
+                
+                posicao++;    
+            
+              
+            }
             view.print(sb.toString());
         }
+        
     }
 
     /**
