@@ -32,18 +32,18 @@ public class View {
     public void menuEstatisticas () {
         StringBuilder sb = new StringBuilder ( );
         sb.append("Estatisticas que pretende consultar:\n");
-        sb.append("1)-número total de registos de reviews errados\n");
-        sb.append("2)-número total de negócios\n");
-        sb.append("3)-total de diferentes negócios avaliados (nº reviews > 0)\n");
-        sb.append("4)-número total de negócios não avaliados\n");
-        sb.append("5)- número total de users \n");
-        sb.append("6)-numero total de users que realizaram reviews\n");
-        sb.append("7)-total de users que nada avaliaram\n");
-        sb.append("8)-total de users inativos (sem reviews)\n");
-        sb.append("9)-reviews com 0 impacto (0 valores no somatório de cool, funny ou useful)\n");
-        sb.append("10)-Número total de reviews por mês\n");
-        sb.append("11)-Média de classificação de reviews por mês e o valor global (média global de reviews);\n");
-        sb.append("12)-Número de distintos utilizadores que avaliaram em cada mês .\n");
+        sb.append("ESTATISCAS 1)\n  -número total de registos de reviews errados\n");
+        sb.append("  -número total de negócios\n");
+        sb.append("  -total de diferentes negócios avaliados (nº reviews > 0)\n");
+        sb.append("  -número total de negócios não avaliados\n");
+        sb.append("  -número total de users \n");
+        sb.append("  -numero total de users que realizaram reviews\n");
+        sb.append("  -total de users que nada avaliaram\n");
+        sb.append("  -total de users inativos (sem reviews)\n");
+        sb.append("  -reviews com 0 impacto (0 valores no somatório de cool, funny ou useful)\n");
+        sb.append("ESTATISCAS 1)\n  -Número total de reviews por mês\n");
+        sb.append("  -Média de classificação de reviews por mês e o valor global (média global de reviews);\n");
+        sb.append("  -Número de distintos utilizadores que avaliaram em cada mês .\n");
     }
 
 

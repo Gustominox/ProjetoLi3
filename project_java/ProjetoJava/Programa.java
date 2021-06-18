@@ -1,7 +1,7 @@
 import model.Businesses.*;
 import model.Reviews.*;
 import model.Users.*;
-//import controller.*;
+import controller.*;
 import view.*;
 import loaders.*;
 
@@ -14,35 +14,81 @@ import java.util.InputMismatchException;
 import java.util.Map;
 import java.util.Scanner ;
 
-public class Programa {
-
-    
-    
-    public static void main (String[] args ) throws IOException{
-
-        Loadlog log = new Loadlog();
-
-        BusinessList businesses = new BusinessList();
-        ReviewList reviews       = new ReviewList();
-        UserList users          = new UserList();
-        
-        log.load(log.getFichDefaut(), businesses, reviews, users);
-        GestReviews gest = new GestReviews(businesses, reviews, users);
-        //reviews.mostrarReviews();
-        // Map<Integer,List<Integer>>map =gest.query4("_bZOUUc6Sr_W3BxbOUJacw");
-        // System.out.println( map.toString());
-        
-        gest.estatica2(reviews,  users);
-        
         //gest.consulta5(10,"YoVfDbnISlW0f7abNQACIg");
+       
+    public class Programa {
+    
         
+        
+        public static void main (String[] args ) throws IOException{
+    
+            Scanner scan = new Scanner(System.in);
+            View view = new View();
+            Controller controller = new Controller();
+            
+            BusinessList listaBusinesses = new BusinessList();
+            ReviewList   listaReviews    = new ReviewList();
+            UserList     listaUsers      = new UserList(); 
+
+            int instruction=0;
+            int n;
+            
+            
+            while(instruction!=-1){
+                view.clearScreen();
+
+                view.menu();
+                view.promptNivel1();
+                try{
+                    instruction = scan.nextInt();
+                    scan.nextLine();
+                }
+                catch (InputMismatchException e) {
+                    instruction = -1;
+                    view.notAnInstruction();
+                }
+                view.clearScreen();
+            switch (instruction){
+            
+
+                case 1:
+                view.menuEstatisticas();
+
+                break;
+                case 2:
+
+                break;
+                case 3:
+
+                break;
+                case 4:
+
+                break;
+                case 5:
+
+                break;
+                case 6:
+
+                break;
+                case 7:
+
+                break;
+            
+                case 8:
+            
+                break;
+                case 9:
+            
+                break;
+            }
+        }   
+    }   
+    
+    
+    
     }
-
-
-
-}
-
-
-
-
-
+    
+        
+        
+        
+        

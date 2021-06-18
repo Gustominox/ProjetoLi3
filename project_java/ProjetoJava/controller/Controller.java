@@ -15,7 +15,7 @@ public class Controller {
     public void menuEstatisticas(){
         Scanner scan= new Scanner(System.in);
         View view =new View();
-        GestReviews gest = new GestReviews();
+        //GestReviews gest = new GestReviews();
         int instruction ;
         try{
             instruction = scan.nextInt();
