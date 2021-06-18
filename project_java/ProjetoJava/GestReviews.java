@@ -236,6 +236,17 @@ quantas vezes avaliou).
         return clasPorMes;
     }
 
+    public float mediaGlobalReview(ReviewList reviews){
+    float stars = 0;
+    int nrRev = 0;
+    for(Review rev: reviews.getList()){
+        nrRev++;
+        stars += rev.getStars();
+    }
+    float res = stars / nrRev;
+    return res;
+}
+
     public int[] userPorMes(ReviewList reviews, UserList users){
         //é uma lista com os user id
         List<String> aux = new ArrayList<>();
