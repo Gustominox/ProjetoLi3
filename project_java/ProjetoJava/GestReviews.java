@@ -454,8 +454,6 @@ inteiro dado pelo utilizador)
         
         View view = new View();
 
-        // key: cidade, value: três negócios mais famosos dessa cidade
-        //Map<String, BusinessList> todosNegPorCidade = new HashMap<>(); // visitados?
         List<String> cidadesVisitadas = new ArrayList<>();
         Map<String,List<SimpleEntry<Business,Integer>>> cidades = new HashMap<>();
 
@@ -472,11 +470,8 @@ inteiro dado pelo utilizador)
                 busNr.put(r.getBusinessId(), n+1);
             }
         }
-
-        //System.out.println(busNr.toString());
-
-
         for(Business b: businesses.getList()){
+
             if(!cidadesVisitadas.contains(b.getCity())){
                 ArrayList<SimpleEntry<Business,Integer>> idBusCidade = new ArrayList<>();
                 if(busNr.containsKey(b.getBusinessId()))
@@ -494,25 +489,19 @@ inteiro dado pelo utilizador)
                 cidades.put(b.getCity(), idBusCidade);
             }
         }
-        System.out.println(cidades.values().toString());
-            for (Map.Entry<String, List<SimpleEntry<Business,Integer>>> entry : cidades.entrySet()) {
+        for (Map.Entry<String, List<SimpleEntry<Business,Integer>>> entry : cidades.entrySet()) {
 
-                StringBuilder sb =  new StringBuilder();
-                sb.append("Cidade - " + entry.getKey()).append("\n");
+            StringBuilder sb =  new StringBuilder();
+            sb.append("Cidade - ").append(entry.getKey()).append("\n");
 
-                List<SimpleEntry<Business,Integer>> ordenados = entry.getValue().stream().sorted(comp).limit(3).collect(Collectors.toList());
-                int posicao = 1;
-                for (SimpleEntry<Business,Integer> bus : ordenados) {
-
-                sb.append("  " + posicao + "º Business Id (mais famoso): " + bus.getKey().getBusinessId() + bus.getValue()).append("\n");
-                
-                posicao++;    
-            
-              
+            List<SimpleEntry<Business,Integer>> ordenados = entry.getValue().stream().sorted(comp).limit(3).collect(Collectors.toList());
+            int posicao = 1;
+            for (SimpleEntry<Business,Integer> bus : ordenados) {
+                sb.append("  ").append(posicao).append("º Business Id (com ").append(bus.getValue()).append(" reviews): ").append(bus.getKey().getBusinessId()).append(bus.getValue()).append("\n");
+                posicao++;
             }
             view.print(sb.toString());
-        }
-        
+        }  
     }
 
     /**
