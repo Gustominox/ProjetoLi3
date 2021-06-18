@@ -357,6 +357,38 @@ public void consulta3(String userId, ReviewList review, BusinessList business){
 }
 
 
+public void imprimeQuery3(int[] revMes, int[] busMes, int[] stars){
+
+    StringBuilder sb =  new StringBuilder();
+    sb.append("  Janeiro:");
+    sb.append("    Número de reviews: " + revMes[0] + " , número de negócios avaliados: " + busMes[0] + " , nota média: " + stars[0]/revMes[0]);
+    sb.append("  Fevereiro:");
+    sb.append("    Número de reviews: " + revMes[1] + " , número de negócios avaliados: " + busMes[1] + " , nota média: " + stars[1]/revMes[1]);
+    sb.append("  Março:");
+    sb.append("    Número de reviews: " + revMes[2] + " , número de negócios avaliados: " + busMes[2] + " , nota média: " + stars[2]/revMes[2]);
+    sb.append("  Abril:");
+    sb.append("    Número de reviews: " + revMes[3] + " , número de negócios avaliados: " + busMes[3] + " , nota média: " + stars[3]/revMes[3]);
+    sb.append("  Maio:");
+    sb.append("    Número de reviews: " + revMes[4] + " , número de negócios avaliados: " + busMes[4] + " , nota média: " + stars[4]/revMes[4]);
+    sb.append("  Junho:");
+    sb.append("    Número de reviews: " + revMes[5] + " , número de negócios avaliados: " + busMes[5] + " , nota média: " + stars[5]/revMes[5]);
+    sb.append("  Julho:");
+    sb.append("    Número de reviews: " + revMes[6] + " , número de negócios avaliados: " + busMes[6] + " , nota média: " + stars[6]/revMes[6]);
+    sb.append("  Agosto:");
+    sb.append("    Número de reviews: " + revMes[7] + " , número de negócios avaliados: " + busMes[7] + " , nota média: " + stars[7]/revMes[7]);
+    sb.append("  Setembro:");
+    sb.append("    Número de reviews: " + revMes[8] + " , número de negócios avaliados: " + busMes[8] + " , nota média: " + stars[8]/revMes[8]);
+    sb.append("  Outubro:");
+    sb.append("    Número de reviews: " + revMes[9] + " , número de negócios avaliados: " + busMes[9] + " , nota média: " + stars[9]/revMes[9]);
+    sb.append("  Novembro:");
+    sb.append("    Número de reviews: " + revMes[10] + " , número de negócios avaliados: " + busMes[10] + " , nota média: " + stars[10]/revMes[10]);
+    sb.append("  Dezembro:");
+    sb.append("    Número de reviews: " + revMes[11] + " , número de negócios avaliados: " + busMes[11] + " , nota média: " + stars[11]/revMes[11]);
+    View view = new View();
+    view.print(sb.toString());
+}
+
+
     public void consulta5(int x, String user_id, ReviewList reviews, BusinessList businesses){
 
         StringBuilder sb =  new StringBuilder();
