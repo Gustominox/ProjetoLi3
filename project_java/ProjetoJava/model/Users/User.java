@@ -106,6 +106,25 @@ public class User
         return reviewsDoUser;
     }
     
+    public BusinessList negociosDoUser(ReviewList reviews, BusinessList businesses){
+        BusinessList negocios = new BusinessList();
+        List<Business> busList = new ArrayList<>();
+
+        for(Review rev: reviews.getList()){
+
+            if(rev.getUserId().equals(getUserId())){
+               for(Business bus: businesses.getList()){
+                    if(bus.getBusinessId().equals(rev.getBusinessId()) && !busList.contains(bus)){
+                        busList.add(bus.clone);
+                    }
+                }
+            }
+        }
+
+        negocios.setList(aux);
+        return negocios;
+    }
+
     /**
      * Método que constrói um objeto User, caso todos os campos sejam válidos.
      */
