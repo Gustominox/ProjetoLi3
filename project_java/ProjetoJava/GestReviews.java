@@ -24,9 +24,9 @@ import view.*;
 
 
 public class GestReviews{
-     private BusinessList bus ;
-     private ReviewList  rev ;
-     private UserList user ;
+    private BusinessList bus ;
+    private ReviewList  rev ;
+    private UserList user ;
     
 
 
@@ -71,7 +71,7 @@ quantas vezes avaliou).
 //    }
 
 
-    public GestReviews(BusinessList bus, ReviewList rev, UserList user) {
+    public GestReviews(BusinessList bus, ReviewList rev, UserList user){
         this.bus = bus;
         this.rev = rev;
         this.user = user;
@@ -359,32 +359,33 @@ public void imprimeQuery3(int[] revMes, int[] busMes, float[] stars){
     view.print(sb.toString());
 }
 
-public void consulta5(int x, String user_id, ReviewList reviews){
+public void consulta5(int x, String user_id){
 
     StringBuilder sb =  new StringBuilder();
     View view = new View();
 
     User user = new User(user_id);
-    ReviewList reviewsDoUser = user.getReviews(reviews);
+    ReviewList reviewsDoUser = user.getReviews(this.reviews);
 
     Map<Business,Integer> busNr = new HashMap<>();
-    
+    // usado para analisar se o business já existe (ou não) no map anterior pelo seu business id
+    List<String> busId = new ArrayList<>();
+
     Comparator<Map.Entry<Business,Integer>> cmp = (p1,p2)-> ( p1.getValue() != p2.getValue() ) ?
                                                             ( p2.getValue() - p1.getValue() ) :
                                                               p1.getKey().getName().compareTo(p2.getKey().getName());
 
     for(Review r: reviewsDoUser.getList()){
         Business bus = this.bus.getBusiness(r.getBusinessId());
-        if(!busNr.containsKey(bus)){
+        if( !busId.contains(bus.getBusinessId()) ){
             busNr.put(bus.clone(), 1);
+            busId.add(bus.getBusinessId());
         }else{
             int n = busNr.get(bus);
             busNr.remove(bus);
             busNr.put(bus.clone(), n+1);
         }
     }
-    
-    // ordenar os negócios com os critérios estipulados
     Map<Business,Integer> ordenados = busNr.entrySet().stream().sorted(cmp).limit(x)
                                            .collect(Collectors.toMap(e->e.getKey().clone(), e->e.getValue()));
 
