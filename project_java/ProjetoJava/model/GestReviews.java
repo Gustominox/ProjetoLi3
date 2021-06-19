@@ -1,4 +1,3 @@
-
 /**
  * Classe agregadora de todo o projecto de Java.
  *
@@ -17,7 +16,6 @@ import model.Businesses.*;
 import model.Reviews.*;
 import model.Users.*;
 import java.util.stream.*;
-
 
 import view.*;
 
@@ -67,7 +65,7 @@ public class GestReviews{
     }
     
 
-    /********************************************** ESTATÍSTICAS **********************************************/
+    /********************************************** ESTATISTICAS **********************************************/
 
     /**
      * Método que apresenta os resultados de todos os requisitos da estatística 1.
@@ -90,9 +88,6 @@ public class GestReviews{
     /**
      * Método que devolve um conjunto de todos os negócios avaliados (pelo seu id).
      * Este método calcula, ainda, o número de reviews erradas e o número de reviews sem impacto, imprimindo-os no ecrã.
-     *
-     * @param reviews lista de todas as reviews (válidas e inválidas)
-     * @return map de todos os negócios avaliados
      */
     public Map<String,Integer> dadosSobreReview(){
 
@@ -124,8 +119,6 @@ public class GestReviews{
      * recebe como argumento o map devolvido pelo método dadosSobreReview().
      * Esse map contém todos os business id que tiveram alguma review.
      *
-     * @param businesses lista de todos os negócios
-     * @param reviewsValidas lista de reviews válidas
      * @param businessAvaliados map dos business avaliados (pelo seu id)
      */
     public void dadosSobreBusiness(Map<String,Integer> businessAvaliados){
@@ -154,9 +147,6 @@ public class GestReviews{
     /**
      * Método que calcula o número total de users (com ou sem reviews), o número de users que fizeram reviews e
      * o número de users nada avaliaram. Para isto, para além da lista de users, recebe a lista de reviews válidas.
-     *
-     * @param users lista de todos os users
-     * @param reviewsValidas lista de reviews válidas
      */
     public void dadosSobreUser(){
 
@@ -337,11 +327,6 @@ public class GestReviews{
             }
         }
     }
-
-    /**
-     * Método auxiliar que imprime os resultados obtidos do método consulta3.
-     */
-    
 
     /**
      * QUERY 4 
@@ -717,6 +702,3 @@ public class GestReviews{
     }
 
 }
-
-
-
