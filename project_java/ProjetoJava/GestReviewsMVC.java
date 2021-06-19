@@ -44,7 +44,7 @@ import java.util.AbstractMap.SimpleEntry;
             
             int instruction = 0;
             while (instruction != -1) {
-         
+                
                 view.clearScreen();
                 view.menu();
                 view.promptNivel1();
@@ -62,6 +62,7 @@ import java.util.AbstractMap.SimpleEntry;
         
                 
                 view.clearScreen();
+                
                 switch(instruction){
                     
                     case 0 :
@@ -132,12 +133,20 @@ import java.util.AbstractMap.SimpleEntry;
                         view.consulta5(map1,user);
                         view.pressEnter();
                         scan.nextLine();
-                        
-                        //view.query5(user,gest.query5(user));
+                        //YoVfDbnISlW0f7abNQACIg
                         break;
         
+
+                    case 6 : 
+                        //view.q7(gest.query7());
+                        break; 
+                            
                     case 7 : 
                         //view.q7(gest.query7());
+                        Map<String, List<SimpleEntry<Business,Integer>>>  map2 = gest.consulta7();
+                        view.consulta7(map2);
+                        view.pressEnter();
+                        scan.nextLine();
                         break; 
                             
                     case 8: 
@@ -147,9 +156,29 @@ import java.util.AbstractMap.SimpleEntry;
                         break;   
         
                     case 9: 
-                        gest.consulta9(10,"RuvuXYEz_fhJZVNXjC7kzw");
+
+                        view.pedeBusinessID();    
+                        String businessID1 = scan.nextLine();
+                        
+                        Map<String, List<Review>> ordenados = gest.consulta9(10,businessID1);//RuvuXYEz_fhJZVNXjC7kzw
+                        view.consulta9(businessID1,ordenados);
+                        view.pressEnter();
+                        scan.nextLine();
+                        
                         break;
-                    default : 
+                    case 10:
+
+                        view.executando();
+                        Map<String,List<String>>state = new HashMap<>();
+                        Map<String,List<Business>> cidades = new HashMap<>();
+
+                        Map<String,SimpleEntry< Float,Integer>> busMedia = new HashMap<>();
+                        gest.consulta10(state,cidades,busMedia);
+                        view.consulta10(state,cidades,busMedia);
+                        view.pressEnter();
+                        scan.nextLine();
+                        break;
+                        default : 
                         //view.notAnInstruction();
                        
                         

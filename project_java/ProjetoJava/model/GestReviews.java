@@ -500,7 +500,7 @@ public class GestReviews{
      * Determina, para cada cidade, a lista dos três mais famosos negócios em termos de
      * número de reviews.
      */
-    public void consulta7(){
+    public Map<String, List<SimpleEntry<Business,Integer>>> consulta7(){
         
         View view = new View();
 
@@ -523,7 +523,7 @@ public class GestReviews{
         for(Business b: this.bus.getList()){
 
             if(!cidadesVisitadas.contains(b.getCity())){
-                ArrayList<SimpleEntry<Business,Integer>> idBusCidade = new ArrayList<>();
+                List<SimpleEntry<Business,Integer>> idBusCidade = new ArrayList<>();
                 if(busNr.containsKey(b.getBusinessId()))
                     idBusCidade.add(new SimpleEntry<>( b.clone(),busNr.get(b.getBusinessId())));
                 else idBusCidade.add(new SimpleEntry<>( b.clone(),0));
@@ -539,19 +539,16 @@ public class GestReviews{
                 cidades.put(b.getCity(), idBusCidade);
             }
         }
+        Map<String,List<SimpleEntry<Business,Integer>>> ret = new HashMap<>();
         for (Map.Entry<String, List<SimpleEntry<Business,Integer>>> entry : cidades.entrySet()) {
 
-            StringBuilder sb =  new StringBuilder();
-            sb.append("Cidade - ").append(entry.getKey()).append("\n");
-
+        
             List<SimpleEntry<Business,Integer>> ordenados = entry.getValue().stream().sorted(comp).limit(3).collect(Collectors.toList());
-            int posicao = 1;
-            for (SimpleEntry<Business,Integer> bus : ordenados) {
-                sb.append("  ").append(posicao).append("º Business Id (com ").append(bus.getValue()).append(" reviews): ").append(bus.getKey().getBusinessId()).append(bus.getValue()).append("\n");
-                posicao++;
-            }
-            view.print(sb.toString());
+            String city = entry.getKey();
+            
+            ret.put(city, ordenados);
         }  
+        return ret;
     }
 
     /**
@@ -608,7 +605,7 @@ public class GestReviews{
      * @param x número de users que mais avaliaram esse negócio
      * @param business_id id do negócio dado
      */
-    public void consulta9(int x, String business_id){
+    public  Map<String, List<Review>> consulta9(int x, String business_id){
 
         StringBuilder sb =  new StringBuilder();
 
@@ -640,36 +637,17 @@ public class GestReviews{
                                                            (a, b) -> { throw new AssertionError(); },
                                                            LinkedHashMap::new
                                                         ));
-    
-        sb.append("Business Id: ").append(business_id).append("\n");
-
-        int posicao = 1;
-        for(Map.Entry<String, List<Review>> user: ordenados.entrySet()){
-      
-            float classificacao = 0;
-            for(Review rev: user.getValue()){
-                classificacao += rev.getStars();
-            }
-            float media = classificacao / user.getValue().size();
-
-            sb.append("  ").append(posicao).append("º User Id (que mais o avaliou): ")
-                           .append(user.getKey()).append("\n")
-                           .append("numero de review: ").append(user.getValue().size());
-            sb.append("      Classificação média do négocio: ").append(media).append("\n");
-            posicao++;
-        }
-        View view = new View();
-        view.print(sb.toString());
+        return ordenados;
     }
 
     /**
      * QUERY 10
      *  Determinar para cada estado, cidade a cidade, a média de classificação de cada negócio.
      */
-    public void consulta10() {
+    public void consulta10( Map<String,List<String>>state ,
+                                                Map<String,List<Business>> cidades ,
+                                                Map<String,SimpleEntry< Float,Integer>> busMedia ) {
     
-        Map<String,List<String>>state = new HashMap<>();
-        Map<String,List<Business>> cidades = new HashMap<>();
 
         for(Business b : this.bus.getList()){ 
             if(!cidades.containsKey(b.getCity())){
@@ -702,7 +680,6 @@ public class GestReviews{
             }
         }
     
-        Map<String,SimpleEntry< Float,Integer>> busMedia = new HashMap<>();
     
         for(Review r: rev.getList()){
             if(!busMedia.containsKey(r.getBusinessId())){
@@ -715,7 +692,7 @@ public class GestReviews{
                 busMedia.put(r.getBusinessId(), new SimpleEntry<>(n.getKey()+r.getStars(),n.getValue()+1));
             }
         }
-    
+    /*
         StringBuilder sb = new StringBuilder();
         for (Map.Entry<String,List<String>> entry : state.entrySet()) {
 
@@ -741,6 +718,8 @@ public class GestReviews{
         }
         View view = new View();
         view.print(sb.toString());
+        */
+        
     }
 
     /************************************* MÉTODOS AUXILIARES *************************************/
