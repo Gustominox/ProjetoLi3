@@ -65,17 +65,18 @@ import java.util.AbstractMap.SimpleEntry;
                 switch(instruction){
                     
                     case 0 :
-                      view.menuEstatisticas();
-                      view.promptNivel2();
-                      int j = scan.nextInt();
-                      scan.nextLine();
-                      view.clearScreen();
-                      if(j == 1) gest.estatistica1();
-                      else if(j == 2) gest.estatistica2();
-                      else view.notAnInstruction();
-                      view.pressEnter();
-                      scan.nextLine();
-                      break; 
+                        view.menuEstatisticas();
+                        view.promptNivel2();
+                        int j = scan.nextInt();
+                        scan.nextLine();
+                        view.clearScreen();
+                        if(j == 1) gest.estatistica1();
+                        else if(j == 2) gest.estatistica2();
+                        else view.notAnInstruction();
+                        view.pressEnter();
+                        scan.nextLine();
+
+                        break; 
                     case 1 :
                         SimpleEntry <Integer,Set<String>> n; 
                         n = gest.consulta1();
@@ -95,8 +96,9 @@ import java.util.AbstractMap.SimpleEntry;
                         SimpleEntry <Integer,Integer> ret;
                         ret = gest.consulta2 (mes,ano);
                         view.consulta2(ret);
-                        scan.nextLine();
                         view.pressEnter();
+                        scan.nextLine();
+                        
                         break;
                         
                     case 3: 
@@ -104,19 +106,33 @@ import java.util.AbstractMap.SimpleEntry;
                         float[] stars = new float[12];
                         int[] revMes = new int[12];
                         int[] busMes = new int[12];
+                        view.pedeUser();
                         String user3 = scan.nextLine();
                         gest.consulta3(user3,stars,revMes,busMes);
                         view.consulta3(stars,revMes,busMes);
+                        view.pressEnter();
+                        scan.nextLine();
                         break;
                     
                     case 4 : 
-                         String businessID = scan.nextLine();
-                         //view.q4( gest.query4(businessID),businessID);
-                         break;
+                        view.pedeBusinessID();    
+                        String businessID = scan.nextLine();
+                        
+                        Map<Integer, List<Integer>> map = gest.consulta4(businessID);
+                        view.consulta4(map);
+                        view.pressEnter();
+                        scan.nextLine();
+                        
+                        break;
                         
                     case 5: 
-                        String user =scan.nextLine();
+                        view.pedeUser();
+                        String user = scan.nextLine();
                         gest.consulta5(10,"YoVfDbnISlW0f7abNQACIg");
+                        view.consulta5();
+                        view.pressEnter();
+                        scan.nextLine();
+                        
                         //view.query5(user,gest.query5(user));
                         break;
         

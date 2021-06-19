@@ -5,6 +5,8 @@ import model.Reviews.*;
 import model.Users.*;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.AbstractMap.SimpleEntry;
 
@@ -158,6 +160,10 @@ public class View {
     public void pedeAno() {
         System.out.print("Insira o Ano que pretende consultar: ");
     }
+
+    public void pedeUser() {
+        System.out.print("Insira o UserId que pretende consultar: ");
+    }
     
     public void consulta3(float[] stars,int[] revMes, int[] busMes){
 
@@ -173,6 +179,25 @@ public class View {
     
         System.out.println(sb.toString());
     }
+
+    public void consulta4(Map<Integer, List<Integer>> map) {
+        StringBuilder sb =  new StringBuilder();
+        
+        for(Map.Entry<Integer, List<Integer>> entry : map.entrySet()){
+           // int nmes = i + 1;
+            sb.append("  Mes:" + entry.getKey()).append("\n");
+            sb.append("    Número de reviews: "           + entry.getValue().get(0) );
+            sb.append(" , Número de negócios avaliados: " + entry.getValue().get(1) ); 
+            sb.append(" , Nota média: "                   + entry.getValue().get(2)).append("\n");
+    
+        }
+        System.out.println(sb.toString());
+    }
+
+    public void pedeBusinessID() {
+        System.out.print("Insira o BusinessId que pretende consultar: ");
+    }
+
 }
 
     

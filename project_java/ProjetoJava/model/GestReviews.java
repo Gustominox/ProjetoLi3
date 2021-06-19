@@ -349,7 +349,7 @@ public class GestReviews{
      *
      * @param business_id business id dado
      */
-    public Map<Integer, List<Integer>> query4 (String businessId){
+    public Map<Integer, List<Integer>> consulta4 (String businessId){
         Map<Integer,List<Integer>>map = new HashMap<>();
    
         for (int mes=1;mes<=12 ;mes++){
