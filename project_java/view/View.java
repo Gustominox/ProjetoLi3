@@ -123,41 +123,61 @@ public class View {
     }
 
     /**
-     * Método que apresenta no ecrã uma mensagem a pedir o nome do ficheiro que o utilizador pretender 
-    */
-
+     * Método que apresenta no ecrã uma mensagem a informar que o programa foi gravado
+     */
     public void gravado() {
         System.out.println("Estado do Programa Gravado\n");
     }
 
+    /**
+     * Método que apresenta no ecrã uma mensagem a pedir o nome do ficheiro que o utilizador pretender 
+     */
     public void fichQueQuer() {
         System.out.print("Nome do ficheiro com que pretende gravar: ");
     }
 
+    /**
+     * Método que apresenta no ecrã uma mensagem a pedir o mes 
+     */
     public void pedeMes() {
         System.out.print("Insira o Mes que pretende consultar: ");
     }
 
+    /**
+     * Método que apresenta no ecrã uma mensagem a pedir o ano 
+     */
     public void pedeAno() {
         System.out.print("Insira o Ano que pretende consultar: ");
     }
 
+    /**
+     * Método que apresenta no ecrã uma mensagem a pedir o userID
+     */
     public void pedeUser() {
         System.out.print("Insira o UserId que pretende consultar: ");
     }
     
+    /**
+     * Método que apresenta no ecrã uma mensagem a pedir a quantidade de valores
+     */
     public void pedeQtValores() {
         System.out.print("Insira a quantidade de valores que pretende consultar: ");
     }
-
+    /**
+     * Método que apresenta no ecrã uma mensagem a informar que o programa ta a executar 
+     */
     public void executando() {
         System.out.println("Processing...\n ! Please Wait !");
     }
-
+    /**
+     * Método que apresenta no ecrã uma mensagem a pedir o BussinessID
+     */
     public void pedeBusinessID() {
         System.out.print("Insira o BusinessId que pretende consultar: ");
     }
-
+    /**
+     * Método que apresenta no ecrã o output da consulta 1
+     */
     public void consulta1(SimpleEntry<Integer, Set<String>> n) {
         
         StringBuilder sb = new StringBuilder();
@@ -171,7 +191,9 @@ public class View {
         System.out.println(sb.toString());
     }
 
-
+    /**
+     * Método que apresenta no ecrã o output da consulta 2
+     */
     public void consulta2(SimpleEntry<Integer, Integer> r) {
 
         StringBuilder sb = new StringBuilder();
@@ -182,7 +204,9 @@ public class View {
         
         System.out.println(sb.toString());
     }
-
+    /**
+     * Método que apresenta no ecrã o output da consulta 3
+     */
     public void consulta3(float[] stars,int[] revMes, int[] busMes){
 
         StringBuilder sb =  new StringBuilder();
@@ -197,12 +221,14 @@ public class View {
     
         System.out.println(sb.toString());
     }
-
+    /**
+     * Método que apresenta no ecrã o output da consulta 4
+     */
     public void consulta4(Map<Integer, List<Integer>> map) {
         StringBuilder sb =  new StringBuilder();
         
         for(Map.Entry<Integer, List<Integer>> entry : map.entrySet()){
-           // int nmes = i + 1;
+           
             sb.append("  Mes:" + entry.getKey()).append("\n");
             sb.append("    Número de reviews: "           + entry.getValue().get(0) );
             sb.append(" , Número de negócios avaliados: " + entry.getValue().get(1) ); 
@@ -213,7 +239,9 @@ public class View {
     }
 
     
-
+    /**
+     * Método que apresenta no ecrã o output da consulta 5
+     */
     public void consulta5(Map<String,Integer> ordenados, String user_id) {
 
         StringBuilder sb =  new StringBuilder();
@@ -228,7 +256,9 @@ public class View {
         }
        System.out.println(sb.toString());
     }
-
+    /**
+     * Método que apresenta no ecrã o output da consulta 7
+     */
     public void consulta7(Map<String, List<SimpleEntry<Business, Integer>>> cidades) {
 
 
@@ -247,7 +277,9 @@ public class View {
         }  
 
     }
-
+    /**
+     * Método que apresenta no ecrã o output da consulta 9
+     */
     public void consulta9(String business_id,Map<String, List<Review>> ordenados) {
        
         StringBuilder sb =  new StringBuilder();
@@ -270,7 +302,9 @@ public class View {
         }
         System.out.println(sb.toString());
     }
-
+    /**
+     * Método que apresenta no ecrã o output da consulta 10
+     */
     public void consulta10( Map<String,List<String>>state ,
                             Map<String,List<Business>> cidades ,
                             Map<String,SimpleEntry< Float,Integer>> busMedia ) {
@@ -300,7 +334,9 @@ public class View {
         System.out.println(sb.toString());
         
     }
-
+    /**
+     * Método que apresenta no ecrã o output da consulta 6
+     */
     public void consulta6(Map<Integer, Map<String, Integer>> anos) {
         StringBuilder sb = new StringBuilder();
 
@@ -315,7 +351,9 @@ public class View {
         }
      System.out.println(sb.toString());
     }
-
+    /**
+     * Método que apresenta no ecrã o output da consulta 8
+     */
     public void consulta8(Map<String, List<String>> ordenados) {
         StringBuilder sb =  new StringBuilder();
         sb.append("\n");
@@ -326,7 +364,9 @@ public class View {
         View view = new View();
         view.print(sb.toString());
     }
-
+    /**
+     * Método que apresenta no ecrã o output da Estatistica 2
+     */
     public void estatistica2(int[] revPorMes, float[] claPorMes, int[] nrUserMes,float valorGlobal) {
         StringBuilder sb =  new StringBuilder();
         for(int i=0; i<12; i++){

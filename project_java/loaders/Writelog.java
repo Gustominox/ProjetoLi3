@@ -1,3 +1,10 @@
+/**
+ * Class para gravar ficheiros com o estado do programa
+ * 
+ * @author grupo 64 
+ * @version 
+ */
+
 package loaders;
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
