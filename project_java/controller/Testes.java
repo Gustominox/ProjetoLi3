@@ -53,7 +53,11 @@ public class Testes{
         System.out.println("Estatistica 2:");
 
         Crono.start();
-        gest.estatistica2();
+        int[] revPorMes = new int[12];
+        float[] claPorMes  = new float[12];  
+        int[] nrUserMes = new int[12];
+
+        gest.estatistica2(revPorMes, claPorMes ,nrUserMes);
 
         System.out.println("    Tempo de execução: " + Crono.getTimeAsString());
         memUsadaDepois = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();

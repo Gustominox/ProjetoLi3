@@ -23,27 +23,46 @@ public class GestReviews{
     private BusinessList bus ;
     private ReviewList  rev ;
     private UserList user ;
-
+/**
+    * Método que obtém a lista de business 
+    * @return lista dos business
+    */
     public BusinessList getBus() {
         return bus;
     }
-
+/**
+    * Método que define a lista de business 
+    * @param  Nova lista de negocios
+    */
     public void setBus(BusinessList bus) {
         this.bus = bus;
     }
-
+/**
+    * Método que obtém a lista de review 
+    * @return lista dos review
+    */ 
     public ReviewList getRev() {
         return rev;
     }
+/**
+    * Método que define a lista de reviews 
+    * @param  Nova lista de reviews
+    */
 
     public void setRev(ReviewList rev) {
         this.rev = rev;
     }
-
+ /**
+    * Método que obtém a lista de user 
+    * @return lista dos user
+    */
     public UserList getUser() {
         return user;
     }
-
+/**
+    * Método que define a lista de user 
+    * @param  Nova lista de user
+    */
     public void setUser(UserList user) {
         this.user = user;
     }
