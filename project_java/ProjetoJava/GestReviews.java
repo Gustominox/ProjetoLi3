@@ -379,7 +379,7 @@ inteiro dado pelo utilizador)
 
  */
 
- public void consulta6(){
+ public void consulta6(int x){
         //ano      //negocio 
     Map<Integer, Map<String,List<Review>>> negPorAno = new HashMap<>();
     List<Business> busList = new ArrayList<>();
@@ -408,11 +408,13 @@ inteiro dado pelo utilizador)
     }
 
     StringBuilder sb =  new StringBuilder();
-    Comparator<Map.entry<String, List<Review>>> comp = (b1,b2) -> b2.getValue().size() - b1.getValue().size();
+    Comparator<Map.Entry<String, List<Review>>> comp = (b1,b2) -> b2.getValue().size() - b1.getValue().size();
     for(Map.Entry<Integer,Map<String, List<Review>>> entry: negPorAno.entrySet()){
         int ano = entry.getKey();
         sb.append("  Ano ").append(ano).append("\n");
-        Map<String, List<Review>> usersPorNeg = new HashMap<>;
+       
+        Map<String, List<String>> usersPorNeg = new HashMap<>();
+       
         for(Map.Entry<String, List<Review>> entry2: entry.get(ano).entrySet()){
             List<String> userList = new ArrayList<>();
             for(Review r: revs){
@@ -433,8 +435,8 @@ inteiro dado pelo utilizador)
     for(Map.Entry<Integer,Map<String, List<Review>>> entry3: res.entrySet){
         sb.append("  Ano " + entry.getKey());
         for(Business bus: entry.getvalue().getList()){
-                sp.append("    Negócio: " + bus.getBusinessId());
-                sp.append("      " + usersPorNeg.get(bus.getBusinessId()).size() + "users avaliaram este negócio");
+                sb.append("    Negócio: " + bus.getBusinessId());
+                sb.append("      " + usersPorNeg.get(bus.getBusinessId()).size() + "users avaliaram este negócio");
         }
     }
     View view = new View();

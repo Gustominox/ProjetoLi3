@@ -2,6 +2,7 @@ import model.Businesses.*;
 import model.Reviews.*;
 import model.Users.*;
 import controller.*;
+import jdk.internal.net.http.common.Log;
 import view.*;
 import loaders.*;
 
@@ -25,11 +26,19 @@ import java.util.Scanner ;
             Scanner scan = new Scanner(System.in);
             View view = new View();
             Controller controller = new Controller();
-            
             BusinessList listaBusinesses = new BusinessList();
             ReviewList   listaReviews    = new ReviewList();
             UserList     listaUsers      = new UserList(); 
 
+            Loadlog loader = new Loadlog();
+
+            loader.load(loader.getFichDefaut(), listaBusinesses
+                                              , listaReviews
+                                              , listaUsers);
+
+            GestReviews gest = new GestReviews( listaBusinesses
+                                                , listaReviews
+                                                , listaUsers);
             int instruction=0;
             int n;
             
@@ -51,9 +60,12 @@ import java.util.Scanner ;
             switch (instruction){
             
 
-                case 1:
+                case 0:
                 view.menuEstatisticas();
                 scan.nextLine();
+
+                break;
+                case 1:
                 break;
                 case 2:
 
@@ -68,7 +80,7 @@ import java.util.Scanner ;
 
                 break;
                 case 6:
-
+                    gest.consulta6();
                 break;
                 case 7:
 
