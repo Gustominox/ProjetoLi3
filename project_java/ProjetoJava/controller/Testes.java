@@ -15,7 +15,19 @@ import model.Users.*;
 public class Testes{
 
     public void runTestes(){
-        GestReviews gestRev = new GestReviews();
+        BusinessList listaBusinesses = new BusinessList();
+            ReviewList   listaReviews    = new ReviewList();
+            UserList     listaUsers      = new UserList(); 
+            
+            Loadlog loader = new Loadlog();
+
+            loader.load(loader.getFichDefaut(), listaBusinesses
+                                              , listaReviews
+                                              , listaUsers);
+
+            GestReviews gest = new GestReviews( listaBusinesses
+                                                , listaReviews
+                                                , listaUsers);
         long memUsadaAntes = RunTime.getRuntime().totalMenory() - RunTime.getRuntime().freeMemory();
 
 
@@ -170,12 +182,15 @@ public class Testes{
         System.out.println("Consulta interativa 10:");
 
         Crono.start();
-        gest.consulta10();
+        Map<String,List<String>>state = new HashMap<>();
+        Map<String,List<Business>> cidades = new HashMap<>(); 
+        Map<String,SimpleEntry< Float,Integer>> busMedia = new HashMap<>();
+        gest.consulta10(state,cidades,busMedia);
 
         System.out.println("    Tempo de execução: " + Crono.getTimeAsString());
         long memUsadaDepois = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
         long memAtual = memUsadaDepois - memUsadaAntes;
-        System.out.println("    Memória: " + memAtual);
+        System.out.println("    Memória: " + memAtual);;
 
 
     }
