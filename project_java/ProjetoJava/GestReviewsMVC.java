@@ -128,8 +128,8 @@ import java.util.AbstractMap.SimpleEntry;
                     case 5: 
                         view.pedeUser();
                         String user = scan.nextLine();
-                        gest.consulta5(10,"YoVfDbnISlW0f7abNQACIg");
-                        view.consulta5();
+                        Map<String, Integer> map1 = gest.consulta5(user);
+                        view.consulta5(map1,user);
                         view.pressEnter();
                         scan.nextLine();
                         

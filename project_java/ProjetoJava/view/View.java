@@ -198,6 +198,21 @@ public class View {
         System.out.print("Insira o BusinessId que pretende consultar: ");
     }
 
+    public void consulta5(Map<String,Integer> ordenados, String user_id) {
+
+        StringBuilder sb =  new StringBuilder();
+        
+        sb.append("User Id - ").append(user_id).append("\n");
+
+        int posicao = 1;
+        for(Map.Entry<String,Integer> bus: ordenados.entrySet()){
+            sb.append("  ").append(posicao).append("º Business (que avaliou ");
+            sb.append(bus.getValue()).append(" vezes): ").append(bus.getKey()).append("\n");
+            posicao++;
+        }
+       System.out.println(sb.toString());
+    }
+
 }
 
     

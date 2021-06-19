@@ -18,6 +18,7 @@ import model.Reviews.*;
 import model.Users.*;
 import java.util.stream.*;
 
+
 import view.*;
 
 public class GestReviews{
@@ -388,10 +389,7 @@ public class GestReviews{
      * @param x número de negócios que o user dado mais avaliou
      * @param user_id o user id dado
      */
-    public void consulta5(int x, String user_id){
-
-        StringBuilder sb =  new StringBuilder();
-        View view = new View();
+    public Map<String, Integer> consulta5( String user_id){
 
         User user = new User(user_id);
         ReviewList reviewsDoUser = user.getReviews(this.rev);
@@ -426,16 +424,7 @@ public class GestReviews{
                                                        (a, b) -> { throw new AssertionError(); },
                                                        LinkedHashMap::new
                                                ));
-
-        sb.append("User Id - ").append(user_id).append("\n");
-
-        int posicao = 1;
-        for(Map.Entry<String,Integer> bus: ordenados.entrySet()){
-            sb.append("  ").append(posicao).append("º Business (que avaliou ");
-            sb.append(bus.getValue()).append(" vezes): ").append(bus.getKey()).append("\n");
-            posicao++;
-        }
-        view.print(sb.toString());
+        return ordenados;
     }
 
     /**
