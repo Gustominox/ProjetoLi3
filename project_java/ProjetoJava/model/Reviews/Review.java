@@ -1,8 +1,8 @@
 /**
- * Escreva a descrição da classe Reviews aqui.
+ * Dados sobre um objeto Review.
  * 
- * @author (seu nome) 
- * @version (número de versão ou data)
+ * @author grupo 64
+ * @version
  */
 
 package model.Reviews;
@@ -27,6 +27,8 @@ public class Review
     private LocalDateTime date;
     private String text;
     
+    /*********************************************** CONSTRUTORES ***********************************************/
+
     public Review(){
          this.reviewId = "";
          this.userId = "";
@@ -68,10 +70,7 @@ public class Review
      * Construtor que cria um objeto User a partir de uma string.
      */
     public Review(String[] info){
-        /*
-        ManipuladorFich mf = new ManipuladorFich();
-        String[][] info = mf.parse(nomeFich);
-        */
+
         try{
             addReview(info);
         }
@@ -80,136 +79,159 @@ public class Review
         }
     }
     
+    /******************************************** GETTERS E SETTERS ********************************************/
+
+    /**
+     * Método que obtém o review id.
+     * @return review id
+     */
     public String getReviewId(){
         return this.reviewId;
     }
 
+    /**
+     * Método que obtém o user id.
+     * @return user id
+     */
     public String getUserId(){
         return this.userId;
     }
 
+    /**
+     * Método que obtém o business id.
+     * @return business id
+     */
     public String getBusinessId(){
         return this.businessId;
     }
 
+    /**
+     * Método que obtém o número de stars.
+     * @return número de stars
+     */
     public float getStars(){
         return this.stars;
     }
 
+    /**
+     * Método que obtém o valor de useful.
+     * @return valor de useful
+     */
     public int getUseful(){
         return this.useful;
     }
 
+    /**
+     * Método que obtém o valor de funny.
+     * @return valor de funny
+     */
     public int getFunny(){
         return this.funny;
     }
 
+    /**
+     * Método que obtém o valor de cool.
+     * @return valor de cool
+     */
     public int getCool(){
         return this.cool;
     }
 
+    /**
+     * Método que obtém a data.
+     * @return data
+     */
     public LocalDateTime getDate(){
         return this.date;
     }
 
+    /**
+     * Método que obtém o texto da review.
+     * @return texto (todo como uma string)
+     */
     public String getText(){
         return this.text;
     }
     
+    /**
+     * Método que muda o review id.
+     * @param reviewId novo review id
+     */
     public void setReviewId(String reviewId){
         this.reviewId = reviewId;
     }
 
+    /**
+     * Método que muda o user id.
+     * @param userId novo user id
+     */
     public void setUserId(String userId){
         this.userId = userId;
     }
 
+    /**
+     * Método que muda o business id.
+     * @param businessId novo business id
+     */
     public void setBusinessId(String businessId){
         this.businessId = businessId;
     }
 
+    /**
+     * Método que muda o número de stars.
+     * @param stars novo número de stars
+     */
     public void setStars(float stars){
         this.stars = stars;
     }
 
+    /**
+     * Método que muda o valor do useful.
+     * @param useful novo valor do useful
+     */
     public void setUseful(int useful){
         this.useful = useful;
     }
 
+    /**
+     * Método que muda o valor de funny.
+     * @param funny novo valor de funny
+     */
     public void setFunny(int funny){
         this.funny = funny;
     }
 
+    /**
+     * Método que muda o valor de cool.
+     * @param cool novo valor de cool
+     */
     public void setCool(int cool){
         this.cool = cool;
     }
 
+    /**
+     * Método que muda a data.
+     * @param date nova data
+     */
     public void setDate(LocalDateTime date){
         this.date = date;
     }
 
+    /**
+     * Método que muda o texto da review.
+     * @param text novo texto da review
+     */
     public void setText(String text){
         this.text = text;
     }
 
     /**
-     * Método que constrói um objeto Review, caso todos os campos sejam válidos.
+     * Método que devolve a lista dos negócios de um determinado ano.
+     * @param businesses lista de todos os negócios
+     * @param review lista de todos os reviews
+     * @param anoPar ano
+     * @return lista de negócios desse ano
      */
-    public void addReview(String[] linha) throws ReviewNotValidException{
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        
-        if(linha[0].length() != 22){
-            throw new ReviewNotValidException(linha[0]);
-        }
-
-        if(linha[1].length() != 22){
-            throw new ReviewNotValidException(linha[1]);
-        }
-        
-        if(linha[2].length() != 22){
-            throw new ReviewNotValidException(linha[1]);
-        }
-        
-        float starsToFloat = Float.parseFloat(linha[3]);
-        if(starsToFloat < 1.0 && starsToFloat > 5.0){
-            throw new ReviewNotValidException(linha[3]);
-        }
-        
-        int usefulToInt = Integer.parseInt(linha[4]);
-        if(usefulToInt < 0){
-            throw new ReviewNotValidException(linha[5]);
-        }
-        
-        int funnyToInt = Integer.parseInt(linha[5]);
-        if(funnyToInt < 0){
-            throw new ReviewNotValidException(linha[5]);
-        }
-        
-        int coolToInt = Integer.parseInt(linha[6]);
-        if(coolToInt < 0){
-            throw new ReviewNotValidException(linha[5]);
-        }
-        
-        if(linha[7].length() == 0){
-            throw new ReviewNotValidException(linha[5]);
-        }
-        
-        setReviewId(linha[0]);
-        setUserId(linha[1]);
-        setBusinessId(linha[2]);
-        setStars(starsToFloat);
-        setUseful(usefulToInt);
-        setFunny(funnyToInt);
-        setCool(coolToInt);
-        setDate(LocalDateTime.parse(linha[7], formatter));
-        setText(linha[8]);
-    }
-    
-    public static String[] parse(String info){
-        String[] camposRev = info.split(";");
-        return camposRev;
-    }
-    
     public BusinessList negociosDoAno(BusinessList businesses,ReviewList review,int anoPar){
        
         BusinessList negocios = new BusinessList();
@@ -226,10 +248,19 @@ public class Review
         return negocios;
     }
 
+    /**
+     * Método que devolve um clone de um objeto Review.
+     * @return clone
+     */
     public Review clone(){
         return new Review(this);
     }
     
+    /**
+     * Método que reescreve o equals de um objeto Review.
+     * @param obj objeto Review
+     * @return verdadeiro se dois objetos Review forem iguais.
+     */
     public boolean equals(Object obj){
         if (obj == this) return true;
         if (obj == null || ! obj.getClass().equals(this.getClass())) return false;
