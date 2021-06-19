@@ -128,7 +128,7 @@ public class Testes{
 
         /*************** Consulta 7 ***************/
 
-        System.out.println("Consulta interativa 7:")
+        System.out.println("Consulta interativa 7:");
 
         Crono.start();
         gest.consulta7();
@@ -141,7 +141,7 @@ public class Testes{
 
         /*************** Consulta 8 ***************/
     
-        System.out.println("Consulta interativa 8:")
+        System.out.println("Consulta interativa 8:");
 
         Crono.start();
         gest.consulta8(8);
@@ -154,7 +154,7 @@ public class Testes{
 
         /*************** Consulta 9 ***************/
 
-        System.out.println("Consulta interativa 9:")
+        System.out.println("Consulta interativa 9:");
 
         Crono.start();
         gest.consulta9(10,"RuvuXYEz_fhJZVNXjC7kzw");
@@ -167,7 +167,7 @@ public class Testes{
 
         /*************** Consulta 10 ***************/
 
-        System.out.println("Consulta interativa 10:")
+        System.out.println("Consulta interativa 10:");
 
         Crono.start();
         gest.consulta10();
