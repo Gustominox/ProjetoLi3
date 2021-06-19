@@ -435,36 +435,45 @@ public class GestReviews{
      *
      * @param x número de negócios mais avaliados
      */
-    /*
+    
     public void consulta6(int x,Map<Integer,Map<String,Integer>>anos){
         
         for(Review r: this.rev.getList()){
-            if(!busNr.containsKey(r.getBusinessId())){
-                
-                busNr.put(r.getBusinessId(), 1);
-            }else{
-                int n = busNr.get(r.getBusinessId());
-                busNr.remove(r.getBusinessId());
-                busNr.put(r.getBusinessId(), n+1);
-            }
+            
 
             if(!anos.containsKey(r.getDate().getYear())){
-                List<String> aux = new ArrayList<>();
-                aux.add(r.getBusinessId());
+                Map<String,Integer> aux = new HashMap<>();
+                aux.put(r.getBusinessId(), 1);
+                
                 anos.put(r.getDate().getYear(), aux);
             }
             else{
-                List<String> aux = anos.get(r.getDate().getYear());
-                if(!aux.contains(r.getBusinessId())){
-                    anos.remove(r.getDate().getYear());
-                    aux.add(r.getBusinessId());    
+                Map<String,Integer> busNr = anos.get(r.getDate().getYear());
+                if(!busNr.containsKey(r.getBusinessId())){
+                
+                    busNr.put(r.getBusinessId(), 1);
+                }else{
+                    int n = busNr.get(r.getBusinessId());
+                    busNr.remove(r.getBusinessId());
+                    busNr.put(r.getBusinessId(), n+1);
                 }
-                anos.put(r.getDate().getYear(), aux);
+                anos.remove(r.getDate().getYear());
+                    
+                anos.put(r.getDate().getYear(), busNr);
             }
         }
+        Map<Integer, Map<String,Integer>> ret = new HashMap<>();
+        for (Map.Entry<Integer, Map<String,Integer>> entry : anos.entrySet()) {
 
         
-    }*/
+            List<SimpleEntry<Business,Integer>> ordenados = entry.getValue().stream().sorted(comp).limit(3).collect(Collectors.toList());
+            int ano = entry.getKey();
+            
+            ret.put(ano, ordenados);
+        } 
+        System.out.println(anos);
+        
+    }
         /*//ano      //negocio 
         Map<Integer, Map<String,List<Review>>> negPorAno = new HashMap<>();
         List<Business> busList = new ArrayList<>();

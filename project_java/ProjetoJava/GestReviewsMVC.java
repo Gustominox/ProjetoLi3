@@ -138,7 +138,8 @@ import java.util.AbstractMap.SimpleEntry;
         
 
                     case 6 : 
-                        //view.q7(gest.query7());
+                    Map<Integer,Map<String,Integer>>anos = new HashMap<>();
+                        gest.consulta6(3, anos);
                         break; 
                             
                     case 7 : 
