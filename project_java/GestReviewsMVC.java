@@ -1,3 +1,11 @@
+/**
+ * Class de comunicacao entre os midulos do mvc
+ * 
+ * @author grupo 64 
+ * @version 
+ */
+
+
 import model.Businesses.*;
 import model.Reviews.*;
 import model.Users.*;
@@ -5,6 +13,7 @@ import controller.*;
 import view.*;
 import loaders.*;
 import model.*;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -77,7 +86,6 @@ import java.util.AbstractMap.SimpleEntry;
                         view.clearScreen();
                         if(j == 1) {
                             gest.estatistica1();
-                            //view.estatistica1();
                         }else if(j == 2) {
                             float f = gest.estatistica2(revPorMes,claPorMes,nrUserMes);
                             view.estatistica2(revPorMes,claPorMes,nrUserMes,f);
