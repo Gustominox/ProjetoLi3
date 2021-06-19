@@ -15,7 +15,13 @@ import model.Reviews.Review;
 import model.Users.User;
 public class Writelog {
     
-
+    /**
+     * Método que devolve a lista das reviews válidas.
+     * @param gest Estrutura principal do programa que executa consultas
+     * @param nome Nome do ficheiro a gravar
+     * @return lista das reviews válidas
+     */
+   
     public void gravar(GestReviews gest,String nome){
     
         try {

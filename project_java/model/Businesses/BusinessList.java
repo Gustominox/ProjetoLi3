@@ -1,3 +1,9 @@
+/**
+ * Class que guarda a Class business numa lista
+ *
+ * @author grupo 64
+ * @version (a version number or a date)
+ */
 package model.Businesses;
 
 
@@ -154,13 +160,6 @@ public class BusinessList {
         return lista;
     }
 
-     /*
-    public Business criaBusiness(String nome ){
-        Business newBusiness = new Business();
-        nova.setBusiness(nome);
-        this.list.add(nova);
-        return nova;
-    }
-    */
+    
  }
  

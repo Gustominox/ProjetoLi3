@@ -1,3 +1,9 @@
+/**
+ * Class que executa testes as consultas
+ *
+ * @author grupo 64
+ * @version (a version number or a date)
+ */
 package controller;
 
 import java.lang.Runtime;
@@ -14,7 +20,10 @@ import view.View;
 public class Testes{
 
 
-    
+     /**
+     * Correr os testes
+     */
+   
     public void runTestes(){
         View view = new View();
         BusinessList listaBusinesses = new BusinessList();

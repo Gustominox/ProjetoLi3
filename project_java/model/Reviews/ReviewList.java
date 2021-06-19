@@ -1,5 +1,5 @@
 /**
- * Dados sobre um objeto ReviewList.
+ * Class que guarda a Class review numa lista
  * 
  * @author grupo 64
  * @version
@@ -134,34 +134,6 @@ public class ReviewList {
         }
         return resultado;
     }
-
-    // consulta a Review consoante o nome da msm 
-    /*
-    public Review verReview( String nome ) {
-        View view = new View ();
-        Review procura =null;
-        try{
-        for (Review review : list ){
-           if (review.getName().equals(nome)){
-              procura = review;
-           }
-        }
-    }
-        catch (InputMismatchException e) {
-            view.notAnInstruction();
-        }
-        return procura;
-    }
-    */
-
-    /*
-    public Review criaReview(String nome ){
-        Review newReview = new Review();
-        nova.setReview(nome);
-        this.list.add(nova);
-        return nova;
-    }
-    */
 
  }
 

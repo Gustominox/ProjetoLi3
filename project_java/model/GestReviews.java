@@ -1,5 +1,5 @@
 /**
- * Classe agregadora de todo o projecto de Java.
+ * Class que contem o codigo das consultas
  *
  * @author grupo 64
  * @version 030621

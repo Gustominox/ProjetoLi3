@@ -1,5 +1,5 @@
 /**
- * Write a description of class UserNotValidException here.
+ * Lança uma exceção quando a review não é válido.
  *
  * @author grupo 64
  * @version (a version number or a date)

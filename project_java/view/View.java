@@ -1,3 +1,9 @@
+/**
+ * 
+ * Class que faz a comunicacao com o utilizador
+ * @author grupo 64 
+ * @version 
+ */
 package view;
 
 import model.Businesses.*;

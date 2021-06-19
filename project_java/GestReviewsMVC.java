@@ -1,5 +1,6 @@
 /**
- * Class de comunicacao entre os midulos do mvc
+ * Class de comunicacao entre os modulos do mvc
+ * Classe agregadora de todo o projecto de Java.
  * 
  * @author grupo 64 
  * @version 
