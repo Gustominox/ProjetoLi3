@@ -186,7 +186,6 @@ import java.util.AbstractMap.SimpleEntry;
                 }
                 
                 
-                instruction = 0;
             }
             scan.close();
             
