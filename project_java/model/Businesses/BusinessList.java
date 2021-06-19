@@ -149,11 +149,11 @@ public class BusinessList {
      * @param id estado 
      * @return a lista de negócios que pertencem ao estado dado como argumento
      */
-    public BusinessList getBusinessEstado(String id) {
+    public BusinessList getBusinessEstado(String state) {
         
         BusinessList lista = new BusinessList();
         for (Business business : list){
-           if(business.getState().equals(id)){
+           if(business.getState().equals(state)){
                lista.addBusiness(business.clone());
            }
         }
