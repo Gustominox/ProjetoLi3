@@ -667,9 +667,6 @@ public class GestReviews{
                 }
                 cidades.put(b.getCity(), aux);
             }
-        }
-
-        for(Business b : this.bus.getList()){ 
             if(!state.containsKey(b.getState())){
                 List<String> aux = new ArrayList<>();
                 aux.add(b.getCity());
@@ -684,9 +681,10 @@ public class GestReviews{
                 state.put(b.getState(), aux);
             }
         }
+
     
     
-        for(Review r: rev.getList()){
+        for(Review r: this.rev.getList()){
             if(!busMedia.containsKey(r.getBusinessId())){
             
                 busMedia.put(r.getBusinessId(), new SimpleEntry<>(r.getStars(), 1));

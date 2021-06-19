@@ -6,8 +6,6 @@ import view.View;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
-import java.util.Iterator;
-import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class BusinessList {
@@ -146,7 +144,7 @@ public class BusinessList {
      * @return a lista de negócios que pertencem ao estado dado como argumento
      */
     public BusinessList getBusinessEstado(String id) {
-        Business procura =null;
+        
         BusinessList lista = new BusinessList();
         for (Business business : list){
            if(business.getState().equals(id)){

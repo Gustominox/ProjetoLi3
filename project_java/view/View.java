@@ -170,6 +170,13 @@ public class View {
         System.out.println("Processing...\n ! Please Wait !");
     }
     /**
+     * Método que apresenta no ecrã uma mensagem a informar que o programa ta a executar testes 
+     */
+    
+    public void testes() {
+        System.out.println("A preparar os testes...\n ! Please Wait !");
+    }
+    /**
      * Método que apresenta no ecrã uma mensagem a pedir o BussinessID
      */
     public void pedeBusinessID() {

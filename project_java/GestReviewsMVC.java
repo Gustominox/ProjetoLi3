@@ -205,7 +205,7 @@ import java.util.AbstractMap.SimpleEntry;
                         break;
                     case 11:
                         Testes teste = new Testes();
-
+                        view.testes();
                         teste.runTestes();
                         view.pressEnter();
                         scan.nextLine();
