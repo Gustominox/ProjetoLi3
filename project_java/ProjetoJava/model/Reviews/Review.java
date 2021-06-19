@@ -69,15 +69,7 @@ public class Review
     /**
      * Construtor que cria um objeto User a partir de uma string.
      */
-    public Review(String[] info){
-
-        try{
-            addReview(info);
-        }
-        catch(ReviewNotValidException e){
-            new Review();
-        }
-    }
+    
     
     /******************************************** GETTERS E SETTERS ********************************************/
 
