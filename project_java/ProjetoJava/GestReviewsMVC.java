@@ -41,7 +41,7 @@ import java.util.Scanner ;
     
             
             int r = 0;
-            while (r == 0) {
+            while (r < 1) {
             
                 r = controller.menu(gest); 
 

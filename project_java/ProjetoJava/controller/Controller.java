@@ -12,6 +12,11 @@ import view.*;
 public class Controller {
 
 
+    private String nextLine;
+
+
+
+
     public void menuEstatisticas(){
         Scanner scan= new Scanner(System.in);
         View view =new View();
@@ -34,45 +39,54 @@ public class Controller {
         Scanner scan= new Scanner(System.in);
         View view =new View();
  
+        view.clearScreen();
         view.menu();
+        view.promptNivel1();
         int instruction=-1;
         try{
              instruction = scan.nextInt();
              scan.nextLine();
         }
-        catch (InputMismatchException e) {
+        catch (Exception e) {
             view.notAnInstruction();
+            instruction = -1;
         }
 
-        view.clearScreen();
-        view.menu();
-        view.promptNivel1();
         
+        view.clearScreen();
         switch(instruction){
             
             case 0 :
               view.menuEstatisticas();
+              view.promptNivel2();
               int j = scan.nextInt();
               scan.nextLine();
-
+              view.clearScreen();
               if(j == 1) gest.estatistica1();
               else if(j == 2) gest.estatistica2();
               else ;
+              scan.nextLine();
             case 1 :
                 SimpleEntry <Integer,Set<String>> n; 
                 n = gest.consulta1();
-                //view.query1(n);  ///// criar isto na view
+                view.consulta1(n);
+                scan.nextLine(); 
+                view.pressEnter();
                 break;
 
             case 2: 
+                view.pedeMes();    
                 int mes = scan.nextInt();
                 scan.nextLine();
+                view.pedeAno();
                 int ano = scan.nextInt();
                 scan.nextLine();
                     
                 SimpleEntry <Integer,Integer> r;
                 r = gest.consulta2 (mes,ano);
-                //view.query2(r);
+                view.consulta2(r);
+                scan.nextLine();
+                view.pressEnter();
                 break;
                 
             case 3: 
@@ -106,9 +120,11 @@ public class Controller {
                 break;
             default : 
                 //view.notAnInstruction();
+                scan.close();
                 return -1;
                 
         }
+        scan.close();
         return 0;
     }
     

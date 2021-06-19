@@ -5,6 +5,8 @@ import model.Reviews.*;
 import model.Users.*;
 
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.AbstractMap.SimpleEntry;
 
 
 public class View {
@@ -123,6 +125,38 @@ public class View {
     */
     public void fichQueQuer() {
         System.out.println("Nome do ficheiro que pretende\n");
+    }
+
+    public void consulta1(SimpleEntry<Integer, Set<String>> n) {
+        
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("Consulta 1:\n");
+        sb.append("    Numero Total de Business:").append(n.getKey());
+        
+        for (String s : n.getValue()) {
+            sb.append("    Business:").append(s).append("\n");         
+        }
+        System.out.println(sb.toString());
+    }
+
+    public void consulta2(SimpleEntry<Integer, Integer> r) {
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("Consulta 2:\n");
+        sb.append("    Numero Total de Reviews:").append(r.getKey()).append("\n");
+        sb.append("    Numero de Users Distintos:").append(r.getValue()).append("\n");
+        
+        System.out.println(sb.toString());
+    }
+
+    public void pedeMes() {
+        System.out.print("Insira o Mes que pretende consultar: ");
+    }
+
+    public void pedeAno() {
+        System.out.print("Insira o Ano que pretende consultar: ");
     }
 }
 
