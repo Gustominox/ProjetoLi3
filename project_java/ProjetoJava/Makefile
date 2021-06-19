@@ -10,6 +10,5 @@ CLASS_FILES = ./*.class
 clean: 
 	rm -r out
 
-run: Programa.class
-	java -cp out Programa
-	
+run: GestReviewsMVC.class
+	java -cp out GestReviewsMVC

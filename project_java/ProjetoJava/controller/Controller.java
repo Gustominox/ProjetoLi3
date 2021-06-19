@@ -30,7 +30,7 @@ public class Controller {
 
  
 
-	public void menu(GestReviews gest){
+	public int menu(GestReviews gest){
         Scanner scan= new Scanner(System.in);
         View view =new View();
  
@@ -43,7 +43,13 @@ public class Controller {
         catch (InputMismatchException e) {
             view.notAnInstruction();
         }
+
+        view.clearScreen();
+        view.menu();
+        view.promptNivel1();
+        
         switch(instruction){
+            
             case 0 :
               view.menuEstatisticas();
               int j = scan.nextInt();
@@ -100,8 +106,10 @@ public class Controller {
                 break;
             default : 
                 //view.notAnInstruction();
-                break;
+                return -1;
+                
         }
+        return 0;
     }
     
 }

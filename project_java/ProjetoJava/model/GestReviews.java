@@ -460,6 +460,7 @@ public class GestReviews{
      *
      * @param x número de negócios mais avaliados
      */
+    /*
     public void consulta6(int x){
             //ano      //negocio 
         Map<Integer, Map<String,List<Review>>> negPorAno = new HashMap<>();
@@ -518,7 +519,7 @@ public class GestReviews{
         View view = new View();
         view.print(sb.toString());
     }
-
+*/
     /**
      * QUERY 7
      * Determina, para cada cidade, a lista dos três mais famosos negócios em termos de
@@ -586,6 +587,7 @@ public class GestReviews{
      *
      * @param x número utilizadores que avaliaram mais negócios diferentes
      */
+    /*
     public void consulta8(int x){
             //user id
         //Map<String, List<SimpleEntry<String,Integer>>> res = new HashMap<>();
@@ -622,7 +624,7 @@ public class GestReviews{
         View view = new View();
         view.print(sb.toString());
     }
-
+*/
     /**
      * QUERY 9
      * Dado o código de um negócio, determina o conjunto dos X users que mais o
