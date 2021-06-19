@@ -519,31 +519,53 @@ ordenação a ordem decrescente do número de negócios;
  */
 
 
- public void consulta8(int x, BusinessList businesses, ReviewList reviews, UserList users){
+ public void consulta8(int x){
         //user id
-    Map<String, BusinessList> res = new HashMap<>();
+    //Map<String, List<SimpleEntry<String,Integer>>> res = new HashMap<>();
+
+    Map<String,List<String>> negDoUser = new HashMap<>();
     
-    Comparator<User> comp = (u1,u2) -> u2.nrBusinessTotal(reviews, businesses) - u1.nrBusinessTotal(reviews, businesses);
+    for(Review review: this.rev.getList()){
+        String userId = review.getUserId();
+        String busId = review.getBusinessId();
 
-    List<User> listUsers =  users.getList().stream().map(User::clone).sorted(comp).limit(x).collect(Collectors.toList());
-
-    for(User user: listUsers){
-        BusinessList negociosDoUser = user.negociosDoUser(reviews, businesses);
-
-        if(negociosDoUser.getList().size() != 0){
-                //negociosDoUser.getList().stream().map(Business::clone).collect(Collectors.toList());
-                res.put(user.getUserId(), negociosDoUser);
+        if(negDoUser.containsKey(userId)){
+            if(!existe(negDoUser.get(userId), busId)){
+                negDoUser.get(userId).add(busId);
             }
+        }
+        else{
+            List<string> aux =  new ArrayList<>();
+            aux.add(busId);
+            negDoUser.put(userId,aux);
+        }
     }
 
+    //Comparator<> comp = 
+
+    Map<String, List<String>> ordenados = usersPorNeg.entrySet().stream().sorted(comp).limit(x)
+                                                         .collect(Collectors.toMap(e->e.getKey(), e->e.getValue().stream()
+                                                         .collect(Collectors.toList())));
+
     StringBuilder sb =  new StringBuilder();
-    for(Map.Entry<String, BusinessList> entry: res.entrySet()){
-        sb.append("  UserId: " + entry.getKey());
-        sb.append("    Número de negócios diferentes que avaliou: " + entry.getValue().getList().size());
+    for(Map.Entry<String, List<string>> entry: negDoUser.entrySet){
+        sb.append("  User: " + entry.getKey());
+        sb.appende("    Número de negócios diferentes que avaliou: " + entry.getValue().getList().size());
     }
     View view = new View();
     view.print(sb.toString());
+
  }
+
+
+public boolean existe(List<String> businesses, String busId){
+    for(String s: businesses){
+        if(s.equals(busId)){
+            return true;
+        }
+    }
+    return false;
+}
 
 
 
