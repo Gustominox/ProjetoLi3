@@ -7,16 +7,15 @@
 
 package model.Users;
 
-
+import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
-import java.util.Arrays;
 
 import model.Businesses.*;
 import model.Reviews.*;
 
-public class User
+public class User implements Serializable
 {
     private String userId;
     private String name;

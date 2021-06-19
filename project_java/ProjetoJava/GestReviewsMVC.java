@@ -14,6 +14,8 @@ import java.util.Scanner ;
 import java.util.Set;
 import java.util.AbstractMap.SimpleEntry;
 
+import javax.xml.namespace.QName;
+
     
        
     public class GestReviewsMVC {
@@ -40,6 +42,7 @@ import java.util.AbstractMap.SimpleEntry;
                                                 , listaUsers);
 
             log.gravar(gest, "gestReviews");
+            
             int instruction = 0;
             while (instruction != -1) {
                 
@@ -64,13 +67,22 @@ import java.util.AbstractMap.SimpleEntry;
                 switch(instruction){
                     
                     case 0 :
+                        int[] revPorMes = new int[12];
+                        float[] claPorMes  = new float[12];  
+                        int[] nrUserMes = new int[12];
+
                         view.menuEstatisticas();
                         view.promptNivel2();
                         int j = scan.nextInt();
                         scan.nextLine();
                         view.clearScreen();
-                        if(j == 1) gest.estatistica1();
-                        else if(j == 2) gest.estatistica2();
+                        if(j == 1) {
+                            gest.estatistica1();
+                            //view.estatistica1();
+                        }else if(j == 2) {
+                            float f = gest.estatistica2(revPorMes,claPorMes,nrUserMes);
+                            view.estatistica2(revPorMes,claPorMes,nrUserMes,f);
+                        }
                         else view.notAnInstruction();
                         view.pressEnter();
                         scan.nextLine();
@@ -131,7 +143,6 @@ import java.util.AbstractMap.SimpleEntry;
                         view.consulta5(map1,user);
                         view.pressEnter();
                         scan.nextLine();
-                        //YoVfDbnISlW0f7abNQACIg
                         break;
         
 
@@ -144,7 +155,7 @@ import java.util.AbstractMap.SimpleEntry;
                         break; 
                             
                     case 7 : 
-                        //view.q7(gest.query7());
+
                         Map<String, List<SimpleEntry<Business,Integer>>>  map2 = gest.consulta7();
                         view.consulta7(map2);
                         view.pressEnter();
@@ -167,7 +178,7 @@ import java.util.AbstractMap.SimpleEntry;
                         view.pedeBusinessID();    
                         String businessID1 = scan.nextLine();
                         
-                        Map<String, List<Review>> ordenados = gest.consulta9(10,businessID1);//RuvuXYEz_fhJZVNXjC7kzw
+                        Map<String, List<Review>> ordenados = gest.consulta9(10,businessID1);
                         view.consulta9(businessID1,ordenados);
                         view.pressEnter();
                         scan.nextLine();

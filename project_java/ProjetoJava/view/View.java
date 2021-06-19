@@ -2,9 +2,7 @@ package view;
 
 import model.Businesses.*;
 import model.Reviews.*;
-import model.Users.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -33,7 +31,7 @@ public class View {
         sb.append("9)  - Executar Consulta 9\n");
         sb.append("10) - Executar Consulta 10\n");
         sb.append("11) - Correr Testes \n");
-
+        sb.append("12) - Gravar o Estado do Programa \n");
         System.out.print(sb.toString());
          
     }
@@ -325,6 +323,22 @@ public class View {
             sb.append("  User: " + entry.getKey());
             sb.append("    Número de negócios diferentes que avaliou: " + entry.getValue().size()).append("\n");
         }
+        View view = new View();
+        view.print(sb.toString());
+    }
+
+    public void estatistica2(int[] revPorMes, float[] claPorMes, int[] nrUserMes,float valorGlobal) {
+        StringBuilder sb =  new StringBuilder();
+        for(int i=0; i<12; i++){
+            int mes = i+1;
+            sb.append("  Mês " + mes + ":");
+            sb.append("\n");
+            sb.append("    Número total de reviews - " + revPorMes[i]).append("\n");
+            sb.append("    Média de classificação de reviews - " + claPorMes[i]).append("\n");
+            sb.append("    Número de distintos utilizadores que avaliaram - " + nrUserMes[i]).append("\n");
+            sb.append("\n");
+        }
+        sb.append("  Média global de reviews - " + valorGlobal);
         View view = new View();
         view.print(sb.toString());
     }

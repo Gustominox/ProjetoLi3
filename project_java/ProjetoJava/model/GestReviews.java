@@ -23,7 +23,7 @@ public class GestReviews{
     private BusinessList bus ;
     private ReviewList  rev ;
     private UserList user ;
-    
+
     public BusinessList getBus() {
         return bus;
     }
@@ -214,40 +214,30 @@ public class GestReviews{
      * o número de distintos utilizadores que avaliaram por mês;
      * e, ainda, a média da classificação global de reviews (de todos os meses).
      */
-    public void estatistica2(){
+    public float estatistica2(   int[] revPorMes ,
+                                float[] claPorMes,  
+                                int[] nrUserMes ){
         
-        int[] revPorMes = new int[12];
-        float[] claPorMes  = new float[12];  
+        
         float valorGlobal;
-        int[] nrUserMes = new int[12];
         float stars = 0;
         int nrRev = 0;
         float[] starsArr = new float[12];
-        HashSet<String> userVisitados = new HashSet<>();
+        //HashSet<String> userVisitados = new HashSet<>();
         
         for(Review rev: this.rev.getList()){
             starsArr[rev.getDate().getMonthValue()-1] += rev.getStars();
-            revPorMes[rev.getDate().getMonthValue()-1]++; 
+            revPorMes[rev.getDate().getMonthValue()-1]++;
+            stars += rev.getStars(); 
+            nrRev++;
         }
 
         for(int i=0; i<12; i++){
             claPorMes[i] = starsArr[i] / revPorMes[i];
         }
         valorGlobal = stars / nrRev;
-
-        StringBuilder sb =  new StringBuilder();
-        for(int i=0; i<12; i++){
-            int mes = i+1;
-            sb.append("  Mês " + mes + ":");
-            sb.append("\n");
-            sb.append("    Número total de reviews - " + revPorMes[i]).append("\n");
-            sb.append("    Média de classificação de reviews - " + claPorMes[i]).append("\n");
-            sb.append("    Número de distintos utilizadores que avaliaram - " + nrUserMes[i]).append("\n");
-            sb.append("\n");
-        }
-        sb.append("  Média global de reviews - " + valorGlobal);
-        View view = new View();
-        view.print(sb.toString());
+        return valorGlobal;
+        
     }
 
     /**

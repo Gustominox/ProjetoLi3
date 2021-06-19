@@ -8,16 +8,14 @@
 package model.Businesses;
 
 import java.util.List;
-import java.util.Set;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
-
 import model.Reviews.Review;
 import model.Reviews.ReviewList;
 
-import java.util.Arrays;
 
-public class Business
+public class Business implements Serializable
 {
     private String businessId;
     private String name;

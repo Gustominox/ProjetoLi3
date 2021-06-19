@@ -7,15 +7,14 @@
 
 package model.Reviews;
 
+import java.io.Serializable;
 import model.Businesses.*;
-import model.Reviews.*;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDateTime;
 
 
-public class Review
+public class Review implements Serializable
 {
     private String reviewId;
     private String userId;
