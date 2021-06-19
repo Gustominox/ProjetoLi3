@@ -139,8 +139,10 @@ import java.util.AbstractMap.SimpleEntry;
 
                     case 6 : 
                      
-                     Map<Integer,Map<String,Integer>>anos = gest.consulta6(3);
+                        Map<Integer,Map<String,Integer>>anos = gest.consulta6(3);
                         view.consulta6( anos);
+                        view.pressEnter();
+                        scan.nextLine();
                         break; 
                             
                     case 7 : 
@@ -177,6 +179,13 @@ import java.util.AbstractMap.SimpleEntry;
                         Map<String,SimpleEntry< Float,Integer>> busMedia = new HashMap<>();
                         gest.consulta10(state,cidades,busMedia);
                         view.consulta10(state,cidades,busMedia);
+                        view.pressEnter();
+                        scan.nextLine();
+                        break;
+                    case 11:
+                        Testes teste = new Testes();
+
+                        teste.runTestes();
                         view.pressEnter();
                         scan.nextLine();
                         break;

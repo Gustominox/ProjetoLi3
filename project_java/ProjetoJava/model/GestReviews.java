@@ -81,7 +81,7 @@ public class GestReviews{
         Map<String,Integer> businessAvaliados= dadosSobreReview(rev);
         
         view.print("Nome do ficheiro: business.csv\n");
-        dadosSobreBusiness(bus, reviewsValidas,businessAvaliados);
+        dadosSobreBusiness(bus, businessAvaliados);
         
         view.print("Nome do ficheiro: users.csv\n");
         dadosSobreUser(user, reviewsValidas);
@@ -128,7 +128,7 @@ public class GestReviews{
      * @param reviewsValidas lista de reviews válidas
      * @param businessAvaliados map dos business avaliados (pelo seu id)
      */
-    public void dadosSobreBusiness(BusinessList businesses, ReviewList reviewsValidas, Map<String,Integer> businessAvaliados){
+    public void dadosSobreBusiness(BusinessList businesses, Map<String,Integer> businessAvaliados){
 
         int nrBusTotal = 0;
         int busAval = 0;
