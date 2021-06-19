@@ -1,3 +1,10 @@
+/**
+ * Classe facultada pelos docentes.
+ *
+ * @author grupo 64
+ * @version
+ */
+ 
 package model;
 
 import static java.lang.System.nanoTime;
