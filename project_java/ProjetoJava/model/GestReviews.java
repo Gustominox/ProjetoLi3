@@ -75,16 +75,16 @@ public class GestReviews{
     public void estatistica1(){
 
         View view = new View();
-        ReviewList reviewsValidas = reviewsValidas(rev);
+        // ReviewList reviewsValidas = reviewsValidas(rev);
         
         view.print("Nome do ficheiro: reviews.csv\n");
-        Map<String,Integer> businessAvaliados= dadosSobreReview(rev);
+        Map<String,Integer> businessAvaliados = dadosSobreReview();
         
         view.print("Nome do ficheiro: business.csv\n");
-        dadosSobreBusiness(bus, businessAvaliados);
+        dadosSobreBusiness(businessAvaliados);
         
         view.print("Nome do ficheiro: users.csv\n");
-        dadosSobreUser(user, reviewsValidas);
+        dadosSobreUser();
     }
     
     /**
@@ -94,7 +94,7 @@ public class GestReviews{
      * @param reviews lista de todas as reviews (válidas e inválidas)
      * @return map de todos os negócios avaliados
      */
-    public Map<String,Integer> dadosSobreReview(ReviewList reviews){
+    public Map<String,Integer> dadosSobreReview(){
 
         int nrRevErradas = 0;
         int nrRevSemImpacto = 0;
@@ -102,7 +102,7 @@ public class GestReviews{
         StringBuilder sb =  new StringBuilder();
         Map<String,Integer> busAvaliados = new HashMap<>();
 
-        for(Review rev: reviews.getList()){
+        for(Review rev: this.rev.getList()){
             busAvaliados.put(rev.getBusinessId(),0);
             if(rev.getReviewId().length() == 0) nrRevErradas++;
             else{
@@ -128,18 +128,18 @@ public class GestReviews{
      * @param reviewsValidas lista de reviews válidas
      * @param businessAvaliados map dos business avaliados (pelo seu id)
      */
-    public void dadosSobreBusiness(BusinessList businesses, Map<String,Integer> businessAvaliados){
+    public void dadosSobreBusiness(Map<String,Integer> businessAvaliados){
 
         int nrBusTotal = 0;
         int busAval = 0;
         
         StringBuilder sb =  new StringBuilder();
 
-        for(Business bus: businesses.getList()){
+        for(Business b: this.bus.getList()){
 
-            if(bus.getBusinessId().length() != 0){
+            if(b.getBusinessId().length() != 0){
                 nrBusTotal++;
-                if (businessAvaliados.containsKey(bus.getBusinessId()))
+                if (businessAvaliados.containsKey(b.getBusinessId()))
                     busAval++;
             }
         }
@@ -158,7 +158,7 @@ public class GestReviews{
      * @param users lista de todos os users
      * @param reviewsValidas lista de reviews válidas
      */
-    public void dadosSobreUser(UserList users, ReviewList reviewsValidas){
+    public void dadosSobreUser(){
 
         StringBuilder sb =  new StringBuilder();
         View view = new View();
@@ -168,10 +168,10 @@ public class GestReviews{
         int usersNaoAval = 0;
         Map<String,Integer> userAvaliados = new HashMap<>();
 
-        for (Review rev: reviewsValidas.getList()) {
-            userAvaliados.put(rev.getUserId(),0);
+        for (Review r: this.rev.getList()) {
+            userAvaliados.put(r.getUserId(),0);
         }
-        for(User user: users.getList()){
+        for(User user: this.user.getList()){
             if(user.getUserId().length() != 0){
                 nrUserTotal++;
                 
