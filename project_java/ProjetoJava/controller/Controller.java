@@ -29,13 +29,13 @@ public class Controller {
 
 
  
-/*
-	public void menu(){
-     Scanner scan= new Scanner(System.in);
-     View view =new View();
-     GestReviews gest = new GestReviews();
+
+	public void menu(GestReviews gest){
+        Scanner scan= new Scanner(System.in);
+        View view =new View();
+ 
         view.menu();
-        int instruction;
+        int instruction=-1;
         try{
              instruction = scan.nextInt();
              scan.nextLine();
@@ -46,10 +46,15 @@ public class Controller {
         switch(instruction){
             case 0 :
               view.menuEstatisticas();
-              menuEstatisticas();
+              int j = scan.nextInt();
+              scan.nextLine();
+
+              if(j == 1) gest.estatistica1();
+              else if(j == 2) gest.estatistica2();
+              else ;
             case 1 :
                 SimpleEntry <Integer,Set<String>> n; 
-                n = gest.query1();
+                n = gest.consulta1();
                 //view.query1(n);  ///// criar isto na view
                 break;
 
@@ -60,7 +65,7 @@ public class Controller {
                 scan.nextLine();
                     
                 SimpleEntry <Integer,Integer> r;
-                r = gest.query2 (mes,ano);
+                r = gest.consulta2 (mes,ano);
                 //view.query2(r);
                 break;
                 
@@ -93,5 +98,5 @@ public class Controller {
                 break;
         }
     }
-    */
+    
 }

@@ -28,7 +28,7 @@ import java.util.Scanner ;
             BusinessList listaBusinesses = new BusinessList();
             ReviewList   listaReviews    = new ReviewList();
             UserList     listaUsers      = new UserList(); 
-
+            
             Loadlog loader = new Loadlog();
 
             loader.load(loader.getFichDefaut(), listaBusinesses
@@ -38,9 +38,11 @@ import java.util.Scanner ;
             GestReviews gest = new GestReviews( listaBusinesses
                                                 , listaReviews
                                                 , listaUsers);
+    
+            
+            controller.menu(gest);
             int instruction=0;
             int n;
-            
             
             while(instruction!=-1){
                 view.clearScreen();
@@ -62,6 +64,8 @@ import java.util.Scanner ;
                 case 0:
                 view.menuEstatisticas();
                 scan.nextLine();
+                
+                
 
                 break;
                 case 1:
