@@ -142,6 +142,10 @@ public class View {
     public void pedeUser() {
         System.out.print("Insira o UserId que pretende consultar: ");
     }
+    
+    public void pedeQtValores() {
+        System.out.print("Insira a quantidade de valores que pretende consultar: ");
+    }
 
     public void executando() {
         System.out.println("Processing...\n ! Please Wait !");

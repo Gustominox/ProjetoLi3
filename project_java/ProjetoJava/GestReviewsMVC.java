@@ -154,9 +154,14 @@ import java.util.AbstractMap.SimpleEntry;
                         break; 
                             
                     case 8: 
+                        view.pedeQtValores();
                         int nUsers = scan.nextInt();
                         scan.nextLine();
-                        //view.q8(nUsers,gest.query8(nUsers));
+                        gest.consulta8(nUsers);
+                        
+                        view.pressEnter();
+                        scan.nextLine();
+                        
                         break;   
         
                     case 9: 

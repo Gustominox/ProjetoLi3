@@ -537,7 +537,7 @@ public class GestReviews{
      */
     
     public void consulta8(int x){
-            //user id
+            
      
         Map<String,List<String>> negDoUser = new HashMap<>();
     
@@ -559,14 +559,18 @@ public class GestReviews{
 
         Comparator<Map.Entry<String, List<String>>> cmp = (p1,p2) -> p2.getValue().size() - p1.getValue().size();
 
-        Map<String, List<String>> ordenados = negDoUser.entrySet().stream().sorted(cmp).limit(x)
-                                                         .collect(Collectors.toMap(e->e.getKey(), e->e.getValue().stream()
-                                                         .collect(Collectors.toList())));
-
+        Map<String, List<String>> ordenados = negDoUser.entrySet().stream().sorted(cmp)
+                                                       .limit(x)
+                                                       .collect(Collectors.toMap(
+                                                                Map.Entry::getKey,
+                                                                Map.Entry::getValue,
+                                                                (a, b) -> { throw new AssertionError(); },
+                                                                LinkedHashMap::new
+                                                             ));
         StringBuilder sb =  new StringBuilder();
         for(Map.Entry<String, List<String>> entry: ordenados.entrySet()){
             sb.append("  User: " + entry.getKey());
-            sb.append("    Número de negócios diferentes que avaliou: " + entry.getValue().size());
+            sb.append("    Número de negócios diferentes que avaliou: " + entry.getValue().size()).append("\n");
         }
         View view = new View();
         view.print(sb.toString());
