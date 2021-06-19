@@ -128,7 +128,9 @@ public class View {
     public void fichQueQuer() {
         System.out.println("Nome do ficheiro que pretende\n");
     }
-
+    public void espera() {
+        
+    }
     public void consulta1(SimpleEntry<Integer, Set<String>> n) {
         
         StringBuilder sb = new StringBuilder();
@@ -164,6 +166,14 @@ public class View {
     public void pedeUser() {
         System.out.print("Insira o UserId que pretende consultar: ");
     }
+
+    public void executando() {
+        System.out.println("Processing...\n ! Please Wait !");
+    }
+
+    public void pedeBusinessID() {
+        System.out.print("Insira o BusinessId que pretende consultar: ");
+    }
     
     public void consulta3(float[] stars,int[] revMes, int[] busMes){
 
@@ -194,9 +204,7 @@ public class View {
         System.out.println(sb.toString());
     }
 
-    public void pedeBusinessID() {
-        System.out.print("Insira o BusinessId que pretende consultar: ");
-    }
+    
 
     public void consulta5(Map<String,Integer> ordenados, String user_id) {
 
@@ -212,6 +220,80 @@ public class View {
         }
        System.out.println(sb.toString());
     }
+
+    public void consulta7(Map<String, List<SimpleEntry<Business, Integer>>> cidades) {
+
+
+        for (Map.Entry<String, List<SimpleEntry<Business,Integer>>> entry : cidades.entrySet()) {
+
+            StringBuilder sb =  new StringBuilder();
+            sb.append("Cidade - ").append(entry.getKey()).append("\n");
+
+            int posicao = 1;
+            for (SimpleEntry<Business,Integer> bus : entry.getValue()) {
+                sb.append("  ").append(posicao).append("º Business Id (com ").append(bus.getValue()).append(" reviews): ").append(bus.getKey().getBusinessId()).append(bus.getValue()).append("\n");
+                posicao++;
+            }
+
+            System.out.println(sb.toString());
+        }  
+
+    }
+
+    public void consulta9(String business_id,Map<String, List<Review>> ordenados) {
+       
+        StringBuilder sb =  new StringBuilder();
+        sb.append("Business Id: ").append(business_id).append("\n");
+
+        int posicao = 1;
+        for(Map.Entry<String, List<Review>> user: ordenados.entrySet()){
+      
+            float classificacao = 0;
+            for(Review rev: user.getValue()){
+                classificacao += rev.getStars();
+            }
+            float media = classificacao / user.getValue().size();
+
+            sb.append("  ").append(posicao).append("º User Id : ")
+                           .append(user.getKey()).append("\n")
+                           .append("\tNumero de reviews: ").append(user.getValue().size()).append("\n");
+            sb.append("\tClassificação média do négocio: ").append(media).append("\n\n");
+            posicao++;
+        }
+        System.out.println(sb.toString());
+    }
+
+    public void consulta10( Map<String,List<String>>state ,
+                            Map<String,List<Business>> cidades ,
+                            Map<String,SimpleEntry< Float,Integer>> busMedia ) {
+                
+        StringBuilder sb = new StringBuilder();
+        for (Map.Entry<String,List<String>> entry : state.entrySet()) {
+
+            sb.append("State: ").append(entry.getKey()).append("\n");
+            for (String s : entry.getValue()) {
+                List<Business> bs = cidades.get(s);
+                sb.append("\tCity: ").append(s).append("\n");
+                for (Business business : bs) {
+                    SimpleEntry<Float,Integer> m;
+                    if(busMedia.containsKey(business.getBusinessId())) {
+                        m = busMedia.get(business.getBusinessId());
+                    }else {
+                        m =  new SimpleEntry<>(0.0f, 1);
+                    }
+                
+                    Float med = m.getKey()/m.getValue();
+                    sb.append("\t\tBusiness: ").append(business.getName())
+                      .append(" whit Stars: ").append(med).append("\n");
+                    
+                }
+            }
+        }
+        System.out.println(sb.toString());
+        
+    }
+
+    
 
 }
 
