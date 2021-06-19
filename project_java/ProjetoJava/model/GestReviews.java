@@ -550,11 +550,10 @@ public class GestReviews{
      *
      * @param x número utilizadores que avaliaram mais negócios diferentes
      */
-    /*
+    
     public void consulta8(int x){
             //user id
-        //Map<String, List<SimpleEntry<String,Integer>>> res = new HashMap<>();
-
+     
         Map<String,List<String>> negDoUser = new HashMap<>();
     
         for(Review review: this.rev.getList()){
@@ -567,27 +566,27 @@ public class GestReviews{
                 }
             }
             else{
-                List<string> aux =  new ArrayList<>();
+                List<String> aux =  new ArrayList<>();
                 aux.add(busId);
                 negDoUser.put(userId,aux);
             }
         }
 
-        //Comparator<> comp = 
+        Comparator<Map.Entry<String, List<String>>> cmp = (p1,p2) -> p2.getValue().size() - p1.getValue().size();
 
-        Map<String, List<String>> ordenados = usersPorNeg.entrySet().stream().sorted(comp).limit(x)
+        Map<String, List<String>> ordenados = negDoUser.entrySet().stream().sorted(cmp).limit(x)
                                                          .collect(Collectors.toMap(e->e.getKey(), e->e.getValue().stream()
                                                          .collect(Collectors.toList())));
 
         StringBuilder sb =  new StringBuilder();
-        for(Map.Entry<String, List<string>> entry: negDoUser.entrySet){
+        for(Map.Entry<String, List<String>> entry: ordenados.entrySet()){
             sb.append("  User: " + entry.getKey());
-            sb.appende("    Número de negócios diferentes que avaliou: " + entry.getValue().getList().size());
+            sb.append("    Número de negócios diferentes que avaliou: " + entry.getValue().size());
         }
         View view = new View();
         view.print(sb.toString());
     }
-*/
+
     /**
      * QUERY 9
      * Dado o código de um negócio, determina o conjunto dos X users que mais o
@@ -597,8 +596,6 @@ public class GestReviews{
      * @param business_id id do negócio dado
      */
     public  Map<String, List<Review>> consulta9(int x, String business_id){
-
-        StringBuilder sb =  new StringBuilder();
 
         Business negocio = new Business(business_id);
         ReviewList reviewsDoNegocio = negocio.getReviews(this.rev);   // lista com todos as reviews daquele negócio
