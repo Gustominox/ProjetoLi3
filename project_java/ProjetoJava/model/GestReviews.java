@@ -380,8 +380,7 @@ inteiro dado pelo utilizador)
 
  */
 
-/*
- public void consulta6(int x){
+public void consulta6(int x){
         //ano      //negocio 
     Map<Integer, Map<String,List<Review>>> negPorAno = new HashMap<>();
     List<Business> busList = new ArrayList<>();
@@ -419,7 +418,7 @@ inteiro dado pelo utilizador)
        
         for(Map.Entry<String, List<Review>> entry2: entry.get(ano).entrySet()){
             List<String> userList = new ArrayList<>();
-            for(Review r: revs){
+            for(Review r: entry2.getValue()){
                 String userId = r.getUserId();
                 if(!userList.contains(userId)){
                     userList.add(userId);
@@ -430,22 +429,16 @@ inteiro dado pelo utilizador)
         Map<String, List<Review>> ordenados = usersPorNeg.entrySet().stream().sorted(comp).limit(x)
                                                          .collect(Collectors.toMap(e->e.getKey(), e->e.getValue().stream().map(Review::clone)
                                                          .collect(Collectors.toList())));
-    }
-
-
-    StringBuilder sb =  new StringBuilder();
-    for(Map.Entry<Integer,Map<String, List<Review>>> entry3: res.entrySet){
-        sb.append("  Ano " + entry.getKey());
-        for(Business bus: entry.getvalue().getList()){
-                sb.append("    Negócio: " + bus.getBusinessId());
-                sb.append("      " + usersPorNeg.get(bus.getBusinessId()).size() + "users avaliaram este negócio");
+        
+        for(Map.Entry<String, List<Review>> entry3: entry.get(ano).entrySet()){
+            sb.append("    Negócio: ").append(entry3.getKey()).append("\n");
+            sb.append("      ").append(usersPorNeg.get(entry3.getKey()).size()).append("users avaliaram este negócio").append("\n");
         }
     }
     View view = new View();
     view.print(sb.toString());
-
  }
-*/
+
 // FEITA
 // retorna 3 neg mais famosos de cada cidade
     public void consulta7(BusinessList businesses, ReviewList reviews){
