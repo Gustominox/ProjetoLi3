@@ -31,7 +31,7 @@ public class Testes{
         long memUsadaAntes = RunTime.getRuntime().totalMenory() - RunTime.getRuntime().freeMemory();
 
 
-        /************** Estatística 1 *************/
+        /************** Estatistica 1 *************/
 
         System.out.println("Estatística 1:");
     
@@ -39,12 +39,12 @@ public class Testes{
         gest.estatistica1();
 
         System.out.println("    Tempo de execução: " + Crono.getTimeAsString());
-        long memUsadaDepois = RunTime.getRuntime().totalMenory() - RunTime.getRuntime().freeMemory();
+        long memUsadaDepois = Runtime.getRuntime().totalMenory() - Runtime.getRuntime().freeMemory();
         long memAtual = memUsadaDepois - memUsadaAntes;
         System.out.println("    Memória: " + memAtual);
 
 
-        /************** Estatística 2 *************/
+        /************** Estatistica 2 *************/
 
         System.out.println("Estatistica 2:");
 
@@ -65,7 +65,7 @@ public class Testes{
         gest.consulta1();
 
         System.out.println("    Tempo de execução: " + Crono.getTimeAsString());
-        long memUsadaDepois = RunTime.getRuntime().totalMenory() - RunTime.getRuntime().freeMemory();
+        long memUsadaDepois = Runtime.getRuntime().totalMenory() - Runtime.getRuntime().freeMemory();
         long memAtual = memUsadaDepois - memUsadaAntes;
         System.out.println("    Memória: " + memAtual);
 
@@ -78,7 +78,7 @@ public class Testes{
         gest.consulta2(4, 2014);
 
         System.out.println("    Tempo de execução: " + Crono.getTimeAsString());
-        long memUsadaDepois = RunTime.getRuntime().totalMenory() - RunTime.getRuntime().freeMemory();
+        long memUsadaDepois = Runtime.getRuntime().totalMenory() - Runtime.getRuntime().freeMemory();
         long memAtual = memUsadaDepois - memUsadaAntes;
         System.out.println("    Memória: " + memAtual);
 
@@ -94,7 +94,7 @@ public class Testes{
         gest.consulta3("YoVfDbnISlW0f7abNQACIg", stars, revMes, busMes);
 
         System.out.println("    Tempo de execução: " + Crono.getTimeAsString());
-        long memUsadaDepois = RunTime.getRuntime().totalMenory() - RunTime.getRuntime().freeMemory();
+        long memUsadaDepois = Runtime.getRuntime().totalMenory() - Runtime.getRuntime().freeMemory();
         long memAtual = memUsadaDepois - memUsadaAntes;
         System.out.println("    Memória: " + memAtual);
 
@@ -107,7 +107,7 @@ public class Testes{
         gest.consulta4("RuvuXYEz_fhJZVNXjC7kzw"); 
 
         System.out.println("    Tempo de execução: " + Crono.getTimeAsString());
-        long memUsadaDepois = RunTime.getRuntime().totalMenory() - RunTime.getRuntime().freeMemory();
+        long memUsadaDepois = Runtime.getRuntime().totalMenory() - Runtime.getRuntime().freeMemory();
         long memAtual = memUsadaDepois - memUsadaAntes;
         System.out.println("    Memória: " + memAtual);
 
@@ -120,7 +120,7 @@ public class Testes{
         gest.consulta5("YoVfDbnISlW0f7abNQACIg");
 
         System.out.println("    Tempo de execução: " + Crono.getTimeAsString());
-        long memUsadaDepois = RunTime.getRuntime().totalMenory() - RunTime.getRuntime().freeMemory();
+        long memUsadaDepois = Runtime.getRuntime().totalMenory() - Runtime.getRuntime().freeMemory();
         long memAtual = memUsadaDepois - memUsadaAntes;
         System.out.println("    Memória: " + memAtual);
 
