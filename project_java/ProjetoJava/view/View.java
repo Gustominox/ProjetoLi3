@@ -21,16 +21,18 @@ public class View {
         StringBuilder sb = new StringBuilder ( );
         sb.append("\n---------------------------------------------------------\n\t\t\t  ");
         sb.append("Menu \n---------------------------------------------------------\n");
-        sb.append("0) - Estatisticas \n");
-        sb.append("1) - Lista ordenada alfabeticamente com os identificadores dos negócios nunca avaliados e o seu respetivo total;\n");
-        sb.append("2) - Dado um mês e um ano (válidos), determinar o número total global de reviews realizadas e o número total de users distintos que as realizaram;\n");
-        sb.append("3) - Dado um código de utilizador, determinar, para cada mês, quantas reviews fez,quantos negócios distintos avaliou e que nota média atribuiu;\n");
-        sb.append("4) - Dado o código de um negócio, determinar, mês a mês, quantas vezes foi avaliado,por quantos users diferentes e a média de classificação;\n");
-        sb.append("5) - Dado o código de um utilizador determinar a lista de nomes de negócios que mais avaliou (e quantos), ordenada por ordem decrescente de quantidade e, paraquantidades iguais, por ordem alfabética dos negócios;\n");
-        sb.append("6) - Determinar o conjunto dos X negócios mais avaliados (com mais reviews) em cada ano, indicando o número total de distintos utilizadores que o avaliaram (X é uminteiro dado pelo utilizador);\n");
-        sb.append("7) - Determinar, para cada cidade, a lista dos três mais famosos negócios em termos de número de reviews;\n");
-        sb.append("8) - Determinar os códigos dos X utilizadores (sendo X dado pelo utilizador) que avaliaram mais negócios diferentes, indicando quantos, sendo o critério deordenação a ordem decrescente do número de negócios\n");
-        sb.append("9) - Dado o código de um negócio, determinar o conjunto dos X users que mais o avaliaram e, para cada um, qual o valor médio de classificação (ordenação cf. 5)n\n");
+        sb.append("0)  - Estatisticas dos Dados Existentes no Programa\n");
+        sb.append("1)  - Executar Consulta 1\n");
+        sb.append("2)  - Executar Consulta 2\n");
+        sb.append("3)  - Executar Consulta 3\n");
+        sb.append("4)  - Executar Consulta 4\n");
+        sb.append("5)  - Executar Consulta 5\n");
+        sb.append("6)  - Executar Consulta 6\n");
+        sb.append("7)  - Executar Consulta 7\n");
+        sb.append("8)  - Executar Consulta 8\n");
+        sb.append("9)  - Executar Consulta 9\n");
+        sb.append("10) - Executar Consulta 10\n");
+        sb.append("11) - Correr Testes \n");
 
         System.out.print(sb.toString());
          
@@ -128,32 +130,6 @@ public class View {
     public void fichQueQuer() {
         System.out.println("Nome do ficheiro que pretende\n");
     }
-    public void espera() {
-        
-    }
-    public void consulta1(SimpleEntry<Integer, Set<String>> n) {
-        
-        StringBuilder sb = new StringBuilder();
-
-        sb.append("Consulta 1:\n");
-        sb.append("    Numero Total de Business:").append(n.getKey());
-        
-        for (String s : n.getValue()) {
-            sb.append("    Business:").append(s).append("\n");         
-        }
-        System.out.println(sb.toString());
-    }
-
-    public void consulta2(SimpleEntry<Integer, Integer> r) {
-
-        StringBuilder sb = new StringBuilder();
-
-        sb.append("Consulta 2:\n");
-        sb.append("    Numero Total de Reviews:").append(r.getKey()).append("\n");
-        sb.append("    Numero de Users Distintos:").append(r.getValue()).append("\n");
-        
-        System.out.println(sb.toString());
-    }
 
     public void pedeMes() {
         System.out.print("Insira o Mes que pretende consultar: ");
@@ -174,7 +150,32 @@ public class View {
     public void pedeBusinessID() {
         System.out.print("Insira o BusinessId que pretende consultar: ");
     }
-    
+
+    public void consulta1(SimpleEntry<Integer, Set<String>> n) {
+        
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("Consulta 1:\n");
+        sb.append("    Numero Total de Business:").append(n.getKey());
+        
+        for (String s : n.getValue()) {
+            sb.append("    Business:").append(s).append("\n");         
+        }
+        System.out.println(sb.toString());
+    }
+
+
+    public void consulta2(SimpleEntry<Integer, Integer> r) {
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("Consulta 2:\n");
+        sb.append("    Numero Total de Reviews:").append(r.getKey()).append("\n");
+        sb.append("    Numero de Users Distintos:").append(r.getValue()).append("\n");
+        
+        System.out.println(sb.toString());
+    }
+
     public void consulta3(float[] stars,int[] revMes, int[] busMes){
 
         StringBuilder sb =  new StringBuilder();
