@@ -311,10 +311,10 @@ public class GestReviews{
     *
     * @param userId o user id dado
     */
-    public void consulta3(String userId){
+    public void consulta3(String userId,float[] stars  ,
+                                        int[]   revMes ,
+                                        int[]   busMes ){
 
-        float[] stars = new float[12];
-        int[] revMes = new int[12];
         List<Review> novaList  = new ArrayList<>();
         for(Review rev: this.rev.getList()){ //guardamos numa lista todas as reviews que o user fez
             if(rev.getUserId().equals(userId)){
@@ -324,7 +324,7 @@ public class GestReviews{
             }
 
         }
-        int[] busMes = new int[12];
+        
         List<Business> novaList2  = new ArrayList<>();
         for(Review rev: novaList){ //percurremos a lista de todas as reviews que o user fez
             String id = rev.getBusinessId();
@@ -335,26 +335,12 @@ public class GestReviews{
                 }
             }
         }
-        imprimeQuery3(revMes, busMes, stars);
     }
 
     /**
      * Método auxiliar que imprime os resultados obtidos do método consulta3.
      */
-    public void imprimeQuery3(int[] revMes, int[] busMes, float[] stars){
-
-        StringBuilder sb =  new StringBuilder();
-        for(int i=0; i < 12; i++){
-            int nmes = i + 1;
-            sb.append("  Mes:" + nmes).append("\n");
-            sb.append("    Número de reviews: " + revMes[i] );
-            sb.append(" , Número de negócios avaliados: " + busMes[i] ); 
-            sb.append(" , Nota média: " + stars[i]/revMes[i]).append("\n");
     
-        }
-        View view = new View();
-        view.print(sb.toString());
-    }
 
     /**
      * QUERY 4 

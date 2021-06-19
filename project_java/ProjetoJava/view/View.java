@@ -158,6 +158,21 @@ public class View {
     public void pedeAno() {
         System.out.print("Insira o Ano que pretende consultar: ");
     }
+    
+    public void consulta3(float[] stars,int[] revMes, int[] busMes){
+
+        StringBuilder sb =  new StringBuilder();
+        for(int i=0; i < 12; i++){
+            int nmes = i + 1;
+            sb.append("  Mes:" + nmes).append("\n");
+            sb.append("    Número de reviews: " + revMes[i] );
+            sb.append(" , Número de negócios avaliados: " + busMes[i] ); 
+            sb.append(" , Nota média: " + stars[i]/revMes[i]).append("\n");
+    
+        }
+    
+        System.out.println(sb.toString());
+    }
 }
 
     

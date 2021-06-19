@@ -100,8 +100,13 @@ import java.util.AbstractMap.SimpleEntry;
                         break;
                         
                     case 3: 
+
+                        float[] stars = new float[12];
+                        int[] revMes = new int[12];
+                        int[] busMes = new int[12];
                         String user3 = scan.nextLine();
-                        //view.q3(user3,gest.query3(user3));
+                        gest.consulta3(user3,stars,revMes,busMes);
+                        view.consulta3(stars,revMes,busMes);
                         break;
                     
                     case 4 : 
