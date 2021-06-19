@@ -92,7 +92,7 @@ public class ReviewList {
     }
  
     /**
-     * Método que mostra todas as reviews da lista.
+     * Método que mostra todas os nomes das reviews da lista.
      */
     public void mostrarReviews(){
         View view = new View();
@@ -104,7 +104,6 @@ public class ReviewList {
             sb.append( aux + "-" + review.toString()).append("\n");
             view.print(sb.toString());
         }
- 
     }
  
     /**
