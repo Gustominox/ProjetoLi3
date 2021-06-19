@@ -2,10 +2,9 @@ import model.Businesses.*;
 import model.Reviews.*;
 import model.Users.*;
 import controller.*;
-import jdk.internal.net.http.common.Log;
 import view.*;
 import loaders.*;
-
+import model.*;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -80,7 +79,7 @@ import java.util.Scanner ;
 
                 break;
                 case 6:
-                    gest.consulta6();
+                   // gest.consulta6();
                 break;
                 case 7:
 
