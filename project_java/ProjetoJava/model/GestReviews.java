@@ -24,6 +24,31 @@ public class GestReviews{
     private ReviewList  rev ;
     private UserList user ;
     
+    public BusinessList getBus() {
+        return bus;
+    }
+
+    public void setBus(BusinessList bus) {
+        this.bus = bus;
+    }
+
+    public ReviewList getRev() {
+        return rev;
+    }
+
+    public void setRev(ReviewList rev) {
+        this.rev = rev;
+    }
+
+    public UserList getUser() {
+        return user;
+    }
+
+    public void setUser(UserList user) {
+        this.user = user;
+    }
+
+    
     /**
      * Construtor parametrizado.
      */
@@ -536,9 +561,9 @@ public class GestReviews{
      * @param x número utilizadores que avaliaram mais negócios diferentes
      */
     
-    public void consulta8(int x){
+    public Map<String, List<String>> consulta8 (int x){
             
-     
+        
         Map<String,List<String>> negDoUser = new HashMap<>();
     
         for(Review review: this.rev.getList()){
@@ -567,13 +592,8 @@ public class GestReviews{
                                                                 (a, b) -> { throw new AssertionError(); },
                                                                 LinkedHashMap::new
                                                              ));
-        StringBuilder sb =  new StringBuilder();
-        for(Map.Entry<String, List<String>> entry: ordenados.entrySet()){
-            sb.append("  User: " + entry.getKey());
-            sb.append("    Número de negócios diferentes que avaliou: " + entry.getValue().size()).append("\n");
-        }
-        View view = new View();
-        view.print(sb.toString());
+        
+        return ordenados;
     }
 
     /**

@@ -6,8 +6,6 @@ import view.*;
 import loaders.*;
 import model.*;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.InputMismatchException;
@@ -16,7 +14,7 @@ import java.util.Scanner ;
 import java.util.Set;
 import java.util.AbstractMap.SimpleEntry;
 
-        //
+    
        
     public class GestReviewsMVC {
     
@@ -26,11 +24,11 @@ import java.util.AbstractMap.SimpleEntry;
     
             Scanner scan = new Scanner(System.in);
             View view = new View();
-            Controller controller = new Controller();
             BusinessList listaBusinesses = new BusinessList();
             ReviewList   listaReviews    = new ReviewList();
             UserList     listaUsers      = new UserList(); 
             
+            Writelog log = new Writelog();
             Loadlog loader = new Loadlog();
 
             loader.load(loader.getFichDefaut(), listaBusinesses
@@ -40,8 +38,8 @@ import java.util.AbstractMap.SimpleEntry;
             GestReviews gest = new GestReviews( listaBusinesses
                                                 , listaReviews
                                                 , listaUsers);
-    
-            
+
+            log.gravar(gest, "gestReviews");
             int instruction = 0;
             while (instruction != -1) {
                 
@@ -157,8 +155,8 @@ import java.util.AbstractMap.SimpleEntry;
                         view.pedeQtValores();
                         int nUsers = scan.nextInt();
                         scan.nextLine();
-                        gest.consulta8(nUsers);
-                        
+                        Map<String, List<String>> u = gest.consulta8(nUsers);
+                        view.consulta8(u);
                         view.pressEnter();
                         scan.nextLine();
                         
@@ -194,8 +192,17 @@ import java.util.AbstractMap.SimpleEntry;
                         view.pressEnter();
                         scan.nextLine();
                         break;
-                        default : 
-                        //view.notAnInstruction();
+                    case 12:
+                        view.fichQueQuer();
+
+                        String nome = scan.nextLine();
+                        log.gravar(gest,nome);
+                        view.gravado();
+                        view.pressEnter();
+                        scan.nextLine();
+                    break;
+                    default : 
+                        view.notAnInstruction();
                        
                         
                         

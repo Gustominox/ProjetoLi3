@@ -11,27 +11,9 @@ import view.*;
 
 public class Controller {
 
-
-    private String nextLine;
-
-
-
-
-    public void menuEstatisticas(){
-        Scanner scan= new Scanner(System.in);
-        View view =new View();
-        //GestReviews gest = new GestReviews();
-        int instruction ;
-        try{
-            instruction = scan.nextInt();
-            scan.nextLine();
-       }
-       catch (InputMismatchException e) {
-           view.notAnInstruction();
-       }
-
+    public void menu(){
+        
     }
-
 
  
 

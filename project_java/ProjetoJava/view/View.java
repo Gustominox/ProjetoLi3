@@ -127,8 +127,13 @@ public class View {
     /**
      * Método que apresenta no ecrã uma mensagem a pedir o nome do ficheiro que o utilizador pretender 
     */
+
+    public void gravado() {
+        System.out.println("Estado do Programa Gravado\n");
+    }
+
     public void fichQueQuer() {
-        System.out.println("Nome do ficheiro que pretende\n");
+        System.out.print("Nome do ficheiro com que pretende gravar: ");
     }
 
     public void pedeMes() {
@@ -312,7 +317,20 @@ public class View {
         }
      System.out.println(sb.toString());
     }
-    
+
+    public void consulta8(Map<String, List<String>> ordenados) {
+        StringBuilder sb =  new StringBuilder();
+        sb.append("\n");
+        for(Map.Entry<String, List<String>> entry: ordenados.entrySet()){
+            sb.append("  User: " + entry.getKey());
+            sb.append("    Número de negócios diferentes que avaliou: " + entry.getValue().size()).append("\n");
+        }
+        View view = new View();
+        view.print(sb.toString());
+    }
+
+  
+        
 
     
 
