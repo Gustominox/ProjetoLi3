@@ -14,7 +14,7 @@ import java.util.InputMismatchException;
 import java.util.Map;
 import java.util.Scanner ;
 
-        //gest.consulta5(10,"YoVfDbnISlW0f7abNQACIg");
+        //
        
     public class Programa {
     

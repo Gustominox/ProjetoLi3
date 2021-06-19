@@ -81,6 +81,7 @@ public class Controller {
                 
             case 5: 
                 String user =scan.nextLine();
+                gest.consulta5(10,"YoVfDbnISlW0f7abNQACIg");
                 //view.query5(user,gest.query5(user));
                 break;
 
@@ -93,6 +94,10 @@ public class Controller {
                 scan.nextLine();
                 //view.q8(nUsers,gest.query8(nUsers));
                 break;   
+
+            case 9: 
+                gest.consulta9(10,"RuvuXYEz_fhJZVNXjC7kzw");
+                break;
             default : 
                 //view.notAnInstruction();
                 break;
