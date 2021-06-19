@@ -293,8 +293,22 @@ public class View {
         
     }
 
+    public void consulta6(Map<Integer, Map<String, Integer>> anos) {
+        StringBuilder sb = new StringBuilder();
+
+        for (Map.Entry<Integer, Map<String,Integer>> entry : anos.entrySet()) {
+        
+            sb.append("Ano: ").append(entry.getKey()).append("\n");
+            
+            for (Map.Entry<String,Integer> bus : entry.getValue().entrySet()) {
+                sb.append("\tBusiness: ").append(bus.getKey());
+                sb.append("\tCom ").append(bus.getValue()).append(" Reviews") .append("\n");
+            }
+        }
+     System.out.println(sb.toString());
+    }
+    
+
     
 
 }
-
-    

@@ -436,8 +436,8 @@ public class GestReviews{
      * @param x número de negócios mais avaliados
      */
     
-    public void consulta6(int x,Map<Integer,Map<String,Integer>>anos){
-        
+    public Map<Integer,Map<String,Integer>> consulta6(int x){
+        Map<Integer,Map<String,Integer>>anos = new HashMap<>();
         for(Review r: this.rev.getList()){
             
 
@@ -462,76 +462,31 @@ public class GestReviews{
                 anos.put(r.getDate().getYear(), busNr);
             }
         }
+
+
+        Comparator<Map.Entry<String,Integer>> cmp = (p1,p2)-> ( p1.getValue() != p2.getValue() ) ?
+                                                              ( p2.getValue() -  p1.getValue() ) :
+                                                                p1.getKey().compareTo(p2.getKey());
         Map<Integer, Map<String,Integer>> ret = new HashMap<>();
         for (Map.Entry<Integer, Map<String,Integer>> entry : anos.entrySet()) {
 
         
-            List<SimpleEntry<Business,Integer>> ordenados = entry.getValue().stream().sorted(comp).limit(3).collect(Collectors.toList());
+            Map<String, Integer> ordenados = entry.getValue().entrySet().stream()
+                                              .sorted(cmp).limit(x)//Collections.reverseOrder(Map.Entry.comparingByValue()))
+                                              .collect(Collectors.toMap(
+                                                       Map.Entry::getKey,
+                                                       Map.Entry::getValue,
+                                                       (a, b) -> { throw new AssertionError(); },
+                                                       LinkedHashMap::new
+                                               ));
             int ano = entry.getKey();
             
             ret.put(ano, ordenados);
         } 
-        System.out.println(anos);
+        return ret;
         
     }
-        /*//ano      //negocio 
-        Map<Integer, Map<String,List<Review>>> negPorAno = new HashMap<>();
-        List<Business> busList = new ArrayList<>();
-
-        for(Review review: this.rev.getList()){
-            int ano = review.getDate().getYear();
-            String busId = review.getBusinessId();
-
-            if(negPorAno.containsKey(ano)){
-                if(!negPorAno.get(ano).containsKey(busId)){
-                    List<Review> revs1 = new ArrayList<>();
-                    revs1.add(review.clone());
-                    negPorAno.get(ano).put(busId,revs1);
-                }
-                else{
-                    negPorAno.get(ano).get(busId).add(review.clone());
-                }
-            }else{
-                Map<String, List<Review>> aux = new HashMap<>();
-                List<Review> revs2 = new ArrayList<>();
-                revs2.add(review.clone());
-                aux.put(busId, revs2);
-                negPorAno.put(ano,aux);
-            }
-        }
-        StringBuilder sb =  new StringBuilder();
-
-        Comparator<Map.Entry<String, List<Review>>> comp = (b1,b2) -> b2.getValue().size() - b1.getValue().size();
-        for(Map.Entry<Integer,Map<String, List<Review>>> entry: negPorAno.entrySet()){
-            int ano = entry.getKey();
-            sb.append("  Ano ").append(ano).append("\n");
-       
-            Map<String, List<String>> usersPorNeg = new HashMap<>();
-       
-            for(Map.Entry<String, List<Review>> entry2: entry.get(ano).entrySet()){
-                List<String> userList = new ArrayList<>();
-                for(Review r: entry2.getValue()){
-                    String userId = r.getUserId();
-                    if(!userList.contains(userId)){
-                        userList.add(userId);
-                    }
-                }
-                usersPorNeg.put(entry2.getKey(),userList);
-            }
-            Map<String, List<Review>> ordenados = usersPorNeg.entrySet().stream().sorted(comp).limit(x)
-                                                         .collect(Collectors.toMap(e->e.getKey(), e->e.getValue()
-                                                         .stream().map(Review::clone)
-                                                         .collect(Collectors.toList())));
-        
-            for(Map.Entry<String, List<Review>> entry3: entry.get(ano).entrySet()){
-                sb.append("    Negócio: ").append(entry3.getKey()).append("\n");
-                sb.append("      ").append(usersPorNeg.get(entry3.getKey()).size()).append("users avaliaram este negócio").append("\n");
-            }
-        }
-        View view = new View();
-        view.print(sb.toString());
-    }
-*/
+  
     /**
      * QUERY 7
      * Determina, para cada cidade, a lista dos três mais famosos negócios em termos de
