@@ -16,17 +16,18 @@ Função que controla o progama.
 #include "auxiliares.h"
 #include "interpretador.h"
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
 
-int r = 0;
+    int r = 0;
 
-clearScreen();
-printf("STARTED LOADING SGR...\n");
-SGR sgr = load_sgr(NULL,NULL,NULL);
-printf("FINISHED LOADING SGR!\n");
-clearScreen();
+    clearScreen();
+    printf("STARTED LOADING SGR...\n");
+    SGR sgr = load_sgr(NULL, NULL, NULL);
+    printf("FINISHED LOADING SGR!\n");
+    clearScreen();
 
-r = interpretador(sgr);
+    r = interpretador(sgr);
 
-return r;
+    return r;
 }

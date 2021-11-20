@@ -312,7 +312,7 @@ TABLE businesses_reviewed(SGR sgr, char *user_id){
 		}
 		Ticks[1] = clock();
 		double time = (Ticks[1] - Ticks[0]) * 1.0 / CLOCKS_PER_SEC;
-    	("\nTempo de execucao da QUERY (segundos): %g\n",time);
+    	printf("\nTempo de execucao da QUERY (segundos): %g\n",time);
 
 		return table;
 	}else{
